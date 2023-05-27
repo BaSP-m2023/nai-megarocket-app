@@ -1,0 +1,35 @@
+.deleteButton {
+  margin-left: 1rem;
+  color: rgba(55, 56, 103);
+  border: none;
+  font-weight: bold;
+  background-color: rgba(224, 224, 224, 0.1);
+  cursor: pointer;
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+}
+
+th,
+td {
+  border: 0.1px solid #ccc;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+th {
+  color: rgba(55, 56, 103, 1);
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(170, 206, 155, 0.2);
+}
+
+td {
+  color: rgba(55, 56, 103, 1);
+}
