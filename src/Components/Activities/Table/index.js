@@ -13,7 +13,6 @@ const Table = ({ data, deleteItem, setShowModal }) => {
           <th></th>
         </tr>
       </thead>
-
       <tbody>
         {data.map((item) => {
           return (
