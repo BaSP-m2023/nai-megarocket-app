@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react';
 
 const Trainers = () => {
   const [trainers, setTrainers] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteModalMessage, setDeleteModalMessage] = useState('');
+
   const getTrainers = async () => {
     const response = await fetch('https://nai-megarocket-server.vercel.app/api/trainers');
     const data = await response.json();
@@ -13,13 +16,40 @@ const Trainers = () => {
   useEffect(() => {
     getTrainers();
   }, []);
-  const deleteItem = (id) => {
-    setTrainers([...trainers.filter((trainer) => trainer._id !== id)]);
+  const DeleteModal = () => {
+    const handleCloseModal = () => {
+      setShowDeleteModal(false);
+    };
+
+    return (
+      <div className={styles.deleteModal}>
+        <p>{deleteModalMessage}</p>
+        <button onClick={handleCloseModal}>Close</button>
+      </div>
+    );
   };
+  const deleteItem = async (id) => {
+    try {
+      await fetch(`https://nai-megarocket-server.vercel.app/api/trainers/${id}`, {
+        method: 'DELETE'
+      });
+
+      setTrainers([...trainers.filter((trainer) => trainer._id !== id)]);
+      setDeleteModalMessage('Trainer deleted successfully');
+      setShowDeleteModal(true);
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      setDeleteModalMessage('Error deleting trainer');
+      setShowDeleteModal(true);
+    }
+  };
+
   return (
     <section className={styles.container}>
       <h2>Trainers</h2>
       <Table data={trainers} deleteItem={deleteItem} />
+      {showDeleteModal && <DeleteModal />}
+      <button className={styles.btn}>+ Add new Trainer</button>
     </section>
   );
 };
