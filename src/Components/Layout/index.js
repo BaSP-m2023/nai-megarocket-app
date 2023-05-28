@@ -8,7 +8,7 @@ import Trainers from '../Trainers';
 
 import Home from '../Home/index';
 import Header from '../Header/index';
-import Footer from '../Footer/index';
+// import Footer from '../Footer/index';
 import styles from './layout.module.css';
 
 function Layout() {
@@ -43,7 +43,7 @@ function Layout() {
     <div className={styles.container}>
       <Header />
       {currentScreen}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
