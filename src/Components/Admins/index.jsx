@@ -58,7 +58,13 @@ const Admins = () => {
   if (admins != '') {
     return (
       <section className={styles.container}>
-        <Modal show={showModal} closeModal={closeModal} onCloseModal={onCloseModal} />
+        <Modal
+          show={showModal}
+          closeModal={closeModal}
+          onCloseModal={onCloseModal}
+          title="Warning"
+          body="Do you want to delete this admin?"
+        />
         <h2>Admins</h2>
         <Table data={admins} deleteItem={deleteItem} />
         <button className={styles.newButton} href="#">

@@ -13,8 +13,8 @@ function Modal(props) {
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
-        <h3>WARNING</h3>
-        <p>Do you want to delete this admin?</p>
+        <h3>{props.title}</h3>
+        <p>{props.body}</p>
         <div className={styles.buttonContainer}>
           <button className={styles.deleteButton} onClick={onCloseModal}>
             Yes
