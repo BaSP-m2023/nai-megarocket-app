@@ -50,7 +50,6 @@ const Admins = () => {
   };
 
   const onCloseModal = () => {
-    console.log('Deleted!');
     deleteAdmins(idDelete);
     setAdmins([...admins.filter((admin) => admin._id !== idDelete)]);
     setIdDelete();
