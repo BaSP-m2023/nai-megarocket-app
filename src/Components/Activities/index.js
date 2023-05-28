@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import Modal from './Modals';
 import styles from './activities.module.css';
 import Table from './Table';
 
 const Activities = () => {
+  const [showModal, setShowModal] = useState(false);
   const [activities, setActivities] = useState([]);
 
   const getActivities = async () => {
@@ -16,7 +18,6 @@ const Activities = () => {
       method: 'DELETE'
     });
     const { data } = await response.json();
-    // setActivities(data);
     console.log(data);
   };
 
@@ -24,16 +25,24 @@ const Activities = () => {
     getActivities();
   }, []);
 
-  const deleteItem = async (id) => {
-    await deleteActivities(id);
+  const deleteItem = (id) => {
+    deleteActivities(id);
     setActivities(activities.filter((activity) => activity._id !== id));
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
     <section className={styles.container}>
       <h2>Activities</h2>
-      <Table data={activities} deleteItem={deleteItem} />
-
+      <Modal
+        title="The activity has been successfully deleted!"
+        show={showModal}
+        closeModal={closeModal}
+      />
+      <Table data={activities} deleteItem={deleteItem} setShowModal={setShowModal} />
       <button className={styles.addButton}> + Add new activity</button>
     </section>
   );

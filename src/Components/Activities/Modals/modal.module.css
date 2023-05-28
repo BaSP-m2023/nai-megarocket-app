@@ -1,0 +1,43 @@
+.container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  z-index: 999;
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  height: 20%;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 5);
+}
+
+.closeButton {
+  width: 5rem;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background-color: white;
+  border: solid 1px;
+  border-color: rgba(55, 56, 103);
+  color: rgba(55, 56, 103);
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+h3 {
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: rgba(170, 206, 155);
+}
