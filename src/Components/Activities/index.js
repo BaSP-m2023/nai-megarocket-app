@@ -8,17 +8,23 @@ const Activities = () => {
   const [activities, setActivities] = useState([]);
 
   const getActivities = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL + '/activities'}`);
-    const { data } = await response.json();
-    setActivities(data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL + '/activities'}`);
+      const { data } = await response.json();
+      setActivities(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteActivities = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL + '/activities/' + id}`, {
-      method: 'DELETE'
-    });
-    const { data } = await response.json();
-    console.log(data);
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL + '/activities/' + id}`, {
+        method: 'DELETE'
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './table.module.css';
 import { FaEdit } from 'react-icons/fa';
-import { FaTrash } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 
 const Table = ({ data, deleteItem, setShowModal }) => {
   return (
@@ -28,7 +28,7 @@ const Table = ({ data, deleteItem, setShowModal }) => {
                     setShowModal(true);
                   }}
                 >
-                  <FaTrash />
+                  <FaTimes />
                 </button>
                 <button className={styles.deleteButton}>
                   <FaEdit />

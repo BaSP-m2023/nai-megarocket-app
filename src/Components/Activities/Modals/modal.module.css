@@ -1,3 +1,9 @@
+h3 {
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: rgba(170, 206, 155);
+}
+
 .container {
   position: absolute;
   display: flex;
@@ -34,10 +40,4 @@
   font-size: 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
-}
-
-h3 {
-  margin-top: 2rem;
-  font-size: 1rem;
-  color: rgba(170, 206, 155);
 }
