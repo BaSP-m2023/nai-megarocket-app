@@ -29,6 +29,9 @@ const Admins = () => {
       if (!response.ok) {
         throw new Error('Error deleting admin.');
       }
+      const data = await response.json();
+      setAdmins([...admins.filter((admin) => admin._id !== data.data._id)]);
+      setIdDelete();
     } catch (error) {
       console.error(error);
     }
@@ -47,40 +50,35 @@ const Admins = () => {
     setShowModal(false);
   };
 
-  const handleConfirmDelete = () => {
-    deleteAdmins(idDelete);
-    setAdmins([...admins.filter((admin) => admin._id !== idDelete)]);
-    setIdDelete();
-  };
-
-  if (admins !== '') {
-    return (
-      <section className={styles.container}>
-        <Modal
-          show={showModal}
-          handleCancelDelete={handleCancelDelete}
-          handleConfirmDelete={handleConfirmDelete}
-          title="Warning"
-          body="Do you want to delete this admin?"
-        />
-        <h2>Admins</h2>
-        <button className={styles.newButton} href="#">
-          + Add new Admin
-        </button>
-        <Table data={admins} deleteItem={deleteItem} />
-      </section>
-    );
-  } else {
-    return (
-      <section className={styles.container}>
-        <h2>Admins</h2>
-        <h3>There are no admins in the database</h3>
-        <button className={styles.newButton} href="#">
-          + Add new Admin
-        </button>
-      </section>
-    );
-  }
+  return (
+    <section className={styles.container}>
+      {admins.length !== 0 ? (
+        <>
+          <Modal
+            idDelete={idDelete}
+            show={showModal}
+            handleCancelDelete={handleCancelDelete}
+            deleteAdmins={deleteAdmins}
+            title="Warning"
+            body="Do you want to delete this admin?"
+          />
+          <h2>Admins</h2>
+          <button className={styles.newButton} href="#">
+            + Add new Admin
+          </button>
+          <Table data={admins} deleteItem={deleteItem} />
+        </>
+      ) : (
+        <>
+          <h2>Admins</h2>
+          <h3>There are no admins in the database</h3>
+          <button className={styles.newButton} href="#">
+            + Add new Admin
+          </button>
+        </>
+      )}
+    </section>
+  );
 };
 
 export default Admins;

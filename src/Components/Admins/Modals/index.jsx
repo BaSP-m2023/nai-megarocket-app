@@ -6,7 +6,7 @@ function Modal(props) {
   }
 
   const onConfirmDelete = () => {
-    props.handleConfirmDelete();
+    props.deleteAdmins(props.idDelete);
     props.handleCancelDelete();
   };
 

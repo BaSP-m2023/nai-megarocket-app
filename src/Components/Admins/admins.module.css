@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   gap: 2vh;
+  margin-bottom: 3vh;
 }
 .newButton {
   box-shadow: inset 0px 1px 0px 0px #23395e;
