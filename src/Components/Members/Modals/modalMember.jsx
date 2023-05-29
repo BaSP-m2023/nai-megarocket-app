@@ -1,4 +1,4 @@
-import styles from './Modal.module.css';
+import styles from './modalMember.module.css';
 
 function Modal({ children, isOpen, closeModal, onConfirm }) {
   return (

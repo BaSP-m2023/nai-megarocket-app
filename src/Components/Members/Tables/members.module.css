@@ -61,10 +61,25 @@
 .members-table tr:hover .actions {
   display: block;
 }
+thead {
+  background-color: #69091f;
+}
 
 button{
   border-radius: 5px;
   color: #ffffff;
   margin: 10px;
   background-color: #EA3354;
+}
+
+.active-icon {
+  color: rgb(0, 189, 0);
+  background-color: rgb(0, 204, 0);
+  border-radius: 20px;
+}
+
+.inactive-icon {
+  color: red;
+  background-color: red;
+  border-radius: 20px;
 }

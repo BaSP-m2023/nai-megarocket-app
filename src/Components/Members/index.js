@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './Tables/members.module.css';
-import MembersTable from './Tables/MembersTable';
-import SelectedMemberInfo from './Tables/SelectedMemberInfo';
+import MembersTable from './Tables/memberTable';
+import SelectedMemberInfo from './Tables/selectedInfoMember';
 import { fetchMembers, deleteMember } from './api';
-import Modal from './Modals/Modal';
+import Modal from './Modals/modalMember';
 
 function Members() {
   const [members, setMembers] = useState([]);
@@ -45,9 +45,8 @@ function Members() {
     }
   };
 
-  const handleRowClick = (member) => {
+  const handleShowInfo = (member) => {
     setSelectedMember(member);
-    setShowActions({});
   };
 
   const handleShowActionsClick = (event, id) => {
@@ -58,23 +57,14 @@ function Members() {
     }));
   };
 
-  const handleEdit = (member) => {
-    setSelectedMember(member);
-  };
-
-  const handleClose = () => {
-    setSelectedMember(null);
-  };
-
   return (
     <section className={styles.container}>
       <h2>Members</h2>
       <MembersTable
         members={members}
-        handleRowClick={handleRowClick}
+        handleShowInfo={handleShowInfo}
         handleShowActionsClick={handleShowActionsClick}
         handleDelete={handleDelete}
-        handleEdit={handleEdit}
         showActions={showActions}
       />
       <button
@@ -87,7 +77,7 @@ function Members() {
       {selectedMember && (
         <>
           <SelectedMemberInfo selectedMember={selectedMember} />
-          <button onClick={handleClose}>Close</button>
+          <button onClick={() => setSelectedMember(null)}>Close</button>
         </>
       )}
       <Modal

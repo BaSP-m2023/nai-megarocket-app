@@ -1,6 +1,6 @@
 export async function fetchMembers() {
   try {
-    const response = await fetch('http://localhost:4000/api/members');
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/members`);
     const data = await response.json();
     return data.data;
   } catch (error) {
@@ -11,7 +11,7 @@ export async function fetchMembers() {
 
 export async function deleteMember(id) {
   try {
-    const response = await fetch(`http://localhost:4000/api/members/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/members/${id}`, {
       method: 'DELETE'
     });
     if (!response.ok) {

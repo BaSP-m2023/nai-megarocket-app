@@ -2,23 +2,25 @@ import styles from './members.module.css';
 import { FaEdit } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 import { FaCog } from 'react-icons/fa';
+import { FaInfoCircle } from 'react-icons/fa';
+import { FiCircle, FiSlash } from 'react-icons/fi';
 
 function MembersTable({
   members,
-  handleRowClick,
+  handleShowInfo,
   handleShowActionsClick,
   handleDelete,
-  handleEdit,
   showActions,
-  tableRef,
-  editButtonRef
+  tableRef
 }) {
   return (
     <table className={styles['members-table']} ref={tableRef}>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Surname</th>
+          <th>Name/Surname</th>
+          <th>Email</th>
+          <th>Membership</th>
+          <th>Active</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -26,9 +28,19 @@ function MembersTable({
         {Array.isArray(members) &&
           members.map((member, _id) => {
             return (
-              <tr key={_id} onClick={() => handleRowClick(member)}>
-                <td>{member.firstName}</td>
-                <td>{member.lastName}</td>
+              <tr key={_id}>
+                <td>
+                  {member.firstName} {member.lastName}
+                </td>
+                <td>{member.email}</td>
+                <td>{member.membership}</td>
+                <td>
+                  {member.isActive ? (
+                    <FiCircle className={styles['active-icon']} />
+                  ) : (
+                    <FiSlash className={styles['inactive-icon']} />
+                  )}
+                </td>
                 <td>
                   <div className="actions">
                     <i
@@ -43,12 +55,11 @@ function MembersTable({
                         <i className="fas fa-times" onClick={() => handleDelete(member._id)}>
                           <FaTimes />
                         </i>
-                        <i
-                          className="fas fa-pencil-alt"
-                          onClick={() => handleEdit(member)}
-                          ref={editButtonRef}
-                        >
+                        <i className="fas fa-pencil-alt">
                           <FaEdit />
+                        </i>
+                        <i onClick={() => handleShowInfo(member)}>
+                          <FaInfoCircle />
                         </i>
                       </>
                     )}
