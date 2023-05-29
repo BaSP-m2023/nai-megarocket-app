@@ -1,3 +1,7 @@
+h2 {
+  margin-top: 2rem;
+}
+
 .container {
   flex: 1;
   display: flex;
@@ -9,7 +13,7 @@
 .addButton {
   width: 13rem;
   padding: 0.9rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
   background-color: white;
   border: solid 1px;

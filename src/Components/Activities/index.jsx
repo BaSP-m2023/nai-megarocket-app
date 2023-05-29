@@ -43,13 +43,13 @@ const Activities = () => {
   return (
     <section className={styles.container}>
       <h2>Activities</h2>
+      <button className={styles.addButton}> + Add new activity</button>
       <Modal
         title="The activity has been successfully deleted!"
         show={showModal}
         closeModal={closeModal}
       />
       <Table data={activities} deleteItem={deleteItem} setShowModal={setShowModal} />
-      <button className={styles.addButton}> + Add new activity</button>
     </section>
   );
 };
