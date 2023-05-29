@@ -29,8 +29,6 @@ const Admins = () => {
       if (!response.ok) {
         throw new Error('Error deleting admin.');
       }
-      const data = await response.json();
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -45,23 +43,23 @@ const Admins = () => {
     setIdDelete(id);
   };
 
-  const closeModal = () => {
+  const handleCancelDelete = () => {
     setShowModal(false);
   };
 
-  const onCloseModal = () => {
+  const handleConfirmDelete = () => {
     deleteAdmins(idDelete);
     setAdmins([...admins.filter((admin) => admin._id !== idDelete)]);
     setIdDelete();
   };
 
-  if (admins != '') {
+  if (admins !== '') {
     return (
       <section className={styles.container}>
         <Modal
           show={showModal}
-          closeModal={closeModal}
-          onCloseModal={onCloseModal}
+          handleCancelDelete={handleCancelDelete}
+          handleConfirmDelete={handleConfirmDelete}
           title="Warning"
           body="Do you want to delete this admin?"
         />

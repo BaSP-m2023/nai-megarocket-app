@@ -6,8 +6,8 @@ function Modal(props) {
   }
 
   const onCloseModal = () => {
-    props.onCloseModal();
-    props.closeModal();
+    props.handleConfirmDelete();
+    props.handleCancelDelete();
   };
 
   return (
@@ -19,7 +19,7 @@ function Modal(props) {
           <button className={styles.deleteButton} onClick={onCloseModal}>
             Yes
           </button>
-          <button className={styles.noButton} onClick={props.closeModal}>
+          <button className={styles.noButton} onClick={props.handleCancelDelete}>
             No
           </button>
         </div>

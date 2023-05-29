@@ -1,64 +1,61 @@
-.container{
-    position: absolute;
-    display: flex;
-	width: 100vw;
-	height: 100vh;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+.container {
+  position: absolute;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
-.modal{
-	display: flex;
-	flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 300px;
-    height: 200px;
-    background-color: #EA3354;
-	font-weight: bolder;
-    border-radius: 5px;
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 300px;
+  height: 200px;
+  background-color: #ea3354;
+  font-weight: bolder;
+  border-radius: 5px;
 }
 .modal button {
-	width: 75px;
-	height: 40px;
-	border-radius:3px;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
-	padding:6px 24px;
-	text-decoration:none;
+  width: 75px;
+  height: 40px;
+  border-radius: 3px;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 13px;
+  padding: 6px 24px;
+  text-decoration: none;
 }
 .modal button:active {
-	position:relative;
-	top:1px;
+  position: relative;
+  top: 1px;
 }
-.buttonContainer{
-	display: flex;
-	gap: 3vw;
+.buttonContainer {
+  display: flex;
+  gap: 3vw;
 }
-.deleteButton{
-    box-shadow:inset 0px 1px 0px 0px #cf866c;
-	background:linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
-	background-color:#d0451b;
-    border:1px solid #942911;
-    text-shadow:0px 1px 0px #854629;
+.deleteButton {
+  box-shadow: inset 0px 1px 0px 0px #cf866c;
+  background: linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
+  background-color: #d0451b;
+  border: 1px solid #942911;
+  text-shadow: 0px 1px 0px #854629;
 }
 .deleteButton:hover {
-	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
-	background-color:#bc3315;
+  background: linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+  background-color: #bc3315;
 }
-.noButton{
-    box-shadow:inset 0px -3px 7px 0px #23395e;
-	background:linear-gradient(to bottom, #2e466e 5%, #415989 100%);
-	background-color:#2e466e;
-    border:1px solid #1f2f47;
+.noButton {
+  box-shadow: inset 0px -3px 7px 0px #23395e;
+  background: linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+  background-color: #2e466e;
+  border: 1px solid #1f2f47;
 }
 .noButton:hover {
-    background:linear-gradient(to bottom, #415989 5%, #2e466e 100%);
-	background-color:#415989;
+  background: linear-gradient(to bottom, #415989 5%, #2e466e 100%);
+  background-color: #415989;
 }
-
-
-
