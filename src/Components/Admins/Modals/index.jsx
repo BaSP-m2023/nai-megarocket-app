@@ -5,7 +5,7 @@ function Modal(props) {
     return null;
   }
 
-  const onCloseModal = () => {
+  const onConfirmDelete = () => {
     props.handleConfirmDelete();
     props.handleCancelDelete();
   };
@@ -16,7 +16,7 @@ function Modal(props) {
         <h3>{props.title}</h3>
         <p>{props.body}</p>
         <div className={styles.buttonContainer}>
-          <button className={styles.deleteButton} onClick={onCloseModal}>
+          <button className={styles.deleteButton} onClick={onConfirmDelete}>
             Yes
           </button>
           <button className={styles.noButton} onClick={props.handleCancelDelete}>
