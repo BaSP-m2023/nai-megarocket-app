@@ -4,3 +4,11 @@
   justify-content: center;
   align-items: center;
 }
+
+.addSubs {
+  width: 9rem;
+  border-color: rgba(55, 56, 103);
+  color: #373867;
+  background-color: #aace9b;
+  border: solid 1px;
+}

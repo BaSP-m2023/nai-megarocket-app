@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './table-module.css';
+import { FaEdit } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 
 const Table = ({ data, deleteItem }) => {
   return (
@@ -13,12 +15,15 @@ const Table = ({ data, deleteItem }) => {
       <tbody>
         {data.map((item) => {
           return (
-            <tr key={item.id}>
-              <td>{item.classes.day + ''}</td>
+            <tr key={item._id}>
+              <td>{item.classes.day}</td>
               <td>{item.member.firstName}</td>
               <td>
-                <button className={styles.buttonDelete} onClick={() => deleteItem(item.id)}>
-                  X
+                <button className={styles.buttonDelete} onClick={() => deleteItem(item._id)}>
+                  <FaTimes />
+                </button>
+                <button>
+                  <FaEdit />
                 </button>
               </td>
             </tr>
