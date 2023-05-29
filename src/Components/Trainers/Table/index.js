@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './table.module.css';
 import ConfirmationModal from '../Modal';
+import { FaEdit, FaTimes } from 'react-icons/fa';
 
 const Table = ({ data, deleteItem }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -44,14 +45,16 @@ const Table = ({ data, deleteItem }) => {
                 <td>{item.lastName}</td>
                 <td></td>
                 <td>
-                  <button className={styles.editButton}>Edit</button>
+                  <button className={styles.editButton}>
+                    <FaEdit />
+                  </button>
                 </td>
                 <td>
                   <button
                     className={styles.deleteButton}
                     onClick={() => openConfirmationModal(item)}
                   >
-                    X
+                    <FaTimes />
                   </button>
                 </td>
               </tr>
