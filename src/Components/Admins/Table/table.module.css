@@ -3,22 +3,22 @@
   border: solid 1px rgba(55, 56, 103, 0.1);
   border-radius: 1em;
 }
-thead {
+.thead {
   height: 5vh;
   background-color: rgba(55, 56, 103, 0.1);
 }
-tr {
+.tr {
   border: solid 1px rgba(55, 56, 103, 0.1);
 }
-tbody tr:hover td:not(:last-child) {
+.tbody tr:hover td:not(:last-child) {
   background-color: #ea3354;
 }
-td {
+.td {
   width: 10vw;
   height: 5vh;
   text-align: center;
 }
-tbody button {
+.tbody button {
   border-radius: 3px;
   display: inline-block;
   cursor: pointer;
@@ -28,7 +28,7 @@ tbody button {
   padding: 6px 24px;
   text-decoration: none;
 }
-tbody button:active {
+.tbody button:active {
   position: relative;
   top: 1px;
 }

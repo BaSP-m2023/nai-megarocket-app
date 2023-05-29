@@ -13,7 +13,7 @@ function Modal(props) {
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
-        <h3>{props.title}</h3>
+        <h3 className={styles.h3}>{props.title}</h3>
         <p>{props.body}</p>
         <div className={styles.buttonContainer}>
           <button className={styles.deleteButton} onClick={onConfirmDelete}>

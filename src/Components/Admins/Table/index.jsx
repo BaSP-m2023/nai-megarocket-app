@@ -6,16 +6,16 @@ import { FaTimes } from 'react-icons/fa';
 const Table = ({ data, deleteItem }) => {
   return (
     <table className={styles.container}>
-      <thead>
+      <thead className={styles.thead}>
         <tr className={styles.tr}>
-          <th>Name</th>
-          <th>Last Name</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Actions</th>
+          <th className={styles.th}>Name</th>
+          <th className={styles.th}>Last Name</th>
+          <th className={styles.th}>Phone</th>
+          <th className={styles.th}>Email</th>
+          <th className={styles.th}>Actions</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className={styles.tbody}>
         {data.map((item) => {
           return (
             <tr key={item._id}>
