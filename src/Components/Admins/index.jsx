@@ -77,7 +77,9 @@ const Admins = () => {
       <section className={styles.container}>
         <h2>Admins</h2>
         <h3>There are no admins in the database</h3>
-        <button className={styles.newButton} href="#"> + Add new Admin</button>
+        <button className={styles.newButton} href="#">
+          + Add new Admin
+        </button>
       </section>
     );
   }
