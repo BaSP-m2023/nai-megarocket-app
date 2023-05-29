@@ -66,10 +66,10 @@ const Admins = () => {
           body="Do you want to delete this admin?"
         />
         <h2>Admins</h2>
-        <Table data={admins} deleteItem={deleteItem} />
         <button className={styles.newButton} href="#">
           + Add new Admin
         </button>
+        <Table data={admins} deleteItem={deleteItem} />
       </section>
     );
   } else {

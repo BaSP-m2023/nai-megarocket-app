@@ -8,13 +8,10 @@ const Table = ({ data, deleteItem }) => {
     <table className={styles.container}>
       <thead>
         <tr className={styles.tr}>
-          <th className={styles.tr}>Name</th>
+          <th>Name</th>
           <th>Last Name</th>
-          <th>DNI</th>
           <th>Phone</th>
           <th>Email</th>
-          <th>City</th>
-          <th>Password</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -24,11 +21,8 @@ const Table = ({ data, deleteItem }) => {
             <tr key={item._id}>
               <td>{item.firstName}</td>
               <td>{item.lastName}</td>
-              <td>{item.dni}</td>
               <td>{item.phone}</td>
               <td>{item.email}</td>
-              <td>{item.city}</td>
-              <td>{item.password}</td>
               <td>
                 <button className={styles.deleteButton} onClick={() => deleteItem(item._id)}>
                   <FaTimes />
