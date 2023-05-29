@@ -2,13 +2,49 @@
   color: rgba(55, 56, 103);
   background-color: rgba(224, 224, 224, 0.1);
   text-align: center;
+  border-radius: 5px;
 }
 
-table {
-  width: 60vw;
+.buttonEdit {
+  color: rgba(55, 56, 103);
+  background-color: rgba(224, 224, 224, 0.1);
+  text-align: center;
+  border-radius: 5px;
 }
 
 .buttonsContainer {
   display: flex;
-  justify-content: end;
+  justify-content: space-around;
+}
+
+table {
+  width: 50vw;
+  table-layout: auto;
+}
+
+.subscriptionsTable {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.theadContainer {
+  background-color: #ea3354;
+}
+
+.theadContainer th {
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+td {
+  text-align: center;
+  padding: 20px;
+}
+
+.thDaysContainer {
+  text-align: center;
+}
+
+tbody tr {
+  background-color: #f0f4f9;
 }
