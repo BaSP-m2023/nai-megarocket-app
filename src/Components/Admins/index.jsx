@@ -76,7 +76,8 @@ const Admins = () => {
     return (
       <section className={styles.container}>
         <h2>Admins</h2>
-        <button href="#">Add new Admin</button>
+        <h3>There are no admins in the database</h3>
+        <button href="#"> + Add new Admin</button>
       </section>
     );
   }
