@@ -3,3 +3,12 @@
   background-color: rgba(224, 224, 224, 0.1);
   text-align: center;
 }
+
+table {
+  width: 60vw;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: end;
+}

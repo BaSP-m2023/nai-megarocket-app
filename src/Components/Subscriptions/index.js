@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import styles from './subscriptions.module.css';
 import Table from './Table';
+import Modal from './Modal';
 
 const Subscriptions = () => {
+  const [showModal, setShowModal] = useState(false);
   const [subscriptions, setSubscriptions] = useState([]);
 
   const getSubscriptions = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL + '/subscriptions'}`);
       if (!response.ok) {
-        throw new Error('An error ocurred trying to retrieve Subscriptions');
+        throw new Error('An error occurred trying to retrieve Subscriptions');
       }
       const { data } = await response.json();
       setSubscriptions(data);
@@ -17,6 +19,7 @@ const Subscriptions = () => {
       console.error(error);
     }
   };
+
   const deleteSubscriptions = async (id) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL + '/subscriptions/' + id}`, {
@@ -33,14 +36,21 @@ const Subscriptions = () => {
 
   const deleteItem = (id) => {
     deleteSubscriptions(id);
-    setSubscriptions(subscriptions.filter((subscriptions) => subscriptions._id !== id));
+    setSubscriptions(subscriptions.filter((subscription) => subscription._id !== id));
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
     <section className={styles.container}>
+      <Modal show={showModal} closeModal={closeModal} />
       <h2>Subscriptions</h2>
-      <Table data={subscriptions} deleteItem={deleteItem} />
-      <button className={styles.addSubs}> Add a new Subscription</button>
+      <Table data={subscriptions} deleteItem={deleteItem} setShowModal={setShowModal} />
+      <div className={styles.buttonContainer}>
+        <button className={styles.addSubs}> Add a new Subscription</button>
+      </div>
     </section>
   );
 };

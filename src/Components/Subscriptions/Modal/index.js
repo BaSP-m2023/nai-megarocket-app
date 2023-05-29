@@ -1,4 +1,5 @@
-import styles from './modal-module.css';
+import React from 'react';
+import styles from './modal.module.css';
 
 function Modal(props) {
   if (!props.show) {
@@ -6,17 +7,18 @@ function Modal(props) {
   }
 
   const onCloseModal = () => {
-    props.onCloseModal();
+    props.closeModal();
   };
 
   return (
     <div className={styles.modalContainer}>
       <div className={styles.modalContent}>
         <h3>Confirm Delete</h3>
-        <p>Are you sure you want to delete this subscription?</p>
+        <p>Subscription deleted!</p>
         <div>
-          <button onClick={onCloseModal}>Delete</button>
-          <button onClick={props.closeModal}>Cancel</button>
+          <button className={styles.buttonOk} onClick={onCloseModal}>
+            Ok
+          </button>
         </div>
       </div>
     </div>

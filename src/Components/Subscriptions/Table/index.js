@@ -1,13 +1,18 @@
 import React from 'react';
-import styles from './table-module.css';
+import styles from './table.module.css';
 import { FaEdit } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 
-const Table = ({ data, deleteItem }) => {
+const Table = ({ data, deleteItem, setShowModal }) => {
+  const handleDelete = (id) => {
+    deleteItem(id);
+    setShowModal(true);
+  };
+
   return (
     <table>
       <thead>
-        <tr>
+        <tr className={styles.trHeadContainer}>
           <th>Days</th>
           <th>Member</th>
         </tr>
@@ -17,12 +22,12 @@ const Table = ({ data, deleteItem }) => {
           return (
             <tr key={item._id}>
               <td>{item.classes.day}</td>
-              <td>{item.member.firstName}</td>
-              <td>
-                <button className={styles.buttonDelete} onClick={() => deleteItem(item._id)}>
+              <td className={styles.nameContainer}>{item.member.firstName}</td>
+              <td className={styles.buttonsContainer}>
+                <button className={styles.buttonDelete} onClick={() => handleDelete(item._id)}>
                   <FaTimes />
                 </button>
-                <button>
+                <button className={styles.buttonDelete}>
                   <FaEdit />
                 </button>
               </td>
