@@ -1,0 +1,70 @@
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.members-table {
+  border-collapse: collapse;
+  width: 80%;
+}
+
+.members-table th,
+.members-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.members-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.members-table tr:hover {
+  background-color: #69091f87;
+}
+.members-table td:nth-child(3) {
+  width: 85px;
+}
+.members-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #e1e1e1ba;
+  color: #111111;
+}
+
+.actions {
+  display: none;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.actions button:before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+
+.actions button:nth-of-type(1):before {
+  content: "\f00d";
+}
+
+.actions button:nth-of-type(2):before {
+  content: "\f141";
+}
+
+.members-table tr:hover .actions {
+  display: block;
+}
+
+button{
+  border-radius: 5px;
+  color: #ffffff;
+  margin: 10px;
+  background-color: #EA3354;
+}
