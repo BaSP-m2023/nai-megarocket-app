@@ -1,6 +1,5 @@
 import styles from './trainers.module.css';
 import Table from './Table';
-/* import Modal from './Modal'; */
 import { useEffect, useState } from 'react';
 
 const Trainers = () => {
@@ -9,9 +8,14 @@ const Trainers = () => {
   const [deleteModalMessage, setDeleteModalMessage] = useState('');
 
   const getTrainers = async () => {
-    const response = await fetch('https://nai-megarocket-server.vercel.app/api/trainers');
-    const data = await response.json();
-    setTrainers(data.data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/trainers`);
+      const data = await response.json();
+      setTrainers(data.data);
+    } catch (error) {
+      setDeleteModalMessage('Error occurred while retrieving the trainers');
+      setShowDeleteModal(true);
+    }
   };
   useEffect(() => {
     getTrainers();
@@ -20,7 +24,6 @@ const Trainers = () => {
     const handleCloseModal = () => {
       setShowDeleteModal(false);
     };
-
     return (
       <div className={styles.deleteModal}>
         <p>{deleteModalMessage}</p>
@@ -28,12 +31,12 @@ const Trainers = () => {
       </div>
     );
   };
+
   const deleteItem = async (id) => {
     try {
-      await fetch(`https://nai-megarocket-server.vercel.app/api/trainers/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL + '/trainers/' + id}`, {
         method: 'DELETE'
       });
-
       setTrainers([...trainers.filter((trainer) => trainer._id !== id)]);
       setDeleteModalMessage('Trainer deleted successfully');
       setShowDeleteModal(true);
