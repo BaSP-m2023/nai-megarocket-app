@@ -5,26 +5,26 @@ import { FaEdit } from 'react-icons/fa';
 
 const Table = ({ data, handleDeleteItem }) => {
   return (
-    <table>
-      <thead className={styles.thead}>
-        <tr>
+    <table className={styles.tableSuperAdmin}>
+      <thead>
+        <tr className={styles.thead}>
           <th>Nombre</th>
           <th>Email</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         {data.map((item) => {
           return (
-            <tr key={item._id}>
+            <tr className={styles.tableRow} key={item._id}>
               <td>{item.firstName}</td>
               <td>{item.email}</td>
-              <td>
-                <i className="fas fa-edit" onClick={() => alert('hola')}>
+              <td className={styles.actions}>
+                <i className="fas fa-edit">
                   <FaEdit />
                 </i>
                 <i className="fas fa-times" onClick={() => handleDeleteItem(item._id)}>
-                  <FaTimes />
+                  <FaTimes className={styles.deleteButton} />
                 </i>
               </td>
             </tr>

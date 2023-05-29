@@ -44,7 +44,10 @@ const SuperAdmins = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Super Admins</h2>
+      <div className={styles.head}>
+        <h2>Super Admins</h2>
+        <button className={styles.addButton}>Add New</button>
+      </div>
       <Table data={superAdmins} handleDeleteItem={handleDeleteItem} />
       <Modal
         closeModal={closeModal}
