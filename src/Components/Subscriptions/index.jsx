@@ -46,11 +46,11 @@ const Subscriptions = () => {
   return (
     <section className={styles.container}>
       <Modal show={showModal} closeModal={closeModal} />
-      <h2>Subscriptions</h2>
-      <Table data={subscriptions} deleteItem={deleteItem} setShowModal={setShowModal} />
       <div className={styles.buttonContainer}>
+        <h2>Subscriptions</h2>
         <button className={styles.addSubs}> Add a new Subscription</button>
       </div>
+      <Table data={subscriptions} deleteItem={deleteItem} setShowModal={setShowModal} />
     </section>
   );
 };

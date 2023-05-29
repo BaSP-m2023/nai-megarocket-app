@@ -15,5 +15,6 @@
 }
 
 .buttonContainer {
+  display: flex;
   padding: 2%;
 }
