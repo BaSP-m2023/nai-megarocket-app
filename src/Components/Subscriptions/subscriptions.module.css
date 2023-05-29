@@ -6,15 +6,18 @@
   align-items: center;
 }
 
-.addSubs {
-  width: 9rem;
-  border-color: rgba(55, 56, 103);
-  color: #373867;
-  background-color: #aace9b;
-  border: solid 1px;
-}
-
 .buttonContainer {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 50vw;
   padding: 2%;
+}
+
+.addSubs {
+  width: 9rem;
+  background-color: #aace9b;
+  border-color: rgba(55, 56, 103);
+  border: solid 1px;
+  color: #373867;
 }
