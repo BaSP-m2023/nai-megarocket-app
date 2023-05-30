@@ -24,7 +24,7 @@ const Trainers = () => {
   useEffect(() => {
     getTrainers();
   }, []);
-  const Modal = () => {
+  const deleteModal = () => {
     const handleCloseModal = () => {
       setShowModal(false);
     };
@@ -131,7 +131,7 @@ const Trainers = () => {
             Add New Trainer
           </button>
           <Table data={trainers} deleteItem={deleteItem} editItem={editItem} />
-          {showModal && <Modal />}
+          {showModal && deleteModal()}
         </>
       )}
     </section>
