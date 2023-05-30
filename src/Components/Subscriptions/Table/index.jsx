@@ -25,7 +25,11 @@ const Table = ({ data, deleteItem, setShowModal }) => {
             <tr key={item._id}>
               <td className={styles.tdFirstNameContainer}>{item.member.firstName}</td>
               <td>{item.member.lastName}</td>
-              <td>{item.classes.day[0] + ' - ' + item.classes.day[1]}</td>
+              <td>
+                {item.classes
+                  ? item.classes.day[0] + ' - ' + item.classes.day[1]
+                  : 'No classes assigned'}
+              </td>
               <td className={styles.buttonsContainer}>
                 <button className={styles.buttonDelete} onClick={() => handleDelete(item._id)}>
                   <FaTimes />
