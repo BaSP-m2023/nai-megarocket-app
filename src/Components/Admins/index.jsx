@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Table from './Table';
+import Form from './Form'
 import Modal from './Modals';
 
 const Admins = () => {
