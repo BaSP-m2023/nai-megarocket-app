@@ -8,8 +8,14 @@ function Modal({ children, isOpen, closeModal, onConfirm }) {
           <div className={styles.modalContent}>
             {children}
             <div className={styles.modalActions}>
-              {onConfirm && <button onClick={onConfirm}>Confirm</button>}
-              <button onClick={closeModal}>Close</button>
+              {onConfirm && (
+                <button className={styles.botonModal} onClick={onConfirm}>
+                  Confirm
+                </button>
+              )}
+              <button className={styles.botonModal} onClick={closeModal}>
+                Close
+              </button>
             </div>
           </div>
         </div>
