@@ -1,4 +1,4 @@
-export async function fetchMembers() {
+async function fetchMembers() {
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/members`);
     const data = await response.json();
@@ -9,7 +9,7 @@ export async function fetchMembers() {
   }
 }
 
-export async function deleteMember(id) {
+async function deleteMember(id) {
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/members/${id}`, {
       method: 'DELETE'
@@ -22,3 +22,7 @@ export async function deleteMember(id) {
     throw error;
   }
 }
+export default {
+  fetchMembers,
+  deleteMember
+};

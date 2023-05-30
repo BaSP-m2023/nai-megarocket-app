@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import styles from './Tables/members.module.css';
 import MembersTable from './Tables/memberTable';
 import SelectedMemberInfo from './Tables/selectedInfoMember';
-import { fetchMembers, deleteMember } from './api';
+import api from './api';
 import Modal from './Modals/modalMember';
+
+const { fetchMembers, deleteMember } = api;
 
 function Members() {
   const [members, setMembers] = useState([]);
@@ -14,21 +16,21 @@ function Members() {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState(null);
 
-  useEffect(() => {
-    const getMembers = async () => {
-      try {
-        const members = await fetchMembers();
-        setMembers(members);
-      } catch (error) {
-        console.error(error);
-        setError(error.message);
-      }
-    };
+  async function getMembers() {
+    try {
+      const members = await fetchMembers();
+      setMembers(members);
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+    }
+  }
 
+  useEffect(() => {
     getMembers();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     setIsConfirmOpen(true);
     setMemberToDelete(id);
   };
