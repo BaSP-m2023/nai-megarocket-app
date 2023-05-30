@@ -1,0 +1,49 @@
+
+input{
+  display: flex;
+  width: 100%;
+  padding: 3%;
+  border-radius: 5px;
+  border: 1px solid #373867;
+}
+
+h4{
+  margin: 0;
+  margin-bottom: 1%;
+  margin-top: 5%;
+}
+
+.form{
+  margin: 5%;
+  margin-top: 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.button {
+  width: 120px;
+  padding: 4%;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 3%;
+  margin-top: 30px;
+  border: 1px solid #373867;
+  background-color: #ffffff;
+  border-radius:4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.checkbox {
+  display: flex;
+  width: 100px;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  margin-top: 10%;
+}
