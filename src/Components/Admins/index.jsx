@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Table from './Table';
-import Form from './Form'
+import Form from './Form';
 import Modal from './Modals';
 
 const Admins = () => {
   const [showModal, setShowModal] = useState(false);
   const [admins, setAdmins] = useState([]);
   const [idDelete, setIdDelete] = useState();
+  const [showForm, setShowForm] = useState(false);
+  const [bodyEdit, setBodyEdit] = useState([]);
+  const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
+  const [isDelete, setIsDelete] = useState(false);
 
   const getAdmins = async () => {
     try {
@@ -38,17 +42,83 @@ const Admins = () => {
     }
   };
 
+  const postAdmins = async (formData) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL + '/admins'}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        setModalInformation({ title: 'Admin not added', body: 'Error posting an admin' });
+        setIsDelete(false);
+        setShowModal(true);
+        throw new Error('Error posting an admin.');
+      }
+      setModalInformation({ title: 'Admin added', body: 'The admin will be added' });
+      setIsDelete(false);
+      setShowModal(true);
+      getAdmins();
+    } catch (error) {
+      setModalInformation({ title: 'Admin not added', body: error });
+      setIsDelete(false);
+      setShowModal(true);
+      console.error(error);
+    }
+  };
+
+  const putAdmins = async (formData) => {
+    try {
+      console.log(formData);
+      console.log(bodyEdit._id);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${bodyEdit._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        throw new Error('Error edit an admin.');
+      }
+      setModalInformation({ title: 'Admin added', body: 'The admin will be updated' });
+      setIsDelete(false);
+      setShowModal(true);
+      setBodyEdit([]);
+      getAdmins();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getAdmins();
   }, []);
 
   const deleteItem = (id) => {
+    setModalInformation({ title: 'Warning', body: 'Are you sure?' });
+    setIsDelete(true);
     setShowModal(true);
     setIdDelete(id);
   };
 
+  const postAdminForm = (formData) => {
+    postAdmins(formData);
+  };
+
+  const putAdminForm = (formData) => {
+    putAdmins(formData);
+  };
+
   const handleCancelDelete = () => {
     setShowModal(false);
+  };
+
+  const handleEdit = (body) => {
+    setShowForm(true);
+    setBodyEdit(body);
   };
 
   return (
@@ -57,29 +127,32 @@ const Admins = () => {
         <>
           <Modal
             idDelete={idDelete}
+            isDelete={isDelete}
             show={showModal}
             handleCancelDelete={handleCancelDelete}
             deleteAdmins={deleteAdmins}
-            title="Warning"
-            body="Do you want to delete this admin?"
+            title={modalInformation.title}
+            body={modalInformation.body}
           />
           <h2>Admins</h2>
-          <button className={styles.newButton} href="#">
+          <button className={styles.newButton} onClick={() => setShowForm(true)}>
             + Add new Admin
           </button>
-          <Table data={admins} deleteItem={deleteItem} />
+          <Table data={admins} deleteItem={deleteItem} handleEdit={handleEdit} />
         </>
       ) : (
         <>
           <h2>Admins</h2>
           <h3>There are no admins in the database</h3>
-          <button className={styles.newButton} href="#">
+          <button className={styles.newButton} onClick={() => setShowForm(true)}>
             + Add new Admin
           </button>
         </>
       )}
+      {showForm && (
+        <Form postAdminForm={postAdminForm} putAdminForm={putAdminForm} bodyEdit={bodyEdit} />
+      )}
     </section>
   );
 };
-
 export default Admins;
