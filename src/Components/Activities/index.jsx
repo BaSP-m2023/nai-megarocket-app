@@ -6,6 +6,9 @@ import Form from './Form';
 
 const Activities = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showAddErrorModal, setShowAddErrorModal] = useState(false);
   const [activities, setActivities] = useState([]);
 
   const getActivities = async () => {
@@ -20,8 +23,25 @@ const Activities = () => {
 
   const deleteActivities = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL + '/activities/' + id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL + '/activities/' + id}`, {
         method: 'DELETE'
+      });
+      if (response.ok) {
+        setShowModal(true);
+      } else {
+        setShowErrorModal(true);
+        return;
+      }
+    } catch (error) {
+      setShowErrorModal(true);
+      console.error(error);
+    }
+  };
+
+  const editActivities = async (id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL + '/activities/' + id}`, {
+        method: 'PUT'
       });
     } catch (error) {
       console.error(error);
@@ -38,14 +58,16 @@ const Activities = () => {
         body: JSON.stringify(activity)
       });
       if (response.ok) {
+        setShowAddModal(true);
         const newActivity = await response.json();
         return newActivity.data;
       } else {
-        setShowModal(true); //hacer modal error
         setActivities(activities);
+        setShowAddErrorModal(true);
       }
     } catch (error) {
       console.error(error);
+      setShowAddErrorModal(true);
       throw error;
     }
   };
@@ -68,8 +90,25 @@ const Activities = () => {
     setActivities(activities.filter((activity) => activity._id !== id));
   };
 
+  const editItem = (id) => {
+    editActivities(id);
+    setActivities(...activities);
+  };
+
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const closeErrorModal = () => {
+    setShowErrorModal(false);
+  };
+
+  const closeAddModal = () => {
+    setShowAddModal(false);
+  };
+
+  const closeAddErrorModal = () => {
+    setShowAddErrorModal(false);
   };
 
   return (
@@ -81,8 +120,28 @@ const Activities = () => {
         show={showModal}
         closeModal={closeModal}
       />
-      <Table data={activities} deleteItem={deleteItem} setShowModal={setShowModal} />
-      <Form addItem={addItem} addActivities={addActivities} />
+      <Modal
+        title="There was an error, the activity has been not deleted!"
+        show={showErrorModal}
+        closeModal={closeErrorModal}
+      />
+      <Modal
+        title="The activity has been created!"
+        show={showAddModal}
+        closeModal={closeAddModal}
+      />
+      <Modal
+        title="There was an error, the activity has been not created!"
+        show={showAddErrorModal}
+        closeModal={closeAddErrorModal}
+      />
+      <Table
+        data={activities}
+        deleteItem={deleteItem}
+        editItem={editItem}
+        setShowModal={setShowModal}
+      />
+      <Form addItem={addItem} setShowAddModal={setShowAddModal} />
     </section>
   );
 };
