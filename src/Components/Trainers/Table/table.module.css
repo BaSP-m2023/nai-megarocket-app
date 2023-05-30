@@ -10,6 +10,7 @@
 }
 .tableContainer th {
   background-color: #f2f2f2;
+  color: #373867;
 }
 .tableContainer tr:hover {
   background-color: #aace9b33;
@@ -23,7 +24,7 @@
   cursor: pointer;
 }
 .editButton {
-  background-color: #0011ff;
+  background-color: #373867;
   color: #fff;
   border: none;
   padding: 5px 10px;

@@ -31,7 +31,7 @@ h4{
 }
 .buttons {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   margin:0;
 }
 .button {
@@ -42,14 +42,12 @@ h4{
   margin: 4%;
   margin-left:0;
   border: 1px solid #373867;
+  color: #373867;
   background-color: #ffffff;
   border-radius: 5px;
   font-size: 0.8rem;
   font-weight: bold;
   cursor: pointer;
-}
-.button p {
-  margin: 12%;
 }
 .button:hover, .button:focus {
   background-color: #6d7298;
