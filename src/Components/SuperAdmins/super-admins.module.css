@@ -1,6 +1,29 @@
 .container {
-  flex: 1;
+  color:#373867;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.addButton {
+display: flex;
+color: #373867;
+font-size: 16px;
+font-weight: 700;
+align-items: center;
+justify-content: center;
+border-style: none;
+height: 40px;
+gap: 10px;
+width: 102px;
+background: #AACE9B;
+border-radius: 5px;
+}
+
+.head {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
