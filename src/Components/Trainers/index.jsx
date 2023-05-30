@@ -131,11 +131,11 @@ const Trainers = () => {
       ) : (
         <>
           <h2>Trainers</h2>
-          <Table data={trainers} deleteItem={deleteItem} editItem={editItem} />
-          {showDeleteModal && <DeleteModal />}
           <button className={styles.btn} onClick={flagForm}>
             Add New Trainer
           </button>
+          <Table data={trainers} deleteItem={deleteItem} editItem={editItem} />
+          {showDeleteModal && <DeleteModal />}
         </>
       )}
     </section>
