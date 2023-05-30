@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.thead {
+  font-size: 2.2vh;
+  background-color: #EBECF0;
+}
+
+.tableSuperAdmin {
+  width: 60%;
+  font-size: 2vh;
+}
+
+.tableRow:hover {
+  background-color: #EBECF0;
+}
+
+.deleteButton {
+  color: red;
+}
+
+.actions {
+  text-align: center;
+  font-size: 2vh;
+}
