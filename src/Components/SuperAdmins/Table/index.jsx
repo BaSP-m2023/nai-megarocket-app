@@ -3,7 +3,7 @@ import styles from './super-admins.module.css';
 import { FaTimes } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
 
-const Table = ({ data, handleDeleteItem }) => {
+const Table = ({ data, handleDelete, handleEditItem }) => {
   return (
     <table className={styles.tableSuperAdmin}>
       <thead>
@@ -20,10 +20,10 @@ const Table = ({ data, handleDeleteItem }) => {
               <td>{item.firstName}</td>
               <td>{item.email}</td>
               <td className={styles.actions}>
-                <i className="fas fa-edit">
+                <i className="fas fa-edit" onClick={() => handleEditItem(item._id)}>
                   <FaEdit />
                 </i>
-                <i className="fas fa-times" onClick={() => handleDeleteItem(item._id)}>
+                <i className="fas fa-times" onClick={() => handleDelete(item._id)}>
                   <FaTimes className={styles.deleteButton} />
                 </i>
               </td>
