@@ -16,17 +16,14 @@ const Trainers = () => {
     const data = await response.json();
     setTrainers(data.data);
   };
-  //
   const flagForm = () => {
     setShowForm(!showForm);
     setEditMode(false);
     setSelectedTrainer(null);
   };
-  //
   useEffect(() => {
     getTrainers();
   }, []);
-  //
   const DeleteModal = () => {
     const handleCloseModal = () => {
       setShowModal(false);
@@ -39,7 +36,6 @@ const Trainers = () => {
       </div>
     );
   };
-  //
   const deleteItem = async (id) => {
     try {
       await fetch(process.env.REACT_APP_API_URL + `/trainers/${id}`, {

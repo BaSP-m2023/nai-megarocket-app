@@ -10,7 +10,6 @@ const Form = ({ onSubmit, onCancel, editMode, trainer }) => {
   const [city, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [salary, setSalary] = useState('');
-  const [is_active, setIsActive] = useState(false);
 
   useEffect(() => {
     if (editMode && trainer) {
@@ -22,7 +21,6 @@ const Form = ({ onSubmit, onCancel, editMode, trainer }) => {
       setCity(trainer.city);
       setSalary(trainer.salary);
       setPassword(trainer.password);
-      setIsActive(trainer.is_active);
     }
   }, [editMode, trainer]);
 
@@ -36,8 +34,7 @@ const Form = ({ onSubmit, onCancel, editMode, trainer }) => {
       email,
       city,
       password,
-      salary,
-      is_active
+      salary
     };
     onSubmit(formData);
     setName('');
@@ -48,7 +45,6 @@ const Form = ({ onSubmit, onCancel, editMode, trainer }) => {
     setCity('');
     setPassword('');
     setSalary('');
-    setIsActive(false);
   };
 
   const handleCancel = () => {
@@ -135,16 +131,6 @@ const Form = ({ onSubmit, onCancel, editMode, trainer }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-        />
-      </div>
-      <div className={styles.checkbox}>
-        <h4>Active</h4>
-        <input
-          type="checkbox"
-          checked={is_active}
-          onChange={(e) => {
-            setIsActive(e.target.checked);
-          }}
         />
       </div>
       <div className={styles.buttons}>
