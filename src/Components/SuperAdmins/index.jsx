@@ -3,10 +3,12 @@ import styles from './super-admins.module.css';
 import Table from './Table';
 import Modal from './Modal';
 import Form from './Form';
+import FormEdit from './FormEdit';
 
 const SuperAdmins = () => {
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [superAdmins, setSuperAdmins] = useState([]);
   const [superAdminId, setSuperAdminId] = useState();
 
@@ -32,6 +34,28 @@ const SuperAdmins = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(superAdmin)
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.message);
+      } else {
+        getSuperAdmins();
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error('An error has ocurred creating the Super Admin');
+    }
+  };
+
+  const editSuperAdmin = async (id, superAdmin) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -82,8 +106,12 @@ const SuperAdmins = () => {
   };
 
   const handleEditItem = (id) => {
-    setShowCreateForm(true);
+    setShowEditForm(true);
     setSuperAdminId(id);
+  };
+
+  const closeEditForm = () => {
+    setShowEditForm(false);
   };
 
   return (
@@ -100,6 +128,13 @@ const SuperAdmins = () => {
         closeCreateForm={closeCreateForm}
         showCreateForm={showCreateForm}
         addSuperAdmin={addItem}
+      />
+      <FormEdit
+        data={superAdmins}
+        closeEditForm={closeEditForm}
+        showEditForm={showEditForm}
+        editSuperAdmin={editSuperAdmin}
+        superAdminId={superAdminId}
       />
       <Modal
         closeWarning={closeWarning}
