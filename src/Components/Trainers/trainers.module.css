@@ -17,6 +17,11 @@
   margin: 1rem;
   cursor: pointer;
 }
+.btn:hover, .btn:focus {
+  background-color: #6d7298;
+  color: #ffffff;
+  cursor: pointer;
+}
 .deleteModal {
   position: fixed;
   top: 50%;
@@ -28,11 +33,9 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 9999;
 }
-
 .deleteModal p {
   margin-bottom: 10px;
 }
-
 .deleteModal button {
   background-color: #ff0000;
   color: #fff;
@@ -40,10 +43,8 @@
   padding: 5px 10px;
   cursor: pointer;
 }
-
 h2 {
   margin: 0;
   padding: 0;
   margin-top: 2%;
 }
-

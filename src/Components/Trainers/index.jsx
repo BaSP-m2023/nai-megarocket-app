@@ -5,7 +5,7 @@ import TrainerForm from './Form';
 
 const Trainers = () => {
   const [trainers, setTrainers] = useState([]);
-  const [showDeleteModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -24,7 +24,7 @@ const Trainers = () => {
   useEffect(() => {
     getTrainers();
   }, []);
-  const DeleteModal = () => {
+  const Modal = () => {
     const handleCloseModal = () => {
       setShowModal(false);
     };
@@ -36,12 +36,12 @@ const Trainers = () => {
       </div>
     );
   };
+
   const deleteItem = async (id) => {
     try {
       await fetch(process.env.REACT_APP_API_URL + `/trainers/${id}`, {
         method: 'DELETE'
       });
-
       setTrainers([...trainers.filter((trainer) => trainer._id !== id)]);
       setModalMessage('Trainer deleted successfully');
       setShowModal(true);
@@ -131,7 +131,7 @@ const Trainers = () => {
             Add New Trainer
           </button>
           <Table data={trainers} deleteItem={deleteItem} editItem={editItem} />
-          {showDeleteModal && <DeleteModal />}
+          {showModal && <Modal />}
         </>
       )}
     </section>
