@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Modal from './Modals';
 import styles from './activities.module.css';
 import Table from './Table';
+import Form from './Form';
 
 const Activities = () => {
   const [showModal, setShowModal] = useState(false);
@@ -27,9 +28,40 @@ const Activities = () => {
     }
   };
 
+  const addActivities = async (activity) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL + '/activities'}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(activity)
+      });
+      if (response.ok) {
+        const newActivity = await response.json();
+        return newActivity.data;
+      } else {
+        setShowModal(true); //hacer modal error
+        setActivities(activities);
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     getActivities();
   }, []);
+
+  const addItem = ({ name, description }) => {
+    const newItem = {
+      name,
+      description
+    };
+    addActivities(newItem);
+    setActivities([...activities, newItem]);
+  };
 
   const deleteItem = (id) => {
     deleteActivities(id);
@@ -50,6 +82,7 @@ const Activities = () => {
         closeModal={closeModal}
       />
       <Table data={activities} deleteItem={deleteItem} setShowModal={setShowModal} />
+      <Form addItem={addItem} addActivities={addActivities} />
     </section>
   );
 };
