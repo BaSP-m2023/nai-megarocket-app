@@ -1,0 +1,50 @@
+.buttonDelete {
+  background-color: rgba(224, 224, 224, 0.1);
+  border-radius: 5px;
+  text-align: center;
+  color: rgba(55, 56, 103);
+}
+
+.buttonEdit {
+  background-color: rgba(224, 224, 224, 0.1);
+  border-radius: 5px;
+  text-align: center;
+  color: rgba(55, 56, 103);
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+table {
+  width: 50vw;
+  margin-bottom: 50px;
+  table-layout: auto;
+}
+
+.subscriptionsTable {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.theadContainer {
+  background-color: #ea3354;
+}
+
+.theadContainer th {
+  padding: 2% 0 2% 0;
+}
+
+td {
+  padding: 20px;
+  text-align: center;
+}
+
+.thDaysContainer {
+  text-align: center;
+}
+
+tbody tr {
+  background-color: #f0f4f9;
+}
