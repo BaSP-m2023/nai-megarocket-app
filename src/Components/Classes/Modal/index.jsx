@@ -5,7 +5,7 @@ const Modal = (props) => {
     return null;
   }
 
-  const CloseModal = () => {
+  const closeModal = () => {
     props.closeModal();
   };
 
@@ -16,7 +16,7 @@ const Modal = (props) => {
           <h3>{props.title}</h3>
         </div>
         <div>
-          <button className={styles.closeButton} onClick={CloseModal}>
+          <button className={styles.closeButton} onClick={closeModal}>
             Close
           </button>
         </div>

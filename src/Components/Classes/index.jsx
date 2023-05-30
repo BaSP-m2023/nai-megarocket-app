@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import styles from './classes.module.css';
-// import Form from './Form';
 import Table from './Table';
 
 const Classes = () => {
