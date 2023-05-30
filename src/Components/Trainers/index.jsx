@@ -20,7 +20,7 @@ const Trainers = () => {
   useEffect(() => {
     getTrainers();
   }, []);
-  const DeleteModal = () => {
+  const deleteModal = () => {
     const handleCloseModal = () => {
       setShowDeleteModal(false);
     };
@@ -51,7 +51,7 @@ const Trainers = () => {
     <section className={styles.container}>
       <h2>Trainers</h2>
       <Table data={trainers} deleteItem={deleteItem} />
-      {showDeleteModal && <DeleteModal />}
+      {showDeleteModal && deleteModal()}
       <button className={styles.btn}>+ Add new Trainer</button>
     </section>
   );
