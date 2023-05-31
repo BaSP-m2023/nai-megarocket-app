@@ -4,9 +4,16 @@
   border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
-input{
+input {
   display: flex;
   width: 100%;
+  padding: 3%;
+  border-radius: 5px;
+  border: 1px solid #373867;
+}
+select {
+  display: flex;
+  width: 106%;
   padding: 3%;
   border-radius: 5px;
   border: 1px solid #373867;

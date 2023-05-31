@@ -5,32 +5,32 @@ import { FaEdit, FaTimes } from 'react-icons/fa';
 
 const Table = ({ data, deleteItem, editItem }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [selectedClass, setSelectedTrainer] = useState(null);
+  const [selectedClass, setSelectedClasses] = useState(null);
   const [modalTitle, setModalTitle] = useState('');
 
-  const handleDeleteConfirmation = () => {
+  const deleteConfirmation = () => {
     if (selectedClass) {
       deleteItem(selectedClass._id);
       setShowConfirmationModal(false);
-      setSelectedTrainer(null);
+      setSelectedClasses(null);
     }
   };
 
-  const handleEditConfirmation = () => {
+  const editConfirmation = () => {
     if (selectedClass) {
       editItem(selectedClass._id);
       setShowConfirmationModal(false);
-      setSelectedTrainer(null);
+      setSelectedClasses(null);
     }
   };
 
-  const handleCancelConfirmation = () => {
+  const cancelConfirmation = () => {
     setShowConfirmationModal(false);
-    setSelectedTrainer(null);
+    setSelectedClasses(null);
   };
 
   const openConfirmationModal = (classe, mode) => {
-    setSelectedTrainer(classe);
+    setSelectedClasses(classe);
     setModalTitle(mode === 'edit' ? 'Edit class' : 'Delete class');
     setShowConfirmationModal(true);
   };
@@ -82,13 +82,11 @@ const Table = ({ data, deleteItem, editItem }) => {
           title={modalTitle}
           message={
             modalTitle === 'Delete Class'
-              ? `Are you sure you want to delete the Class ${selectedClass.day} ${selectedClass.hour}?`
-              : `Are you sure you want to edit the Class ${selectedClass.day} ${selectedClass.hour}?`
+              ? `Are you sure you want to delete the class ${selectedClass.day} ${selectedClass.hour}?`
+              : `Are you sure you want to edit the class ${selectedClass.day} ${selectedClass.hour}?`
           }
-          onConfirm={
-            modalTitle === 'Delete Class' ? handleDeleteConfirmation : handleEditConfirmation
-          }
-          onCancel={handleCancelConfirmation}
+          onConfirm={modalTitle === 'Delete class' ? deleteConfirmation : editConfirmation}
+          onCancel={cancelConfirmation}
         />
       )}
     </div>

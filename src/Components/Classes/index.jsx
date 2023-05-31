@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-// import Modal from './Modal';
 import styles from './classes.module.css';
 import Table from './Table';
 import ClassesForm from './Form';
@@ -27,14 +26,14 @@ const Classes = () => {
   }, []);
 
   const modal = () => {
-    const handleCloseModal = () => {
+    const closeModal = () => {
       setShowModal(false);
     };
 
     return (
       <div className={styles.deleteModal}>
         <p>{modalMessage}</p>
-        <button onClick={handleCloseModal}>Close</button>
+        <button onClick={closeModal}>Close</button>
       </div>
     );
   };
@@ -89,7 +88,7 @@ const Classes = () => {
             },
             body: JSON.stringify(formData)
           });
-          setModalMessage('Trainer added successfully');
+          setModalMessage('class added successfully');
           setShowModal(true);
           getClasses();
         } catch (error) {
