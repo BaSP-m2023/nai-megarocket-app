@@ -10,10 +10,16 @@ const Activities = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAddErrorModal, setShowAddErrorModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditErrorModal, setShowEditErrorModal] = useState(false);
   const [activities, setActivities] = useState([]);
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const [activityId, setActivityId] = useState();
+
+  useEffect(() => {
+    getActivities();
+  }, []);
 
   const getActivities = async () => {
     try {
@@ -52,8 +58,8 @@ const Activities = () => {
         body: JSON.stringify(activity)
       });
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
+        setShowEditModal(true);
         const newActivity = data;
         const updatedActivities = activities.map((item) => {
           if (item._id === newActivity.data._id) {
@@ -65,9 +71,11 @@ const Activities = () => {
         setSelectedActivity(null);
         setShowEditForm(false);
       } else {
+        setShowEditErrorModal(true);
         return;
       }
     } catch (error) {
+      setShowEditErrorModal(true);
       console.error(error);
       throw error;
     }
@@ -98,10 +106,6 @@ const Activities = () => {
     }
   };
 
-  useEffect(() => {
-    getActivities();
-  }, []);
-
   const addItem = ({ name, description }) => {
     const newItem = {
       name,
@@ -116,20 +120,8 @@ const Activities = () => {
     setActivities(activities.filter((activity) => activity._id !== id));
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  const closeErrorModal = () => {
-    setShowErrorModal(false);
-  };
-
-  const closeAddModal = () => {
-    setShowAddModal(false);
-  };
-
-  const closeAddErrorModal = () => {
-    setShowAddErrorModal(false);
+  const handleCloseModal = (modalStateSetter) => {
+    modalStateSetter(false);
   };
 
   const handleShowForm = () => {
@@ -151,22 +143,32 @@ const Activities = () => {
       <Modal
         title="The activity has been successfully deleted!"
         show={showModal}
-        closeModal={closeModal}
+        closeModal={() => handleCloseModal(setShowModal)}
       />
       <Modal
         title="There was an error! The activity has been not deleted."
         show={showErrorModal}
-        closeModal={closeErrorModal}
+        closeModal={() => handleCloseModal(setShowErrorModal)}
       />
       <Modal
         title="The activity has been successfully created!"
         show={showAddModal}
-        closeModal={closeAddModal}
+        closeModal={() => handleCloseModal(setShowAddModal)}
       />
       <Modal
         title="There was an error! The activity has been not created."
         show={showAddErrorModal}
-        closeModal={closeAddErrorModal}
+        closeModal={() => handleCloseModal(setShowAddErrorModal)}
+      />
+      <Modal
+        title="The activity has been successfully updated!"
+        show={showEditModal}
+        closeModal={() => handleCloseModal(setShowEditModal)}
+      />
+      <Modal
+        title="There was an error! The activity has been not updated."
+        show={showEditErrorModal}
+        closeModal={() => handleCloseModal(setShowEditErrorModal)}
       />
       <Table
         data={activities}
