@@ -19,11 +19,17 @@
   background-color: #EBECF0;
 }
 
-.deleteButton {
-  color: red;
+.actionButton {
+  color: #373867;
 }
 
-.actions {
-  text-align: center;
-  font-size: 2vh;
+.actionButton:hover {
+  color: #AACE9B;
+  cursor: pointer;
+}
+
+.actions {  
+    display: flex;
+    justify-content: space-around;
+
 }

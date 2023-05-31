@@ -3,12 +3,11 @@ import styles from './super-admins.module.css';
 import Table from './Table';
 import Modal from './Modal';
 import Form from './Form';
-import FormEdit from './FormEdit';
 
 const SuperAdmins = () => {
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
+  const [showSuperAdminForm, setShowSuperAdminForm] = useState(false);
+  const [method, setMethod] = useState('');
   const [superAdmins, setSuperAdmins] = useState([]);
   const [superAdminId, setSuperAdminId] = useState();
 
@@ -44,6 +43,7 @@ const SuperAdmins = () => {
         alert(data.message);
       } else {
         getSuperAdmins();
+        closeSuperAdminForm();
         alert(data.message);
       }
     } catch (error) {
@@ -52,7 +52,7 @@ const SuperAdmins = () => {
     }
   };
 
-  const editSuperAdmin = async (id, superAdmin) => {
+  const updateSuperAdmin = async (id, superAdmin) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
         method: 'PUT',
@@ -66,11 +66,12 @@ const SuperAdmins = () => {
         alert(data.message);
       } else {
         getSuperAdmins();
+        closeSuperAdminForm();
         alert(data.message);
       }
     } catch (error) {
       console.error(error);
-      throw new Error('An error has ocurred creating the Super Admin');
+      throw new Error('An error has ocurred updating the Super Admin');
     }
   };
 
@@ -78,69 +79,63 @@ const SuperAdmins = () => {
     getSuperAdmins();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDeleteSuperAdmin = (id) => {
     setShowDeleteWarning(true);
     setSuperAdminId(id);
   };
 
-  const deleteItem = () => {
+  const confirmDeleteSuperAdmin = () => {
     deleteSuperAdmin(superAdminId);
     setSuperAdmins([...superAdmins.filter((superAdmins) => superAdmins._id !== superAdminId)]);
   };
 
-  const closeWarning = () => {
+  const closeDeleteWarning = () => {
     setShowDeleteWarning(false);
   };
 
-  const handleAddItem = () => {
-    setShowCreateForm(true);
-    showCreateForm;
+  const handleAddSuperAdmin = () => {
+    setMethod('POST');
+    setShowSuperAdminForm(true);
+    showSuperAdminForm;
   };
 
-  const addItem = (superAdmin) => {
-    addSuperAdmin(superAdmin);
+  const closeSuperAdminForm = () => {
+    setShowSuperAdminForm(false);
   };
 
-  const closeCreateForm = () => {
-    setShowCreateForm(false);
-  };
-
-  const handleEditItem = (id) => {
-    setShowEditForm(true);
+  const handleUpdateSuperAdmin = (id) => {
+    setMethod('PUT');
     setSuperAdminId(id);
-  };
-
-  const closeEditForm = () => {
-    setShowEditForm(false);
+    setShowSuperAdminForm(true);
   };
 
   return (
     <section className={styles.container}>
       <div className={styles.head}>
-        <h2>Super Admins</h2>
-        <button onClick={handleAddItem} className={styles.addButton}>
+        <h2 className={styles.tableTitle}>Super Admins</h2>
+        <button onClick={handleAddSuperAdmin} className={styles.addButton}>
           Add New
         </button>
       </div>
-      <Table data={superAdmins} handleDelete={handleDelete} handleEditItem={handleEditItem} />
+      <Table
+        data={superAdmins}
+        handleDeleteItem={handleDeleteSuperAdmin}
+        handleUpdateItem={handleUpdateSuperAdmin}
+      />
       <Form
         data={superAdmins}
-        closeCreateForm={closeCreateForm}
-        showCreateForm={showCreateForm}
-        addSuperAdmin={addItem}
-      />
-      <FormEdit
-        data={superAdmins}
-        closeEditForm={closeEditForm}
-        showEditForm={showEditForm}
-        editSuperAdmin={editSuperAdmin}
-        superAdminId={superAdminId}
+        closeForm={closeSuperAdminForm}
+        showForm={showSuperAdminForm}
+        addItem={addSuperAdmin}
+        updateItem={updateSuperAdmin}
+        itemId={superAdminId}
+        method={method}
       />
       <Modal
-        closeWarning={closeWarning}
-        showDeleteWarning={showDeleteWarning}
-        confirmDelete={deleteItem}
-        warningMsg="Are you sure you want delete this Super Admin?"
+        closeWarning={closeDeleteWarning}
+        showWarning={showDeleteWarning}
+        confirmDelete={confirmDeleteSuperAdmin}
+        warningMsg="Are you sure you want to delete this Super Admin?"
       />
     </section>
   );
