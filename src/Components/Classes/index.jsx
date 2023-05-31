@@ -14,13 +14,11 @@ const Classes = () => {
   const flagForm = () => {
     setShowForm(!showForm);
   };
-  //
   const getClasses = async () => {
     const response = await fetch(process.env.REACT_APP_API_URL + '/classes');
     const data = await response.json();
     setClasses(data.data);
   };
-  //
   useEffect(() => {
     getClasses();
   }, []);
