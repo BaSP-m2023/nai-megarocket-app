@@ -31,9 +31,13 @@ const Classes = () => {
     };
 
     return (
-      <div className={styles.deleteModal}>
-        <p>{modalMessage}</p>
-        <button onClick={closeModal}>Close</button>
+      <div className={styles.modalOverlay}>
+        <div className={styles.modalContent}>
+          <p>{modalMessage}</p>
+          <button className={styles.modalButton} onClick={closeModal}>
+            Close
+          </button>
+        </div>
       </div>
     );
   };
@@ -44,7 +48,7 @@ const Classes = () => {
         method: 'DELETE'
       });
       setClasses([...classes.filter((classes) => classes._id !== id)]);
-      setModalMessage('classes deleted successfully');
+      setModalMessage('Class deleted successfully');
       setShowModal(true);
     } catch (error) {
       console.error('Error deleting item:', error);
@@ -71,7 +75,7 @@ const Classes = () => {
             },
             body: JSON.stringify(formData)
           });
-          setModalMessage('class edited successfully');
+          setModalMessage('Class edited successfully');
           setShowModal(true);
           getClasses();
         } catch (error) {
@@ -88,7 +92,7 @@ const Classes = () => {
             },
             body: JSON.stringify(formData)
           });
-          setModalMessage('class added successfully');
+          setModalMessage('Class added successfully');
           setShowModal(true);
           getClasses();
         } catch (error) {

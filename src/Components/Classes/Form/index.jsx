@@ -14,8 +14,8 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
     if (editMode && classe) {
       setDay(classe.day);
       setHour(classe.hour);
-      setTrainer(classe.trainer?.firstName);
-      setActivity(classe.activity?.name);
+      setTrainer(classe.trainer?._id);
+      setActivity(classe.activity?._id);
       setSlots(classe.slots);
     }
   }, [editMode, classe]);
@@ -46,16 +46,15 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const dayArray = day.split(',').map((d) => d.trim());
+    const dayArray = Array.isArray(day) ? day : day.split(',').map((d) => d.trim());
     const formData = {
       day: dayArray,
       hour,
-      trainer,
-      activity,
+      trainer: trainer,
+      activity: activity,
       slots: parseInt(slots)
     };
     onSubmit(formData);
-    console.log(formData);
     setDay([]);
     setHour('');
     setTrainer('');
@@ -65,6 +64,64 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
 
   const handleCancel = () => {
     onCancel();
+  };
+
+  const renderTrainer = () => {
+    if (editMode) {
+      return trainers.map((trainer) => (
+        <option key={trainer._id} value={trainer._id}>
+          {trainer.firstName}
+        </option>
+      ));
+    } else {
+      return (
+        <>
+          <option value="">Select a trainer</option>
+          {trainers.map((trainer) => (
+            <option key={trainer._id} value={trainer._id}>
+              {trainer.firstName}
+            </option>
+          ))}
+        </>
+      );
+    }
+  };
+
+  const renderActivity = () => {
+    if (editMode) {
+      return activities.map((activity) => (
+        <option key={activity._id} value={activity._id}>
+          {activity.name}
+        </option>
+      ));
+    } else {
+      return (
+        <>
+          <option value="">Select activity</option>
+          {activities.map((activity) => (
+            <option key={activity._id} value={activity._id}>
+              {activity.name}
+            </option>
+          ))}
+          ;
+        </>
+      );
+    }
+  };
+
+  const activityChange = (e) => {
+    const selectedActivity = e.target.value;
+    setActivity(selectedActivity);
+  };
+
+  const trainerChange = (e) => {
+    const selectedTrainer = e.target.value;
+    setTrainer(selectedTrainer);
+  };
+
+  const slotsChange = (e) => {
+    const selectedSlots = e.target.value;
+    setSlots(selectedSlots);
   };
 
   return (
@@ -95,35 +152,19 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
         </div>
         <div className={styles.box}>
           <h4>Trainer</h4>
-          <select value={trainer} onChange={(e) => setTrainer(e.target.value)} required>
-            <option>Select an trainer</option>
-            {trainers.map((trainer) => (
-              <option key={trainer._id} value={trainer._id}>
-                {trainer.firstName}
-              </option>
-            ))}
+          <select value={trainer} onChange={trainerChange} required>
+            {renderTrainer()};
           </select>
         </div>
         <div className={styles.box}>
           <h4>Activity</h4>
-          <select value={activity} onChange={(e) => setActivity(e.target.value)} required>
-            <option>Select an activity</option>
-            {activities.map((activity) => (
-              <option key={activity._id} value={activity._id}>
-                {activity.name}
-              </option>
-            ))}
+          <select value={activity} onChange={activityChange} required>
+            {renderActivity()};
           </select>
         </div>
         <div className={styles.box}>
           <h4>Slots</h4>
-          <input
-            type="number"
-            placeholder="Slots"
-            value={slots}
-            onChange={(e) => setSlots(e.target.value)}
-            required
-          />
+          <input type="number" placeholder="Slots" value={slots} onChange={slotsChange} required />
         </div>
       </div>
       <div className={styles.buttons}>
