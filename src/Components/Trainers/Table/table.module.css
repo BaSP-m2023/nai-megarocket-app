@@ -1,25 +1,21 @@
-/* table.module.css */
 .tableContainer {
   width: 100%;
   border-collapse: collapse;
 }
-
 .tableContainer th,
 .tableContainer td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
-
 .tableContainer th {
   background-color: #f2f2f2;
+  color: #373867;
 }
-
 .tableContainer tr:hover {
   background-color: #aace9b33;
   cursor: pointer;
 }
-
 .deleteButton {
   background-color: #ff0000;
   color: #fff;
@@ -27,11 +23,11 @@
   padding: 5px 10px;
   cursor: pointer;
 }
-
 .editButton {
-  background-color: #0011ff;
+  background-color: #373867;
   color: #fff;
   border: none;
   padding: 5px 10px;
+  margin-right: 10px;
   cursor: pointer;
 }
