@@ -5,11 +5,15 @@ import Table from './Table';
 import Form from './Form';
 
 const Activities = () => {
+  const [showForm, setShowForm] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAddErrorModal, setShowAddErrorModal] = useState(false);
   const [activities, setActivities] = useState([]);
+  const [selectedActivity, setSelectedActivity] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [activityId, setActivityId] = useState();
 
   const getActivities = async () => {
     try {
@@ -38,13 +42,34 @@ const Activities = () => {
     }
   };
 
-  const editActivities = async (id) => {
+  const editItem = async (activity, id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL + '/activities/' + id}`, {
-        method: 'PUT'
+      const response = await fetch(`${process.env.REACT_APP_API_URL + '/activities/' + id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(activity)
       });
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        const newActivity = data;
+        const updatedActivities = activities.map((item) => {
+          if (item._id === newActivity.data._id) {
+            return newActivity.data;
+          }
+          return item;
+        });
+        setActivities(updatedActivities);
+        setSelectedActivity(null);
+        setShowEditForm(false);
+      } else {
+        return;
+      }
     } catch (error) {
       console.error(error);
+      throw error;
     }
   };
 
@@ -58,6 +83,7 @@ const Activities = () => {
         body: JSON.stringify(activity)
       });
       if (response.ok) {
+        getActivities();
         setShowAddModal(true);
         const newActivity = await response.json();
         return newActivity.data;
@@ -90,11 +116,6 @@ const Activities = () => {
     setActivities(activities.filter((activity) => activity._id !== id));
   };
 
-  const editItem = (id) => {
-    editActivities(id);
-    setActivities(...activities);
-  };
-
   const closeModal = () => {
     setShowModal(false);
   };
@@ -111,37 +132,58 @@ const Activities = () => {
     setShowAddErrorModal(false);
   };
 
+  const handleShowForm = () => {
+    setShowForm(true);
+  };
+
+  const handleEditItem = (activity, id) => {
+    setSelectedActivity(activity);
+    setShowEditForm(true);
+    setActivityId(id);
+  };
+
   return (
     <section className={styles.container}>
       <h2>Activities</h2>
-      <button className={styles.addButton}> + Add new activity</button>
+      <button className={styles.addButton} onClick={handleShowForm}>
+        + Add new activity
+      </button>
       <Modal
         title="The activity has been successfully deleted!"
         show={showModal}
         closeModal={closeModal}
       />
       <Modal
-        title="There was an error, the activity has been not deleted!"
+        title="There was an error! The activity has been not deleted."
         show={showErrorModal}
         closeModal={closeErrorModal}
       />
       <Modal
-        title="The activity has been created!"
+        title="The activity has been successfully created!"
         show={showAddModal}
         closeModal={closeAddModal}
       />
       <Modal
-        title="There was an error, the activity has been not created!"
+        title="There was an error! The activity has been not created."
         show={showAddErrorModal}
         closeModal={closeAddErrorModal}
       />
       <Table
         data={activities}
         deleteItem={deleteItem}
-        editItem={editItem}
         setShowModal={setShowModal}
+        handleShowForm={handleShowForm}
+        handleEditItem={handleEditItem}
+        editItem={editItem}
       />
-      <Form addItem={addItem} setShowAddModal={setShowAddModal} />
+      <Form
+        addItem={addItem}
+        setShowAddModal={setShowAddModal}
+        showForm={showForm || showEditForm}
+        activityToEdit={selectedActivity}
+        editItem={editItem}
+        activityId={activityId}
+      />
     </section>
   );
 };

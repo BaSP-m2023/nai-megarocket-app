@@ -3,9 +3,9 @@ import styles from './table.module.css';
 import { FaEdit } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 
-const Table = ({ data, deleteItem, editItem }) => {
+const Table = ({ data, deleteItem, handleEditItem }) => {
   return (
-    <table>
+    <table className={styles.table}>
       <thead>
         <tr>
           <th>Name</th>
@@ -30,9 +30,7 @@ const Table = ({ data, deleteItem, editItem }) => {
                 </button>
                 <button
                   className={styles.deleteButton}
-                  onClick={() => {
-                    editItem(item._id);
-                  }}
+                  onClick={() => handleEditItem(item, item._id)}
                 >
                   <FaEdit />
                 </button>

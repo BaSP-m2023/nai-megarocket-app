@@ -1,12 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Input from '../Input';
 import styles from './form.module.css';
 
-const Form = ({ addItem }) => {
+const Form = ({ addItem, showForm, activityToEdit, editItem, activityId }) => {
+  if (!showForm) {
+    return null;
+  }
   const [activities, setActivity] = useState({
     name: '',
     description: ''
   });
+
+  useEffect(() => {
+    if (activityToEdit) {
+      setActivity({
+        name: activityToEdit.name,
+        description: activityToEdit.description
+      });
+    }
+  }, [activityToEdit]);
 
   const onChangeInput = (e) => {
     setActivity({
@@ -17,7 +29,11 @@ const Form = ({ addItem }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addItem(activities);
+    if (activityToEdit) {
+      editItem(activities, activityId);
+    } else {
+      addItem(activities);
+    }
     setActivity({
       name: '',
       description: ''

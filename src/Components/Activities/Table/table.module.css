@@ -1,4 +1,4 @@
-table {
+.table {
   margin-bottom: 2rem;
   width: 80%;
   border-collapse: collapse;
@@ -6,23 +6,23 @@ table {
   border-radius: 2px;
 }
 
-th,
-td {
+.table th,
+.table td {
   border: 0.1px solid #ccc;
   padding: 10px;
   border-radius: 2px;
 }
 
-th {
+.table th {
   color: rgba(55, 56, 103, 1);
   background-color: #f2f2f2;
 }
 
-tr:nth-child(even) {
+.table tr:nth-child(even) {
   background-color: rgba(170, 206, 155, 0.2);
 }
 
-td {
+.table td {
   color: rgba(55, 56, 103, 1);
 }
 
