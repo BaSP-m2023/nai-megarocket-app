@@ -9,7 +9,7 @@ const Classes = () => {
 
   const getClasses = async () => {
     try {
-      const response = await fetch(` ${process.env.REACT_APP_API_URL + '/classes'}`);
+      const response = await fetch(` ${process.env.REACT_APP_API_URL + '/api/classes'}`);
       const { data } = await response.json();
       setClasses(data);
     } catch (error) {
@@ -19,7 +19,7 @@ const Classes = () => {
 
   const deleteClasses = async (id) => {
     try {
-      await fetch(` ${process.env.REACT_APP_API_URL + '/classes/' + id}`, {
+      await fetch(` ${process.env.REACT_APP_API_URL + '/api/classes/' + id}`, {
         method: 'DELETE'
       });
     } catch (error) {

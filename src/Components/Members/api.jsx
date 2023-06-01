@@ -1,6 +1,6 @@
 async function fetchMembers() {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/members`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
     const data = await response.json();
     return data.data;
   } catch (error) {
@@ -11,7 +11,7 @@ async function fetchMembers() {
 
 async function deleteMember(id) {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/members/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
