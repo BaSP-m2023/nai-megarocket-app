@@ -11,7 +11,6 @@ const Classes = () => {
     try {
       const response = await fetch(` ${process.env.REACT_APP_API_URL + '/classes'}`);
       const { data } = await response.json();
-      console.log(data);
       setClasses(data);
     } catch (error) {
       console.error(error);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 
-const Form = ({ postAdminForm, putAdminForm, bodyEdit }) => {
-  const [firstName, setName] = useState('');
+const Form = ({ postAdminForm, putAdminForm, adminEdit }) => {
+  const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dni, setDNI] = useState('');
   const [phone, setPhoneNumber] = useState('');
@@ -11,16 +11,16 @@ const Form = ({ postAdminForm, putAdminForm, bodyEdit }) => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    if (bodyEdit.length !== 0) {
-      setName(bodyEdit.firstName);
-      setLastName(bodyEdit.lastName);
-      setDNI(bodyEdit.dni);
-      setPhoneNumber(bodyEdit.phone);
-      setEmail(bodyEdit.email);
-      setCity(bodyEdit.city);
-      setPassword(bodyEdit.password);
+    if (adminEdit.length !== 0) {
+      setFirstName(adminEdit.firstName);
+      setLastName(adminEdit.lastName);
+      setDNI(adminEdit.dni);
+      setPhoneNumber(adminEdit.phone);
+      setEmail(adminEdit.email);
+      setCity(adminEdit.city);
+      setPassword(adminEdit.password);
     }
-  }, [bodyEdit]);
+  }, [adminEdit]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,17 +33,16 @@ const Form = ({ postAdminForm, putAdminForm, bodyEdit }) => {
       city,
       password
     };
-    if (bodyEdit.length !== 0) {
+    if (adminEdit.length !== 0) {
       putAdminForm(formData);
     } else {
       postAdminForm(formData);
     }
-    /* bodyEdit.length !== 0 ? putAdminForm(formData) : postAdminForm(formData);*/
     cleanForm();
   };
 
   const cleanForm = () => {
-    setName('');
+    setFirstName('');
     setLastName('');
     setDNI('');
     setPhoneNumber('');
@@ -60,7 +59,7 @@ const Form = ({ postAdminForm, putAdminForm, bodyEdit }) => {
           type="text"
           value={firstName}
           placeholder="Name"
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setFirstName(e.target.value)}
           required
         />
       </div>

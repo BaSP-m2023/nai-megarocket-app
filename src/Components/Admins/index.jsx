@@ -9,7 +9,7 @@ const Admins = () => {
   const [admins, setAdmins] = useState([]);
   const [idDelete, setIdDelete] = useState();
   const [showForm, setShowForm] = useState(false);
-  const [bodyEdit, setBodyEdit] = useState([]);
+  const [adminEdit, setAdminEdit] = useState([]);
   const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
   const [isDelete, setIsDelete] = useState(false);
 
@@ -72,8 +72,8 @@ const Admins = () => {
   const putAdmins = async (formData) => {
     try {
       console.log(formData);
-      console.log(bodyEdit._id);
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${bodyEdit._id}`, {
+      console.log(adminEdit._id);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminEdit._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ const Admins = () => {
       setModalInformation({ title: 'Admin added', body: 'The admin will be updated' });
       setIsDelete(false);
       setShowModal(true);
-      setBodyEdit([]);
+      setAdminEdit([]);
       getAdmins();
     } catch (error) {
       console.error(error);
@@ -116,13 +116,20 @@ const Admins = () => {
     setShowModal(false);
   };
 
-  const handleEdit = (body) => {
+  const handleEdit = (admin) => {
     setShowForm(true);
-    setBodyEdit(body);
+    setAdminEdit(admin);
+  };
+  const hadleShowForm = () => {
+    showForm ? setShowForm(false) : setShowForm(true);
   };
 
   return (
     <section className={styles.container}>
+      <h2>Admins</h2>
+      <button className={styles.newButton} onClick={() => hadleShowForm()}>
+        + Add new Admin
+      </button>
       {admins.length !== 0 ? (
         <>
           <Modal
@@ -134,23 +141,15 @@ const Admins = () => {
             title={modalInformation.title}
             body={modalInformation.body}
           />
-          <h2>Admins</h2>
-          <button className={styles.newButton} onClick={() => setShowForm(true)}>
-            + Add new Admin
-          </button>
           <Table data={admins} deleteItem={deleteItem} handleEdit={handleEdit} />
         </>
       ) : (
         <>
-          <h2>Admins</h2>
           <h3>There are no admins in the database</h3>
-          <button className={styles.newButton} onClick={() => setShowForm(true)}>
-            + Add new Admin
-          </button>
         </>
       )}
       {showForm && (
-        <Form postAdminForm={postAdminForm} putAdminForm={putAdminForm} bodyEdit={bodyEdit} />
+        <Form postAdminForm={postAdminForm} putAdminForm={putAdminForm} adminEdit={adminEdit} />
       )}
     </section>
   );

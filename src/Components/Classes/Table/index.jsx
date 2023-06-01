@@ -22,8 +22,8 @@ const Table = ({ data, deleteItem, setShowModal }) => {
             <tr key={item._id}>
               <td>{item.day.join(', ')}</td>
               <td>{item.hour}</td>
-              <td>{item.trainer?.firstName}</td>
-              <td>{item.activity?.name}</td>
+              <td>{item.trainer.firstName}</td>
+              <td>{item.activity.name}</td>
               <td>{item.slots}</td>
               <td>
                 <button
