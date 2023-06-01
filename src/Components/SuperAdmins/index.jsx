@@ -9,14 +9,14 @@ const SuperAdmins = () => {
   const [superAdminId, setSuperAdminId] = useState();
 
   const getSuperAdmins = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`);
     const data = await response.json();
     setSuperAdmins(data.data);
   };
 
   const deleteSuperAdmin = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'DELETE'
       });
     } catch (error) {

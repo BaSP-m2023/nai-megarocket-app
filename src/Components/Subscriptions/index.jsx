@@ -9,7 +9,7 @@ const Subscriptions = () => {
 
   const getSubscriptions = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/subscriptions'}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL + '/api/subscriptions'}`);
       if (!response.ok) {
         throw new Error('An error occurred trying to retrieve Subscriptions');
       }
@@ -22,7 +22,7 @@ const Subscriptions = () => {
 
   const deleteSubscriptions = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL + '/subscriptions/' + id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL + '/api/subscriptions/' + id}`, {
         method: 'DELETE'
       });
     } catch (error) {
