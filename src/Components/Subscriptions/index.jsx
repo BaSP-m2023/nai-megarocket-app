@@ -9,8 +9,9 @@ const Subscriptions = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [classes, setClasses] = useState([]);
   const [members, setMembers] = useState([]);
+  const [selectedSubscriptionId, setSelectedSubscriptionId] = useState(null);
 
-  const addSubscriptions = async ({ member: newMember, classes }) => {
+  const addSubscription = async ({ member: newMember, classes }) => {
     const newSubscription = {
       classes,
       member: newMember,
@@ -25,7 +26,7 @@ const Subscriptions = () => {
         },
         body: JSON.stringify(newSubscription)
       });
-      getSubscriptions();
+
       if (!response.ok) {
         throw new Error('Failed to add subscription');
       }
@@ -46,7 +47,6 @@ const Subscriptions = () => {
       }
       const { data } = await response.json();
       setSubscriptions(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -62,7 +62,7 @@ const Subscriptions = () => {
     }
   };
 
-  const getMember = async () => {
+  const getMembers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/members`);
       const { data } = await response.json();
@@ -72,7 +72,7 @@ const Subscriptions = () => {
     }
   };
 
-  const deleteSubscriptions = async (id) => {
+  const deleteSubscription = async (id) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/${id}`, {
         method: 'DELETE'
@@ -82,35 +82,41 @@ const Subscriptions = () => {
     }
   };
 
-  useEffect(() => {
-    getSubscriptions();
-    getClasses();
-    getMember();
-  }, []);
-
-  const deleteItem = (id) => {
-    deleteSubscriptions(id);
-    setSubscriptions(subscriptions.filter((subscription) => subscription._id !== id));
+  const confirmDelete = () => {
+    if (selectedSubscriptionId) {
+      deleteSubscription(selectedSubscriptionId);
+      setSubscriptions(
+        subscriptions.filter((subscription) => subscription._id !== selectedSubscriptionId)
+      );
+      setSelectedSubscriptionId(null);
+      setShowModal(false);
+    }
   };
 
   const closeModal = () => {
     setShowModal(false);
   };
 
+  const handleDelete = (id) => {
+    setSelectedSubscriptionId(id);
+    setShowModal(true);
+  };
+
+  useEffect(() => {
+    getSubscriptions();
+    getClasses();
+    getMembers();
+  }, []);
+
   return (
     <section className={styles.container}>
-      <Modal show={showModal} closeModal={closeModal} />
+      <Modal show={showModal} closeModal={closeModal} onConfirm={confirmDelete} />
       <div className={styles.buttonContainer}>
         <h2>Subscriptions</h2>
         <button className={styles.addSubs}> Add a new Subscription</button>
       </div>
-      <Table subscriptions={subscriptions} deleteItem={deleteItem} setShowModal={setShowModal} />
-      <Form
-        dataSubscription={subscriptions}
-        dataClasses={classes}
-        dataMembers={members}
-        addSubscriptions={addSubscriptions}
-      />
+      <Table subscriptions={subscriptions} deleteItem={handleDelete} setShowModal={setShowModal} />
+      <Form dataClasses={classes} dataMembers={members} addSubscription={addSubscription} />
     </section>
   );
 };

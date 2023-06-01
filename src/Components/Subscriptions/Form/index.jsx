@@ -8,18 +8,19 @@ const Form = ({ dataClasses, dataMembers, addSubscriptions }) => {
     member: '',
     date: new Date()
   });
+
   const onChangeClasses = (e) => {
-    setUsers({
-      ...users,
+    setUsers((prevState) => ({
+      ...prevState,
       classes: e.target.value
-    });
+    }));
   };
 
   const onChangeMember = (e) => {
-    setUsers({
-      ...users,
+    setUsers((prevState) => ({
+      ...prevState,
       member: e.target.value
-    });
+    }));
   };
 
   const onSubmit = (e) => {
