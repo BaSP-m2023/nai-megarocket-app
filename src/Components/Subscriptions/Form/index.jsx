@@ -6,8 +6,12 @@ const Form = ({
   addSubscription,
   selectedSubscription,
   updateSubscription,
-  method
+  method,
+  showForm
 }) => {
+  if (!showForm) {
+    return null;
+  }
   const [users, setUsers] = useState({
     classes: '',
     member: '',

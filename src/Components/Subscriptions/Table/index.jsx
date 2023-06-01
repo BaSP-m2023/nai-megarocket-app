@@ -3,7 +3,7 @@ import styles from './table.module.css';
 import { FaEdit } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 
-const Table = ({ subscriptions, deleteItem, handleEdit }) => {
+const Table = ({ subscriptions, deleteItem, handleEdit, handleShowForm }) => {
   const handleDelete = (id) => {
     deleteItem(id);
   };
@@ -33,7 +33,13 @@ const Table = ({ subscriptions, deleteItem, handleEdit }) => {
                 <button className={styles.buttonDelete} onClick={() => handleDelete(item._id)}>
                   <FaTimes />
                 </button>
-                <button className={styles.buttonEdit} onClick={() => handleEditClick(item)}>
+                <button
+                  className={styles.buttonEdit}
+                  onClick={() => {
+                    handleEditClick(item);
+                    handleShowForm();
+                  }}
+                >
                   <FaEdit />
                 </button>
               </td>

@@ -12,6 +12,7 @@ const Subscriptions = () => {
   const [selectedSubscriptionId, setSelectedSubscriptionId] = useState(null);
   const [selectedSubscription, setSelectedSubscription] = useState(null);
   const [method, setMethod] = useState('');
+  const [showForm, setShowForm] = useState(false);
 
   const addSubscription = async ({ member: newMember, classes }) => {
     const newSubscription = {
@@ -132,6 +133,10 @@ const Subscriptions = () => {
     setMethod('PUT');
   };
 
+  const handleShowForm = () => {
+    setShowForm(true);
+  };
+
   useEffect(() => {
     getSubscriptions();
     getClasses();
@@ -143,11 +148,22 @@ const Subscriptions = () => {
       <Modal show={showModal} closeModal={closeModal} onConfirm={confirmDelete} />
       <div className={styles.buttonContainer}>
         <h2>Subscriptions</h2>
-        <button className={styles.addSubs} onClick={() => handleEdit(null)}>
+        <button
+          className={styles.addSubs}
+          onClick={() => {
+            handleEdit(null);
+            handleShowForm();
+          }}
+        >
           Add a new Subscription
         </button>
       </div>
-      <Table subscriptions={subscriptions} deleteItem={handleDelete} handleEdit={handleEdit} />
+      <Table
+        subscriptions={subscriptions}
+        deleteItem={handleDelete}
+        handleEdit={handleEdit}
+        handleShowForm={handleShowForm}
+      />
       <Form
         dataClasses={classes}
         dataMembers={members}
@@ -155,6 +171,7 @@ const Subscriptions = () => {
         selectedSubscription={selectedSubscription}
         updateSubscription={updateSubscription}
         method={method}
+        showForm={showForm}
       />
     </section>
   );
