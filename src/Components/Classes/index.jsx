@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './classes.module.css';
 import Table from './Table';
 import ClassesForm from './Form';
+import ModalClose from './Modal/modalClose';
 
 const Classes = () => {
   const [classes, setClasses] = useState([]);
@@ -23,21 +24,8 @@ const Classes = () => {
     getClasses();
   }, []);
 
-  const modal = () => {
-    const closeModal = () => {
-      setShowModal(false);
-    };
-
-    return (
-      <div className={styles.modalOverlay}>
-        <div className={styles.modalContent}>
-          <p>{modalMessage}</p>
-          <button className={styles.modalButton} onClick={closeModal}>
-            Close
-          </button>
-        </div>
-      </div>
-    );
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   const deleteItem = async (id) => {
@@ -134,7 +122,7 @@ const Classes = () => {
             Add New Class
           </button>
           <Table data={classes} deleteItem={deleteItem} editItem={editItem} />
-          {showModal && modal()}
+          {showModal && <ModalClose message={modalMessage} onClose={closeModal} />}
         </>
       )}
     </section>

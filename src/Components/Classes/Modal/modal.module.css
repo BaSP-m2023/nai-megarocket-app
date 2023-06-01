@@ -10,19 +10,22 @@
   justify-content: center;
 }
 .modalContent {
+  text-align: center;
   background-color: #fff;
   padding: 20px;
-  border-radius: 4px;
+  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   max-width: 400px;
   width: 100%;
 }
 .modalContent h3 {
   margin-top: 0;
-  color:black
+  color: rgba(55, 56, 103);
 }
 .modalContent p {
   margin-bottom: 20px;
+  font-weight: bold;
+  color: rgba(55, 56, 103);
 }
 .modalButtons {
   display: flex;
@@ -42,4 +45,21 @@
 .cancelButton {
   background-color: #f44336;
   color: #fff;
+}
+.btn {
+  width: 120px;
+  background-color: #fff;
+  color: #000000;
+  border: #000000 1px solid;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn:hover, .btn:focus {
+  background-color: rgba(55, 56, 103);
+  color: #ffffff;
+  cursor: pointer;
 }

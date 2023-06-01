@@ -21,28 +21,29 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
   }, [editMode, classe]);
 
   useEffect(() => {
-    const fetchActivities = async () => {
-      try {
-        const response = await fetch(process.env.REACT_APP_API_URL + '/activities');
-        const data = await response.json();
-        setActivities(data.data);
-      } catch (error) {
-        console.error('Error fetching activities:', error);
-      }
-    };
-
-    const fetchTrainers = async () => {
-      try {
-        const response = await fetch(process.env.REACT_APP_API_URL + '/trainers');
-        const data = await response.json();
-        setTrainers(data.data);
-      } catch (error) {
-        console.error('Error fetching trainers:', error);
-      }
-    };
     fetchActivities();
     fetchTrainers();
   }, []);
+
+  const fetchActivities = async () => {
+    try {
+      const response = await fetch(process.env.REACT_APP_API_URL + '/activities');
+      const data = await response.json();
+      setActivities(data.data);
+    } catch (error) {
+      console.error('Error fetching activities:', error);
+    }
+  };
+
+  const fetchTrainers = async () => {
+    try {
+      const response = await fetch(process.env.REACT_APP_API_URL + '/trainers');
+      const data = await response.json();
+      setTrainers(data.data);
+    } catch (error) {
+      console.error('Error fetching trainers:', error);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
