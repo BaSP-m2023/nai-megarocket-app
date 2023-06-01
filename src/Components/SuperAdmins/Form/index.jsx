@@ -15,16 +15,16 @@ const Form = (props) => {
     password: ''
   });
 
-  if (isPut) {
-    useEffect(() => {
+  useEffect(() => {
+    if (isPut) {
       const item = props.data.filter((item) => item._id === props.itemId);
       setItem({
         firstName: item[0].firstName,
         email: item[0].email,
         password: item[0].password
       });
-    }, [props.method, props.data, props.itemId]);
-  }
+    }
+  }, [props.method, props.data, props.itemId, isPut]);
 
   const onChange = (e) => {
     setItem({

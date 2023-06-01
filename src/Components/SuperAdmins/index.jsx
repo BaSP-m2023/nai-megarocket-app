@@ -13,7 +13,7 @@ const SuperAdmins = () => {
 
   const getSuperAdmins = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`);
       const data = await response.json();
       setSuperAdmins(data.data);
     } catch (error) {
@@ -28,7 +28,7 @@ const SuperAdmins = () => {
 
   const deleteSuperAdmin = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'DELETE'
       });
       const data = await response.json();
@@ -40,7 +40,7 @@ const SuperAdmins = () => {
 
   const addSuperAdmin = async (superAdmin) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ const SuperAdmins = () => {
       if (!response.ok) {
         alert(data.message);
       } else {
-        getSuperAdmins();
+        setSuperAdmins([...superAdmins, data.data]);
         closeSuperAdminForm();
         alert(data.message);
       }
@@ -63,7 +63,7 @@ const SuperAdmins = () => {
 
   const updateSuperAdmin = async (id, superAdmin) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -74,7 +74,9 @@ const SuperAdmins = () => {
       if (!response.ok) {
         alert(data.message);
       } else {
-        getSuperAdmins();
+        setSuperAdmins(
+          superAdmins.map((item) => (item._id === id ? { ...item, ...superAdmin } : item))
+        );
         closeSuperAdminForm();
         alert(data.message);
       }
