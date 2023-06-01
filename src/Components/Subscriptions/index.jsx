@@ -10,6 +10,8 @@ const Subscriptions = () => {
   const [classes, setClasses] = useState([]);
   const [members, setMembers] = useState([]);
   const [selectedSubscriptionId, setSelectedSubscriptionId] = useState(null);
+  const [selectedSubscription, setSelectedSubscription] = useState(null);
+  const [method, setMethod] = useState('');
 
   const addSubscription = async ({ member: newMember, classes }) => {
     const newSubscription = {
@@ -19,7 +21,7 @@ const Subscriptions = () => {
     };
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -42,7 +44,7 @@ const Subscriptions = () => {
 
   const getSubscriptions = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`);
       if (!response.ok) {
         throw new Error('An error occurred trying to retrieve Subscriptions');
       }
@@ -55,7 +57,7 @@ const Subscriptions = () => {
 
   const getClasses = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/classes`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
       const { data } = await response.json();
       setClasses(data);
     } catch (error) {
@@ -65,7 +67,7 @@ const Subscriptions = () => {
 
   const getMembers = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/members`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
       const { data } = await response.json();
       setMembers(data);
     } catch (error) {
@@ -75,9 +77,31 @@ const Subscriptions = () => {
 
   const deleteSubscription = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'DELETE'
       });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateSubscription = async (updatedSubscription) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/subscriptions/${selectedSubscription._id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedSubscription)
+        }
+      );
+      if (!response.ok) {
+        throw new Error('Failed to update subscription');
+      }
+      getSubscriptions();
+      setSelectedSubscription(null);
     } catch (error) {
       console.error(error);
     }
@@ -103,6 +127,11 @@ const Subscriptions = () => {
     setShowModal(true);
   };
 
+  const handleEdit = (item) => {
+    setSelectedSubscription(item);
+    setMethod('PUT');
+  };
+
   useEffect(() => {
     getSubscriptions();
     getClasses();
@@ -114,10 +143,19 @@ const Subscriptions = () => {
       <Modal show={showModal} closeModal={closeModal} onConfirm={confirmDelete} />
       <div className={styles.buttonContainer}>
         <h2>Subscriptions</h2>
-        <button className={styles.addSubs}> Add a new Subscription</button>
+        <button className={styles.addSubs} onClick={() => handleEdit(null)}>
+          Add a new Subscription
+        </button>
       </div>
-      <Table subscriptions={subscriptions} deleteItem={handleDelete} setShowModal={setShowModal} />
-      <Form dataClasses={classes} dataMembers={members} addSubscription={addSubscription} />
+      <Table subscriptions={subscriptions} deleteItem={handleDelete} handleEdit={handleEdit} />
+      <Form
+        dataClasses={classes}
+        dataMembers={members}
+        addSubscription={addSubscription}
+        selectedSubscription={selectedSubscription}
+        updateSubscription={updateSubscription}
+        method={method}
+      />
     </section>
   );
 };

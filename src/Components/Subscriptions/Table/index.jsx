@@ -3,10 +3,13 @@ import styles from './table.module.css';
 import { FaEdit } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 
-const Table = ({ subscriptions, deleteItem, setShowModal }) => {
+const Table = ({ subscriptions, deleteItem, handleEdit }) => {
   const handleDelete = (id) => {
     deleteItem(id);
-    setShowModal(true);
+  };
+
+  const handleEditClick = (item) => {
+    handleEdit(item);
   };
 
   return (
@@ -16,7 +19,6 @@ const Table = ({ subscriptions, deleteItem, setShowModal }) => {
           <th>First name</th>
           <th>Last name</th>
           <th>Class Name</th>
-          {/* <th className={styles.thDaysContainer}>Days</th> */}
           <th>Actions</th>
         </tr>
       </thead>
@@ -31,7 +33,7 @@ const Table = ({ subscriptions, deleteItem, setShowModal }) => {
                 <button className={styles.buttonDelete} onClick={() => handleDelete(item._id)}>
                   <FaTimes />
                 </button>
-                <button className={styles.buttonEdit}>
+                <button className={styles.buttonEdit} onClick={() => handleEditClick(item)}>
                   <FaEdit />
                 </button>
               </td>

@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
-// import Subscriptions from '..';
-// import Styles from './form.module.css';
+import React, { useState, useEffect } from 'react';
 
-const Form = ({ dataClasses, dataMembers, addSubscription }) => {
+const Form = ({
+  dataClasses,
+  dataMembers,
+  addSubscription,
+  selectedSubscription,
+  updateSubscription,
+  method
+}) => {
   const [users, setUsers] = useState({
     classes: '',
     member: '',
@@ -25,7 +30,19 @@ const Form = ({ dataClasses, dataMembers, addSubscription }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addSubscription(users);
+
+    if (selectedSubscription) {
+      updateSubscription(users);
+    } else {
+      const newSubscription = {
+        classes: users.classes,
+        member: users.member,
+        date: users.date
+      };
+
+      addSubscription(newSubscription);
+    }
+
     setUsers({
       classes: '',
       member: '',
@@ -33,9 +50,21 @@ const Form = ({ dataClasses, dataMembers, addSubscription }) => {
     });
   };
 
-  const onClick = () => {
-    console.log('Click');
-  };
+  useEffect(() => {
+    if (method === 'PUT' && selectedSubscription) {
+      setUsers({
+        classes: selectedSubscription.classes?._id || '',
+        member: selectedSubscription.member?._id || '',
+        date: selectedSubscription.date || new Date()
+      });
+    } else {
+      setUsers({
+        classes: '',
+        member: '',
+        date: new Date()
+      });
+    }
+  }, [method, selectedSubscription]);
 
   return (
     <>
@@ -63,9 +92,7 @@ const Form = ({ dataClasses, dataMembers, addSubscription }) => {
             ))}
           </select>
         </fieldset>
-        <button onClick={onClick} type="submit">
-          add!
-        </button>
+        <button type="submit">{selectedSubscription ? 'Update' : 'Add'}</button>
       </form>
     </>
   );
