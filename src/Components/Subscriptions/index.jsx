@@ -10,6 +10,34 @@ const Subscriptions = () => {
   const [classes, setClasses] = useState([]);
   const [members, setMembers] = useState([]);
 
+  const addSubscriptions = async ({ member: newMember, classes }) => {
+    const newSubscription = {
+      classes,
+      member: newMember,
+      date: new Date()
+    };
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newSubscription)
+      });
+      getSubscriptions();
+      if (!response.ok) {
+        throw new Error('Failed to add subscription');
+      }
+
+      const { data } = await response.json();
+
+      setSubscriptions([...subscriptions, data]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const getSubscriptions = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions`);
@@ -34,7 +62,7 @@ const Subscriptions = () => {
     }
   };
 
-  const getMembers = async () => {
+  const getMember = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/members`);
       const { data } = await response.json();
@@ -57,11 +85,8 @@ const Subscriptions = () => {
   useEffect(() => {
     getSubscriptions();
     getClasses();
-    getMembers();
+    getMember();
   }, []);
-
-  console.log('members', members);
-  console.log('classes', classes);
 
   const deleteItem = (id) => {
     deleteSubscriptions(id);
@@ -79,8 +104,13 @@ const Subscriptions = () => {
         <h2>Subscriptions</h2>
         <button className={styles.addSubs}> Add a new Subscription</button>
       </div>
-      <Table data={subscriptions} deleteItem={deleteItem} setShowModal={setShowModal} />
-      <Form dataSubscription={subscriptions} dataClasses={classes} dataMember={members} />
+      <Table subscriptions={subscriptions} deleteItem={deleteItem} setShowModal={setShowModal} />
+      <Form
+        dataSubscription={subscriptions}
+        dataClasses={classes}
+        dataMembers={members}
+        addSubscriptions={addSubscriptions}
+      />
     </section>
   );
 };

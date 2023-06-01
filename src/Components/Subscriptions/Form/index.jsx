@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+// import Subscriptions from '..';
 // import Styles from './form.module.css';
 
-const Form = ({ dataClasses, dataMembers }) => {
+const Form = ({ dataClasses, dataMembers, addSubscriptions }) => {
   const [users, setUsers] = useState({
     classes: '',
     member: '',
@@ -23,6 +24,16 @@ const Form = ({ dataClasses, dataMembers }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    addSubscriptions(users);
+    setUsers({
+      classes: '',
+      member: '',
+      date: new Date()
+    });
+  };
+
+  const onClick = () => {
+    console.log('Click');
   };
 
   return (
@@ -35,7 +46,7 @@ const Form = ({ dataClasses, dataMembers }) => {
             <option value="">Select a class</option>
             {dataClasses?.map((classItem) => (
               <option key={classItem?._id} value={classItem?._id}>
-                {classItem?.activity.name}
+                {classItem?.activity?.name || ''}
               </option>
             ))}
           </select>
@@ -51,7 +62,9 @@ const Form = ({ dataClasses, dataMembers }) => {
             ))}
           </select>
         </fieldset>
-        <button type="submit">add!</button>
+        <button onClick={onClick} type="submit">
+          add!
+        </button>
       </form>
     </>
   );
