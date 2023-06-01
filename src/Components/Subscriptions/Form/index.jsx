@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import Subscriptions from '..';
 // import Styles from './form.module.css';
 
-const Form = ({ dataClasses, dataMembers, addSubscriptions }) => {
+const Form = ({ dataClasses, dataMembers, addSubscription }) => {
   const [users, setUsers] = useState({
     classes: '',
     member: '',
@@ -25,7 +25,7 @@ const Form = ({ dataClasses, dataMembers, addSubscriptions }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addSubscriptions(users);
+    addSubscription(users);
     setUsers({
       classes: '',
       member: '',
@@ -45,7 +45,7 @@ const Form = ({ dataClasses, dataMembers, addSubscriptions }) => {
           <label>Classes</label>
           <select value={users.classes} onChange={onChangeClasses}>
             <option value="">Select a class</option>
-            {dataClasses?.map((classItem) => (
+            {dataClasses.map((classItem) => (
               <option key={classItem?._id} value={classItem?._id}>
                 {classItem?.activity?.name || ''}
               </option>
@@ -56,7 +56,7 @@ const Form = ({ dataClasses, dataMembers, addSubscriptions }) => {
           <label>Members</label>
           <select value={users.member} onChange={onChangeMember}>
             <option value="">Select a member</option>
-            {dataMembers?.map((memberItem) => (
+            {dataMembers.map((memberItem) => (
               <option key={memberItem?._id} value={memberItem?._id}>
                 {memberItem?.firstName}
               </option>

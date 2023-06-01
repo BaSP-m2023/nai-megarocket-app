@@ -34,6 +34,7 @@ const Subscriptions = () => {
       const { data } = await response.json();
 
       setSubscriptions([...subscriptions, data]);
+      getSubscriptions();
     } catch (error) {
       console.error(error);
     }
