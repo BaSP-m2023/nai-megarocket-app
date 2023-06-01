@@ -7,37 +7,35 @@ const Form = (props) => {
     return null;
   }
 
-  const [superAdmin, setSuperAdmin] = useState({
+  const isPut = props.method === 'PUT';
+
+  const [item, setItem] = useState({
     firstName: '',
     email: '',
     password: ''
   });
 
-  useEffect(() => {
-    if (props.method === 'PUT') {
-      const actualSuperAdmin = props.data.filter((item) => item._id === props.itemId);
-      setSuperAdmin({
-        firstName: actualSuperAdmin[0].firstName,
-        email: actualSuperAdmin[0].email,
-        password: actualSuperAdmin[0].password
+  if (isPut) {
+    useEffect(() => {
+      const item = props.data.filter((item) => item._id === props.itemId);
+      setItem({
+        firstName: item[0].firstName,
+        email: item[0].email,
+        password: item[0].password
       });
-    }
-  }, [props.method, props.data, props.itemId]);
+    }, [props.method, props.data, props.itemId]);
+  }
 
   const onChange = (e) => {
-    setSuperAdmin({
-      ...superAdmin,
+    setItem({
+      ...item,
       [e.target.name]: e.target.value
     });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (props.method === 'PUT') {
-      props.updateItem(props.itemId, superAdmin);
-    } else {
-      props.addItem(superAdmin);
-    }
+    isPut ? props.updateItem(props.itemId, item) : props.addItem(item);
   };
 
   return (
@@ -52,7 +50,7 @@ const Form = (props) => {
             type="text"
             id="firstName"
             name="firstName"
-            value={superAdmin.firstName}
+            value={item.firstName}
             onChange={onChange}
           />
         </div>
@@ -61,13 +59,7 @@ const Form = (props) => {
             Email
           </label>
           <br />
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={superAdmin.email}
-            onChange={onChange}
-          />
+          <input type="email" id="email" name="email" value={item.email} onChange={onChange} />
         </div>
         <div>
           <label className={styles.label} htmlFor="password">
@@ -78,12 +70,12 @@ const Form = (props) => {
             type="password"
             id="password"
             name="password"
-            value={superAdmin.password}
+            value={item.password}
             onChange={onChange}
           />
         </div>
         <div className={styles.modalButtons}>
-          <input className={styles.modalButton} type="submit" value="Send" />
+          <input className={styles.modalButton} type="submit" value={isPut ? 'Edit' : 'Add'} />
           <button className={styles.modalButton} onClick={props.closeForm}>
             Close
           </button>

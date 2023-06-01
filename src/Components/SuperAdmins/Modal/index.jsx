@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './super-admins.module.css';
 
-function Modal(props) {
+const Modal = (props) => {
   if (!props.showWarning) {
     return null;
   }
@@ -26,6 +26,6 @@ function Modal(props) {
       </div>
     </div>
   );
-}
+};
 
 export default Modal;

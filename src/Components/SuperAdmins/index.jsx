@@ -12,10 +12,19 @@ const SuperAdmins = () => {
   const [superAdminId, setSuperAdminId] = useState();
 
   const getSuperAdmins = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins`);
-    const data = await response.json();
-    setSuperAdmins(data.data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins`);
+      const data = await response.json();
+      setSuperAdmins(data.data);
+    } catch (error) {
+      console.error(error);
+      throw new Error('An error has ocurred, cannot get the Super Admins');
+    }
   };
+
+  useEffect(() => {
+    getSuperAdmins();
+  }, []);
 
   const deleteSuperAdmin = async (id) => {
     try {
@@ -74,10 +83,6 @@ const SuperAdmins = () => {
       throw new Error('An error has ocurred updating the Super Admin');
     }
   };
-
-  useEffect(() => {
-    getSuperAdmins();
-  }, []);
 
   const handleDeleteSuperAdmin = (id) => {
     setShowDeleteWarning(true);
