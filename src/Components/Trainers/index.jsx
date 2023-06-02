@@ -12,7 +12,7 @@ const Trainers = () => {
   const [selectedTrainer, setSelectedTrainer] = useState(null);
 
   const getTrainers = async () => {
-    const response = await fetch(process.env.REACT_APP_API_URL + '/trainers');
+    const response = await fetch(process.env.REACT_APP_API_URL + '/api/trainers');
     const data = await response.json();
     setTrainers(data.data);
   };
@@ -39,7 +39,7 @@ const Trainers = () => {
 
   const deleteItem = async (id) => {
     try {
-      await fetch(process.env.REACT_APP_API_URL + `/trainers/${id}`, {
+      await fetch(process.env.REACT_APP_API_URL + `/api/trainers/${id}`, {
         method: 'DELETE'
       });
       setTrainers([...trainers.filter((trainer) => trainer._id !== id)]);
@@ -63,7 +63,7 @@ const Trainers = () => {
     try {
       if (editMode) {
         try {
-          await fetch(process.env.REACT_APP_API_URL + `/trainers/${selectedTrainer._id}`, {
+          await fetch(process.env.REACT_APP_API_URL + `/api/trainers/${selectedTrainer._id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ const Trainers = () => {
         }
       } else {
         try {
-          await fetch(process.env.REACT_APP_API_URL + '/trainers', {
+          await fetch(process.env.REACT_APP_API_URL + '/api/trainers', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
