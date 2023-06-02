@@ -9,7 +9,7 @@ const Activities = () => {
 
   const getActivities = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/activities'}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL + '/api/activities'}`);
       const { data } = await response.json();
       setActivities(data);
     } catch (error) {
@@ -19,7 +19,7 @@ const Activities = () => {
 
   const deleteActivities = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL + '/activities/' + id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL + '/api/activities/' + id}`, {
         method: 'DELETE'
       });
     } catch (error) {
