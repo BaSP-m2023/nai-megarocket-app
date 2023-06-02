@@ -1,0 +1,29 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.submitButton {
+  width: 13rem;
+  padding: 0.9rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  background-color: white;
+  border: solid 1px;
+  border-color: rgba(55, 56, 103);
+  color: rgba(55, 56, 103);
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}

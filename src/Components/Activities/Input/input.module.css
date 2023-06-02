@@ -1,0 +1,8 @@
+input {
+  width: 30vw;
+  padding: 1rem 1rem;
+  margin: 1rem 0;
+  border: 0.1rem solid rgba(55, 56, 103, 0.4);
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+}
