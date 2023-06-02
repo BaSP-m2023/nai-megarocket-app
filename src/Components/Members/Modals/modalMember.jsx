@@ -1,6 +1,6 @@
 import styles from './modalMember.module.css';
 
-function Modal({ children, isOpen, closeModal, onConfirm }) {
+const Modal = ({ children, isOpen, closeModal, onConfirm }) => {
   return (
     <>
       {isOpen && (
@@ -22,6 +22,6 @@ function Modal({ children, isOpen, closeModal, onConfirm }) {
       )}
     </>
   );
-}
+};
 
 export default Modal;

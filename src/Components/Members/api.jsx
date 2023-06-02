@@ -1,4 +1,4 @@
-async function fetchMembers() {
+const fetchMembers = async () => {
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
     const data = await response.json();
@@ -7,9 +7,9 @@ async function fetchMembers() {
     console.error(error);
     throw error;
   }
-}
+};
 
-async function deleteMember(id) {
+const deleteMember = async (id) => {
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
       method: 'DELETE'
@@ -21,8 +21,8 @@ async function deleteMember(id) {
     console.error(error);
     throw error;
   }
-}
-async function updateMember(member) {
+};
+const updateMember = async (member) => {
   try {
     const memberWithoutId = { ...member };
     delete memberWithoutId._id;
@@ -44,9 +44,9 @@ async function updateMember(member) {
     console.error(error);
     throw error;
   }
-}
+};
 
-async function createMember(member) {
+const createMember = async (member) => {
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
       method: 'POST',
@@ -65,7 +65,7 @@ async function createMember(member) {
     console.error(error);
     throw error;
   }
-}
+};
 export default {
   fetchMembers,
   deleteMember,

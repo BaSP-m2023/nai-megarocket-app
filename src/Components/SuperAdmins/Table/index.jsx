@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './super-admins.module.css';
-import { FaTimes } from 'react-icons/fa';
-import { FaEdit } from 'react-icons/fa';
+import { FaTimes, FaEdit } from 'react-icons/fa';
 
 const Table = (props) => {
   return (

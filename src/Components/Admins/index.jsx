@@ -15,7 +15,7 @@ const Admins = () => {
 
   const getAdmins = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/api/admins'}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
       if (!response.ok) {
         throw new Error('Error retrieving admins');
       }
@@ -44,7 +44,7 @@ const Admins = () => {
 
   const postAdmins = async (formData) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/admins'}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ const Admins = () => {
     try {
       console.log(formData);
       console.log(adminEdit._id);
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminEdit._id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminEdit._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

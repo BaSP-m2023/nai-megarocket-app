@@ -8,7 +8,7 @@ import api from './api';
 
 const { fetchMembers, deleteMember, updateMember, createMember } = api;
 
-function Members() {
+const Members = () => {
   const [members, setMembers] = useState([]);
   const [selectedMember, setSelectedMember] = useState(null);
   const [memberToEdit, setMemberToEdit] = useState(null);
@@ -19,7 +19,7 @@ function Members() {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState(null);
 
-  async function getMembers() {
+  const getMembers = async () => {
     try {
       const members = await fetchMembers();
       setMembers(members);
@@ -27,7 +27,7 @@ function Members() {
       console.error(error);
       setError(error.message);
     }
-  }
+  };
 
   useEffect(() => {
     getMembers();
@@ -152,6 +152,6 @@ function Members() {
       </Modal>
     </section>
   );
-}
+};
 
 export default Members;

@@ -23,7 +23,7 @@ const Activities = () => {
 
   const getActivities = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/api/activities'}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
       const { data } = await response.json();
       setActivities(data);
     } catch (error) {
@@ -33,7 +33,7 @@ const Activities = () => {
 
   const deleteActivities = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/api/activities/' + id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities${id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -50,7 +50,7 @@ const Activities = () => {
 
   const editItem = async (activity, id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/api/activities/' + id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -83,7 +83,7 @@ const Activities = () => {
 
   const addActivities = async (activity) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/api/activities'}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
