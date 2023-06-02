@@ -1,23 +1,17 @@
 import styles from './modal.module.css';
 
-const Modal = (props) => {
-  if (!props.showModal) {
-    return null;
-  }
-
-  const closeModal = () => {
-    props.closeModal();
-  };
-
+const ConfirmationModal = ({ title, message, onConfirm, onCancel }) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.modal}>
-        <div>
-          <h3>{props.title}</h3>
-        </div>
-        <div>
-          <button className={styles.closeButton} onClick={closeModal}>
-            Close
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <h3>{title}</h3>
+        <p>{message}</p>
+        <div className={styles.modalButtons}>
+          <button className={styles.confirmButton} onClick={onConfirm}>
+            Confirm
+          </button>
+          <button className={styles.cancelButton} onClick={onCancel}>
+            Cancel
           </button>
         </div>
       </div>
@@ -25,4 +19,4 @@ const Modal = (props) => {
   );
 };
 
-export default Modal;
+export default ConfirmationModal;
