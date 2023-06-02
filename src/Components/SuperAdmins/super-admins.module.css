@@ -14,11 +14,20 @@ font-weight: 700;
 align-items: center;
 justify-content: center;
 border-style: none;
-height: 40px;
-gap: 10px;
+height: 5vh;
 width: 102px;
 background: #AACE9B;
 border-radius: 5px;
+}
+
+.addButton:hover {
+  background-color: #373867;
+  color: white;
+  cursor: pointer;
+}
+
+.tableTitle {
+  font-size: 3.5vh;
 }
 
 .head {

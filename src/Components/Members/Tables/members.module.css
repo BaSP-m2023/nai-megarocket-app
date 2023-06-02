@@ -46,40 +46,47 @@
 }
 
 .actions button:before {
-  font-family: "Font Awesome 5 Free";
+  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
 }
 
 .actions button:nth-of-type(1):before {
-  content: "\f00d";
+  content: '\f00d';
 }
 
 .actions button:nth-of-type(2):before {
-  content: "\f141";
+  content: '\f141';
 }
 
 .members-table tr:hover .actions {
   display: block;
 }
-thead {
+.table-head {
   background-color: #69091f;
 }
 
-button{
-  border-radius: 5px;
-  color: #ffffff;
-  margin: 10px;
-  background-color: #EA3354;
+.create-button{
+ border-radius: 5px;
+ color: #ffffff;
+ margin-bottom: 10px;
+ padding: 5px;
+ background-color: #2d2d2d;
 }
 
 .active-icon {
-  color: rgb(0, 189, 0);
-  background-color: rgb(0, 204, 0);
-  border-radius: 20px;
+ color: rgb(0,189,0);
+ background-color: rgb(0,204,0);
+ border-radius :20px
 }
-
-.inactive-icon {
-  color: red;
-  background-color: red;
-  border-radius: 20px;
+.inactive-icon{
+ color:red ;
+ background-color:red ;
+ border-radius :20px
+}
+.button-info {
+  background-color: #262626;
+  color: #ddd;
+  border-radius: 15px;
+  padding: 7px;
+  margin-bottom: 5px;
 }

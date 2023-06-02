@@ -1,0 +1,39 @@
+form {
+  display: flex;
+  padding-bottom: 50px;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 20vw;
+  border: none;
+}
+
+label {
+  padding-bottom: 20px;
+}
+
+
+button {
+  width: 50px;
+  background-color: #4CAF7A;
+  color: white;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #4CAF7A;
+  border: none;
+  cursor: pointer;
+}
+
+.daySelection {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonRemoveSelectedDay {
+  background: none;
+  color: #EA3354;
+}

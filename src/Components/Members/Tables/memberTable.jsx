@@ -10,12 +10,13 @@ function MembersTable({
   handleShowInfo,
   handleShowActionsClick,
   handleDelete,
+  handleEdit,
   showActions,
   tableRef
 }) {
   return (
     <table className={styles['members-table']} ref={tableRef}>
-      <thead>
+      <thead className={styles['table-head']} ref={tableRef}>
         <tr>
           <th>Name/Surname</th>
           <th>Email</th>
@@ -55,7 +56,7 @@ function MembersTable({
                         <i className="fas fa-times" onClick={() => handleDelete(member._id)}>
                           <FaTimes />
                         </i>
-                        <i className="fas fa-pencil-alt">
+                        <i className="fas fa-pencil-alt" onClick={() => handleEdit(member)}>
                           <FaEdit />
                         </i>
                         <i onClick={() => handleShowInfo(member)}>

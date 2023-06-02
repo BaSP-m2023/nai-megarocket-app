@@ -12,7 +12,7 @@ const Modal = (props) => {
     <div className={styles.container}>
       <div className={styles.modal}>
         <div>
-          <h3>{props.title}</h3>
+          <h3 className={styles.title}>{props.title}</h3>
         </div>
         <div>
           <button className={styles.closeButton} onClick={CloseModal}>
