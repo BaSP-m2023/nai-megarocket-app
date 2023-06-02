@@ -24,3 +24,9 @@
   .modalActions button {
     margin-left: 10px;
   }
+
+  .botonModal {
+    background-color: rgb(35, 35, 35);
+    color: aliceblue;
+    border-radius: 15px;
+  }
