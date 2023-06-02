@@ -1,6 +1,6 @@
 async function fetchMembers() {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/members`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
     const data = await response.json();
     return data.data;
   } catch (error) {
@@ -11,7 +11,7 @@ async function fetchMembers() {
 
 async function deleteMember(id) {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/members/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
@@ -28,7 +28,7 @@ async function updateMember(member) {
     delete memberWithoutId._id;
     delete memberWithoutId.__v;
 
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/members/${member._id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${member._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ async function updateMember(member) {
 
 async function createMember(member) {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/members`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
