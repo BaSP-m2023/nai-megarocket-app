@@ -1,4 +1,4 @@
-function SelectedMemberInfo({ selectedMember }) {
+const SelectedMemberInfo = ({ selectedMember }) => {
   return (
     <div>
       <h3>Detailed information of the selected member:</h3>
@@ -21,6 +21,6 @@ function SelectedMemberInfo({ selectedMember }) {
       <p>Membership: {selectedMember.membership}</p>
     </div>
   );
-}
+};
 
 export default SelectedMemberInfo;

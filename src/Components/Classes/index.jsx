@@ -16,7 +16,7 @@ const Classes = () => {
     setShowForm(!showForm);
   };
   const getClasses = async () => {
-    const response = await fetch(process.env.REACT_APP_API_URL + '/api/classes');
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
     const data = await response.json();
     setClasses(data.data);
   };
@@ -30,7 +30,7 @@ const Classes = () => {
 
   const deleteItem = async (id) => {
     try {
-      await fetch(process.env.REACT_APP_API_URL + `/api/classes/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'DELETE'
       });
       setClasses([...classes.filter((classes) => classes._id !== id)]);
@@ -54,7 +54,7 @@ const Classes = () => {
     try {
       if (editMode) {
         try {
-          await fetch(process.env.REACT_APP_API_URL + `/api/classes/${selectedClasses._id}`, {
+          await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${selectedClasses._id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ const Classes = () => {
         }
       } else {
         try {
-          await fetch(process.env.REACT_APP_API_URL + '/api/classes', {
+          await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

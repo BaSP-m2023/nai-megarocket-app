@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './table.module.css';
-import { FaEdit } from 'react-icons/fa';
-import { FaTimes } from 'react-icons/fa';
+import { FaEdit, FaTimes } from 'react-icons/fa';
 
 const Table = ({ data, deleteItem, handleEdit }) => {
   return (
