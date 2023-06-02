@@ -33,7 +33,7 @@ const Activities = () => {
 
   const deleteActivities = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/api/activities/' + id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL + '/api/activities/' + id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
