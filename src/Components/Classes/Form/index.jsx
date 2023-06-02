@@ -27,7 +27,7 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
 
   const fetchActivities = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + '/activities');
+      const response = await fetch(process.env.REACT_APP_API_URL + '/api/activities');
       const data = await response.json();
       setActivities(data.data);
     } catch (error) {
@@ -37,7 +37,7 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
 
   const fetchTrainers = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + '/trainers');
+      const response = await fetch(process.env.REACT_APP_API_URL + '/api/trainers');
       const data = await response.json();
       setTrainers(data.data);
     } catch (error) {
