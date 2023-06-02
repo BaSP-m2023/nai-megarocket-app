@@ -4,7 +4,7 @@
   border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
-input {
+.inputClasses {
   display: flex;
   width: 100%;
   padding: 3%;
@@ -31,11 +31,7 @@ select {
   margin-bottom: 2%;
   padding-right: 3%;
 }
-h4{
-  margin: 0;
-  margin-bottom: 1%;
-  margin-top: 5%;
-}
+
 .buttons {
   display: flex;
   justify-content: flex-end;

@@ -27,7 +27,7 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
 
   const fetchActivities = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + '/api/activities');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
       const data = await response.json();
       setActivities(data.data);
     } catch (error) {
@@ -37,7 +37,7 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
 
   const fetchTrainers = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + '/api/trainers');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
       const data = await response.json();
       setTrainers(data.data);
     } catch (error) {
@@ -131,6 +131,7 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
         <div className={styles.box}>
           <h4>Day</h4>
           <input
+            className={styles.inputClasses}
             type="text"
             placeholder="Day"
             value={day}
@@ -142,6 +143,7 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
         <div className={styles.box}>
           <h4>Hour</h4>
           <input
+            className={styles.inputClasses}
             type="text"
             placeholder="Hour"
             pattern="[0-9]{2}:[0-9]{2}"

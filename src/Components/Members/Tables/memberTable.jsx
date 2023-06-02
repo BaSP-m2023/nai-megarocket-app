@@ -1,11 +1,8 @@
 import styles from './members.module.css';
-import { FaEdit } from 'react-icons/fa';
-import { FaTimes } from 'react-icons/fa';
-import { FaCog } from 'react-icons/fa';
-import { FaInfoCircle } from 'react-icons/fa';
+import { FaEdit, FaTimes, FaCog, FaInfoCircle } from 'react-icons/fa';
 import { FiCircle, FiSlash } from 'react-icons/fi';
 
-function MembersTable({
+const MembersTable = ({
   members,
   handleShowInfo,
   handleShowActionsClick,
@@ -13,7 +10,7 @@ function MembersTable({
   handleEdit,
   showActions,
   tableRef
-}) {
+}) => {
   return (
     <table className={styles['members-table']} ref={tableRef}>
       <thead className={styles['table-head']} ref={tableRef}>
@@ -72,6 +69,6 @@ function MembersTable({
       </tbody>
     </table>
   );
-}
+};
 
 export default MembersTable;
