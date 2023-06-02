@@ -10,7 +10,7 @@ const Admins = () => {
 
   const getAdmins = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL + '/admins'}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL + '/api/admins'}`);
       if (!response.ok) {
         throw new Error('Error retrieving admins');
       }
@@ -23,7 +23,7 @@ const Admins = () => {
 
   const deleteAdmins = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'DELETE'
       });
       if (!response.ok) {
