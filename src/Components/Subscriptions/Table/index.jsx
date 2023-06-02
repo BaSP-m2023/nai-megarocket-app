@@ -3,10 +3,13 @@ import styles from './table.module.css';
 import { FaEdit } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 
-const Table = ({ data, deleteItem, setShowModal }) => {
+const Table = ({ subscriptions, deleteItem, handleEdit, handleShowForm }) => {
   const handleDelete = (id) => {
     deleteItem(id);
-    setShowModal(true);
+  };
+
+  const handleEditClick = (item) => {
+    handleEdit(item);
   };
 
   return (
@@ -15,26 +18,28 @@ const Table = ({ data, deleteItem, setShowModal }) => {
         <tr className={styles.trContainer}>
           <th>First name</th>
           <th>Last name</th>
-          <th className={styles.thDaysContainer}>Days</th>
+          <th>Class Name</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {data.map((item) => {
+        {subscriptions?.map((item) => {
           return (
             <tr key={item._id}>
-              <td className={styles.tdFirstNameContainer}>{item.member.firstName}</td>
-              <td>{item.member.lastName}</td>
-              <td>
-                {item.classes
-                  ? item.classes.day[0] + ' - ' + item.classes.day[1]
-                  : 'No classes assigned'}
-              </td>
+              <td>{item.member?.firstName}</td>
+              <td>{item.member?.lastName}</td>
+              <td>{item.classes?.activity?.name}</td>
               <td className={styles.buttonsContainer}>
                 <button className={styles.buttonDelete} onClick={() => handleDelete(item._id)}>
                   <FaTimes />
                 </button>
-                <button className={styles.buttonEdit}>
+                <button
+                  className={styles.buttonEdit}
+                  onClick={() => {
+                    handleEditClick(item);
+                    handleShowForm();
+                  }}
+                >
                   <FaEdit />
                 </button>
               </td>

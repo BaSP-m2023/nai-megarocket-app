@@ -10,14 +10,21 @@ function Modal(props) {
     props.closeModal();
   };
 
+  const onConfirm = () => {
+    props.onConfirm();
+  };
+
   return (
     <div className={styles.modalContainer}>
       <div className={styles.modalContent}>
-        <h3>Confirm Delete</h3>
-        <p>Subscription deleted!</p>
-        <div>
-          <button className={styles.buttonOk} onClick={onCloseModal}>
-            Ok
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete this subscription?</p>
+        <div className={styles.buttonContainer}>
+          <button className={styles.buttonCancel} onClick={onCloseModal}>
+            Cancel
+          </button>
+          <button className={styles.buttonConfirm} onClick={onConfirm}>
+            Confirm
           </button>
         </div>
       </div>
