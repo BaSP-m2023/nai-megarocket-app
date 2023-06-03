@@ -38,7 +38,6 @@ const Form = ({ postAdminForm, putAdminForm, adminEdit }) => {
     } else {
       postAdminForm(formData);
     }
-    cleanForm();
   };
 
   const cleanForm = () => {
