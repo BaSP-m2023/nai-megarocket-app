@@ -124,10 +124,10 @@ const Form = ({ postAdminForm, putAdminForm, adminEdit }) => {
         />
       </div>
       <button className={styles.deleteButton} onClick={cleanForm}>
-        x
+        Reset
       </button>
       <button className={styles.confirmButton} onClick={handleSubmit}>
-        Y
+        Submit
       </button>
     </form>
   );

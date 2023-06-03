@@ -62,7 +62,7 @@ const Admins = () => {
       setShowModal(true);
       getAdmins();
     } catch (error) {
-      setModalInformation({ title: 'Admin not added', body: error });
+      setModalInformation({ title: 'Admin not added', body: error.message });
       setIsDelete(false);
       setShowModal(true);
       console.error(error);
@@ -71,8 +71,6 @@ const Admins = () => {
 
   const putAdmins = async (formData) => {
     try {
-      console.log(formData);
-      console.log(adminEdit._id);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminEdit._id}`, {
         method: 'PUT',
         headers: {
@@ -81,14 +79,20 @@ const Admins = () => {
         body: JSON.stringify(formData)
       });
       if (!response.ok) {
+        setModalInformation({ title: 'Admin not updated', body: 'Error editing an admin' });
+        setIsDelete(false);
+        setShowModal(true);
         throw new Error('Error edit an admin.');
       }
-      setModalInformation({ title: 'Admin added', body: 'The admin will be updated' });
+      setModalInformation({ title: 'Admin updated', body: 'The admin will be updated' });
       setIsDelete(false);
       setShowModal(true);
       setAdminEdit([]);
       getAdmins();
     } catch (error) {
+      setModalInformation({ title: 'Admin not updated', body: error.message });
+      setIsDelete(false);
+      setShowModal(true);
       console.error(error);
     }
   };
