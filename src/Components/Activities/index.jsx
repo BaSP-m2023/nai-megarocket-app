@@ -16,7 +16,7 @@ const Activities = () => {
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const [activityId, setActivityId] = useState();
-
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   useEffect(() => {
     getActivities();
   }, []);
@@ -33,7 +33,7 @@ const Activities = () => {
 
   const deleteActivities = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -115,9 +115,15 @@ const Activities = () => {
     setActivities([...activities, newItem]);
   };
 
-  const deleteItem = (id) => {
-    deleteActivities(id);
-    setActivities(activities.filter((activity) => activity._id !== id));
+  const handleDeleteClick = (id) => {
+    setShowDeleteConfirmationModal(true);
+    setActivityId(id);
+  };
+
+  const handleConfirmDelete = () => {
+    deleteActivities(activityId);
+    setActivities(activities.filter((activity) => activity._id !== activityId));
+    setShowDeleteConfirmationModal(false);
   };
 
   const handleCloseModal = (modalStateSetter) => {
@@ -140,6 +146,12 @@ const Activities = () => {
       <button className={styles.addButton} onClick={handleShowForm}>
         + Add new activity
       </button>
+      <Modal
+        title="Are you sure you want to delete this activity?"
+        show={showDeleteConfirmationModal}
+        closeModal={() => setShowDeleteConfirmationModal(false)}
+        onConfirm={handleConfirmDelete}
+      />
       <Modal
         title="The activity has been successfully deleted!"
         show={showModal}
@@ -172,7 +184,7 @@ const Activities = () => {
       />
       <Table
         data={activities}
-        deleteItem={deleteItem}
+        deleteItem={handleDeleteClick}
         setShowModal={setShowModal}
         handleShowForm={handleShowForm}
         handleEditItem={handleEditItem}
