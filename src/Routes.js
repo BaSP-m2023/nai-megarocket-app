@@ -13,7 +13,7 @@ import Trainers from './Components/Trainers';
 //import MembersForm from './Components/Members/Form';
 //import SubscriptionsForm from './Components/Subscriptions/Form';
 //import SuperAdminsForm from './Components/SuperAdmins/Form';
-//import AdminsForm from './Components/Admins/Form';
+//import TrainersForm from './Components/Trainers/Form';
 import Home from './Components/Home';
 
 const Routes = () => {
