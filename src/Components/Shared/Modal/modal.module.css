@@ -1,0 +1,58 @@
+.modalContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 200vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: white;
+  border-radius: 9px;
+}
+
+h3 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.buttonContainer {
+  display: flex;
+  width: 10vw;
+  margin-left: 200px;
+  margin-top: 20px;
+}
+
+.buttonOk {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10vw;
+  height: 5vh;
+}
+
+.buttonConfirm {
+  background-color: #373867;
+  color: white;
+  width: 30vw;
+  height: 5vh;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.buttonCancel {
+  background-color: white;
+  border-color: black;
+  width: 30vw;
+  height: 5vh;
+  border: 1px solid;
+  border-radius: 5px;
+}
