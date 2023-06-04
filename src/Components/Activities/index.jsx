@@ -21,6 +21,10 @@ const Activities = () => {
     getActivities();
   }, []);
 
+  useEffect(() => {
+    setShowForm(false);
+  }, [activities]);
+
   const getActivities = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
