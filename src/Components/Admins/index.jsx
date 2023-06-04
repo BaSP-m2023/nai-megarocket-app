@@ -100,7 +100,7 @@ const Admins = () => {
 
   useEffect(() => {
     getAdmins();
-  });
+  }, [putAdmins, postAdmins]);
 
   const deleteItem = (id) => {
     setModalInformation({ title: 'Warning', body: 'Are you sure?' });
