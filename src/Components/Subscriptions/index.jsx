@@ -205,6 +205,7 @@ const Subscriptions = () => {
         </button>
       </div>
       <Form
+        className={styles.formContainer}
         dataClasses={classes}
         dataMembers={members}
         addSubscription={addSubscription}

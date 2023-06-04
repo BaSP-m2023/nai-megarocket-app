@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './form.module.css';
 
 const Form = ({
   dataClasses,
@@ -73,7 +74,7 @@ const Form = ({
   return (
     <>
       <h2>Form</h2>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className={styles['form-container']}>
         <fieldset>
           <label>Classes</label>
           <select value={users.classes} onChange={onChangeClasses}>
@@ -96,7 +97,9 @@ const Form = ({
             ))}
           </select>
         </fieldset>
-        <button type="submit">{selectedSubscription ? 'Update' : 'Add'}</button>
+        <fieldset>
+          <button type="submit">{selectedSubscription ? 'Update' : 'Add'}</button>
+        </fieldset>
       </form>
     </>
   );
