@@ -33,6 +33,25 @@ button {
   cursor: pointer;
 }
 
+.flex_buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.cancel_button {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+}
+
+.ok_button {
+  width: 100px;
+  height: 50px;
+  border-radius: 10%;
+}
+
 .daySelection {
   display: flex;
   flex-direction: column;

@@ -8,7 +8,8 @@ const Form = ({
   selectedSubscription,
   updateSubscription,
   method,
-  showForm
+  showForm,
+  setShowForm
 }) => {
   if (!showForm) {
     return null;
@@ -31,6 +32,10 @@ const Form = ({
       ...prevState,
       member: e.target.value
     }));
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
   };
 
   const onSubmit = (e) => {
@@ -97,8 +102,13 @@ const Form = ({
             ))}
           </select>
         </fieldset>
-        <fieldset>
-          <button type="submit">{selectedSubscription ? 'Update' : 'Add'}</button>
+        <fieldset className={styles.flex_buttons}>
+          <button className={styles.cancel_button} type="button" onClick={handleCancel}>
+            X
+          </button>
+          <button className={styles.ok_button} type="submit">
+            {selectedSubscription ? 'Update' : 'Add'}
+          </button>
         </fieldset>
       </form>
     </>

@@ -128,13 +128,6 @@ const Subscriptions = () => {
     }
   };
 
-  const handleShowAddModal = () => {
-    setSelectedSubscription(null);
-    setMethod('');
-    setShowForm(true);
-    setShowDeleteModal(false);
-  };
-
   const handleShowDeleteModal = (id) => {
     setSelectedSubscriptionId(id);
     setShowDeleteModal(true);
@@ -200,7 +193,7 @@ const Subscriptions = () => {
       />
       <div className={styles.buttonContainer}>
         <h2>Subscriptions</h2>
-        <button className={styles.addSubs} onClick={handleShowAddModal}>
+        <button className={styles.addSubs} onClick={handleShowForm}>
           Add New Subscription
         </button>
       </div>
@@ -213,6 +206,7 @@ const Subscriptions = () => {
         updateSubscription={updateSubscription}
         method={method}
         showForm={showForm}
+        setShowForm={setShowForm}
       />
       <Table
         subscriptions={subscriptions}
