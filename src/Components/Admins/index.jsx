@@ -52,7 +52,6 @@ const Admins = () => {
         body: JSON.stringify(formData)
       });
       const data = await response.json();
-      console.log(data);
       if (!response.ok) {
         setModalInformation({ title: 'Admin not added', body: 'Error posting an admin' });
         setIsDelete(false);
@@ -62,6 +61,7 @@ const Admins = () => {
       setModalInformation({ title: 'Admin added', body: 'The admin will be added' });
       setIsDelete(false);
       setShowModal(true);
+      setShowForm(false);
     } catch (error) {
       setModalInformation({ title: 'Admin not added', body: error.message });
       setIsDelete(false);
@@ -80,7 +80,7 @@ const Admins = () => {
         body: JSON.stringify(formData)
       });
       const data = await response.json();
-      if (!data.ok) {
+      if (!response.ok) {
         setModalInformation({ title: 'Admin not updated', body: 'Error editing an admin:' });
         setIsDelete(false);
         setShowModal(true);
@@ -90,6 +90,7 @@ const Admins = () => {
       setIsDelete(false);
       setShowModal(true);
       setAdminEdit([]);
+      setShowForm(false);
     } catch (error) {
       setModalInformation({ title: 'Admin not updated', body: error.message });
       setIsDelete(false);
