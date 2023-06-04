@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-function SharedModal(props) {
+const SharedModal = (props) => {
   if (!props.show) {
     return null;
   }
@@ -38,6 +38,6 @@ function SharedModal(props) {
       </div>
     </div>
   );
-}
+};
 
 export default SharedModal;
