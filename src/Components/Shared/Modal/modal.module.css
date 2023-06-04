@@ -30,29 +30,3 @@ p {
   margin-left: 200px;
   margin-top: 20px;
 }
-
-.buttonOk {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 10vw;
-  height: 5vh;
-}
-
-.buttonConfirm {
-  background-color: #373867;
-  color: white;
-  width: 30vw;
-  height: 5vh;
-  border: 1px solid;
-  border-radius: 5px;
-}
-
-.buttonCancel {
-  background-color: white;
-  border-color: black;
-  width: 30vw;
-  height: 5vh;
-  border: 1px solid;
-  border-radius: 5px;
-}

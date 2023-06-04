@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './modal.module.css';
+import Button from '../Button';
 
 const SharedModal = (data) => {
   if (!data.show) {
@@ -22,17 +23,11 @@ const SharedModal = (data) => {
         <div className={styles.buttonContainer}>
           {data.isDelete ? (
             <>
-              <button className={styles.buttonCancel} onClick={onCloseModal}>
-                Cancel
-              </button>
-              <button className={styles.buttonConfirm} onClick={onConfirm}>
-                Confirm
-              </button>
+              <Button type="cancel" text={'Cancel'} clickAction={onCloseModal} />
+              <Button type="confirm" text={'Confirm'} clickAction={onConfirm} />
             </>
           ) : (
-            <button className={styles.noButton} onClick={onCloseModal}>
-              Ok
-            </button>
+            <Button type="confirm" text={'Confirm'} clickAction={onCloseModal} />
           )}
         </div>
       </div>
