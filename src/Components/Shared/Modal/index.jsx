@@ -1,26 +1,26 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-const SharedModal = (props) => {
-  if (!props.show) {
+const SharedModal = (data) => {
+  if (!data.show) {
     return null;
   }
 
   const onCloseModal = () => {
-    props.closeModal();
+    data.closeModal();
   };
 
   const onConfirm = () => {
-    props.onConfirm();
+    data.onConfirm();
   };
 
   return (
     <div className={styles.modalContainer}>
       <div className={styles.modalContent}>
-        <h3>{props.title}</h3>
-        <p>{props.body}</p>
+        <h3>{data.title}</h3>
+        <p>{data.body}</p>
         <div className={styles.buttonContainer}>
-          {props.isDelete ? (
+          {data.isDelete ? (
             <>
               <button className={styles.buttonCancel} onClick={onCloseModal}>
                 Cancel
