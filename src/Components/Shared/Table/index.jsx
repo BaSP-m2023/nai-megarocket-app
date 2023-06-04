@@ -1,14 +1,7 @@
 import React from 'react';
 import { FaTimes, FaEdit } from 'react-icons/fa';
 import styles from './table.module.css';
-
 const Table = ({ data, rows, columnTitles, handleUpdateItem, handleDeleteItem }) => {
-  const isBoolean = (item) => {
-    if (typeof item === 'boolean') {
-      return item ? 'Yes' : 'No';
-    }
-    return item;
-  };
   return (
     <table className={styles.tableShared}>
       <thead className={styles.tableHead}>
@@ -25,11 +18,14 @@ const Table = ({ data, rows, columnTitles, handleUpdateItem, handleDeleteItem })
         {data.map((item) => {
           return (
             <tr className={styles.tableTr} key={item._id}>
-              {rows.map((row) => (
-                <td className={styles.tableThtd} key={row}>
-                  {isBoolean(item[row])}
-                </td>
-              ))}
+              {rows.map((row) => {
+                const value = row.split('.').reduce((acc, curr) => (acc ? acc[curr] : null), item);
+                return (
+                  <td className={styles.tableThtd} key={row}>
+                    {Array.isArray(value) ? value.join(', ') : value}
+                  </td>
+                );
+              })}
               <td className={styles.tableThtd}>
                 <i className="fas fa-edit" onClick={() => handleUpdateItem(item._id)}>
                   <FaEdit />
@@ -45,5 +41,4 @@ const Table = ({ data, rows, columnTitles, handleUpdateItem, handleDeleteItem })
     </table>
   );
 };
-
 export default Table;
