@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import Table from './Table';
 import Modal from './Modal';
-import Form from './Form';
+import { useHistory } from 'react-router-dom';
 
 const SuperAdmins = () => {
+  const history = useHistory();
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
-  const [showSuperAdminForm, setShowSuperAdminForm] = useState(false);
-  const [method, setMethod] = useState('');
   const [superAdmins, setSuperAdmins] = useState([]);
   const [superAdminId, setSuperAdminId] = useState();
 
@@ -24,7 +23,7 @@ const SuperAdmins = () => {
 
   useEffect(() => {
     getSuperAdmins();
-  }, []);
+  });
 
   const deleteSuperAdmin = async (id) => {
     try {
@@ -35,54 +34,6 @@ const SuperAdmins = () => {
       alert(data.message);
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  const addSuperAdmin = async (superAdmin) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(superAdmin)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        alert(data.message);
-      } else {
-        setSuperAdmins([...superAdmins, data.data]);
-        closeSuperAdminForm();
-        alert(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      throw new Error('An error has ocurred creating the Super Admin');
-    }
-  };
-
-  const updateSuperAdmin = async (id, superAdmin) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(superAdmin)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        alert(data.message);
-      } else {
-        setSuperAdmins(
-          superAdmins.map((item) => (item._id === id ? { ...item, ...superAdmin } : item))
-        );
-        closeSuperAdminForm();
-        alert(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      throw new Error('An error has ocurred updating the Super Admin');
     }
   };
 
@@ -101,19 +52,11 @@ const SuperAdmins = () => {
   };
 
   const handleAddSuperAdmin = () => {
-    setMethod('POST');
-    setShowSuperAdminForm(true);
-    showSuperAdminForm;
-  };
-
-  const closeSuperAdminForm = () => {
-    setShowSuperAdminForm(false);
+    history.push('/super-admins/form');
   };
 
   const handleUpdateSuperAdmin = (id) => {
-    setMethod('PUT');
-    setSuperAdminId(id);
-    setShowSuperAdminForm(true);
+    history.push(`/super-admins/form/${id}`);
   };
 
   return (
@@ -128,15 +71,6 @@ const SuperAdmins = () => {
         data={superAdmins}
         handleDeleteItem={handleDeleteSuperAdmin}
         handleUpdateItem={handleUpdateSuperAdmin}
-      />
-      <Form
-        data={superAdmins}
-        closeForm={closeSuperAdminForm}
-        showForm={showSuperAdminForm}
-        addItem={addSuperAdmin}
-        updateItem={updateSuperAdmin}
-        itemId={superAdminId}
-        method={method}
       />
       <Modal
         closeWarning={closeDeleteWarning}

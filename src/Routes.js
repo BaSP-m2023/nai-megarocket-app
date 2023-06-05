@@ -12,7 +12,7 @@ import Trainers from './Components/Trainers';
 //import ClassesForm from './Components/Classes/Form';
 //import MembersForm from './Components/Members/Form';
 //import SubscriptionsForm from './Components/Subscriptions/Form';
-//import SuperAdminsForm from './Components/SuperAdmins/Form';
+import SuperAdminsForm from './Components/SuperAdmins/Form';
 //import TrainersForm from './Components/Trainers/Form';
 import Home from './Components/Home';
 
@@ -32,7 +32,8 @@ const Routes = () => {
         <Route exact path="/subscriptions" component={Subscriptions} />
         {/*<Route path="/subscriptions/form" component={SubscriptionsForm} />*/}
         <Route exact path="/super-admins" component={SuperAdmins} />
-        {/*<Route path="/superadmins/form" component={SuperAdminsForm} />*/}
+        <Route exact path="/super-admins/form" component={SuperAdminsForm} />
+        <Route path="/super-admins/form/:id" component={SuperAdminsForm} />
         <Route exact path="/trainers" component={Trainers} />
         {/*<Route path="/trainers/form" component={TrainersForm} />*/}
         <Route exact path="/">
