@@ -23,7 +23,7 @@ const SuperAdmins = () => {
 
   useEffect(() => {
     getSuperAdmins();
-  });
+  }, []);
 
   const deleteSuperAdmin = async (id) => {
     try {

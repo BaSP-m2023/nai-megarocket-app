@@ -3,10 +3,16 @@ import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins.module.css';
 
 const Form = () => {
-  const [superAdmins, setSuperAdmins] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
   const { id } = useParams();
   const history = useHistory();
+  const [superAdmins, setSuperAdmins] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [item, setItem] = useState({
+    firstName: '',
+    email: '',
+    password: ''
+  });
 
   const getSuperAdmins = async () => {
     try {
@@ -20,12 +26,19 @@ const Form = () => {
   };
 
   useEffect(() => {
-    getSuperAdmins();
-  }, []);
-
-  useEffect(() => {
-    setIsEdit(id);
-  }, [id]);
+    const fetchData = async () => {
+      await getSuperAdmins();
+      setIsEdit(id);
+      if (isEdit && !isDataLoaded) {
+        const superAdmin = superAdmins.find((admin) => admin._id === id);
+        if (superAdmin) {
+          setItem(superAdmin);
+          setIsDataLoaded(true);
+        }
+      }
+    };
+    fetchData();
+  }, [id, superAdmins, isEdit, isDataLoaded]);
 
   const addSuperAdmin = async (superAdmin) => {
     try {
@@ -82,21 +95,6 @@ const Form = () => {
     }
   };
 
-  const [item, setItem] = useState({
-    firstName: '',
-    email: '',
-    password: ''
-  });
-
-  useEffect(() => {
-    if (isEdit) {
-      const superAdmin = superAdmins.find((admin) => admin._id === id);
-      if (superAdmin) {
-        setItem(superAdmin);
-      }
-    }
-  }, [isEdit, id, superAdmins]);
-
   const onChange = (e) => {
     setItem({
       ...item,
@@ -118,8 +116,8 @@ const Form = () => {
   };
 
   return (
-    <div className={styles.modalContainer}>
-      <form className={styles.modalContent} onSubmit={onSubmit}>
+    <div>
+      <form onSubmit={onSubmit}>
         <div>
           <label className={styles.label} htmlFor="firstName">
             Name
