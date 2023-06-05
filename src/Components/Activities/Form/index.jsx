@@ -81,7 +81,6 @@ const Form = () => {
       ...activity,
       [e.target.name]: e.target.value
     });
-    console.log('hola');
   };
 
   const onSubmit = (e) => {
