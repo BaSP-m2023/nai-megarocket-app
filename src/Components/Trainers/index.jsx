@@ -14,7 +14,7 @@ const Trainers = () => {
   };
   useEffect(() => {
     getTrainers();
-  }, []);
+  });
   const modal = () => {
     const handleCloseModal = () => {
       setShowModal(false);
@@ -28,11 +28,12 @@ const Trainers = () => {
   };
   const deleteItem = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
         method: 'DELETE'
       });
+      const data = await response.json();
       setTrainers([...trainers.filter((trainer) => trainer._id !== id)]);
-      setModalMessage('Trainer deleted successfully');
+      setModalMessage(data.message);
       setShowModal(true);
     } catch (error) {
       console.error('Error deleting item:', error);

@@ -35,10 +35,7 @@ const Routes = () => {
         {/*<Route path="/superadmins/form" component={SuperAdminsForm} />*/}
         <Route exact path="/trainers" component={Trainers} />
         <Route exact path="/trainers/form" component={TrainersForm} />
-        <Route
-          path="/trainers/form/:id?"
-          render={(props) => <TrainersForm {...props} editMode={true} />}
-        />
+        <Route path="/trainers/form/:id?" component={TrainersForm} />
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>

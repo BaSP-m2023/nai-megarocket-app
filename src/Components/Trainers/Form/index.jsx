@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styles from './form.module.css';
-const Form = ({ editMode }) => {
+
+const Form = () => {
   const history = useHistory();
   const { id } = useParams();
   const [firstName, setName] = useState('');
@@ -12,24 +13,27 @@ const Form = ({ editMode }) => {
   const [city, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [salary, setSalary] = useState('');
+
+  const getTrainerById = async () => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
+    const data = await response.json();
+    const trainer = data.data;
+    setName(trainer.firstName);
+    setLastName(trainer.lastName);
+    setDNI(trainer.dni);
+    setPhoneNumber(trainer.phone);
+    setEmail(trainer.email);
+    setCity(trainer.city);
+    setSalary(trainer.salary);
+    setPassword(trainer.password);
+  };
+
   useEffect(() => {
-    if (editMode && id) {
-      const getTrainer = async () => {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
-        const data = await response.json();
-        const trainer = data.data;
-        setName(trainer.firstName);
-        setLastName(trainer.lastName);
-        setDNI(trainer.dni);
-        setPhoneNumber(trainer.phone);
-        setEmail(trainer.email);
-        setCity(trainer.city);
-        setSalary(trainer.salary);
-        setPassword(trainer.password);
-      };
-      getTrainer();
+    if (id) {
+      getTrainerById();
     }
-  }, [editMode, id]);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
@@ -42,35 +46,54 @@ const Form = ({ editMode }) => {
       password,
       salary
     };
-    if (editMode) {
-      try {
-        await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
-      } catch (error) {
-        console.error('Error editing trainer:', error);
-      }
+    if (id) {
+      editTrainer(id, formData);
     } else {
-      try {
-        await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
-      } catch (error) {
-        console.error('Error adding trainer:', error);
-      }
+      addTrainer(formData);
     }
     history.push('/trainers');
   };
+  const addTrainer = async (formData) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error('Error al agregar entrenador:', error);
+    }
+  };
+
+  const editTrainer = async (id, formData) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error('Error al editar entrenador:', error);
+    }
+  };
   const handleCancel = () => {
-    history.push('/trainers');
+    history.goBack();
   };
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
@@ -161,7 +184,7 @@ const Form = ({ editMode }) => {
           Cancel
         </button>
         <button className={styles.button} type="submit" onSubmit={handleSubmit}>
-          {editMode ? <p>Edit</p> : <p>Add</p>}
+          {id ? <p>Edit</p> : <p>Add</p>}
         </button>
       </div>
     </form>
