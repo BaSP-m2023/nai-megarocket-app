@@ -43,6 +43,7 @@ const Form = () => {
         setSuperAdmins(data.data);
         setSuperAdmins([...superAdmins, data.data]);
         alert(data.message);
+        history.push('/super-admins');
       }
     } catch (error) {
       console.error(error);
@@ -73,6 +74,7 @@ const Form = () => {
           superAdmins.map((item) => (item._id === id ? { ...item, ...updatedSuperAdmin } : item))
         );
         alert(data.message);
+        history.push('/super-admins');
       }
     } catch (error) {
       console.error(error);
@@ -109,7 +111,6 @@ const Form = () => {
     } else {
       addSuperAdmin(item);
     }
-    history.push('/super-admins');
   };
 
   const handleCancel = () => {
