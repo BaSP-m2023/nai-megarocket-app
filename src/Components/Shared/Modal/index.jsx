@@ -3,6 +3,8 @@ import styles from './modal.module.css';
 import Button from '../Button';
 
 const SharedModal = (data) => {
+  let containerStyle = styles.content;
+
   if (!data.show) {
     return null;
   }
@@ -15,9 +17,22 @@ const SharedModal = (data) => {
     data.onConfirm();
   };
 
+  switch (data.typeStyle) {
+    case 'success':
+      containerStyle = styles.modalContentSuccess;
+      break;
+
+    case 'error':
+      containerStyle = styles.modalContentError;
+      break;
+    default:
+      containerStyle = styles.modalContentDefault;
+      break;
+  }
+
   return (
     <div className={styles.modalContainer}>
-      <div className={styles.modalContent}>
+      <div className={containerStyle}>
         <h3>{data.title}</h3>
         <p>{data.body}</p>
         <div className={styles.buttonContainer}>
