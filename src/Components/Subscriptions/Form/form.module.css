@@ -1,39 +1,53 @@
-form {
-  display: flex;
-  padding-bottom: 50px;
-}
-
 fieldset {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
-  width: 20vw;
+  align-items: flex-start;
+  padding: 50px;
   border: none;
+  font-size: 20px;
 }
 
 label {
   padding-bottom: 20px;
 }
 
+select {
+  font-size: 20px;
+}
 
 button {
-  width: 50px;
-  background-color: #4CAF7A;
-  color: white;
-  height: 50px;
-  border-radius: 50%;
+  width: 100px;
+  height: 100px;
   background-color: #4CAF7A;
   border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  color: white;
   cursor: pointer;
 }
 
-.daySelection {
+.form-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  width: 80%;
 }
 
-.buttonRemoveSelectedDay {
-  background: none;
-  color: #EA3354;
+.flex_buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.cancel_button {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+}
+
+.ok_button {
+  width: 100px;
+  height: 50px;
+  border-radius: 10%;
 }
