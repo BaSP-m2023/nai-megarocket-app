@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import styles from './form.module.css';
-
-const Form = ({ onSubmit, onCancel, editMode, trainer }) => {
+const Form = ({ editMode }) => {
+  const history = useHistory();
+  const { id } = useParams();
   const [firstName, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dni, setDNI] = useState('');
@@ -10,21 +12,25 @@ const Form = ({ onSubmit, onCancel, editMode, trainer }) => {
   const [city, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [salary, setSalary] = useState('');
-
   useEffect(() => {
-    if (editMode && trainer) {
-      setName(trainer.firstName);
-      setLastName(trainer.lastName);
-      setDNI(trainer.dni);
-      setPhoneNumber(trainer.phone);
-      setEmail(trainer.email);
-      setCity(trainer.city);
-      setSalary(trainer.salary);
-      setPassword(trainer.password);
+    if (editMode && id) {
+      const getTrainer = async () => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
+        const data = await response.json();
+        const trainer = data.data;
+        setName(trainer.firstName);
+        setLastName(trainer.lastName);
+        setDNI(trainer.dni);
+        setPhoneNumber(trainer.phone);
+        setEmail(trainer.email);
+        setCity(trainer.city);
+        setSalary(trainer.salary);
+        setPassword(trainer.password);
+      };
+      getTrainer();
     }
-  }, [editMode, trainer]);
-
-  const handleSubmit = (e) => {
+  }, [editMode, id]);
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
       firstName,
@@ -36,21 +42,36 @@ const Form = ({ onSubmit, onCancel, editMode, trainer }) => {
       password,
       salary
     };
-    onSubmit(formData);
-    setName('');
-    setLastName('');
-    setDNI('');
-    setPhoneNumber('');
-    setEmail('');
-    setCity('');
-    setPassword('');
-    setSalary('');
+    if (editMode) {
+      try {
+        await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+      } catch (error) {
+        console.error('Error editing trainer:', error);
+      }
+    } else {
+      try {
+        await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+      } catch (error) {
+        console.error('Error adding trainer:', error);
+      }
+    }
+    history.push('/trainers');
   };
-
   const handleCancel = () => {
-    onCancel();
+    history.push('/trainers');
   };
-
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.container}>
@@ -146,5 +167,4 @@ const Form = ({ onSubmit, onCancel, editMode, trainer }) => {
     </form>
   );
 };
-
 export default Form;
