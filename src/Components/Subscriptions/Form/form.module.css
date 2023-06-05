@@ -1,9 +1,3 @@
-.form-container{
-  display: flex;
-  flex-direction: row;
-  width: 80%;
-}
-
 fieldset {
   display: flex;
   flex-direction: column;
@@ -33,6 +27,12 @@ button {
   cursor: pointer;
 }
 
+.form-container {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+}
+
 .flex_buttons {
   display: flex;
   flex-direction: row;
@@ -50,14 +50,4 @@ button {
   width: 100px;
   height: 50px;
   border-radius: 10%;
-}
-
-.daySelection {
-  display: flex;
-  flex-direction: column;
-}
-
-.buttonRemoveSelectedDay {
-  background: none;
-  color: #EA3354;
 }

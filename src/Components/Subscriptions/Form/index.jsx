@@ -40,7 +40,6 @@ const Form = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     if (selectedSubscription) {
       updateSubscription(users);
     } else {
@@ -49,10 +48,8 @@ const Form = ({
         member: users.member,
         date: users.date
       };
-
       addSubscription(newSubscription);
     }
-
     setUsers({
       classes: '',
       member: '',
