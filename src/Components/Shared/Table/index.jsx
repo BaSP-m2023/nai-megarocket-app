@@ -1,7 +1,13 @@
 import React from 'react';
-import { FaTimes, FaEdit } from 'react-icons/fa';
+import Button from '../Button';
 import styles from './table.module.css';
-const Table = ({ data, rows, columnTitles, handleUpdateItem, handleDeleteItem }) => {
+const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteItem }) => {
+  const isBoolean = (value) => {
+    if (typeof value === 'boolean') {
+      return value === true ? 'Yes' : 'No';
+    }
+    return value;
+  };
   return (
     <table className={styles.tableShared}>
       <thead className={styles.tableHead}>
@@ -18,21 +24,21 @@ const Table = ({ data, rows, columnTitles, handleUpdateItem, handleDeleteItem })
         {data.map((item) => {
           return (
             <tr className={styles.tableTr} key={item._id}>
-              {rows.map((row) => {
-                const value = row.split('.').reduce((acc, curr) => (acc ? acc[curr] : null), item);
+              {properties.map((property) => {
+                const value = property
+                  .split('.')
+                  .reduce((acc, curr) => (acc ? acc[curr] : null), item);
+                const isArray = Array.isArray(value);
+                const displayValue = isArray ? value.join(', ') : value;
                 return (
-                  <td className={styles.tableThtd} key={row}>
-                    {Array.isArray(value) ? value.join(', ') : value}
+                  <td className={styles.tableThtd} key={property}>
+                    {isBoolean(displayValue) ? isBoolean(displayValue) : displayValue}
                   </td>
                 );
               })}
               <td className={styles.tableThtd}>
-                <i className="fas fa-edit" onClick={() => handleUpdateItem(item._id)}>
-                  <FaEdit />
-                </i>
-                <i className="fas fa-times" onClick={() => handleDeleteItem(item._id)}>
-                  <FaTimes />
-                </i>
+                <Button type="edit" clickAction={() => handleUpdateItem(item._id)} />
+                <Button type="delete" clickAction={() => handleDeleteItem(item._id)} />
               </td>
             </tr>
           );
