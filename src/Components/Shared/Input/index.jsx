@@ -2,29 +2,12 @@ import { useState, useEffect } from 'react';
 import styles from './input.module.css';
 
 function InputComponent({ inputType, data, list, listProp, labelName, editMode, useStateItem }) {
-  // inputType (text, date, isActive, list)
-  // data puede ser cualquier cosa que va en el value del input
-  // list lista para hacer .map, si no mandar null
-  // listProp es el string que va después del punto en el .map
-  // labelName es string
-  // editMode true o false
-
-  // ejemplo:
-
-  //   <InputComponent
-  //   inputType={'text'}
-  //   data={firstName}
-  //   list={null}
-  //   listProp={null}
-  //   labelName={'first name'}
-  //   editMode={true}
-  //   useStateItem={setFirstName}
-  //   />
-
   const [text, setText] = useState('');
   const [date, setDate] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [listItem, setListItem] = useState('');
+
+  const dateInput = new Date(data);
 
   useEffect(() => {
     if (editMode) {
@@ -34,8 +17,7 @@ function InputComponent({ inputType, data, list, listProp, labelName, editMode, 
           break;
 
         case 'date':
-          setDate(data);
-          // que el componente haga la transformación o que lo haga el componente hablar con gonza
+          setDate(dateInput.toISOString().substring(0, 10));
           break;
 
         case 'isActive':
