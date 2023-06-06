@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './subscriptions.module.css';
-import Table from './Table';
+import Table from '../Shared/Table';
+/* import Table from './Table'; */
 import Modal from './Modal';
 import Form from './Form';
 
@@ -208,11 +209,18 @@ const Subscriptions = () => {
         showForm={showForm}
         setShowForm={setShowForm}
       />
-      <Table
+      {/* <Table
         subscriptions={subscriptions}
         deleteItem={handleShowDeleteModal}
         handleEdit={handleShowEditModal}
         handleShowForm={handleShowForm}
+      /> */}
+      <Table
+        data={subscriptions || []}
+        properties={['firstName', 'lastName', 'className', 'actions']}
+        columnTitles={['First Name', 'Last Name', 'Class Name', 'Actions']}
+        handleUpdateItem={handleShowEditModal}
+        handleDeleteItem={handleShowDeleteModal}
       />
     </section>
   );
