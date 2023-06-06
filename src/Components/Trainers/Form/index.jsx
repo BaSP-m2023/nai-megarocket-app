@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styles from './form.module.css';
+import Button from '../../Shared/Button/index';
+import SharedModal from '../../Shared/Modal/index';
 
 const Form = () => {
   const history = useHistory();
@@ -13,6 +15,10 @@ const Form = () => {
   const [city, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [salary, setSalary] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalTypeStyle, setModalTypeStyle] = useState('success');
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const getTrainerById = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
@@ -33,6 +39,13 @@ const Form = () => {
       getTrainerById();
     }
   }, []);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    if (shouldRedirect) {
+      history.push('/trainers');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,13 +76,20 @@ const Form = () => {
       });
       const data = await response.json();
       if (!response.ok) {
-        alert(data.message);
+        setModalMessage(data.message);
+        setModalTypeStyle('error');
+        setShowModal(true);
       } else {
-        alert(data.message);
-        history.push('/trainers');
+        setModalMessage('Trainer added successfully');
+        setModalTypeStyle('success');
+        setShowModal(true);
+        setShouldRedirect(true);
       }
     } catch (error) {
       console.error('Error al agregar entrenador:', error);
+      setModalMessage('Error al agregar entrenador');
+      setModalTypeStyle('error');
+      setShowModal(true);
     }
   };
 
@@ -84,13 +104,20 @@ const Form = () => {
       });
       const data = await response.json();
       if (!response.ok) {
-        alert(data.message);
+        setModalMessage(data.message);
+        setModalTypeStyle('error');
+        setShowModal(true);
       } else {
-        alert(data.message);
-        history.push('/trainers');
+        setModalMessage('Trainer edited successfully');
+        setModalTypeStyle('success');
+        setShowModal(true);
+        setShouldRedirect(true);
       }
     } catch (error) {
       console.error('Error al editar entrenador:', error);
+      setModalMessage('Error al editar entrenador');
+      setModalTypeStyle('error');
+      setShowModal(true);
     }
   };
   const handleCancel = () => {
@@ -181,13 +208,20 @@ const Form = () => {
         </div>
       </div>
       <div className={styles.buttons}>
-        <button className={styles.button} type="button" onClick={handleCancel}>
-          Cancel
-        </button>
-        <button className={styles.button} type="submit" onSubmit={handleSubmit}>
-          {id ? <p>Confirm</p> : <p>Submit</p>}
-        </button>
+        <Button text="Cancel" type="cancel" clickAction={handleCancel} />
+        <Button text={id ? 'Confirm' : 'Submit'} type="submit" clickAction={handleSubmit} />
       </div>
+      <SharedModal
+        show={showModal}
+        title={id ? 'Edit Trainer' : 'Add Trainer'}
+        body={modalMessage}
+        isDelete={false}
+        typeStyle={modalTypeStyle}
+        closeModal={handleCloseModal}
+        onConfirm={() => {
+          handleSubmit;
+        }}
+      />
     </form>
   );
 };
