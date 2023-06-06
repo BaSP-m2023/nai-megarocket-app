@@ -184,7 +184,7 @@ const Form = () => {
           Cancel
         </button>
         <button className={styles.button} type="submit" onSubmit={handleSubmit}>
-          {id ? <p>Edit</p> : <p>Add</p>}
+          {id ? <p>Confirm</p> : <p>Submit</p>}
         </button>
       </div>
     </form>
