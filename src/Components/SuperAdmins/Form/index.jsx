@@ -144,7 +144,7 @@ const Form = () => {
         </div>
         <div className={styles.modalButtons}>
           <button className={styles.modalButton} onClick={onSubmit}>
-            Confirm
+            {id ? <p>Submit</p> : <p>Confirm</p>}
           </button>
           <button className={styles.modalButton} onClick={handleCancel}>
             Close
