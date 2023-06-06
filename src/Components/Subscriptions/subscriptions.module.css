@@ -16,8 +16,8 @@
 
 .addSubs {
   width: 9rem;
-  background-color: #aace9b;
-  border-color: rgba(55, 56, 103);
-  border: solid 1px;
-  color: #373867;
+  background-color:#4CAF7A;
+  border: none;
+  color: white;
+  cursor: pointer;
 }

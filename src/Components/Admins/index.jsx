@@ -51,18 +51,19 @@ const Admins = () => {
         },
         body: JSON.stringify(formData)
       });
+      const data = await response.json();
       if (!response.ok) {
         setModalInformation({ title: 'Admin not added', body: 'Error posting an admin' });
         setIsDelete(false);
         setShowModal(true);
-        throw new Error('Error posting an admin.');
+        throw new Error(data.message);
       }
       setModalInformation({ title: 'Admin added', body: 'The admin will be added' });
       setIsDelete(false);
       setShowModal(true);
-      getAdmins();
+      setShowForm(false);
     } catch (error) {
-      setModalInformation({ title: 'Admin not added', body: error });
+      setModalInformation({ title: 'Admin not added', body: error.message });
       setIsDelete(false);
       setShowModal(true);
       console.error(error);
@@ -71,8 +72,6 @@ const Admins = () => {
 
   const putAdmins = async (formData) => {
     try {
-      console.log(formData);
-      console.log(adminEdit._id);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminEdit._id}`, {
         method: 'PUT',
         headers: {
@@ -80,22 +79,29 @@ const Admins = () => {
         },
         body: JSON.stringify(formData)
       });
+      const data = await response.json();
       if (!response.ok) {
-        throw new Error('Error edit an admin.');
+        setModalInformation({ title: 'Admin not updated', body: 'Error editing an admin:' });
+        setIsDelete(false);
+        setShowModal(true);
+        throw new Error(data.message);
       }
-      setModalInformation({ title: 'Admin added', body: 'The admin will be updated' });
+      setModalInformation({ title: 'Admin updated', body: 'The admin will be updated' });
       setIsDelete(false);
       setShowModal(true);
       setAdminEdit([]);
-      getAdmins();
+      setShowForm(false);
     } catch (error) {
+      setModalInformation({ title: 'Admin not updated', body: error.message });
+      setIsDelete(false);
+      setShowModal(true);
       console.error(error);
     }
   };
 
   useEffect(() => {
     getAdmins();
-  }, []);
+  }, [putAdmins, postAdmins]);
 
   const deleteItem = (id) => {
     setModalInformation({ title: 'Warning', body: 'Are you sure?' });
@@ -127,7 +133,13 @@ const Admins = () => {
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      <button className={styles.newButton} onClick={() => hadleShowForm()}>
+      <button
+        className={styles.newButton}
+        onClick={() => {
+          hadleShowForm();
+          setAdminEdit([]);
+        }}
+      >
         + Add new Admin
       </button>
       {admins.length !== 0 ? (
