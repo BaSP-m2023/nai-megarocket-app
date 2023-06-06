@@ -48,47 +48,43 @@ const Form = () => {
     }
   };
 
+  const updateSubmit = async (formData) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        const errorMessage = await response.text;
+        console.log(errorMessage);
+        throw new Error(errorMessage);
+      }
+      history.push('/classes');
+    } catch (error) {
+      console.error('Error edited class:', error);
+    }
+  };
+
   const createSubmit = async (formData) => {
     try {
-      if (id) {
-        try {
-          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-          });
-          if (!response.ok) {
-            const errorMessage = await response.text;
-            console.log(errorMessage);
-          } else {
-            history.push('/classes');
-          }
-        } catch (error) {
-          console.error('Error edited class:', error);
-        }
-      } else {
-        try {
-          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-          });
-          if (!response.ok) {
-            const errorMessage = await response.text;
-            console.log(errorMessage);
-          } else {
-            history.push('/classes');
-          }
-        } catch (error) {
-          console.error('Error adding class:', error);
-        }
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        const errorMessage = await response.text;
+        console.log(errorMessage);
+        throw new Error(errorMessage);
       }
+      history.push('/classes');
     } catch (error) {
-      console.error('Error adding/updating class:', error);
+      console.error('Error adding class:', error);
     }
   };
 
@@ -102,7 +98,11 @@ const Form = () => {
       activity: activity,
       slots: parseInt(slots)
     };
-    createSubmit(formData);
+    if (id) {
+      updateSubmit(formData);
+    } else {
+      createSubmit(formData);
+    }
     setDay([]);
     setHour('');
     setTrainer('');
