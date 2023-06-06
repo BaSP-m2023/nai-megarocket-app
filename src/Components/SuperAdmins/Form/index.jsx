@@ -5,40 +5,23 @@ import styles from './super-admins.module.css';
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
-  const [superAdmins, setSuperAdmins] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [item, setItem] = useState({
+  const [superAdmin, setSuperAdmin] = useState({
     firstName: '',
     email: '',
     password: ''
   });
 
-  const getSuperAdmins = async () => {
+  const getSuperAdminById = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`);
-      const data = await response.json();
-      setSuperAdmins(data.data);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
+        method: 'GET'
+      });
+      const { data } = await response.json();
+      setSuperAdmin({ firstName: data.firstName, email: data.email, password: data.password });
     } catch (error) {
       console.error(error);
-      throw new Error('An error has occurred, cannot get the Super Admins');
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await getSuperAdmins();
-      setIsEdit(id);
-      if (isEdit && !isDataLoaded) {
-        const superAdmin = superAdmins.find((admin) => admin._id === id);
-        if (superAdmin) {
-          setItem(superAdmin);
-          setIsDataLoaded(true);
-        }
-      }
-    };
-    fetchData();
-  }, [id, superAdmins, isEdit, isDataLoaded]);
 
   const addSuperAdmin = async (superAdmin) => {
     try {
@@ -50,13 +33,16 @@ const Form = () => {
         body: JSON.stringify(superAdmin)
       });
       const data = await response.json();
-      if (!response.ok) {
+      if (response.ok) {
         alert(data.message);
+        setSuperAdmin({
+          firstName: '',
+          email: '',
+          password: ''
+        });
+        handleCancel();
       } else {
-        setSuperAdmins(data.data);
-        setSuperAdmins([...superAdmins, data.data]);
         alert(data.message);
-        history.push('/super-admins');
       }
     } catch (error) {
       console.error(error);
@@ -66,28 +52,19 @@ const Form = () => {
 
   const updateSuperAdmin = async (id, superAdmin) => {
     try {
-      const { firstName, email, password } = superAdmin;
-      const updatedSuperAdmin = {
-        firstName,
-        email,
-        password
-      };
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(updatedSuperAdmin)
+        body: JSON.stringify(superAdmin)
       });
       const data = await response.json();
-      if (!response.ok) {
+      if (response.ok) {
         alert(data.message);
+        handleCancel();
       } else {
-        setSuperAdmins(
-          superAdmins.map((item) => (item._id === id ? { ...item, ...updatedSuperAdmin } : item))
-        );
         alert(data.message);
-        history.push('/super-admins');
       }
     } catch (error) {
       console.error(error);
@@ -95,19 +72,25 @@ const Form = () => {
     }
   };
 
+  useEffect(() => {
+    if (id) {
+      getSuperAdminById(id);
+    }
+  }, []);
+
   const onChange = (e) => {
-    setItem({
-      ...item,
+    setSuperAdmin({
+      ...superAdmin,
       [e.target.name]: e.target.value
     });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (isEdit) {
-      updateSuperAdmin(id, item);
+    if (id) {
+      updateSuperAdmin(id, superAdmin);
     } else {
-      addSuperAdmin(item);
+      addSuperAdmin(superAdmin);
     }
   };
 
@@ -127,8 +110,9 @@ const Form = () => {
             type="text"
             id="firstName"
             name="firstName"
-            value={item.firstName}
+            value={superAdmin.firstName}
             onChange={onChange}
+            required
           />
         </div>
         <div>
@@ -136,7 +120,14 @@ const Form = () => {
             Email
           </label>
           <br />
-          <input type="email" id="email" name="email" value={item.email} onChange={onChange} />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={superAdmin.email}
+            onChange={onChange}
+            required
+          />
         </div>
         <div>
           <label className={styles.label} htmlFor="password">
@@ -147,16 +138,14 @@ const Form = () => {
             type="password"
             id="password"
             name="password"
-            value={item.password}
+            value={superAdmin.password}
             onChange={onChange}
           />
         </div>
         <div className={styles.modalButtons}>
-          <input
-            className={styles.modalButton}
-            type="submit"
-            value={isEdit ? 'Update' : 'Create'}
-          />
+          <button className={styles.modalButton} onClick={onSubmit}>
+            Confirm
+          </button>
           <button className={styles.modalButton} onClick={handleCancel}>
             Close
           </button>
