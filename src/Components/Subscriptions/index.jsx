@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './subscriptions.module.css';
-import Table from '../Shared/Table';
-/* import Table from './Table'; */
+import Table from './Table';
 import Modal from './Modal';
 import Form from './Form';
 
@@ -198,30 +197,7 @@ const Subscriptions = () => {
           Add New Subscription
         </button>
       </div>
-      <Form
-        className={styles.formContainer}
-        dataClasses={classes}
-        dataMembers={members}
-        addSubscription={addSubscription}
-        selectedSubscription={selectedSubscription}
-        updateSubscription={updateSubscription}
-        method={method}
-        showForm={showForm}
-        setShowForm={setShowForm}
-      />
-      {/* <Table
-        subscriptions={subscriptions}
-        deleteItem={handleShowDeleteModal}
-        handleEdit={handleShowEditModal}
-        handleShowForm={handleShowForm}
-      /> */}
-      <Table
-        data={subscriptions || []}
-        properties={['firstName', 'lastName', 'className', 'actions']}
-        columnTitles={['First Name', 'Last Name', 'Class Name', 'Actions']}
-        handleUpdateItem={handleShowEditModal}
-        handleDeleteItem={handleShowDeleteModal}
-      />
+      <Table subscriptions={subscriptions} handleDelete={handleDelete} handleEdit={handleEdit} />
     </section>
   );
 };
