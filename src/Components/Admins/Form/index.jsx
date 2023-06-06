@@ -1,6 +1,7 @@
 import { useParams, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Button from '../../Shared/Button';
 
 const Form = () => {
   const history = useHistory();
@@ -180,12 +181,10 @@ const Form = () => {
         />
       </div>
       <div className={styles.buttonsAdmin}>
-        <button className={styles.buttonAdmin} onClick={handleCancel}>
-          Cancel
-        </button>
-        <button className={styles.buttonAdmin} onClick={handleSubmit}>
-          Submit
-        </button>
+        <div className={styles.buttonsAdmin}>
+          <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
+          <Button text={'Submit'} type={'submit'} clickAction={handleSubmit} />
+        </div>
       </div>
     </form>
   );

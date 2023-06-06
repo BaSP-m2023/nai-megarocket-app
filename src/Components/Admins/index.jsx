@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
-import Table from './Table';
+import Table from '../Shared/Table';
+import Button from '../Shared/Button';
+import SharedModal from '../Shared/Modal';
 import { useHistory } from 'react-router-dom';
-import Modal from './Modals';
 
 const Admins = () => {
   const [isDelete, setIsDelete] = useState(false);
-  const [idDelete, setIdDelete] = useState();
+  const [typeStyle, setTypeStyle] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
   const [admins, setAdmins] = useState([]);
+  const [idAdmin, setIdAdmin] = useState('');
   const history = useHistory();
 
   const getAdmins = async () => {
@@ -39,6 +41,7 @@ const Admins = () => {
       }
       const data = await response.json();
       setAdmins([...admins.filter((admin) => admin._id !== data.data._id)]);
+      setShowModal(false);
       alert('Admin deleted');
     } catch (error) {
       console.error(error);
@@ -53,11 +56,16 @@ const Admins = () => {
     history.push(`/admins/form/${id}`);
   };
 
-  const deleteItem = (id) => {
+  const handleDeleteAdmin = (id) => {
     setModalInformation({ title: 'Warning', body: 'Are you sure?' });
     setIsDelete(true);
     setShowModal(true);
-    setIdDelete(id);
+    setTypeStyle('success');
+    setIdAdmin(id);
+  };
+
+  const confirmDelete = () => {
+    deleteAdmins(idAdmin);
   };
 
   const handleCancelDelete = () => {
@@ -67,21 +75,25 @@ const Admins = () => {
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      <button className={styles.buttonAdmin} onClick={handleAddAdmin}>
-        + Add new Admin
-      </button>
+      <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
       {admins.length !== 0 ? (
         <>
-          <Modal
-            idDelete={idDelete}
-            isDelete={isDelete}
+          <SharedModal
             show={showModal}
-            handleCancelDelete={handleCancelDelete}
-            deleteAdmins={deleteAdmins}
+            typeStyle={typeStyle}
             title={modalInformation.title}
             body={modalInformation.body}
+            isDelete={isDelete}
+            onConfirm={confirmDelete}
+            closeModal={handleCancelDelete}
           />
-          <Table data={admins} deleteItem={deleteItem} handleEdit={handleUpdateAdmin} />
+          <Table
+            data={admins}
+            properties={['firstName', 'lastName', 'phone', 'email']}
+            columnTitles={['First Name', 'Last Name', 'Phone Number', 'Email']}
+            handleUpdateItem={handleUpdateAdmin}
+            handleDeleteItem={handleDeleteAdmin}
+          />
         </>
       ) : (
         <>
