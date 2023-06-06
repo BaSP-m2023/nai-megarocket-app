@@ -59,6 +59,7 @@ const Form = () => {
             },
             body: JSON.stringify(formData)
           });
+          history.push('/classes');
         } catch (error) {
           console.error('Error edited class:', error);
         }
@@ -71,6 +72,7 @@ const Form = () => {
             },
             body: JSON.stringify(formData)
           });
+          history.push('/classes');
         } catch (error) {
           console.error('Error adding class:', error);
         }
@@ -96,7 +98,6 @@ const Form = () => {
     setTrainer('');
     setActivity('');
     setSlots('');
-    history.push('/classes');
   };
 
   const handleCancel = () => {
