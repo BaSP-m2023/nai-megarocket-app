@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import Modal from './Modals';
 import styles from './activities.module.css';
 import Table from './Table';
-import Form from './Form';
+import { useHistory } from 'react-router-dom';
 
 const Activities = () => {
-  const [showForm, setShowForm] = useState(false);
+  const history = useHistory();
+
   const [showModal, setShowModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -13,17 +14,11 @@ const Activities = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showEditErrorModal, setShowEditErrorModal] = useState(false);
   const [activities, setActivities] = useState([]);
-  const [selectedActivity, setSelectedActivity] = useState(null);
-  const [showEditForm, setShowEditForm] = useState(false);
   const [activityId, setActivityId] = useState();
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   useEffect(() => {
     getActivities();
   }, []);
-
-  useEffect(() => {
-    setShowForm(false);
-  }, [activities]);
 
   const getActivities = async () => {
     try {
@@ -52,71 +47,8 @@ const Activities = () => {
     }
   };
 
-  const editItem = async (activity, id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(activity)
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setShowEditModal(true);
-        const newActivity = data;
-        const updatedActivities = activities.map((item) => {
-          if (item._id === newActivity.data._id) {
-            return newActivity.data;
-          }
-          return item;
-        });
-        setActivities(updatedActivities);
-        setSelectedActivity(null);
-        setShowEditForm(false);
-      } else {
-        setShowEditErrorModal(true);
-        return;
-      }
-    } catch (error) {
-      setShowEditErrorModal(true);
-      console.error(error);
-      throw error;
-    }
-  };
-
-  const addActivities = async (activity) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(activity)
-      });
-      if (response.ok) {
-        getActivities();
-        setShowAddModal(true);
-        const newActivity = await response.json();
-        return newActivity.data;
-      } else {
-        setActivities(activities);
-        setShowAddErrorModal(true);
-      }
-    } catch (error) {
-      console.error(error);
-      setShowAddErrorModal(true);
-      throw error;
-    }
-  };
-
-  const addItem = ({ name, description }) => {
-    const newItem = {
-      name,
-      description
-    };
-    addActivities(newItem);
-    setActivities([...activities, newItem]);
+  const handleAddItem = () => {
+    history.push('activities/form');
   };
 
   const handleDeleteClick = (id) => {
@@ -134,20 +66,14 @@ const Activities = () => {
     modalStateSetter(false);
   };
 
-  const handleShowForm = () => {
-    setShowForm(true);
-  };
-
-  const handleEditItem = (activity, id) => {
-    setSelectedActivity(activity);
-    setShowEditForm(true);
-    setActivityId(id);
+  const handleEditItem = (id) => {
+    history.push(`/activities/form/${id}`);
   };
 
   return (
     <section className={styles.container}>
       <h2>Activities</h2>
-      <button className={styles.addButton} onClick={handleShowForm}>
+      <button className={styles.addButton} onClick={handleAddItem}>
         + Add new activity
       </button>
       <Modal
@@ -190,17 +116,7 @@ const Activities = () => {
         data={activities}
         deleteItem={handleDeleteClick}
         setShowModal={setShowModal}
-        handleShowForm={handleShowForm}
         handleEditItem={handleEditItem}
-        editItem={editItem}
-      />
-      <Form
-        addItem={addItem}
-        setShowAddModal={setShowAddModal}
-        showForm={showForm || showEditForm}
-        activityToEdit={selectedActivity}
-        editItem={editItem}
-        activityId={activityId}
       />
     </section>
   );
