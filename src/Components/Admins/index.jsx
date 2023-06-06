@@ -39,6 +39,7 @@ const Admins = () => {
       }
       const data = await response.json();
       setAdmins([...admins.filter((admin) => admin._id !== data.data._id)]);
+      alert('Admin deleted');
     } catch (error) {
       console.error(error);
     }
