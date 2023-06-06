@@ -1,3 +1,22 @@
+.buttonAdmin {
+  width: 120px;
+  height: auto;
+  background-color: #fff;
+  color: #000000;
+  border: #000000 1px solid;
+  border-radius: 5px;
+  padding: 10px 10px;
+  cursor: pointer;
+  margin: 1rem;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+.buttonAdmin:hover, .buttonAdmin:focus {
+  background-color: #6d7298;
+  color: #ffffff;
+  cursor: pointer;
+}
 .container {
   flex: 1;
   display: flex;
@@ -7,27 +26,4 @@
   justify-content: space-evenly;
   gap: 2vh;
   margin-bottom: 3vh;
-}
-.newButton {
-  box-shadow: inset 0px 1px 0px 0px #23395e;
-  background: linear-gradient(to bottom, #2e466e 5%, #415989 100%);
-  background-color: #2e466e;
-  border-radius: 3px;
-  border: 1px solid #1f2f47;
-  display: inline-block;
-  cursor: pointer;
-  color: #ffffff;
-  font-family: Arial;
-  font-size: 15px;
-  padding: 6px 24px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #ffff;
-}
-.newButton:hover {
-  background: linear-gradient(to bottom, #415989 5%, #2e466e 100%);
-  background-color: #415989;
-}
-.newButton:active {
-  position: relative;
-  top: 1px;
 }

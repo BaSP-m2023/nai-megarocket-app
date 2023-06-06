@@ -1,133 +1,192 @@
-import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import styles from './form.module.css';
 
-const Form = ({ postAdminForm, putAdminForm, adminEdit }) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [dni, setDNI] = useState('');
-  const [phone, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [city, setCity] = useState('');
-  const [password, setPassword] = useState('');
+const Form = () => {
+  const history = useHistory();
+  const { id } = useParams();
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    email: '',
+    city: '',
+    password: ''
+  });
 
-  useEffect(() => {
-    if (adminEdit.length !== 0) {
-      setFirstName(adminEdit.firstName);
-      setLastName(adminEdit.lastName);
-      setDNI(adminEdit.dni);
-      setPhoneNumber(adminEdit.phone);
-      setEmail(adminEdit.email);
-      setCity(adminEdit.city);
-      setPassword(adminEdit.password);
-    }
-  }, [adminEdit]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = {
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      password
-    };
-    if (adminEdit.length !== 0) {
-      putAdminForm(formData);
-    } else {
-      postAdminForm(formData);
+  const getAdminById = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
+      const data = await response.json();
+      setFormData({
+        firstName: data.data.firstName,
+        lastName: data.data.lastName,
+        dni: data.data.dni,
+        phone: data.data.phone,
+        email: data.data.email,
+        city: data.data.city,
+        password: data.data.password
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const cleanForm = () => {
-    setFirstName('');
-    setLastName('');
-    setDNI('');
-    setPhoneNumber('');
-    setEmail('');
-    setCity('');
-    setPassword('');
+  useEffect(() => {
+    if (id) {
+      getAdminById(id);
+    }
+  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (id) {
+      putAdmin(formData, id);
+    } else {
+      postAdmin(formData);
+    }
+  };
+
+  const postAdmin = async (admin) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(admin)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        history.push('/admins');
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const putAdmin = async (admin, id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(admin)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        history.push('/admins');
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const handleCancel = () => {
+    history.push('/admins');
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
-    <form className={styles.container}>
+    <form>
       <div>
         <h3 className={styles.h3}>Name</h3>
         <input
+          name="firstName"
           type="text"
-          value={firstName}
+          value={formData.firstName}
           placeholder="Name"
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={handleChange}
           required
         />
       </div>
       <div>
         <h3 className={styles.h3}>Last Name</h3>
         <input
+          name="lastName"
           type="text"
-          value={lastName}
+          value={formData.lastName}
           placeholder="Last Name"
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={handleChange}
           required
         />
       </div>
       <div>
         <h3 className={styles.h3}>DNI</h3>
         <input
+          name="dni"
           type="number"
-          value={dni}
+          value={formData.dni}
           placeholder="DNI"
-          onChange={(e) => setDNI(e.target.value)}
+          onChange={handleChange}
           required
         />
       </div>
       <div>
         <h3 className={styles.h3}>Phone</h3>
         <input
+          name="phone"
           type="number"
-          value={phone}
+          value={formData.phone}
           placeholder="Phone"
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          onChange={handleChange}
           required
         />
       </div>
       <div>
         <h3 className={styles.h3}>Email</h3>
         <input
+          name="email"
           type="text"
-          value={email}
+          value={formData.email}
           placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange}
           required
         />
       </div>
       <div>
         <h3 className={styles.h3}>City</h3>
         <input
+          name="city"
           type="text"
-          value={city}
+          value={formData.city}
           placeholder="City"
-          onChange={(e) => setCity(e.target.value)}
+          onChange={handleChange}
           required
         />
       </div>
       <div>
         <h3 className={styles.h3}>Password</h3>
         <input
+          name="password"
           type="text"
-          value={password}
+          value={formData.password}
           placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange}
           required
         />
       </div>
-      <button className={styles.deleteButton} onClick={cleanForm}>
-        Reset
-      </button>
-      <button className={styles.confirmButton} onClick={handleSubmit}>
-        Submit
-      </button>
+      <div className={styles.buttonsAdmin}>
+        <button className={styles.buttonAdmin} onClick={handleCancel}>
+          Cancel
+        </button>
+        <button className={styles.buttonAdmin} onClick={handleSubmit}>
+          Submit
+        </button>
+      </div>
     </form>
   );
 };
