@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react';
 import styles from './input.module.css';
 
-function InputComponent({ inputType, data, list, listProp, labelName, editMode, useStateItem }) {
+function InputComponent({
+  inputType,
+  value,
+  list,
+  listProp,
+  labelName,
+  editMode,
+  useStateItem,
+  placeholder
+}) {
   const [text, setText] = useState('');
   const [date, setDate] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [listItem, setListItem] = useState('');
 
-  const dateInput = new Date(data);
+  const dateInput = new Date(value);
 
   useEffect(() => {
     if (editMode) {
       switch (inputType) {
         case 'text':
-          setText(data);
+          setText(value);
           break;
 
         case 'date':
@@ -21,11 +30,11 @@ function InputComponent({ inputType, data, list, listProp, labelName, editMode, 
           break;
 
         case 'isActive':
-          setIsActive(data);
+          setIsActive(value);
           break;
 
         case 'list':
-          setListItem(data);
+          setListItem(value);
           break;
 
         default:
@@ -37,7 +46,7 @@ function InputComponent({ inputType, data, list, listProp, labelName, editMode, 
       setIsActive('');
       setListItem('');
     }
-  }, [data]);
+  }, [value]);
 
   const renderList = () => {
     return (
@@ -63,6 +72,7 @@ function InputComponent({ inputType, data, list, listProp, labelName, editMode, 
             type="text"
             value={text}
             onChange={(event) => useStateItem(event.target.value)}
+            placeholder={placeholder}
           />
         </label>
       );
