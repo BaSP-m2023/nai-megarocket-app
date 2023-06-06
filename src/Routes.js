@@ -9,7 +9,7 @@ import Trainers from './Components/Trainers';
 
 import ActivitiesForm from './Components/Activities/Form';
 import AdminsForm from './Components/Admins/Form';
-//import ClassesForm from './Components/Classes/Form';
+import ClassesForm from './Components/Classes/Form';
 import MembersForm from './Components/Members/Form';
 //import SubscriptionsForm from './Components/Subscriptions/Form';
 import SuperAdminsForm from './Components/SuperAdmins/Form';
@@ -27,9 +27,9 @@ const Routes = () => {
         <Route exact path="/admins" component={Admins} />
         <Route exact path="/admins/form" component={AdminsForm} />
         <Route path="/admins/form/:id" component={AdminsForm} />
-        {/*<Route path="/admins/form" component={AdminsForm} />*/}
         <Route exact path="/classes" component={Classes} />
-        {/*<Route path="/classes/form" component={ClassesForm} />*/}
+        <Route exact path="/classes/form" component={ClassesForm} />
+        <Route path="/classes/form/:id" component={ClassesForm} />
         <Route exact path="/members" component={Members} />
         <Route exact path="/members/form" component={MembersForm} />
         <Route path="/members/form/:id" component={MembersForm} />
