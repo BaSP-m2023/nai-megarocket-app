@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-import Table from './Table';
+import Table from '../Shared/Table/index';
 import Modal from './Modal';
 import { useHistory } from 'react-router-dom';
 
@@ -67,10 +67,17 @@ const SuperAdmins = () => {
           Add New
         </button>
       </div>
-      <Table
+      {/* <Table
         data={superAdmins}
         handleDeleteItem={handleDeleteSuperAdmin}
         handleUpdateItem={handleUpdateSuperAdmin}
+      /> */}
+      <Table
+        data={superAdmins || []}
+        properties={['firstName', 'email', 'password']}
+        columnTitles={['First Name', 'Email', 'Password']}
+        handleUpdateItem={handleUpdateSuperAdmin}
+        handleDeleteItem={handleDeleteSuperAdmin}
       />
       <Modal
         closeWarning={closeDeleteWarning}
