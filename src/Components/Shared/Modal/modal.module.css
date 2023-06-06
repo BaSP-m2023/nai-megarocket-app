@@ -1,0 +1,48 @@
+.modalContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 200vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContentDefault {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: white;
+  border-radius: 9px;
+}
+
+.modalContentError {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #e3170a;
+  border-radius: 9px;
+}
+
+.modalContentSuccess {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #fddba1;
+  border-radius: 9px;
+}
+
+.h3Container {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pContainer {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.buttonContainer {
+  display: flex;
+  width: 10vw;
+  margin-left: 200px;
+  margin-top: 20px;
+}

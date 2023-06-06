@@ -1,10 +1,10 @@
 import styles from './members.module.css';
-import { FaEdit, FaTimes, FaCog, FaInfoCircle } from 'react-icons/fa';
+import { FaEdit, FaTimes, FaCog } from 'react-icons/fa';
 import { FiCircle, FiSlash } from 'react-icons/fi';
 
 const MembersTable = ({
   members,
-  handleShowInfo,
+
   handleShowActionsClick,
   handleDelete,
   handleEdit,
@@ -53,11 +53,8 @@ const MembersTable = ({
                         <i className="fas fa-times" onClick={() => handleDelete(member._id)}>
                           <FaTimes />
                         </i>
-                        <i className="fas fa-pencil-alt" onClick={() => handleEdit(member)}>
+                        <i className="fas fa-pencil-alt" onClick={() => handleEdit(member._id)}>
                           <FaEdit />
-                        </i>
-                        <i onClick={() => handleShowInfo(member)}>
-                          <FaInfoCircle />
                         </i>
                       </>
                     )}

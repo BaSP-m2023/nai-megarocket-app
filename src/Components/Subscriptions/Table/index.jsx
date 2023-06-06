@@ -9,6 +9,7 @@ const Table = ({ subscriptions, deleteItem, handleEdit, handleShowForm }) => {
 
   const handleEditClick = (item) => {
     handleEdit(item);
+    handleShowForm();
   };
 
   return (
@@ -32,13 +33,7 @@ const Table = ({ subscriptions, deleteItem, handleEdit, handleShowForm }) => {
                 <button className={styles.buttonDelete} onClick={() => handleDelete(item._id)}>
                   <FaTimes />
                 </button>
-                <button
-                  className={styles.buttonEdit}
-                  onClick={() => {
-                    handleEditClick(item);
-                    handleShowForm();
-                  }}
-                >
+                <button className={styles.buttonEdit} onClick={() => handleEditClick(item)}>
                   <FaEdit />
                 </button>
               </td>

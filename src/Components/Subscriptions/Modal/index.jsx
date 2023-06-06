@@ -17,14 +17,16 @@ function Modal(props) {
   return (
     <div className={styles.modalContainer}>
       <div className={styles.modalContent}>
-        <h3>Confirm Deletion</h3>
-        <p>Are you sure you want to delete this subscription?</p>
+        <h3>{props.title}</h3>
+        <p>{props.message}</p>
         <div className={styles.buttonContainer}>
-          <button className={styles.buttonCancel} onClick={onCloseModal}>
-            Cancel
-          </button>
+          {props.showCancel && (
+            <button className={styles.buttonCancel} onClick={onCloseModal}>
+              Cancel
+            </button>
+          )}
           <button className={styles.buttonConfirm} onClick={onConfirm}>
-            Confirm
+            {props.confirmText}
           </button>
         </div>
       </div>
