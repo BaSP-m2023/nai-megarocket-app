@@ -4,7 +4,6 @@ import { useHistory, useParams } from 'react-router-dom';
 
 const MemberForm = () => {
   const { id } = useParams();
-
   const history = useHistory();
 
   useEffect(() => {
@@ -15,7 +14,6 @@ const MemberForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     if (id) {
       updateMemberById(id);
     } else {
@@ -33,7 +31,7 @@ const MemberForm = () => {
     city: '',
     birthDay: '',
     postalCode: '',
-
+    isActive: false,
     membership: ''
   });
 
@@ -60,7 +58,6 @@ const MemberForm = () => {
       const memberWithoutId = { ...member };
       delete memberWithoutId._id;
       delete memberWithoutId.__v;
-      delete memberWithoutId.isActive;
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'PUT',
         headers: {
@@ -193,7 +190,21 @@ const MemberForm = () => {
             name="postalCode"
           />
         </label>
-
+        <label className={styles['form-label']}>
+          Is Active?
+          <input
+            className={styles['form-input']}
+            type="checkbox"
+            checked={member.isActive}
+            onChange={(e) => {
+              setMember({
+                ...member,
+                isActive: e.target.checked
+              });
+            }}
+            name="isActive"
+          />
+        </label>
         <label className={styles['form-label']}>
           Memberships:
           <select
