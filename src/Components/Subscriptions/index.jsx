@@ -9,8 +9,6 @@ const Subscriptions = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [subscriptions, setSubscriptions] = useState([]);
-  /*   const [selectedSubscription, setSelectedSubscription] = useState(null);
-  const [method, setMethod] = useState(''); */
   const [successMessage, setSuccessMessage] = useState('');
 
   const getSubscriptions = async () => {
@@ -38,12 +36,6 @@ const Subscriptions = () => {
       console.error(error);
     }
   };
-
-  /*   const handleShowEditModal = () => {
-    setSelectedSubscription(item);
-    setMethod('PUT'); 
-    setShowDeleteModal(false);
-  }; */
 
   const handleAdd = () => {
     history.push('/subscriptions/form');

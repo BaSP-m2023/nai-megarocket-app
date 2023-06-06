@@ -5,11 +5,9 @@ import { useParams, useHistory } from 'react-router-dom';
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
-  const [subscription, setsubscription] = useState([]);
-  // const [selectedSubscription, setSelectedSubscription] = useState(null);
-  /*   const [subscriptionById, setsubscriptionById] = useState([]); */
   const [classes, setClasses] = useState([]);
   const [members, setMembers] = useState([]);
+  const [subscription, setsubscription] = useState([]);
   const [users, setUsers] = useState({
     classes: '',
     member: '',
@@ -24,17 +22,6 @@ const Form = () => {
     getMembers();
   }, [id]);
 
-  /*   useEffect(() => {
-    if (id) {
-      getsubscriptionById(id);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    getClasses();
-    getMembers();
-  }, []); */
-
   const getsubscriptionById = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
@@ -45,6 +32,11 @@ const Form = () => {
       }
       const { data } = await response.json();
       setsubscription(data);
+      setUsers({
+        classes: data.classes?._id || '',
+        member: data.member?._id || '',
+        date: new Date(data.date) || new Date()
+      });
     } catch (error) {
       console.error(error);
     }
@@ -112,46 +104,17 @@ const Form = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(subscription)
+        body: JSON.stringify(users)
       });
       if (response.ok) {
         handleCancel();
-      } else {
+      } else if (!response.ok) {
         throw new Error('Failed to update subscription');
       }
     } catch (error) {
       console.error(error);
     }
   };
-  /* const updateSubscription = async (updatedSubscription) => {
-    try {
-      if (!selectedSubscription || !selectedSubscription._id) {
-        throw new Error('Invalid subscription ID');
-      }
-
-      const response = await fetch(
-        ${process.env.REACT_APP_API_URL}/api/subscriptions/${selectedSubscription._id},
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(updatedSubscription)
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to update subscription');
-      }
-
-      setSuccessMessage('Subscription updated successfully');
-      getSubscriptions();
-      setSelectedSubscription(null);
-      setShowEditModal(false);
-    } catch (error) {
-      console.error(error);
-    }
-  }; */
 
   const onChangeClasses = (e) => {
     setUsers((prevState) => ({
@@ -174,7 +137,7 @@ const Form = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (id) {
-      updateSubscription(id);
+      updateSubscription(users, id);
     } else {
       const newSubscription = {
         classes: users.classes,
@@ -183,28 +146,7 @@ const Form = () => {
       };
       addSubscription(newSubscription);
     }
-    setUsers({
-      classes: '',
-      member: '',
-      date: new Date()
-    });
   };
-
-  /*   useEffect(() => {
-    if (method === 'PUT' && selectedSubscription) {
-      setUsers({
-        classes: selectedSubscription.classes?._id || '',
-        member: selectedSubscription.member?._id || '',
-        date: selectedSubscription.date || new Date()
-      });
-    } else {
-      setUsers({
-        classes: '',
-        member: '',
-        date: new Date()
-      });
-    }
-  }, [method, selectedSubscription]); */
 
   return (
     <>
@@ -237,7 +179,7 @@ const Form = () => {
             X
           </button>
           <button className={styles.ok_button} type="submit">
-            {id ? 'Update' : 'Add'}
+            {id ? 'Submit' : 'Confirm'}
           </button>
         </fieldset>
       </form>
