@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './form.module.css';
 
 const Form = ({
   dataClasses,
@@ -7,7 +8,8 @@ const Form = ({
   selectedSubscription,
   updateSubscription,
   method,
-  showForm
+  showForm,
+  setShowForm
 }) => {
   if (!showForm) {
     return null;
@@ -32,9 +34,12 @@ const Form = ({
     }));
   };
 
+  const handleCancel = () => {
+    setShowForm(false);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
-
     if (selectedSubscription) {
       updateSubscription(users);
     } else {
@@ -43,10 +48,8 @@ const Form = ({
         member: users.member,
         date: users.date
       };
-
       addSubscription(newSubscription);
     }
-
     setUsers({
       classes: '',
       member: '',
@@ -73,7 +76,7 @@ const Form = ({
   return (
     <>
       <h2>Form</h2>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className={styles['form-container']}>
         <fieldset>
           <label>Classes</label>
           <select value={users.classes} onChange={onChangeClasses}>
@@ -96,7 +99,14 @@ const Form = ({
             ))}
           </select>
         </fieldset>
-        <button type="submit">{selectedSubscription ? 'Update' : 'Add'}</button>
+        <fieldset className={styles.flex_buttons}>
+          <button className={styles.cancel_button} type="button" onClick={handleCancel}>
+            X
+          </button>
+          <button className={styles.ok_button} type="submit">
+            {selectedSubscription ? 'Update' : 'Add'}
+          </button>
+        </fieldset>
       </form>
     </>
   );
