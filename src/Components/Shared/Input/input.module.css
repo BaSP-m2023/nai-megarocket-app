@@ -1,0 +1,15 @@
+.form-input,
+.form-select {
+  width: 20vw;
+  padding: 1rem 1rem;
+  margin: 1rem 0;
+  border: 0.1rem solid rgba(55, 56, 103, 0.4);
+  border-radius: 0.2rem;
+  box-sizing: border-box;
+}
+
+.form-label {
+  text-align: left;
+  color: rgb(24, 24, 24);
+  font-size: 0.7rem;
+}

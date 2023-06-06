@@ -1,48 +1,108 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins.module.css';
 
-const Form = (props) => {
-  if (!props.showForm) {
-    return null;
-  }
-
-  const isPut = props.method === 'PUT';
-
-  const [item, setItem] = useState({
+const Form = () => {
+  const { id } = useParams();
+  const history = useHistory();
+  const [superAdmin, setSuperAdmin] = useState({
     firstName: '',
     email: '',
     password: ''
   });
 
-  useEffect(() => {
-    if (isPut) {
-      const item = props.data.filter((item) => item._id === props.itemId);
-      setItem({
-        firstName: item[0].firstName,
-        email: item[0].email,
-        password: item[0].password
+  const getSuperAdminById = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
+        method: 'GET'
       });
+      const { data } = await response.json();
+      setSuperAdmin({ firstName: data.firstName, email: data.email, password: data.password });
+    } catch (error) {
+      console.error(error);
     }
-  }, [props.method, props.data, props.itemId, isPut]);
+  };
+
+  const addSuperAdmin = async (superAdmin) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(superAdmin)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        setSuperAdmin({
+          firstName: '',
+          email: '',
+          password: ''
+        });
+        handleCancel();
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error('An error has occurred creating the Super Admin');
+    }
+  };
+
+  const updateSuperAdmin = async (id, superAdmin) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(superAdmin)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        handleCancel();
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error('An error has occurred updating the Super Admin');
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getSuperAdminById(id);
+    }
+  }, []);
 
   const onChange = (e) => {
-    setItem({
-      ...item,
+    setSuperAdmin({
+      ...superAdmin,
       [e.target.name]: e.target.value
     });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    isPut ? props.updateItem(props.itemId, item) : props.addItem(item);
+    if (id) {
+      updateSuperAdmin(id, superAdmin);
+    } else {
+      addSuperAdmin(superAdmin);
+    }
+  };
+
+  const handleCancel = () => {
+    history.push('/super-admins');
   };
 
   return (
-    <div className={styles.modalContainer}>
-      <form className={styles.modalContent} onSubmit={onSubmit}>
+    <div>
+      <form onSubmit={onSubmit}>
         <div>
-          <label className={styles.label} htmlFor="name">
+          <label className={styles.label} htmlFor="firstName">
             Name
           </label>
           <br />
@@ -50,8 +110,9 @@ const Form = (props) => {
             type="text"
             id="firstName"
             name="firstName"
-            value={item.firstName}
+            value={superAdmin.firstName}
             onChange={onChange}
+            required
           />
         </div>
         <div>
@@ -59,7 +120,14 @@ const Form = (props) => {
             Email
           </label>
           <br />
-          <input type="email" id="email" name="email" value={item.email} onChange={onChange} />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={superAdmin.email}
+            onChange={onChange}
+            required
+          />
         </div>
         <div>
           <label className={styles.label} htmlFor="password">
@@ -70,13 +138,15 @@ const Form = (props) => {
             type="password"
             id="password"
             name="password"
-            value={item.password}
+            value={superAdmin.password}
             onChange={onChange}
           />
         </div>
         <div className={styles.modalButtons}>
-          <input className={styles.modalButton} type="submit" value={isPut ? 'Edit' : 'Add'} />
-          <button className={styles.modalButton} onClick={props.closeForm}>
+          <button className={styles.modalButton} onClick={onSubmit}>
+            {id ? <p>Submit</p> : <p>Confirm</p>}
+          </button>
+          <button className={styles.modalButton} onClick={handleCancel}>
             Close
           </button>
         </div>

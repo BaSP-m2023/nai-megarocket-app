@@ -8,7 +8,7 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modalContent {
+.modalContentDefault {
   display: flex;
   flex-direction: column;
   padding: 30px;
@@ -16,11 +16,27 @@
   border-radius: 9px;
 }
 
-h3 {
+.modalContentError {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #e3170a;
+  border-radius: 9px;
+}
+
+.modalContentSuccess {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #fddba1;
+  border-radius: 9px;
+}
+
+.h3Container {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-p {
+.pContainer {
   font-family: Arial, Helvetica, sans-serif;
 }
 
