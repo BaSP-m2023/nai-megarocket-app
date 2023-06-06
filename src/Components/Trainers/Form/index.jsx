@@ -86,8 +86,8 @@ const Form = () => {
         setShouldRedirect(true);
       }
     } catch (error) {
-      console.error('Error al agregar entrenador:', error);
-      setModalMessage('Error al agregar entrenador');
+      console.error('Error to add trainer:', error);
+      setModalMessage('Error to add trainer');
       setModalTypeStyle('error');
       setShowModal(true);
     }
@@ -114,8 +114,8 @@ const Form = () => {
         setShouldRedirect(true);
       }
     } catch (error) {
-      console.error('Error al editar entrenador:', error);
-      setModalMessage('Error al editar entrenador');
+      console.error('Error to edit trainer:', error);
+      setModalMessage('Error to edit trainer');
       setModalTypeStyle('error');
       setShowModal(true);
     }
