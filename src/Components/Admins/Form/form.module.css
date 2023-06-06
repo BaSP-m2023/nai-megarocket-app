@@ -1,0 +1,23 @@
+.buttonsAdmin {
+  display: flex;
+  justify-content: flex-end;
+  margin:10px;
+}
+.buttonAdmin {
+  width: 120px;
+  height: auto;
+  background-color: #fff;
+  color: #000000;
+  border: #000000 1px solid;
+  border-radius: 5px;
+  padding: 10px 10px;
+  cursor: pointer;
+  margin: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.buttonAdmin:hover, .buttonAdmin:focus {
+  background-color: #6d7298;
+  color: #ffffff;
+  cursor: pointer;
+}
