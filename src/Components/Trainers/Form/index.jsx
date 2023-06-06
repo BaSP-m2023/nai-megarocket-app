@@ -51,7 +51,6 @@ const Form = () => {
     } else {
       addTrainer(formData);
     }
-    history.push('/trainers');
   };
   const addTrainer = async (formData) => {
     try {
@@ -67,6 +66,7 @@ const Form = () => {
         alert(data.message);
       } else {
         alert(data.message);
+        history.push('/trainers');
       }
     } catch (error) {
       console.error('Error al agregar entrenador:', error);
@@ -87,6 +87,7 @@ const Form = () => {
         alert(data.message);
       } else {
         alert(data.message);
+        history.push('/trainers');
       }
     } catch (error) {
       console.error('Error al editar entrenador:', error);
