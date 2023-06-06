@@ -32,8 +32,8 @@ const SharedModal = (data) => {
   return (
     <div className={styles.modalContainer}>
       <div className={containerStyle}>
-        <h3>{data.title}</h3>
-        <p>{data.body}</p>
+        <h3 className={styles.h3Container}>{data.title}</h3>
+        <p className={styles.pContainer}>{data.body}</p>
         <div className={styles.buttonContainer}>
           {data.isDelete ? (
             <>
