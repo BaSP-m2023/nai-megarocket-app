@@ -1,0 +1,32 @@
+.modalContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 200vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: white;
+  border-radius: 9px;
+}
+
+h3 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.buttonContainer {
+  display: flex;
+  width: 10vw;
+  margin-left: 200px;
+  margin-top: 20px;
+}
