@@ -28,10 +28,7 @@ const Table = ({ data, deleteItem, handleEditItem }) => {
                 >
                   <FaTimes />
                 </button>
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => handleEditItem(item, item._id)}
-                >
+                <button className={styles.deleteButton} onClick={() => handleEditItem(item._id)}>
                   <FaEdit />
                 </button>
               </td>
