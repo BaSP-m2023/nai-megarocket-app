@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import Table from '../Shared/Table/index';
 import Modal from './Modal';
+import Button from '../Shared/Button/index';
 import { useHistory } from 'react-router-dom';
 
 const SuperAdmins = () => {
@@ -63,15 +64,8 @@ const SuperAdmins = () => {
     <section className={styles.container}>
       <div className={styles.head}>
         <h2 className={styles.tableTitle}>Super Admins</h2>
-        <button onClick={handleAddSuperAdmin} className={styles.addButton}>
-          Add New
-        </button>
+        <Button text="Add New" clickAction={handleAddSuperAdmin} type="add" />
       </div>
-      {/* <Table
-        data={superAdmins}
-        handleDeleteItem={handleDeleteSuperAdmin}
-        handleUpdateItem={handleUpdateSuperAdmin}
-      /> */}
       <Table
         data={superAdmins || []}
         properties={['firstName', 'email', 'password']}
