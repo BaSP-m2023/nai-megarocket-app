@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import Table from '../Shared/Table/index';
-import Modal from './Modal';
+import Modal from '../Shared/Modal/index';
 import Button from '../Shared/Button/index';
 import { useHistory } from 'react-router-dom';
 
@@ -43,13 +43,20 @@ const SuperAdmins = () => {
     setSuperAdminId(id);
   };
 
-  const confirmDeleteSuperAdmin = () => {
-    deleteSuperAdmin(superAdminId);
-    setSuperAdmins([...superAdmins.filter((superAdmins) => superAdmins._id !== superAdminId)]);
-  };
-
   const closeDeleteWarning = () => {
     setShowDeleteWarning(false);
+  };
+
+  const confirmDeleteSuperAdmin = async () => {
+    try {
+      await deleteSuperAdmin(superAdminId);
+      setSuperAdmins((prevSuperAdmins) =>
+        prevSuperAdmins.filter((superAdmin) => superAdmin._id !== superAdminId)
+      );
+      setShowDeleteWarning(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleAddSuperAdmin = () => {
@@ -74,10 +81,12 @@ const SuperAdmins = () => {
         handleDeleteItem={handleDeleteSuperAdmin}
       />
       <Modal
-        closeWarning={closeDeleteWarning}
-        showWarning={showDeleteWarning}
-        confirmDelete={confirmDeleteSuperAdmin}
-        warningMsg="Are you sure you want to delete this Super Admin?"
+        show={showDeleteWarning}
+        closeModal={closeDeleteWarning}
+        onConfirm={confirmDeleteSuperAdmin}
+        title="Delete Super Admin"
+        body="Are you sure you want to delete this Super Admin?"
+        isDelete={true}
       />
     </section>
   );
