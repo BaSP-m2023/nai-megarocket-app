@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './classes.module.css';
 import Table from './Table';
+import Button from '../Shared/Button/index';
 import ModalClose from './Modal/modalClose';
 import { useHistory } from 'react-router-dom';
 
@@ -10,9 +11,9 @@ const Classes = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
-  const flagForm = () => {
-    history.push('/classes/form');
-  };
+  // const flagForm = () => {
+  //   history.push('/classes/form');
+  // };
   const getClasses = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
     const data = await response.json();
@@ -45,13 +46,15 @@ const Classes = () => {
     history.push(`/classes/form/${id}`);
   };
 
+  const handleAddClass = () => {
+    history.push('/classes/form');
+  };
+
   return (
     <section className={styles.container}>
       <>
         <h2>Classes</h2>
-        <button className={styles.btn} onClick={flagForm}>
-          Add New Class
-        </button>
+        <Button text="Add New" clickAction={handleAddClass} type="add" />
         <Table data={classes} deleteItem={deleteItem} editItem={editItem} />
         {showModal && <ModalClose message={modalMessage} onClose={closeModal} />}
       </>
