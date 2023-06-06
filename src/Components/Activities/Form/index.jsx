@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import Input from '../Input';
-import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
+import Input from '../Input';
+import Button from '../../Shared/Button';
+import SharedModal from '../../Shared/Modal';
+import styles from './form.module.css';
 
 const Form = () => {
   const history = useHistory();
@@ -11,6 +13,11 @@ const Form = () => {
     name: '',
     description: ''
   });
+  const [showModal, setShowModal] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+  const [typeStyle, setTypeStyle] = useState('');
+  const [titleModal, setTitleModal] = useState('');
+  const [bodyModal, setBodyModal] = useState('');
 
   const getActivityById = async (id) => {
     try {
@@ -33,14 +40,28 @@ const Form = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
-        goBack();
+        setIsDelete(false);
+        setTypeStyle('success');
+        setTitleModal(data.message);
+        setBodyModal(data.data.name + 'was edited');
+        setShowModal(true);
+        setTimeout(() => {
+          goBack();
+        }, 2000);
       } else {
-        alert(data.message);
+        setIsDelete(false);
+        setTypeStyle('error');
+        setTitleModal('Error');
+        setBodyModal(data.message);
+        setShowModal(true);
       }
     } catch (error) {
       console.error(error);
-      throw new Error('An error has ocurred creating the Activities');
+      setIsDelete(false);
+      setTypeStyle('error');
+      setBodyModal('Error to edit an activity');
+      setTitleModal('Error');
+      setShowModal(true);
     }
   };
 
@@ -55,18 +76,32 @@ const Form = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
+        setIsDelete(false);
+        setTypeStyle('success');
+        setTitleModal(data.data.name + 'was added');
+        setBodyModal('');
+        setShowModal(true);
         setActivity({
           name: '',
           description: ''
         });
-        goBack();
+        setTimeout(() => {
+          goBack();
+        }, 2000);
       } else {
-        alert(data.message);
+        setIsDelete(false);
+        setTypeStyle('error');
+        setTitleModal('Error');
+        setBodyModal(data.message);
+        setShowModal(true);
       }
     } catch (error) {
       console.error(error);
-      throw error;
+      setIsDelete(false);
+      setTypeStyle('error');
+      setBodyModal('Error to add an activity');
+      setTitleModal('Error');
+      setShowModal(true);
     }
   };
 
@@ -76,15 +111,7 @@ const Form = () => {
     }
   }, []);
 
-  const onChangeInput = (e) => {
-    setActivity({
-      ...activity,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     if (id) {
       editItem(activity, id);
     } else {
@@ -92,8 +119,34 @@ const Form = () => {
     }
   };
 
+  const handleConfirmClick = (e) => {
+    e.preventDefault();
+    setIsDelete(true);
+    setTypeStyle();
+    id
+      ? setTitleModal('Do you want to edit this activity?')
+      : setTitleModal('Do you want to add this activity?');
+    setBodyModal('');
+    setShowModal(true);
+  };
+
+  const handleConfirm = () => {
+    onSubmit();
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   const goBack = () => {
     history.push(`/activities`);
+  };
+
+  const onChangeInput = (e) => {
+    setActivity({
+      ...activity,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
@@ -116,13 +169,18 @@ const Form = () => {
           onChange={onChangeInput}
           required
         />
-        <button className={styles.submitButton} onClick={onSubmit}>
-          Save
-        </button>
-        <button className={styles.submitButton} onClick={goBack}>
-          Cancel
-        </button>
+        <Button text={'Submit'} type={'submit'} clickAction={handleConfirmClick}></Button>
+        <Button text={'Cancel'} type={'cancel'} clickAction={goBack}></Button>
       </form>
+      <SharedModal
+        show={showModal}
+        typeStyle={typeStyle}
+        title={titleModal}
+        body={bodyModal}
+        isDelete={isDelete}
+        onConfirm={handleConfirm}
+        closeModal={handleCloseModal}
+      />
     </div>
   );
 };
