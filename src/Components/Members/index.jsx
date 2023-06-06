@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
-import styles from './Tables/members.module.css';
-import MembersTable from './Tables/memberTable';
-import Modal from './Modals/modalMember';
+import styles from './members.module.css';
+import Table from '../Shared/Table';
+import Button from '../Shared/Button';
+import SharedModal from '../Shared/Modal';
 import { useHistory } from 'react-router-dom';
 
 const Members = () => {
   const history = useHistory();
   const [members, setMembers] = useState([]);
-  const [showActions, setShowActions] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const [memberToDelete, setMemberToDelete] = useState(null);
 
   useEffect(() => {
@@ -22,9 +23,16 @@ const Members = () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'DELETE'
       });
+      const data = await response.json();
       if (!response.ok) {
-        throw new Error('An error occurred while trying to delete the member');
+        setAlertMessage(data.message);
+        setShowAlert(true);
+        setIsSuccess(false);
       }
+      setAlertMessage(data.message);
+      setIsSuccess(true);
+      console.log(data);
+      setShowAlert(true);
     } catch (error) {
       console.error(error);
       throw error;
@@ -43,28 +51,22 @@ const Members = () => {
   };
 
   const handleDelete = (id) => {
-    setIsConfirmOpen(true);
+    setShowWarning(true);
     setMemberToDelete(id);
   };
 
   const handleConfirmDelete = async () => {
-    setIsConfirmOpen(false);
+    setShowWarning(false);
     try {
       await deleteMember(memberToDelete);
       setMembers((prevMembers) => prevMembers.filter((member) => member._id !== memberToDelete));
-      setSuccessMessage('Member deleted successfully');
     } catch (error) {
       console.error(error);
-      setErrorMessage('Failed to delete member');
     }
   };
 
-  const handleShowActionsClick = (event, id) => {
-    event.stopPropagation();
-    setShowActions((prevShowActions) => ({
-      ...prevShowActions,
-      [id]: !prevShowActions[id]
-    }));
+  const handleAdd = () => {
+    history.push('/members/form/');
   };
 
   const handleEdit = (id) => {
@@ -74,36 +76,35 @@ const Members = () => {
   return (
     <section className={styles.container}>
       <h2>Members</h2>
-      <MembersTable
-        members={members}
-        handleShowActionsClick={handleShowActionsClick}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-        showActions={showActions}
-      />
-
-      <button
-        className={styles['create-button']}
-        onClick={() => {
-          history.push('/members/form/');
-        }}
-      >
-        Create Member
-      </button>
-
-      <Modal
-        isOpen={isConfirmOpen}
-        closeModal={() => setIsConfirmOpen(false)}
-        onConfirm={handleConfirmDelete}
-      >
-        Do you want to delete this member?
-      </Modal>
-      <Modal isOpen={successMessage !== null} closeModal={() => setSuccessMessage(null)}>
-        {successMessage}
-      </Modal>
-      <Modal isOpen={errorMessage !== null} closeModal={() => setErrorMessage(null)}>
-        {errorMessage}
-      </Modal>
+      <Button text={'+ Add Member'} type={'add'} clickAction={handleAdd} />
+      {members.length !== 0 ? (
+        <>
+          <Table
+            data={members}
+            handleDeleteItem={handleDelete}
+            handleUpdateItem={handleEdit}
+            columnTitles={['Name', 'Surname', 'Email', 'Membership', 'Active']}
+            properties={['firstName', 'lastName', 'email', 'membership', 'isActive']}
+          />
+          <SharedModal
+            isDelete={true}
+            show={showWarning}
+            closeModal={() => setShowWarning(false)}
+            title={'Delete Member'}
+            body={'Are you sure you want to delete this member?'}
+            onConfirm={handleConfirmDelete}
+          />
+          <SharedModal
+            isDelete={false}
+            show={showAlert}
+            closeModal={() => setShowAlert(false)}
+            title={isSuccess ? 'Success' : 'Error'}
+            body={alertMessage}
+          />
+        </>
+      ) : (
+        <h3>There are no Members in the database</h3>
+      )}
     </section>
   );
 };
