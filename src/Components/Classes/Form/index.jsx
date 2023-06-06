@@ -52,27 +52,37 @@ const Form = () => {
     try {
       if (id) {
         try {
-          await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
           });
-          history.push('/classes');
+          if (!response.ok) {
+            const errorMessage = await response.text;
+            console.log(errorMessage);
+          } else {
+            history.push('/classes');
+          }
         } catch (error) {
           console.error('Error edited class:', error);
         }
       } else {
         try {
-          await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
           });
-          history.push('/classes');
+          if (!response.ok) {
+            const errorMessage = await response.text;
+            console.log(errorMessage);
+          } else {
+            history.push('/classes');
+          }
         } catch (error) {
           console.error('Error adding class:', error);
         }
