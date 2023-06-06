@@ -1,37 +1,46 @@
 import { useEffect, useState } from 'react';
 import styles from './Tables/members.module.css';
 import MembersTable from './Tables/memberTable';
-import SelectedMemberInfo from './Tables/selectedInfoMember';
-import MemberForm from './FormMembers';
 import Modal from './Modals/modalMember';
-import api from './api';
-
-const { fetchMembers, deleteMember, updateMember, createMember } = api;
+import { useHistory } from 'react-router-dom';
 
 const Members = () => {
+  const history = useHistory();
   const [members, setMembers] = useState([]);
-  const [selectedMember, setSelectedMember] = useState(null);
-  const [memberToEdit, setMemberToEdit] = useState(null);
   const [showActions, setShowActions] = useState({});
-  const [showForm, setShowForm] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState(null);
-
-  const getMembers = async () => {
-    try {
-      const members = await fetchMembers();
-      setMembers(members);
-    } catch (error) {
-      console.error(error);
-      setError(error.message);
-    }
-  };
 
   useEffect(() => {
     getMembers();
   }, []);
+
+  const deleteMember = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+        method: 'DELETE'
+      });
+      if (!response.ok) {
+        throw new Error('An error occurred while trying to delete the member');
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const getMembers = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
+      const data = await response.json();
+      setMembers(data.data);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
   const handleDelete = (id) => {
     setIsConfirmOpen(true);
@@ -43,16 +52,11 @@ const Members = () => {
     try {
       await deleteMember(memberToDelete);
       setMembers((prevMembers) => prevMembers.filter((member) => member._id !== memberToDelete));
-      setSuccess('Member deleted successfully');
+      setSuccessMessage('Member deleted successfully');
     } catch (error) {
       console.error(error);
-      setError('Failed to delete member');
+      setErrorMessage('Failed to delete member');
     }
-  };
-
-  const handleShowInfo = (member) => {
-    setSelectedMember(member);
-    setShowActions({});
   };
 
   const handleShowActionsClick = (event, id) => {
@@ -63,43 +67,8 @@ const Members = () => {
     }));
   };
 
-  const handleEdit = (member) => {
-    setMemberToEdit(member);
-    setShowForm(true);
-  };
-
-  const handleUpdate = async (member) => {
-    try {
-      await updateMember(member);
-      setMembers((prevMembers) =>
-        prevMembers.map((prevMember) => (prevMember._id === member._id ? member : prevMember))
-      );
-      setSuccess('Member updated successfully');
-    } catch (error) {
-      console.error(error);
-      setError('Failed to update member');
-    }
-    setShowForm(false);
-  };
-
-  const handleFormSubmit = async (member) => {
-    if (memberToEdit) {
-      handleUpdate(member);
-    } else {
-      try {
-        const newMember = await createMember(member);
-        setMembers((prevMembers) => [...prevMembers, newMember]);
-        setSuccess('Member created successfully');
-      } catch (error) {
-        console.error(error);
-        setError('Failed to create member');
-      }
-    }
-    setShowForm(false);
-  };
-
-  const handleClose = () => {
-    setSelectedMember(null);
+  const handleEdit = (id) => {
+    history.push(`/members/form/${id}`);
   };
 
   return (
@@ -107,36 +76,21 @@ const Members = () => {
       <h2>Members</h2>
       <MembersTable
         members={members}
-        handleShowInfo={handleShowInfo}
         handleShowActionsClick={handleShowActionsClick}
         handleDelete={handleDelete}
         handleEdit={handleEdit}
         showActions={showActions}
       />
+
       <button
         className={styles['create-button']}
         onClick={() => {
-          setMemberToEdit(null);
-          setShowForm(true);
+          history.push('/members/form/');
         }}
       >
         Create Member
       </button>
-      {showForm && (
-        <MemberForm
-          onSubmit={handleFormSubmit}
-          member={memberToEdit}
-          onCancel={() => setShowForm(false)}
-        />
-      )}
-      {selectedMember && !showForm && (
-        <>
-          <SelectedMemberInfo selectedMember={selectedMember} />
-          <button className={styles['button-info']} onClick={handleClose}>
-            Close
-          </button>
-        </>
-      )}
+
       <Modal
         isOpen={isConfirmOpen}
         closeModal={() => setIsConfirmOpen(false)}
@@ -144,11 +98,11 @@ const Members = () => {
       >
         Do you want to delete this member?
       </Modal>
-      <Modal isOpen={success !== null} closeModal={() => setSuccess(null)}>
-        {success}
+      <Modal isOpen={successMessage !== null} closeModal={() => setSuccessMessage(null)}>
+        {successMessage}
       </Modal>
-      <Modal isOpen={error !== null} closeModal={() => setError(null)}>
-        {error}
+      <Modal isOpen={errorMessage !== null} closeModal={() => setErrorMessage(null)}>
+        {errorMessage}
       </Modal>
     </section>
   );

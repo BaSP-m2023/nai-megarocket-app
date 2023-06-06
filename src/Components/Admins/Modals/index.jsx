@@ -11,22 +11,22 @@ function Modal(props) {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.modal}>
+    <div className={styles.modalAdminOverlay}>
+      <div className={styles.modalAdmin}>
         <h3 className={styles.h3}>{props.title}</h3>
         <p>{props.body}</p>
-        <div className={styles.buttonContainer}>
+        <div>
           {props.isDelete ? (
             <>
-              <button className={styles.deleteButton} onClick={onConfirmDelete}>
+              <button className={styles.buttonAdmin} onClick={onConfirmDelete}>
                 Yes
               </button>
-              <button className={styles.noButton} onClick={props.handleCancelDelete}>
+              <button className={styles.buttonAdmin} onClick={props.handleCancelDelete}>
                 No
               </button>
             </>
           ) : (
-            <button className={styles.noButton} onClick={props.handleCancelDelete}>
+            <button className={styles.buttonAdmin} onClick={props.handleCancelDelete}>
               Ok
             </button>
           )}

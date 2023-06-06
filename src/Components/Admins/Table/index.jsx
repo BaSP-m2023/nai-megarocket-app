@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './table.module.css';
 import { FaEdit, FaTimes } from 'react-icons/fa';
 
-const Table = ({ data, deleteItem, handleEdit }) => {
+const Table = (props) => {
   return (
     <table className={styles.container}>
       <thead className={styles.thead}>
@@ -15,7 +15,7 @@ const Table = ({ data, deleteItem, handleEdit }) => {
         </tr>
       </thead>
       <tbody className={styles.tbody}>
-        {data.map((item) => {
+        {props.data.map((item) => {
           return (
             <tr key={item._id}>
               <td>{item.firstName}</td>
@@ -23,10 +23,10 @@ const Table = ({ data, deleteItem, handleEdit }) => {
               <td>{item.phone}</td>
               <td>{item.email}</td>
               <td>
-                <button className={styles.deleteButton} onClick={() => deleteItem(item._id)}>
+                <button className={styles.deleteButton} onClick={() => props.deleteItem(item._id)}>
                   <FaTimes />
                 </button>
-                <button className={styles.editButton} onClick={() => handleEdit(item)}>
+                <button className={styles.editButton} onClick={() => props.handleEdit(item._id)}>
                   <FaEdit />
                 </button>
               </td>
