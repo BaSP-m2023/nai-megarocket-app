@@ -7,80 +7,15 @@ const MemberForm = () => {
 
   const history = useHistory();
 
-  // const [firstName, setFirstName] = useState('');
-  // const [lastName, setLastName] = useState('');
-  // const [dni, setDni] = useState('');
-  // const [phone, setPhone] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [city, setCity] = useState('');
-  // const [birthDay, setBirthDay] = useState('');
-  // const [postalCode, setPostalCode] = useState('');
-  // const [isActive, setIsActive] = useState(false);
-  // const [membership, setMembership] = useState('');
-
   useEffect(() => {
     if (id) {
       getMembersById(id);
-
-      // setFirstName(member.firstName);
-      // setLastName(member.lastName);
-      // setDni(member.dni);
-      // setPhone(member.phone);
-      // setEmail(member.email);
-      // setPassword(member.password);
-      // setCity(member.city);
-      // setBirthDay(member.birthDay);
-      // setPostalCode(member.postalCode);
-      // setIsActive(member.isActive);
-      // setMembership(member.membership);
-      // } else {
-      //   setFirstName('');
-      //   setLastName('');
-      //   setDni('');
-      //   setPhone('');
-      //   setEmail('');
-      //   setPassword('');
-      //   setCity('');
-      //   setBirthDay('');
-      //   setPostalCode('');
-      //   setIsActive(false);
-      //   setMembership('');
     }
   }, [id]);
 
-  // const handleSubmit = (event) => {
-  //   onSubmit({
-  //     ...member,
-  //     firstName,
-  //     lastName,
-  //     dni,
-  //     phone,
-  //     email,
-  //     password,
-  //     city,
-  //     birthDay,
-  //     postalCode,
-  //     isActive,
-  //     membership
-  //   });
-  // };
   const handleSubmit = (event) => {
     event.preventDefault();
-    // onSubmit({
-    //   ...member,
-    //   firstName,
-    //   lastName,
-    //   dni,
-    //   phone,
-    //   email,
-    //   password,
-    //   city,
-    //   birthDay,
-    //   postalCode,
-    //   isActive,
-    //   membership
-    // });
+
     if (id) {
       updateMemberById(id);
     } else {
@@ -98,7 +33,7 @@ const MemberForm = () => {
     city: '',
     birthDay: '',
     postalCode: '',
-    // isActive: false,
+
     membership: ''
   });
 
@@ -164,19 +99,6 @@ const MemberForm = () => {
       throw error;
     }
   };
-
-  // const handleUpdate = async (member) => {
-  //   try {
-  //     await updateMember(member);
-  //     setMembers((prevMembers) =>
-  //       prevMembers.map((prevMember) => (prevMember._id === member._id ? member : prevMember))
-  //     );
-  //     setSuccess('Member updated successfully');
-  //   } catch (error) {
-  //     console.error(error);
-  //     setErrorMessage('Failed to update member');
-  //   }
-  // };
 
   return (
     <div className={styles['form-container']}>
@@ -271,16 +193,7 @@ const MemberForm = () => {
             name="postalCode"
           />
         </label>
-        {/* <label className={styles['form-label']}>
-          Is Active?
-          <input
-            className={styles['form-input']}
-            type="checkbox"
-            checked={member.isActive}
-            onChange={onChange}
-            name="isActive"
-          />
-        </label> */}
+
         <label className={styles['form-label']}>
           Memberships:
           <select
