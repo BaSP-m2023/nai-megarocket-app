@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './input.module.css';
 
 function InputComponent({
+  inputName,
   inputType,
   value,
   list,
@@ -12,6 +13,9 @@ function InputComponent({
   placeholder
 }) {
   const [text, setText] = useState('');
+  const [number, setNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [listItem, setListItem] = useState('');
@@ -23,6 +27,18 @@ function InputComponent({
       switch (inputType) {
         case 'text':
           setText(value);
+          break;
+
+        case 'number':
+          setNumber(value);
+          break;
+
+        case 'password':
+          setPassword(value);
+          break;
+
+        case 'email':
+          setEmail(value);
           break;
 
         case 'date':
@@ -68,9 +84,62 @@ function InputComponent({
         <label className={styles['form-label']}>
           <h2>{labelName}</h2>
           <input
+            name={inputName}
+            required
             className={styles['form-input']}
             type="text"
             value={text}
+            onChange={(event) => useStateItem(event.target.value)}
+            placeholder={placeholder}
+          />
+        </label>
+      );
+    }
+
+    if (inputType === 'number') {
+      return (
+        <label className={styles['form-label']}>
+          <h2>{labelName}</h2>
+          <input
+            name={inputName}
+            required
+            className={styles['form-input']}
+            type="number"
+            value={number}
+            onChange={(event) => useStateItem(event.target.value)}
+            placeholder={placeholder}
+          />
+        </label>
+      );
+    }
+
+    if (inputType === 'password') {
+      return (
+        <label className={styles['form-label']}>
+          <h2>{labelName}</h2>
+          <input
+            name={inputName}
+            required
+            className={styles['form-input']}
+            type="password"
+            value={password}
+            onChange={(event) => useStateItem(event.target.value)}
+            placeholder={placeholder}
+          />
+        </label>
+      );
+    }
+
+    if (inputType === 'email') {
+      return (
+        <label className={styles['form-label']}>
+          <h2>{labelName}</h2>
+          <input
+            name={inputName}
+            required
+            className={styles['form-input']}
+            type="email"
+            value={email}
             onChange={(event) => useStateItem(event.target.value)}
             placeholder={placeholder}
           />
@@ -83,6 +152,8 @@ function InputComponent({
         <label className={styles['form-label']}>
           <h2>{labelName}</h2>
           <input
+            name={inputName}
+            required
             className={styles['form-input']}
             type="date"
             value={date}
@@ -97,6 +168,8 @@ function InputComponent({
         <label className={styles['form-label']}>
           <h2>{labelName}</h2>
           <input
+            name={inputName}
+            required
             className={styles['form-input']}
             type="checkbox"
             checked={isActive}
@@ -111,6 +184,8 @@ function InputComponent({
         <label className={styles['form-label']}>
           <h2>{labelName}</h2>
           <select
+            name={inputName}
+            required
             className={styles['form-select']}
             value={listItem}
             onChange={(event) => useStateItem(event.target.value)}
