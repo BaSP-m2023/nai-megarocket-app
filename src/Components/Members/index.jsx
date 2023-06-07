@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import styles from './members.module.css';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import SharedModal from '../Shared/Modal';
@@ -74,7 +73,7 @@ const Members = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <section>
       <h2>Members</h2>
       <Button text={'+ Add Member'} type={'add'} clickAction={handleAdd} />
       {members.length !== 0 ? (

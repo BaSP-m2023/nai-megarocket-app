@@ -97,9 +97,10 @@ const MemberForm = () => {
       if (!response.ok) {
         setAlertMessage(data.message);
         setShowAlert(true);
+      } else {
+        setAlertMessage(data.message);
+        setShowSuccessAlert(true);
       }
-      setAlertMessage(data.message);
-      setShowSuccessAlert(true);
     } catch (error) {
       console.error(error);
       throw error;
@@ -108,7 +109,6 @@ const MemberForm = () => {
 
   const handleCloseAlert = () => {
     if (showSuccessAlert) {
-      setShowAlert(false);
       history.push('/members');
     }
     setShowAlert(false);
