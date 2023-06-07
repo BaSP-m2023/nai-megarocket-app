@@ -43,7 +43,7 @@ const Form = () => {
         setIsDelete(false);
         setTypeStyle('success');
         setTitleModal(data.message);
-        setBodyModal(data.data.name + 'was edited');
+        setBodyModal(data.data.name + ' was edited');
         setShowModal(true);
         setTimeout(() => {
           goBack();
