@@ -8,10 +8,10 @@ import SuperAdmins from './Components/SuperAdmins';
 import Trainers from './Components/Trainers';
 
 import ActivitiesForm from './Components/Activities/Form';
-//import AdminsForm from './Components/Admins/Form';
-//import ClassesForm from './Components/Classes/Form';
+import AdminsForm from './Components/Admins/Form';
+import ClassesForm from './Components/Classes/Form';
 import MembersForm from './Components/Members/Form';
-//import SubscriptionsForm from './Components/Subscriptions/Form';
+import SubscriptionsForm from './Components/Subscriptions/Form';
 import SuperAdminsForm from './Components/SuperAdmins/Form';
 import TrainersForm from './Components/Trainers/Form';
 import Home from './Components/Home';
@@ -25,14 +25,17 @@ const Routes = () => {
         <Route exact path="/activities/form" component={ActivitiesForm} />
         <Route path="/activities/form/:id" component={ActivitiesForm} />
         <Route exact path="/admins" component={Admins} />
-        {/*<Route path="/admins/form" component={AdminsForm} />*/}
+        <Route exact path="/admins/form" component={AdminsForm} />
+        <Route path="/admins/form/:id" component={AdminsForm} />
         <Route exact path="/classes" component={Classes} />
-        {/*<Route path="/classes/form" component={ClassesForm} />*/}
+        <Route exact path="/classes/form" component={ClassesForm} />
+        <Route path="/classes/form/:id" component={ClassesForm} />
         <Route exact path="/members" component={Members} />
         <Route exact path="/members/form" component={MembersForm} />
         <Route path="/members/form/:id" component={MembersForm} />
         <Route exact path="/subscriptions" component={Subscriptions} />
-        {/*<Route path="/subscriptions/form" component={SubscriptionsForm} />*/}
+        <Route exact path="/subscriptions/form" component={SubscriptionsForm} />
+        <Route path="/subscriptions/form/:id" component={SubscriptionsForm} />
         <Route exact path="/super-admins" component={SuperAdmins} />
         <Route exact path="/super-admins/form" component={SuperAdminsForm} />
         <Route path="/super-admins/form/:id" component={SuperAdminsForm} />

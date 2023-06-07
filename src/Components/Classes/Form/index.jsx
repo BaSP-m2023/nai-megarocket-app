@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
+import { useHistory, useParams } from 'react-router-dom';
 
-const Form = ({ onSubmit, onCancel, editMode, classe }) => {
+const Form = () => {
+  const history = useHistory();
+  const { id } = useParams();
   const [day, setDay] = useState([]);
   const [hour, setHour] = useState('');
   const [trainer, setTrainer] = useState('');
@@ -10,20 +13,20 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
   const [activities, setActivities] = useState([]);
   const [trainers, setTrainers] = useState([]);
 
-  useEffect(() => {
-    if (editMode && classe) {
-      setDay(classe.day);
-      setHour(classe.hour);
-      setTrainer(classe.trainer?._id);
-      setActivity(classe.activity?._id);
-      setSlots(classe.slots);
+  const getClasses = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
+      const data = await response.json();
+      const classes = data.data;
+      setDay(classes.day);
+      setHour(classes.hour);
+      setTrainer(classes.trainer?._id);
+      setActivity(classes.activity?._id);
+      setSlots(classes.slots);
+    } catch (error) {
+      throw new Error(error);
     }
-  }, [editMode, classe]);
-
-  useEffect(() => {
-    fetchActivities();
-    fetchTrainers();
-  }, []);
+  };
 
   const fetchActivities = async () => {
     try {
@@ -45,6 +48,46 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
     }
   };
 
+  const updateSubmit = async (formData) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        const errorMessage = await response.text;
+        console.log(errorMessage);
+        throw new Error(errorMessage);
+      }
+      history.push('/classes');
+    } catch (error) {
+      console.error('Error edited class:', error);
+    }
+  };
+
+  const createSubmit = async (formData) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        const errorMessage = await response.text;
+        console.log(errorMessage);
+        throw new Error(errorMessage);
+      }
+      history.push('/classes');
+    } catch (error) {
+      console.error('Error adding class:', error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const dayArray = Array.isArray(day) ? day : day.split(',').map((d) => d.trim());
@@ -55,7 +98,11 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
       activity: activity,
       slots: parseInt(slots)
     };
-    onSubmit(formData);
+    if (id) {
+      updateSubmit(formData);
+    } else {
+      createSubmit(formData);
+    }
     setDay([]);
     setHour('');
     setTrainer('');
@@ -64,11 +111,19 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
   };
 
   const handleCancel = () => {
-    onCancel();
+    history.push('/classes/');
   };
 
+  useEffect(() => {
+    if (id) {
+      getClasses();
+    }
+    fetchActivities();
+    fetchTrainers();
+  }, []);
+
   const renderTrainer = () => {
-    if (editMode) {
+    if (id) {
       return trainers.map((trainer) => (
         <option key={trainer._id} value={trainer._id}>
           {trainer.firstName}
@@ -89,7 +144,7 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
   };
 
   const renderActivity = () => {
-    if (editMode) {
+    if (id) {
       return activities.map((activity) => (
         <option key={activity._id} value={activity._id}>
           {activity.name}
@@ -175,7 +230,7 @@ const Form = ({ onSubmit, onCancel, editMode, classe }) => {
           Cancel
         </button>
         <button className={styles.button} type="submit" onSubmit={handleSubmit}>
-          {editMode ? <p>Edit</p> : <p>Add</p>}
+          {id ? <p>Edit</p> : <p>Add</p>}
         </button>
       </div>
     </form>

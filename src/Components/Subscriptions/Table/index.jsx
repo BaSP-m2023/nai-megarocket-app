@@ -2,16 +2,7 @@ import React from 'react';
 import styles from './table.module.css';
 import { FaEdit, FaTimes } from 'react-icons/fa';
 
-const Table = ({ subscriptions, deleteItem, handleEdit, handleShowForm }) => {
-  const handleDelete = (id) => {
-    deleteItem(id);
-  };
-
-  const handleEditClick = (item) => {
-    handleEdit(item);
-    handleShowForm();
-  };
-
+const Table = ({ subscriptions, handleDelete, handleEdit }) => {
   return (
     <table className={styles.subscriptionsTable}>
       <thead className={styles.theadContainer}>
@@ -33,7 +24,7 @@ const Table = ({ subscriptions, deleteItem, handleEdit, handleShowForm }) => {
                 <button className={styles.buttonDelete} onClick={() => handleDelete(item._id)}>
                   <FaTimes />
                 </button>
-                <button className={styles.buttonEdit} onClick={() => handleEditClick(item)}>
+                <button className={styles.buttonEdit} onClick={() => handleEdit(item._id)}>
                   <FaEdit />
                 </button>
               </td>
