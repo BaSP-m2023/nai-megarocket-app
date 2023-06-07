@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import Table from '../Shared/Table/index';
-import Modal from '../Shared/Modal/index';
+import SharedModal from '../Shared/Modal';
 import Button from '../Shared/Button/index';
 import { useHistory } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ const SuperAdmins = () => {
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [superAdmins, setSuperAdmins] = useState([]);
   const [superAdminId, setSuperAdminId] = useState();
+  const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
 
   const getSuperAdmins = async () => {
     try {
@@ -32,7 +33,10 @@ const SuperAdmins = () => {
         method: 'DELETE'
       });
       const data = await response.json();
-      alert(data.message);
+      setModalInformation({
+        title: `Super admin deleted succesfully`,
+        body: data.message
+      });
     } catch (error) {
       console.error(error);
     }
@@ -80,12 +84,12 @@ const SuperAdmins = () => {
         handleUpdateItem={handleUpdateSuperAdmin}
         handleDeleteItem={handleDeleteSuperAdmin}
       />
-      <Modal
+      <SharedModal
         show={showDeleteWarning}
         closeModal={closeDeleteWarning}
         onConfirm={confirmDeleteSuperAdmin}
-        title="Delete Super Admin"
-        body="Are you sure you want to delete this Super Admin?"
+        title={modalInformation.title}
+        body={modalInformation.body}
         isDelete={true}
       />
     </section>

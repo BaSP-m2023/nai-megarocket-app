@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins.module.css';
+import Button from '../../Shared/Button/index';
+import SharedModal from '../../Shared/Modal/index';
 
 const Form = () => {
   const { id } = useParams();
@@ -10,6 +12,12 @@ const Form = () => {
     email: '',
     password: ''
   });
+  const [showModal, setShowModal] = useState(false);
+  const [typeStyle, setTypeStyle] = useState('');
+  const [titleModal, setTitleModal] = useState('');
+  const [bodyModal, setBodyModal] = useState('');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  //const [isDelete, setIsDelete] = useState(false);
 
   const getSuperAdminById = async (id) => {
     try {
@@ -34,15 +42,16 @@ const Form = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
-        setSuperAdmin({
-          firstName: '',
-          email: '',
-          password: ''
-        });
-        handleCancel();
+        setTypeStyle('success');
+        setTitleModal('Success');
+        setBodyModal('Super Admin created successfully.');
+        setShowSuccessModal(true);
+        setSuperAdmin({ firstName: '', email: '', password: '' });
       } else {
-        alert(data.message);
+        setTypeStyle('error');
+        setTitleModal('Error');
+        setBodyModal(data.message);
+        setShowModal(true);
       }
     } catch (error) {
       console.error(error);
@@ -61,10 +70,15 @@ const Form = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
-        handleCancel();
+        setTypeStyle('success');
+        setTitleModal('Success');
+        setBodyModal('Super Admin updated successfully.');
+        setShowSuccessModal(true);
       } else {
-        alert(data.message);
+        setTypeStyle('error');
+        setTitleModal('Error');
+        setBodyModal(data.message);
+        setShowModal(true);
       }
     } catch (error) {
       console.error(error);
@@ -72,11 +86,34 @@ const Form = () => {
     }
   };
 
+  // const deleteSuperAdmin = async (id) => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
+  //       method: 'DELETE'
+  //     });
+  //     const data = await response.json();
+  //     if (response.ok) {
+  //       setTypeStyle('success');
+  //       setTitleModal('Success');
+  //       setBodyModal('Super Admin deleted successfully.');
+  //       setShowSuccessModal(true);
+  //     } else {
+  //       setTypeStyle('error');
+  //       setTitleModal('Error');
+  //       setBodyModal(data.message);
+  //       setShowModal(true);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     throw new Error('An error has occurred while deleting the Super Admin');
+  //   }
+  // };
+
   useEffect(() => {
     if (id) {
       getSuperAdminById(id);
     }
-  }, []);
+  }, [id]);
 
   const onChange = (e) => {
     setSuperAdmin({
@@ -98,14 +135,34 @@ const Form = () => {
     history.push('/super-admins');
   };
 
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    history.replace('/super-admins');
+  };
+
+  const handleConfirm = () => {
+    history.replace('/super-admins');
+  };
+
+  const handleDelete = () => {
+    setTypeStyle('error');
+    setTitleModal('Delete Confirmation');
+    setBodyModal('Are you sure you want to delete this super admin?');
+    //setIsDelete(true);
+    openModal();
+  };
+
   return (
-    <div>
+    <>
       <form onSubmit={onSubmit}>
         <div>
           <label className={styles.label} htmlFor="firstName">
             Name
           </label>
-          <br />
           <input
             type="text"
             id="firstName"
@@ -119,7 +176,6 @@ const Form = () => {
           <label className={styles.label} htmlFor="email">
             Email
           </label>
-          <br />
           <input
             type="email"
             id="email"
@@ -133,7 +189,6 @@ const Form = () => {
           <label className={styles.label} htmlFor="password">
             Password
           </label>
-          <br />
           <input
             type="password"
             id="password"
@@ -143,15 +198,34 @@ const Form = () => {
           />
         </div>
         <div className={styles.modalButtons}>
-          <button className={styles.modalButton} onClick={onSubmit}>
-            {id ? <p>Submit</p> : <p>Confirm</p>}
-          </button>
-          <button className={styles.modalButton} onClick={handleCancel}>
-            Close
-          </button>
+          <Button text="Cancel" type="cancel" clickAction={handleCancel} />
+          {id ? (
+            <>
+              <Button text="Delete" type="delete" clickAction={handleDelete} />
+              <Button text="Confirm" type="submit" clickAction={onSubmit} />
+            </>
+          ) : (
+            <Button text="Submit" type="submit" clickAction={onSubmit} />
+          )}
         </div>
       </form>
-    </div>
+      <SharedModal
+        show={showModal}
+        typeStyle={typeStyle}
+        title={titleModal}
+        body={bodyModal}
+        closeModal={closeModal}
+        onConfirm={handleConfirm}
+      />
+      <SharedModal
+        show={showSuccessModal}
+        typeStyle="success"
+        title="Success"
+        body="Super Admin updated successfully."
+        closeModal={closeModal}
+        onConfirm={handleConfirm}
+      />
+    </>
   );
 };
 
