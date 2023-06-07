@@ -65,9 +65,10 @@ const Form = () => {
       if (!response.ok) {
         setAlertMessage(data.message);
         setShowAlert(true);
+      } else {
+        setAlertMessage(data.message);
+        setShowSuccessAlert(true);
       }
-      setAlertMessage(data.message);
-      setShowSuccessAlert(true);
     } catch (error) {
       alert(error);
     }
@@ -98,9 +99,14 @@ const Form = () => {
   const handleCancel = () => {
     if (showSuccessAlert) {
       setShowAlert(false);
-      history.push('/admins');
     }
     setShowAlert(false);
+    history.push('/admins');
+  };
+
+  const handleExitAlert = () => {
+    setShowAlert(false);
+    setShowSuccessAlert(false);
   };
 
   const handleChange = (e) => {
@@ -115,7 +121,7 @@ const Form = () => {
       <SharedModal
         isDelete={false}
         show={showAlert}
-        closeModal={handleCancel}
+        closeModal={handleExitAlert}
         title={'Something is wrong'}
         body={alertMessage}
       />
