@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import SharedModal from '../Shared/Modal';
+import styles from './members.module.css';
 import { useHistory } from 'react-router-dom';
 
 const Members = () => {
@@ -73,9 +74,11 @@ const Members = () => {
   };
 
   return (
-    <section>
-      <h2>Members</h2>
-      <Button text={'+ Add Member'} type={'add'} clickAction={handleAdd} />
+    <section className={styles.membersContainer}>
+      <div className={styles.membersSection}>
+        <h2>Members</h2>
+        <Button text={'+ Add Member'} type={'add'} clickAction={handleAdd} />
+      </div>
       {members.length !== 0 ? (
         <>
           <Table
@@ -96,6 +99,7 @@ const Members = () => {
           <SharedModal
             isDelete={false}
             show={showAlert}
+            typeStyle={isSuccess ? 'success' : 'error'}
             closeModal={() => setShowAlert(false)}
             title={isSuccess ? 'Success' : 'Error'}
             body={alertMessage}

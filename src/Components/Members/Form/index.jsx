@@ -6,25 +6,10 @@ import Button from '../../Shared/Button';
 
 const MemberForm = () => {
   const [showAlert, setShowAlert] = useState(false);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const { id } = useParams();
   const history = useHistory();
-
-  useEffect(() => {
-    if (id) {
-      getMembersById(id);
-    }
-  }, [id]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (id) {
-      updateMemberById(id);
-    } else {
-      createMember(member);
-    }
-  };
 
   const [member, setMember] = useState({
     firstName: '',
@@ -40,6 +25,15 @@ const MemberForm = () => {
     membership: ''
   });
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (id) {
+      updateMember(id);
+    } else {
+      addMember(member);
+    }
+  };
+
   const onChange = (e) => {
     setMember({
       ...member,
@@ -47,7 +41,7 @@ const MemberForm = () => {
     });
   };
 
-  const getMembersById = async (id) => {
+  const getMemberById = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`);
       const data = await response.json();
@@ -58,7 +52,7 @@ const MemberForm = () => {
     }
   };
 
-  const updateMemberById = async (id) => {
+  const updateMember = async (id) => {
     try {
       const memberWithoutId = { ...member };
       delete memberWithoutId._id;
@@ -73,10 +67,12 @@ const MemberForm = () => {
       const data = await response.json();
       if (!response.ok) {
         setAlertMessage(data.message);
+        setIsSuccess(false);
         setShowAlert(true);
       } else {
         setAlertMessage(data.message);
-        setShowSuccessAlert(true);
+        setIsSuccess(true);
+        setShowAlert(true);
       }
     } catch (error) {
       console.error(error);
@@ -84,7 +80,7 @@ const MemberForm = () => {
     }
   };
 
-  const createMember = async (member) => {
+  const addMember = async (member) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
         method: 'POST',
@@ -96,10 +92,12 @@ const MemberForm = () => {
       const data = await response.json();
       if (!response.ok) {
         setAlertMessage(data.message);
+        setIsSuccess(false);
         setShowAlert(true);
       } else {
         setAlertMessage(data.message);
-        setShowSuccessAlert(true);
+        setIsSuccess(true);
+        setShowAlert(true);
       }
     } catch (error) {
       console.error(error);
@@ -108,124 +106,149 @@ const MemberForm = () => {
   };
 
   const handleCloseAlert = () => {
-    if (showSuccessAlert) {
+    if (isSuccess) {
       history.push('/members');
+    } else {
+      setShowAlert(false);
     }
-    setShowAlert(false);
   };
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  useEffect(() => {
+    if (id) {
+      getMemberById(id);
+    }
+  }, [id]);
 
   return (
     <>
-      <SharedModal
-        isDelete={false}
-        show={showAlert}
-        closeModal={handleCloseAlert}
-        title={'Something went wrong'}
-        body={alertMessage}
-      />
-      <SharedModal
-        isDelete={false}
-        show={showSuccessAlert}
-        closeModal={handleCloseAlert}
-        title={'Success'}
-        body={alertMessage}
-      />
       <div className={styles['form-container']}>
+        <SharedModal
+          isDelete={false}
+          show={showAlert}
+          closeModal={handleCloseAlert}
+          typeStyle={isSuccess ? 'success' : 'error'}
+          title={isSuccess ? 'Success' : 'Something went wrong'}
+          body={alertMessage}
+        />
         <form className={styles['form-form']}>
-          <label className={styles['form-label']}>
-            Name:
+          <div className={`${styles['form-column']} ${styles['form-left-column']}`}>
+            <div className={styles.formInputs}>
+              <label>Name</label>
+              <input
+                className={styles['form-input']}
+                type="text"
+                value={member.firstName}
+                onChange={onChange}
+                name="firstName"
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <label>Last Name</label>
+              <input
+                className={styles['form-input']}
+                type="text"
+                value={member.lastName}
+                onChange={onChange}
+                name="lastName"
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <label>DNI</label>
+              <input
+                className={styles['form-input']}
+                type="text"
+                value={member.dni}
+                onChange={onChange}
+                name="dni"
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <label>Phone</label>
+              <input
+                className={styles['form-input']}
+                type="text"
+                value={member.phone}
+                onChange={onChange}
+                name="phone"
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <label>Email</label>
+              <input
+                className={styles['form-input']}
+                type="email"
+                value={member.email}
+                onChange={onChange}
+                name="email"
+              />
+            </div>
+          </div>
+          <div className={`${styles['form-column']} ${styles['form-right-column']}`}>
+            <div className={styles.formInputs}>
+              <label>Password</label>
+              <input
+                className={styles['form-input']}
+                type="password"
+                value={member.password}
+                onChange={onChange}
+                name="password"
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <label>City</label>
+              <input
+                className={styles['form-input']}
+                type="text"
+                value={member.city}
+                onChange={onChange}
+                name="city"
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <label>Date of birth</label>
+              <input
+                className={styles['form-input']}
+                type="date"
+                value={formatDate(member.birthDay)}
+                onChange={onChange}
+                name="birthDay"
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <label>ZIP code</label>
+              <input
+                className={styles['form-input']}
+                type="text"
+                value={member.postalCode}
+                onChange={onChange}
+                name="postalCode"
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <label>Memberships</label>
+              <select
+                className={styles['form-select']}
+                value={member.membership}
+                onChange={onChange}
+                name="membership"
+              >
+                <option value="">Select an option</option>
+                <option value="Black">Black</option>
+                <option value="Gold">Gold</option>
+                <option value="Silver">Silver</option>
+              </select>
+            </div>
+            <label>Is Active?</label>
             <input
-              className={styles['form-input']}
-              type="text"
-              value={member.firstName}
-              onChange={onChange}
-              name="firstName"
-            />
-          </label>
-          <label className={styles['form-label']}>
-            Last Name:
-            <input
-              className={styles['form-input']}
-              type="text"
-              value={member.lastName}
-              onChange={onChange}
-              name="lastName"
-            />
-          </label>
-          <label className={styles['form-label']}>
-            DNI:
-            <input
-              className={styles['form-input']}
-              type="text"
-              value={member.dni}
-              onChange={onChange}
-              name="dni"
-            />
-          </label>
-          <label className={styles['form-label']}>
-            Phone:
-            <input
-              className={styles['form-input']}
-              type="text"
-              value={member.phone}
-              onChange={onChange}
-              name="phone"
-            />
-          </label>
-          <label className={styles['form-label']}>
-            Email:
-            <input
-              className={styles['form-input']}
-              type="email"
-              value={member.email}
-              onChange={onChange}
-              name="email"
-            />
-          </label>
-          <label className={styles['form-label']}>
-            Password:
-            <input
-              className={styles['form-input']}
-              type="password"
-              value={member.password}
-              onChange={onChange}
-              name="password"
-            />
-          </label>
-          <label className={styles['form-label']}>
-            City:
-            <input
-              className={styles['form-input']}
-              type="text"
-              value={member.city}
-              onChange={onChange}
-              name="city"
-            />
-          </label>
-          <label className={styles['form-label']}>
-            Date of birth:
-            <input
-              className={styles['form-input']}
-              type="date"
-              value={member.birthDay}
-              onChange={onChange}
-              name="birthDay"
-            />
-          </label>
-          <label className={styles['form-label']}>
-            ZIP code:
-            <input
-              className={styles['form-input']}
-              type="text"
-              value={member.postalCode}
-              onChange={onChange}
-              name="postalCode"
-            />
-          </label>
-          <label className={styles['form-label']}>
-            Is Active?
-            <input
-              className={styles['form-input']}
+              className={styles['form-checkbox']}
               type="checkbox"
               checked={member.isActive}
               onChange={(e) => {
@@ -236,26 +259,12 @@ const MemberForm = () => {
               }}
               name="isActive"
             />
-          </label>
-          <label className={styles['form-label']}>
-            Memberships:
-            <select
-              className={styles['form-select']}
-              value={member.membership}
-              onChange={onChange}
-              name="membership"
-            >
-              <option value="">Select an option</option>
-              <option value="Black">Black</option>
-              <option value="Gold">Gold</option>
-              <option value="Silver">Silver</option>
-            </select>
-          </label>
-          <div className={styles['button-container']}>
-            <Button text={id ? 'Update' : 'Add'} type={'confirm'} clickAction={handleSubmit} />
-            <Button text={'Cancel'} type={'cancel'} clickAction={() => history.push('/members')} />
           </div>
         </form>
+        <div className={styles['button-container']}>
+          <Button text={id ? 'Update' : 'Add'} type={'confirm'} clickAction={handleSubmit} />
+          <Button text={'Cancel'} type={'cancel'} clickAction={() => history.push('/members')} />
+        </div>
       </div>
     </>
   );

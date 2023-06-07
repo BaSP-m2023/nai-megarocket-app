@@ -1,45 +1,48 @@
 .form-container {
+  margin-top: 5%;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .form-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-column {
+  flex: 1;
+}
+
+.form-left-column {
+  margin-right: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
-.form-label {
-  display: block;
-  margin-bottom: 1rem;
-  height: 20px;
-  color: rgb(49, 49, 49);
+.form-right-column {
+  margin-left: 10px;
 }
 
-.form-input,
+.formInputs {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
 .form-select {
-  font-size: 0.8rem;
-  padding: 0.25rem;
-  color: rgb(44, 44, 44);
-  border-radius: 7px;
-}
-
-.form-button {
+  width: 30%;
   font-size: 1rem;
-  padding: 0.5rem 0.5rem;
-  color: rgb(0, 0, 0);
-  border-radius: 10px;
-  background-color: #3d3d3d;
-  margin: 10px 10px;
-  color: aliceblue;
-}
-
-.form-button:hover {
- background-color: #424242cd;
+  height: 2rem;
 }
 
 .button-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+.form-checkbox {
+  margin-left: 3%;
 }

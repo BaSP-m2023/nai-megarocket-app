@@ -1,0 +1,12 @@
+.membersContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.membersSection {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
