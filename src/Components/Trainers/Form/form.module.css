@@ -2,7 +2,6 @@
   margin: 5%;
   margin-top: 0;
   border-radius: 20px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .container {
@@ -12,6 +11,7 @@
   max-width: 800px;
   padding: 4%;
   padding-bottom: 0;
+  margin-left: 13%;
 }
 .box {
   width: 40%;
@@ -19,26 +19,6 @@
   padding-right: 3%;
 }
 
-.buttons {
-  display: flex;
-  justify-content: flex-end;
-  margin:0;
-}
-.button {
-  width: 120px;
-  padding: 3%;
-  padding-top: 0;
-  padding-bottom: 0;
-  margin: 4%;
-  margin-left:0;
-  border: 1px solid #373867;
-  color: #373867;
-  background-color: #ffffff;
-  border-radius: 5px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  cursor: pointer;
-}
 .button:hover, .button:focus {
   background-color: #6d7298;
   color: #ffffff;
