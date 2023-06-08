@@ -24,16 +24,6 @@
   margin-top: 5vh;
 }
 
-input {
-  margin: 1vh 0 1vh 0;
-  font-size: 1.5vh;
-  width: 30vh;
-  height: 3vh;
-  border-radius: 5px;
-  border-style: solid;
-  font-family: inherit;
-}
-
 .modalButtons {
   display: flex;
   align-items: center;
