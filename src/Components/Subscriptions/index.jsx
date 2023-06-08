@@ -12,9 +12,7 @@ const Subscriptions = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  /*   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false); */
-  /*   const [successMessage, setSuccessMessage] = useState(''); */
+  const [subscriptionId, setSubscriptionId] = useState('');
 
   const getSubscriptions = async () => {
     try {
@@ -52,49 +50,21 @@ const Subscriptions = () => {
     history.push(`/subscriptions/form/${id}`);
   };
 
-  const handleDelete = (id) => {
-    deleteSubscription(id);
+  const confirmDelete = () => {
+    deleteSubscription(subscriptionId);
   };
-
+  const handleDeleteSubscription = (id) => {
+    setSubscriptionId(id);
+    setShowWarning(true);
+  };
   useEffect(() => {
     getSubscriptions();
   }, []);
-
+  console.log(subscriptions);
   return (
     <section className={styles.container}>
-      {/*       <Modal
-        show={showDeleteModal}
-        title="Confirm Deletion"
-        message="Are you sure you want to delete this subscription?"
-        confirmText="Delete"
-        onConfirm={handleDelete}
-        closeModal={() => setShowDeleteModal(false)}
-        showCancel={true}
-      />
-      <Modal
-        show={showEditModal}
-        title="Edit Subscription"
-        message="Edit subscription details"
-        confirmText="Save"
-        onConfirm={handleEdit}
-        closeModal={() => setShowEditModal(false)}
-        showCancel={true}
-      />
-      <Modal
-        show={successMessage !== ''}
-        title="Success"
-        message={successMessage}
-        confirmText="OK"
-        onConfirm={() => setSuccessMessage('')}
-        closeModal={() => setSuccessMessage('')}
-        showCancel={false}
-      /> */}
-
       <div className={styles.buttonContainer}>
         <h2>Subscriptions</h2>
-        {/*         <button className={styles.addSubs} onClick={handleAdd}>
-          Add New Subscription
-        </button> */}
         <Button text={'+ Add New Subscription'} type={'add'} clickAction={handleAdd} />
       </div>
       <Table
@@ -102,15 +72,15 @@ const Subscriptions = () => {
         properties={['member.firstName', 'member.lastName', 'classes.activity.name']}
         columnTitles={['First Name', 'Last Name', 'Class Name']}
         handleUpdateItem={handleEdit}
-        handleDeleteItem={() => setShowWarning(true)}
+        handleDeleteItem={handleDeleteSubscription}
       />
       <SharedModal
-        isDelete={false}
+        isDelete={true}
         show={showWarning}
         closeModal={() => setShowWarning(false)}
         title={'Delete subscription'}
         body={'Are you sure you want to delete this subscription?'}
-        onConfirm={handleDelete}
+        onConfirm={confirmDelete}
       />
       <SharedModal
         isDelete={false}

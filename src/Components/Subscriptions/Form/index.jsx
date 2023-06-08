@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useParams, useHistory } from 'react-router-dom';
+import Button from '../../Shared/Button';
+import SharedModal from '../../Shared/Modal';
 
 const Form = () => {
   const { id } = useParams();
@@ -13,6 +15,9 @@ const Form = () => {
     member: '',
     date: new Date()
   });
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -84,9 +89,11 @@ const Form = () => {
       });
       const { data } = await response.json();
       if (!response.ok) {
-        throw new Error('Failed to add subscription');
+        setAlertMessage('Failed to add subscription');
+        setShowAlert(true);
       } else {
-        handleCancel();
+        setAlertMessage('Subscription created!');
+        setShowSuccessAlert(true);
         setsubscription([...subscription, data]);
       }
     } catch (error) {
@@ -106,13 +113,16 @@ const Form = () => {
         },
         body: JSON.stringify(users)
       });
+      const data = await response.json();
       if (response.ok) {
-        handleCancel();
+        setAlertMessage('Subscription updated!');
+        setShowSuccessAlert(true);
       } else if (!response.ok) {
-        throw new Error('Failed to update subscription');
+        setAlertMessage(data.message);
+        setShowSuccessAlert(true);
       }
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -131,6 +141,10 @@ const Form = () => {
   };
 
   const handleCancel = () => {
+    if (showSuccessAlert) {
+      setShowAlert(false);
+    }
+    setShowAlert(false);
     history.push('/subscriptions');
   };
 
@@ -147,9 +161,27 @@ const Form = () => {
       addSubscription(newSubscription);
     }
   };
+  const handleExitAlert = () => {
+    setShowAlert(false);
+    setShowSuccessAlert(false);
+  };
 
   return (
     <>
+      <SharedModal
+        isDelete={false}
+        show={showAlert}
+        closeModal={handleExitAlert}
+        title={'Something is wrong'}
+        body={alertMessage}
+      />
+      <SharedModal
+        isDelete={false}
+        show={showSuccessAlert}
+        closeModal={handleCancel}
+        title={'Success'}
+        body={alertMessage}
+      />
       <h2>Form</h2>
       <form onSubmit={handleSubmit} className={styles['form-container']}>
         <fieldset>
@@ -175,12 +207,8 @@ const Form = () => {
           </select>
         </fieldset>
         <fieldset className={styles.flex_buttons}>
-          <button className={styles.cancel_button} type="button" onClick={handleCancel}>
-            X
-          </button>
-          <button className={styles.ok_button} type="submit">
-            {id ? 'Submit' : 'Confirm'}
-          </button>
+          <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
+          <Button text={id ? 'Submit' : 'Confirm'} type={'submit'} clickAction={handleSubmit} />
         </fieldset>
       </form>
     </>
