@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import styles from './subscriptions.module.css';
-import Table from './Table';
-import Modal from './Modal';
+import Table from '../Shared/Table/index';
 import { useHistory } from 'react-router-dom';
+import SharedModal from '../Shared/Modal/index';
+import Button from '../Shared/Button/index';
 
 const Subscriptions = () => {
   const history = useHistory();
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [subscriptions, setSubscriptions] = useState([]);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [showWarning, setShowWarning] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  /*   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false); */
+  /*   const [successMessage, setSuccessMessage] = useState(''); */
 
   const getSubscriptions = async () => {
     try {
@@ -18,19 +23,21 @@ const Subscriptions = () => {
         throw new Error('Failed to get subscriptions');
       }
       const { data } = await response.json();
+      setAlertMessage(data.message);
       setSubscriptions(data);
+      setIsSuccess(true);
     } catch (error) {
       console.error(error);
     }
   };
 
   const deleteSubscription = async (id) => {
+    setShowWarning(false);
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'DELETE'
       });
       setSubscriptions(subscriptions.filter((subscription) => subscription._id !== id));
-      setSuccessMessage('Subscription deleted successfully');
       getSubscriptions();
     } catch (error) {
       console.error(error);
@@ -47,7 +54,6 @@ const Subscriptions = () => {
 
   const handleDelete = (id) => {
     deleteSubscription(id);
-    setShowDeleteModal(false);
   };
 
   useEffect(() => {
@@ -56,7 +62,7 @@ const Subscriptions = () => {
 
   return (
     <section className={styles.container}>
-      <Modal
+      {/*       <Modal
         show={showDeleteModal}
         title="Confirm Deletion"
         message="Are you sure you want to delete this subscription?"
@@ -82,14 +88,38 @@ const Subscriptions = () => {
         onConfirm={() => setSuccessMessage('')}
         closeModal={() => setSuccessMessage('')}
         showCancel={false}
-      />
+      /> */}
+
       <div className={styles.buttonContainer}>
         <h2>Subscriptions</h2>
-        <button className={styles.addSubs} onClick={handleAdd}>
+        {/*         <button className={styles.addSubs} onClick={handleAdd}>
           Add New Subscription
-        </button>
+        </button> */}
+        <Button text={'+ Add New Subscription'} type={'add'} clickAction={handleAdd} />
       </div>
-      <Table subscriptions={subscriptions} handleDelete={handleDelete} handleEdit={handleEdit} />
+      <Table
+        data={subscriptions || []}
+        properties={['member.firstName', 'member.lastName', 'classes.activity.name']}
+        columnTitles={['First Name', 'Last Name', 'Class Name']}
+        handleUpdateItem={handleEdit}
+        handleDeleteItem={() => setShowWarning(true)}
+      />
+      <SharedModal
+        isDelete={false}
+        show={showWarning}
+        closeModal={() => setShowWarning(false)}
+        title={'Delete subscription'}
+        body={'Are you sure you want to delete this subscription?'}
+        onConfirm={handleDelete}
+      />
+      <SharedModal
+        isDelete={false}
+        show={showAlert}
+        typeStyle={isSuccess ? 'success' : 'error'}
+        closeModal={() => setShowAlert(false)}
+        title={isSuccess ? 'Success' : 'Error'}
+        body={alertMessage}
+      />
     </section>
   );
 };
