@@ -182,7 +182,7 @@ const Form = () => {
         title={'Success'}
         body={alertMessage}
       />
-      <h2>Form</h2>
+      <h2 className={styles.title}>Form</h2>
       <form onSubmit={handleSubmit} className={styles['form-container']}>
         <fieldset>
           <label>Classes</label>

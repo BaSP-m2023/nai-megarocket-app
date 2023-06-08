@@ -4,6 +4,7 @@
   justify-content: space-evenly;
   flex-direction: column;
   align-items: center;
+  margin-left: 20%;
 }
 
 .buttonContainer {
@@ -16,7 +17,7 @@
 
 .addSubs {
   width: 9rem;
-  background-color:#4CAF7A;
+  background-color: #4caf7a;
   border: none;
   color: white;
   cursor: pointer;
