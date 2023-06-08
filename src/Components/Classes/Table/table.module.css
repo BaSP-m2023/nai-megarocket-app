@@ -1,34 +1,3 @@
-table {
-  border-collapse: collapse;
-  width: 70%;
-  margin-bottom: 0.5rem;
-}
-table,
-th,
-td {
-  border: 1px solid black;
-  padding: 8px;
-}
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-th {
-  background-color: #575f77;
-  color: white;
-}
-td {
-  text-align: center;
-}
-tr {
-  height: 30px;
-}
-tr:hover {
-  background-color: #947373;
-}
-button {
-  margin: 0 5px 0 5px;
-  cursor: pointer;
-}
 .deleteButton {
   background-color: #ff0000;
   color: #fff;
