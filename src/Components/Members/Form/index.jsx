@@ -7,6 +7,7 @@ import Button from '../../Shared/Button';
 const MemberForm = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const { id } = useParams();
   const history = useHistory();
@@ -113,23 +114,31 @@ const MemberForm = () => {
     }
   };
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
+  const formatDate = (dateString) => {
+    const parts = dateString.split('-');
+    const year = parseInt(parts[0]);
+    const month = parseInt(parts[1]) - 1; // Restar 1 al mes, ya que los meses en JavaScript son indexados desde 0 (enero = 0)
+    const day = parseInt(parts[2]);
+    const date = new Date(year, month, day);
+
+    const formattedYear = date.getFullYear();
+    const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+    const formattedDay = date.getDate().toString().padStart(2, '0');
+
+    return `${formattedYear}-${formattedMonth}-${formattedDay}`;
+  };
 
   useEffect(() => {
     if (id) {
       getMemberById(id);
     }
-  }, [id]);
+  }, []);
 
+  console.log(member);
   return (
     <>
-      <div className={styles['form-container']}>
+      <div className={styles.formContainer}>
+        <h2 className={styles.formTitle}>{id ? 'Update Member' : 'Add Member'}</h2>
         <SharedModal
           isDelete={false}
           show={showAlert}
@@ -138,132 +147,89 @@ const MemberForm = () => {
           title={isSuccess ? 'Success' : 'Something went wrong'}
           body={alertMessage}
         />
-        <form className={styles['form-form']}>
-          <div className={`${styles['form-column']} ${styles['form-left-column']}`}>
+        <form className={styles.formMembers}>
+          <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <div className={styles.formInputs}>
               <label>Name</label>
-              <input
-                className={styles['form-input']}
-                type="text"
-                value={member.firstName}
-                onChange={onChange}
-                name="firstName"
-              />
+              <input type="text" value={member.firstName} onChange={onChange} name="firstName" />
             </div>
             <div className={styles.formInputs}>
               <label>Last Name</label>
-              <input
-                className={styles['form-input']}
-                type="text"
-                value={member.lastName}
-                onChange={onChange}
-                name="lastName"
-              />
+              <input type="text" value={member.lastName} onChange={onChange} name="lastName" />
             </div>
             <div className={styles.formInputs}>
               <label>DNI</label>
-              <input
-                className={styles['form-input']}
-                type="text"
-                value={member.dni}
-                onChange={onChange}
-                name="dni"
-              />
+              <input type="text" value={member.dni} onChange={onChange} name="dni" />
             </div>
             <div className={styles.formInputs}>
               <label>Phone</label>
-              <input
-                className={styles['form-input']}
-                type="text"
-                value={member.phone}
-                onChange={onChange}
-                name="phone"
-              />
+              <input type="text" value={member.phone} onChange={onChange} name="phone" />
             </div>
             <div className={styles.formInputs}>
               <label>Email</label>
-              <input
-                className={styles['form-input']}
-                type="email"
-                value={member.email}
-                onChange={onChange}
-                name="email"
-              />
+              <input type="email" value={member.email} onChange={onChange} name="email" />
             </div>
           </div>
-          <div className={`${styles['form-column']} ${styles['form-right-column']}`}>
+          <div className={`${styles.formColumn} ${styles.formRight}`}>
             <div className={styles.formInputs}>
               <label>Password</label>
-              <input
-                className={styles['form-input']}
-                type="password"
-                value={member.password}
-                onChange={onChange}
-                name="password"
-              />
+              <input type="password" value={member.password} onChange={onChange} name="password" />
             </div>
             <div className={styles.formInputs}>
               <label>City</label>
-              <input
-                className={styles['form-input']}
-                type="text"
-                value={member.city}
-                onChange={onChange}
-                name="city"
-              />
+              <input type="text" value={member.city} onChange={onChange} name="city" />
             </div>
             <div className={styles.formInputs}>
               <label>Date of birth</label>
               <input
-                className={styles['form-input']}
                 type="date"
-                value={formatDate(member.birthDay)}
+                onClick={() => setIsEditing(true)}
+                value={isEditing ? member.birthDay : formatDate(member.birthDay)}
                 onChange={onChange}
                 name="birthDay"
               />
             </div>
             <div className={styles.formInputs}>
               <label>ZIP code</label>
-              <input
-                className={styles['form-input']}
-                type="text"
-                value={member.postalCode}
-                onChange={onChange}
-                name="postalCode"
-              />
+              <input type="text" value={member.postalCode} onChange={onChange} name="postalCode" />
             </div>
-            <div className={styles.formInputs}>
-              <label>Memberships</label>
-              <select
-                className={styles['form-select']}
-                value={member.membership}
-                onChange={onChange}
-                name="membership"
-              >
-                <option value="">Select an option</option>
-                <option value="Black">Black</option>
-                <option value="Gold">Gold</option>
-                <option value="Silver">Silver</option>
-              </select>
+            <div className={styles.formInputsDiv}>
+              <div className={styles.membershipActive}>
+                <div>
+                  <label>Memberships</label>
+                  <select
+                    className={styles.formSelect}
+                    value={member.membership}
+                    onChange={onChange}
+                    name="membership"
+                  >
+                    <option value="">Select an option</option>
+                    <option value="Black">Black</option>
+                    <option value="Gold">Gold</option>
+                    <option value="Silver">Silver</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Active?</label>
+                  <input
+                    type="checkbox"
+                    checked={member.isActive}
+                    onChange={(e) => {
+                      setMember({
+                        ...member,
+                        isActive: e.target.checked
+                      });
+                    }}
+                    name="isActive"
+                  />
+                </div>
+              </div>
             </div>
-            <label>Is Active?</label>
-            <input
-              className={styles['form-checkbox']}
-              type="checkbox"
-              checked={member.isActive}
-              onChange={(e) => {
-                setMember({
-                  ...member,
-                  isActive: e.target.checked
-                });
-              }}
-              name="isActive"
-            />
           </div>
         </form>
-        <div className={styles['button-container']}>
-          <Button text={id ? 'Update' : 'Add'} type={'confirm'} clickAction={handleSubmit} />
+        <div className={styles.buttonContainer}>
           <Button text={'Cancel'} type={'cancel'} clickAction={() => history.push('/members')} />
+          <Button text={id ? 'Update' : 'Add'} type={'submit'} clickAction={handleSubmit} />
         </div>
       </div>
     </>
