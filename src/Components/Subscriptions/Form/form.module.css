@@ -1,7 +1,9 @@
 .form-container {
   display: flex;
   flex-direction: row;
-  margin: auto;
+  margin-top: 30%;
+  margin-left: 17%;
+  max-width: 50%;
 }
 
 .flex_buttons {

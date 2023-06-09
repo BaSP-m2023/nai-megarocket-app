@@ -1,13 +1,11 @@
 .adminForm {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 800px;
-  padding: 0;
-  margin-left: 30%;
-  margin-top: 8%;
-  border-radius: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 50%;
+  margin-left: 33%;
+  margin-top: 6%;
 }
 .containerAdminForm {
   display: flex;
@@ -33,7 +31,7 @@
   border-radius: 5px;
   border: 1px solid;
 }
-.buttonsAdminForm{
+.buttonsAdminForm {
   display: flex;
   justify-content: space-around;
   width: 35%;
@@ -41,10 +39,9 @@
   padding: 2%;
   padding-top: 0;
 }
-.titleAdminForm{
+.titleAdminForm {
   width: 100%;
   padding-top: 2%;
   padding-bottom: 2%;
   text-align: center;
-  border-bottom: 1px solid #D7D7D7;
 }

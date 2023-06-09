@@ -2,7 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20vh;
+  flex-direction: column;
+  margin-left: 45%;
+  margin-top: 20%;
 }
 
 .fieldsetForm {

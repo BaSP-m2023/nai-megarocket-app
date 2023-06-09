@@ -1,4 +1,4 @@
-form {
+.form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,6 +11,8 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-left: 20%;
+  margin-top: 15%;
 }
 
 .submitButton {

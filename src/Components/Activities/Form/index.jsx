@@ -152,7 +152,7 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <h2>Form</h2>
-      <form>
+      <form className={styles.form}>
         <Input
           id="name"
           name="name"
