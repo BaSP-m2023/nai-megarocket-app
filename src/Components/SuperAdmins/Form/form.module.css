@@ -1,0 +1,20 @@
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20vh;
+}
+
+.fieldsetForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: space-around;
+  width: fit-content;
+  margin: 2vh;
+}
+
+.label {
+  margin: 2vh;
+}

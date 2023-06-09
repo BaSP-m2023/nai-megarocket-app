@@ -11,6 +11,9 @@ const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
   const [superAdminId, setSuperAdminId] = useState();
   const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
 
   const getSuperAdmins = async () => {
     try {
@@ -33,16 +36,20 @@ const SuperAdmins = () => {
         method: 'DELETE'
       });
       const data = await response.json();
-      setModalInformation({
-        title: `Super admin deleted succesfully`,
-        body: data.message
-      });
+      if (!response.ok) {
+        setAlertMessage(data.message);
+        setShowAlert(true);
+      } else {
+        setAlertMessage(data.message);
+        setShowSuccessAlert(true);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleDeleteSuperAdmin = (id) => {
+    setModalInformation({ title: 'Warning', body: 'Are you sure?' });
     setShowDeleteWarning(true);
     setSuperAdminId(id);
   };
@@ -71,10 +78,14 @@ const SuperAdmins = () => {
     history.push(`/super-admins/form/${id}`);
   };
 
+  const handleExitAlert = () => {
+    setShowSuccessAlert(false);
+  };
+
   return (
     <section className={styles.container}>
       <div className={styles.head}>
-        <h2 className={styles.tableTitle}>Super Admins</h2>
+        <h2>Super Admins</h2>
         <Button text="Add New" clickAction={handleAddSuperAdmin} type="add" />
       </div>
       <Table
@@ -91,6 +102,20 @@ const SuperAdmins = () => {
         title={modalInformation.title}
         body={modalInformation.body}
         isDelete={true}
+      />
+      <SharedModal
+        isDelete={false}
+        show={showSuccessAlert}
+        closeModal={handleExitAlert}
+        title={'Success'}
+        body={alertMessage}
+      />
+      <SharedModal
+        isDelete={false}
+        show={showAlert}
+        closeModal={handleExitAlert}
+        title={'Something is wrong'}
+        body={alertMessage}
       />
     </section>
   );

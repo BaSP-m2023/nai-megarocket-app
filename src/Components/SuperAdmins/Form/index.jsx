@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import styles from './super-admins.module.css';
+import styles from './form.module.css';
 import Button from '../../Shared/Button/index';
 import SharedModal from '../../Shared/Modal/index';
 
@@ -17,7 +17,6 @@ const Form = () => {
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  //const [isDelete, setIsDelete] = useState(false);
 
   const getSuperAdminById = async (id) => {
     try {
@@ -86,29 +85,6 @@ const Form = () => {
     }
   };
 
-  // const deleteSuperAdmin = async (id) => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-  //       method: 'DELETE'
-  //     });
-  //     const data = await response.json();
-  //     if (response.ok) {
-  //       setTypeStyle('success');
-  //       setTitleModal('Success');
-  //       setBodyModal('Super Admin deleted successfully.');
-  //       setShowSuccessModal(true);
-  //     } else {
-  //       setTypeStyle('error');
-  //       setTitleModal('Error');
-  //       setBodyModal(data.message);
-  //       setShowModal(true);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw new Error('An error has occurred while deleting the Super Admin');
-  //   }
-  // };
-
   useEffect(() => {
     if (id) {
       getSuperAdminById(id);
@@ -132,34 +108,21 @@ const Form = () => {
   };
 
   const handleCancel = () => {
-    history.push('/super-admins');
-  };
-
-  const openModal = () => {
-    setShowModal(true);
+    history.goBack();
   };
 
   const closeModal = () => {
     setShowModal(false);
-    history.replace('/super-admins');
   };
 
   const handleConfirm = () => {
-    history.replace('/super-admins');
-  };
-
-  const handleDelete = () => {
-    setTypeStyle('error');
-    setTitleModal('Delete Confirmation');
-    setBodyModal('Are you sure you want to delete this super admin?');
-    //setIsDelete(true);
-    openModal();
+    setShowSuccessModal(false);
   };
 
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <div>
+      <form onSubmit={onSubmit} className={styles.modalContainer}>
+        <div className={styles.fieldsetForm}>
           <label className={styles.label} htmlFor="firstName">
             Name
           </label>
@@ -170,9 +133,10 @@ const Form = () => {
             value={superAdmin.firstName}
             onChange={onChange}
             required
+            className={styles.inputForm}
           />
         </div>
-        <div>
+        <div className={styles.fieldsetForm}>
           <label className={styles.label} htmlFor="email">
             Email
           </label>
@@ -183,9 +147,10 @@ const Form = () => {
             value={superAdmin.email}
             onChange={onChange}
             required
+            className={styles.inputForm}
           />
         </div>
-        <div>
+        <div className={styles.fieldsetForm}>
           <label className={styles.label} htmlFor="password">
             Password
           </label>
@@ -195,13 +160,13 @@ const Form = () => {
             name="password"
             value={superAdmin.password}
             onChange={onChange}
+            className={styles.inputForm}
           />
         </div>
-        <div className={styles.modalButtons}>
+        <div>
           <Button text="Cancel" type="cancel" clickAction={handleCancel} />
           {id ? (
             <>
-              <Button text="Delete" type="delete" clickAction={handleDelete} />
               <Button text="Confirm" type="submit" clickAction={onSubmit} />
             </>
           ) : (

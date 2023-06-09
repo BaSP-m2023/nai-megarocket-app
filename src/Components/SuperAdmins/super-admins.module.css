@@ -1,38 +1,25 @@
 .container {
-  color:#373867;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.addButton {
-display: flex;
-color: #373867;
-font-size: 16px;
-font-weight: 700;
-align-items: center;
-justify-content: center;
-border-style: none;
-height: 5vh;
-width: 102px;
-background: #AACE9B;
-border-radius: 5px;
-}
-
-.addButton:hover {
-  background-color: #373867;
-  color: white;
-  cursor: pointer;
-}
-
-.tableTitle {
-  font-size: 3.5vh;
+  align-content: center;
+  width: 100%;
+  margin: 10vh;
+  color:#373867;
 }
 
 .head {
-  width: 60%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.modalContent {
+  font-size: 2vh;
+  font-weight: 500;
+  color: #373867;
+  background-color: #fff;
+  padding: 4vh;
+  border-radius: 5px;
 }
