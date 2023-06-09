@@ -31,7 +31,6 @@ const Members = () => {
       }
       setAlertMessage(data.message);
       setIsSuccess(true);
-      console.log(data);
       setShowAlert(true);
     } catch (error) {
       console.error(error);

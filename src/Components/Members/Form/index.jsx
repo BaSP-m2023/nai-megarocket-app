@@ -132,9 +132,8 @@ const MemberForm = () => {
     if (id) {
       getMemberById(id);
     }
-  }, []);
+  }, [id]);
 
-  console.log(member);
   return (
     <>
       <div className={styles.formContainer}>
