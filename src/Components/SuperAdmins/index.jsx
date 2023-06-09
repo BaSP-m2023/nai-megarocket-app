@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-import Table from './Table';
-import Modal from './Modal';
+import Table from '../Shared/Table/index';
+import SharedModal from '../Shared/Modal';
+import Button from '../Shared/Button/index';
 import { useHistory } from 'react-router-dom';
 
 const SuperAdmins = () => {
@@ -9,6 +10,10 @@ const SuperAdmins = () => {
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [superAdmins, setSuperAdmins] = useState([]);
   const [superAdminId, setSuperAdminId] = useState();
+  const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
 
   const getSuperAdmins = async () => {
     try {
@@ -31,24 +36,38 @@ const SuperAdmins = () => {
         method: 'DELETE'
       });
       const data = await response.json();
-      alert(data.message);
+      if (!response.ok) {
+        setAlertMessage(data.message);
+        setShowAlert(true);
+      } else {
+        setAlertMessage(data.message);
+        setShowSuccessAlert(true);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleDeleteSuperAdmin = (id) => {
+    setModalInformation({ title: 'Warning', body: 'Are you sure?' });
     setShowDeleteWarning(true);
     setSuperAdminId(id);
   };
 
-  const confirmDeleteSuperAdmin = () => {
-    deleteSuperAdmin(superAdminId);
-    setSuperAdmins([...superAdmins.filter((superAdmins) => superAdmins._id !== superAdminId)]);
-  };
-
   const closeDeleteWarning = () => {
     setShowDeleteWarning(false);
+  };
+
+  const confirmDeleteSuperAdmin = async () => {
+    try {
+      await deleteSuperAdmin(superAdminId);
+      setSuperAdmins((prevSuperAdmins) =>
+        prevSuperAdmins.filter((superAdmin) => superAdmin._id !== superAdminId)
+      );
+      setShowDeleteWarning(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleAddSuperAdmin = () => {
@@ -59,24 +78,44 @@ const SuperAdmins = () => {
     history.push(`/super-admins/form/${id}`);
   };
 
+  const handleExitAlert = () => {
+    setShowSuccessAlert(false);
+  };
+
   return (
     <section className={styles.container}>
       <div className={styles.head}>
-        <h2 className={styles.tableTitle}>Super Admins</h2>
-        <button onClick={handleAddSuperAdmin} className={styles.addButton}>
-          Add New
-        </button>
+        <h2>Super Admins</h2>
+        <Button text="+ Add new Super Admin" clickAction={handleAddSuperAdmin} type="add" />
       </div>
       <Table
-        data={superAdmins}
-        handleDeleteItem={handleDeleteSuperAdmin}
+        data={superAdmins || []}
+        properties={['firstName', 'email']}
+        columnTitles={['First Name', 'Email']}
         handleUpdateItem={handleUpdateSuperAdmin}
+        handleDeleteItem={handleDeleteSuperAdmin}
       />
-      <Modal
-        closeWarning={closeDeleteWarning}
-        showWarning={showDeleteWarning}
-        confirmDelete={confirmDeleteSuperAdmin}
-        warningMsg="Are you sure you want to delete this Super Admin?"
+      <SharedModal
+        show={showDeleteWarning}
+        closeModal={closeDeleteWarning}
+        onConfirm={confirmDeleteSuperAdmin}
+        title={modalInformation.title}
+        body={modalInformation.body}
+        isDelete={true}
+      />
+      <SharedModal
+        isDelete={false}
+        show={showSuccessAlert}
+        closeModal={handleExitAlert}
+        title={'Success'}
+        body={alertMessage}
+      />
+      <SharedModal
+        isDelete={false}
+        show={showAlert}
+        closeModal={handleExitAlert}
+        title={'Something is wrong'}
+        body={alertMessage}
       />
     </section>
   );
