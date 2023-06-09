@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import styles from './super-admins.module.css';
+import styles from './form.module.css';
+import SharedModal from '../../Shared/Modal';
+import Button from '../../Shared/Button';
 
 const Form = () => {
   const { id } = useParams();
@@ -10,6 +12,13 @@ const Form = () => {
     email: '',
     password: ''
   });
+  const [showModal, setShowModal] = useState(false);
+  const [typeStyle, setTypeStyle] = useState('');
+  const [titleModal, setTitleModal] = useState('');
+  const [bodyModal, setBodyModal] = useState('');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const getSuperAdminById = async (id) => {
     try {
@@ -34,15 +43,20 @@ const Form = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
-        setSuperAdmin({
-          firstName: '',
-          email: '',
-          password: ''
-        });
-        handleCancel();
+        setTypeStyle('success');
+        setTitleModal('Success');
+        setBodyModal('Super Admin created successfully.');
+        setShowSuccessModal(true);
+        setShowErrorModal(false);
+        setSuperAdmin({ firstName: '', email: '', password: '' });
+        setIsSuccess(true);
       } else {
-        alert(data.message);
+        setTypeStyle('error');
+        setTitleModal('Error');
+        setBodyModal(data.message);
+        setShowModal(true);
+        setShowSuccessModal(false);
+        setIsSuccess(false);
       }
     } catch (error) {
       console.error(error);
@@ -61,10 +75,19 @@ const Form = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
-        handleCancel();
+        setTypeStyle('success');
+        setTitleModal('Success');
+        setBodyModal('Super Admin updated successfully.');
+        setShowSuccessModal(true);
+        setShowErrorModal(false);
+        setIsSuccess(true);
       } else {
-        alert(data.message);
+        setTypeStyle('error');
+        setTitleModal('Error');
+        setBodyModal(data.message);
+        setShowModal(true);
+        setShowSuccessModal(false);
+        setIsSuccess(false);
       }
     } catch (error) {
       console.error(error);
@@ -76,7 +99,7 @@ const Form = () => {
     if (id) {
       getSuperAdminById(id);
     }
-  }, []);
+  }, [id]);
 
   const onChange = (e) => {
     setSuperAdmin({
@@ -98,14 +121,26 @@ const Form = () => {
     history.push('/super-admins');
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+    setShowSuccessModal(false);
+  };
+
+  const handleConfirm = () => {
+    if (isSuccess) {
+      history.replace('/super-admins');
+    } else {
+      setShowSuccessModal(false);
+    }
+  };
+
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <div>
+    <>
+      <form onSubmit={onSubmit} className={styles.modalContainer}>
+        <div className={styles.fieldsetForm}>
           <label className={styles.label} htmlFor="firstName">
             Name
           </label>
-          <br />
           <input
             type="text"
             id="firstName"
@@ -113,13 +148,13 @@ const Form = () => {
             value={superAdmin.firstName}
             onChange={onChange}
             required
+            className={styles.inputForm}
           />
         </div>
-        <div>
+        <div className={styles.fieldsetForm}>
           <label className={styles.label} htmlFor="email">
             Email
           </label>
-          <br />
           <input
             type="email"
             id="email"
@@ -127,31 +162,50 @@ const Form = () => {
             value={superAdmin.email}
             onChange={onChange}
             required
+            className={styles.inputForm}
           />
         </div>
-        <div>
+        <div className={styles.fieldsetForm}>
           <label className={styles.label} htmlFor="password">
             Password
           </label>
-          <br />
           <input
             type="password"
             id="password"
             name="password"
             value={superAdmin.password}
             onChange={onChange}
+            className={styles.inputForm}
           />
         </div>
         <div className={styles.modalButtons}>
-          <button className={styles.modalButton} onClick={onSubmit}>
-            {id ? <p>Submit</p> : <p>Confirm</p>}
-          </button>
-          <button className={styles.modalButton} onClick={handleCancel}>
-            Close
-          </button>
+          <Button text="Cancel" type="cancel" clickAction={handleCancel} />
+          {id ? (
+            <>
+              <Button text="Confirm" type="submit" clickAction={onSubmit} />
+            </>
+          ) : (
+            <Button text="Submit" type="submit" clickAction={onSubmit} />
+          )}
         </div>
       </form>
-    </div>
+      <SharedModal
+        show={showModal || showErrorModal}
+        typeStyle={typeStyle}
+        title={titleModal}
+        body={bodyModal}
+        closeModal={closeModal}
+        onConfirm={handleConfirm}
+      />
+      <SharedModal
+        show={showSuccessModal}
+        typeStyle="success"
+        title="Success"
+        body={id ? 'Super Admin updated successfully.' : 'Super Admin created successfully.'}
+        closeModal={closeModal}
+        onConfirm={handleConfirm}
+      />
+    </>
   );
 };
 
