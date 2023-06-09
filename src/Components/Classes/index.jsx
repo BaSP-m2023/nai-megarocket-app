@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import Table from './Table';
-import Button from '../Shared/Button/index';
-import ModalClose from './Modal/modalClose';
+import Table from '../Shared/Table';
+import Button from '../Shared/Button';
+import SharedModal from '../Shared/Modal';
 import { useHistory } from 'react-router-dom';
 
 const Classes = () => {
@@ -14,6 +14,7 @@ const Classes = () => {
   // const flagForm = () => {
   //   history.push('/classes/form');
   // };
+
   const getClasses = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
     const data = await response.json();
@@ -54,9 +55,15 @@ const Classes = () => {
     <section className={styles.container}>
       <>
         <h2>Classes</h2>
-        <Button text="Add New" clickAction={handleAddClass} type="add" />
-        <Table data={classes} deleteItem={deleteItem} editItem={editItem} />
-        {showModal && <ModalClose message={modalMessage} onClose={closeModal} />}
+        <Button clickAction={handleAddClass} text="Add New" type="add" />
+        {classes && classes.length > 0 ? (
+          <Table data={classes} deleteItem={deleteItem} editItem={editItem} />
+        ) : classes === undefined ? (
+          <p>Loading...</p>
+        ) : (
+          <p>No classes found.</p>
+        )}
+        {showModal && <SharedModal message={modalMessage} onClose={closeModal} />}
       </>
     </section>
   );
