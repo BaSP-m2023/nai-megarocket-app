@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
+import styles from './form.module.css';
+import SharedModal from '../../Shared/Modal';
+import Button from '../../Shared/Button';
 
 const Form = () => {
   const history = useHistory();
@@ -12,6 +14,20 @@ const Form = () => {
   const [slots, setSlots] = useState('');
   const [activities, setActivities] = useState([]);
   const [trainers, setTrainers] = useState([]);
+
+  const [classData, setClassData] = useState({
+    activity: '',
+    day: '',
+    hour: '',
+    slots: '',
+    trainer: ''
+  });
+  const [showModal, setShowModal] = useState(false);
+  const [typeStyle, setTypeStyle] = useState('');
+  const [titleModal, setTitleModal] = useState('');
+  const [bodyModal, setBodyModal] = useState('');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const getClasses = async () => {
     try {
@@ -58,33 +74,44 @@ const Form = () => {
         body: JSON.stringify(formData)
       });
       if (!response.ok) {
-        const errorMessage = await response.text;
+        const errorMessage = await response.text(); // Corrección: llamada a response.text()
         console.log(errorMessage);
         throw new Error(errorMessage);
       }
+      setShowModal(true); // Mostrar el modal de confirmación después de enviar el formulario
       history.push('/classes');
     } catch (error) {
       console.error('Error edited class:', error);
     }
   };
 
-  const createSubmit = async (formData) => {
+  const addClass = async (classData) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(classData)
       });
-      if (!response.ok) {
-        const errorMessage = await response.text;
-        console.log(errorMessage);
-        throw new Error(errorMessage);
+      const data = await response.json();
+      if (response.ok) {
+        setTypeStyle('success');
+        setTitleModal('Success');
+        setBodyModal('Class created successfully.');
+        setShowSuccessModal(true);
+        setShowErrorModal(false);
+        setClassData({ activity: '', day: '', hour: '', slots: '', trainer: '' });
+      } else {
+        setTypeStyle('error');
+        setTitleModal('Error');
+        setBodyModal(data.message);
+        setShowModal(true);
+        setShowSuccessModal(false);
       }
-      history.push('/classes');
     } catch (error) {
-      console.error('Error adding class:', error);
+      console.error(error);
+      throw new Error('An error has occurred creating the Class');
     }
   };
 
@@ -99,9 +126,9 @@ const Form = () => {
       slots: parseInt(slots)
     };
     if (id) {
-      updateSubmit(formData);
+      updateClass(id, formData);
     } else {
-      createSubmit(formData);
+      addClass(formData);
     }
     setDay([]);
     setHour('');
@@ -109,9 +136,37 @@ const Form = () => {
     setActivity('');
     setSlots('');
   };
+  const updateClass = async (id, formData) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setTypeStyle('success');
+        setTitleModal('Success');
+        setBodyModal('Class updated successfully.');
+        setShowSuccessModal(true);
+        setShowErrorModal(false);
+      } else {
+        setTypeStyle('error');
+        setTitleModal('Error');
+        setBodyModal(data.message);
+        setShowModal(true);
+        setShowSuccessModal(false);
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error('An error has occurred updating the Class');
+    }
+  };
 
   const handleCancel = () => {
-    history.push('/classes/');
+    setShowModal(true);
   };
 
   useEffect(() => {
@@ -124,20 +179,24 @@ const Form = () => {
 
   const renderTrainer = () => {
     if (id) {
-      return trainers.map((trainer) => (
-        <option key={trainer._id} value={trainer._id}>
-          {trainer.firstName}
-        </option>
-      ));
+      return (
+        trainers &&
+        trainers.map((trainer) => (
+          <option key={trainer._id} value={trainer._id}>
+            {trainer.firstName}
+          </option>
+        ))
+      );
     } else {
       return (
         <>
           <option value="">Select a trainer</option>
-          {trainers.map((trainer) => (
-            <option key={trainer._id} value={trainer._id}>
-              {trainer.firstName}
-            </option>
-          ))}
+          {trainers &&
+            trainers.map((trainer) => (
+              <option key={trainer._id} value={trainer._id}>
+                {trainer.firstName}
+              </option>
+            ))}
         </>
       );
     }
@@ -145,24 +204,37 @@ const Form = () => {
 
   const renderActivity = () => {
     if (id) {
-      return activities.map((activity) => (
-        <option key={activity._id} value={activity._id}>
-          {activity.name}
-        </option>
-      ));
+      return (
+        activities &&
+        activities.map((activity) => (
+          <option key={activity._id} value={activity._id}>
+            {activity.name}
+          </option>
+        ))
+      );
     } else {
       return (
         <>
           <option value="">Select activity</option>
-          {activities.map((activity) => (
-            <option key={activity._id} value={activity._id}>
-              {activity.name}
-            </option>
-          ))}
-          ;
+          {activities &&
+            activities.map((activity) => (
+              <option key={activity._id} value={activity._id}>
+                {activity.name}
+              </option>
+            ))}
         </>
       );
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setShowSuccessModal(false);
+    history.replace('/classes');
+  };
+
+  const handleConfirm = () => {
+    setShowSuccessModal(false);
   };
 
   const activityChange = (e) => {
@@ -180,60 +252,91 @@ const Form = () => {
     setSlots(selectedSlots);
   };
 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.container}>
-        <div className={styles.box}>
-          <h4>Day</h4>
-          <input
-            className={styles.inputClasses}
-            type="text"
-            placeholder="Day"
-            value={day}
-            onChange={(e) => setDay(e.target.value)}
-            required
-          />
-          <small>Enter the days seperated for comas</small>
+    <>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.container}>
+          <div className={styles.box}>
+            <h4>Day</h4>
+            <input
+              className={styles.inputClasses}
+              type="text"
+              placeholder="Day"
+              value={day}
+              onChange={(e) => setDay(e.target.value)}
+              required
+            />
+            <small>Enter the days separated by commas</small>
+          </div>
+          <div className={styles.box}>
+            <h4>Hour</h4>
+            <input
+              className={styles.inputClasses}
+              type="text"
+              placeholder="Hour"
+              pattern="[0-9]{2}:[0-9]{2}"
+              value={hour}
+              onChange={(e) => setHour(e.target.value)}
+              required
+            />
+            <small>Please enter the hour in HH:MM format.</small>
+          </div>
+          <div className={styles.box}>
+            <h4>Trainer</h4>
+            <select value={trainer} onChange={trainerChange} required>
+              {renderTrainer()}
+            </select>
+          </div>
+          <div className={styles.box}>
+            <h4>Activity</h4>
+            <select value={activity} onChange={activityChange} required>
+              {renderActivity()}
+            </select>
+          </div>
+          <div className={styles.box}>
+            <h4>Slots</h4>
+            <input
+              type="number"
+              placeholder="Slots"
+              value={slots}
+              onChange={slotsChange}
+              required
+            />
+          </div>
         </div>
-        <div className={styles.box}>
-          <h4>Hour</h4>
-          <input
-            className={styles.inputClasses}
-            type="text"
-            placeholder="Hour"
-            pattern="[0-9]{2}:[0-9]{2}"
-            value={hour}
-            onChange={(e) => setHour(e.target.value)}
-            required
-          />
-          <small>Please enter the hour in HH:MM format.</small>
-        </div>
-        <div className={styles.box}>
-          <h4>Trainer</h4>
-          <select value={trainer} onChange={trainerChange} required>
-            {renderTrainer()};
-          </select>
-        </div>
-        <div className={styles.box}>
-          <h4>Activity</h4>
-          <select value={activity} onChange={activityChange} required>
-            {renderActivity()};
-          </select>
-        </div>
-        <div className={styles.box}>
-          <h4>Slots</h4>
-          <input type="number" placeholder="Slots" value={slots} onChange={slotsChange} required />
-        </div>
-      </div>
-      <div className={styles.buttons}>
-        <button className={styles.button} type="button" onClick={handleCancel}>
-          Cancel
-        </button>
-        <button className={styles.button} type="submit" onSubmit={handleSubmit}>
-          {id ? <p>Edit</p> : <p>Add</p>}
-        </button>
-      </div>
-    </form>
+        <Button onClick={() => handleCancel(classData)}>Cancel</Button>
+        <Button onClick={() => updateSubmit(classData)}>Update</Button>
+      </form>
+      <SharedModal
+        title="Confirmation"
+        content="Are you sure you want to perform this action?"
+        onCancel={toggleModal}
+        onConfirm={() => {
+          toggleModal();
+          history.push('/classes');
+        }}
+      />
+      <SharedModal
+        show={showModal || showErrorModal}
+        typeStyle={typeStyle}
+        title={titleModal}
+        body={bodyModal}
+        closeModal={closeModal}
+        onConfirm={handleConfirm}
+      />
+      <SharedModal
+        show={showSuccessModal}
+        typeStyle="success"
+        title="Success"
+        body={id ? 'Super Admin updated successfully.' : 'Super Admin created successfully.'}
+        closeModal={closeModal}
+        onConfirm={handleConfirm}
+      />
+    </>
   );
 };
 

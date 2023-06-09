@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import Table from '../Shared/Table/index';
+import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import SharedModal from '../Shared/Modal';
 import { useHistory } from 'react-router-dom';
@@ -33,31 +33,6 @@ const Classes = () => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
-        const responseData = await response.json();
-        const data = responseData.data;
-
-        const transformedData = Object.values(data).map((classItem, index) => {
-          return {
-            ...classItem,
-            _id: index.toString()
-          };
-        });
-
-        setClasses(transformedData);
-        console.log('las clases aca', classes);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getClasses();
-    fetchData();
-  }, []);
 
   const deleteClasses = async (id) => {
     try {
@@ -109,6 +84,10 @@ const Classes = () => {
     setShowSuccessAlert(false);
   };
 
+  useEffect(() => {
+    getClasses();
+  }, []);
+
   return (
     <section className={styles.container}>
       <>
@@ -116,14 +95,7 @@ const Classes = () => {
         <Button clickAction={handleAddClass} text="Add New" type="add" />
         <Table
           data={classes || []}
-          properties={[
-            'classes._id',
-            'classes.activity.name',
-            'classes.day',
-            'classes.hour',
-            'classes.slots',
-            'classes.trainer'
-          ]}
+          properties={['activity.name', 'day', 'hour', 'slots', 'trainer.firstName']}
           columnTitles={['Activity', 'Day', 'Hour', 'Slots', 'Trainer']}
           handleUpdateItem={handleUpdateClass}
           handleDeleteItem={handleDeleteClass}
