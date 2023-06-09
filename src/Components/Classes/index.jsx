@@ -9,111 +9,106 @@ const Classes = () => {
   const history = useHistory();
   const [classes, setClasses] = useState([]);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
-  const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const [classesID, setClassesID] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [classToDelete, setClassToDelete] = useState(null);
+
+  useEffect(() => {
+    getClasses();
+  }, []);
+
+  const deleteClasses = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
+        method: 'DELETE'
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setAlertMessage(data.message);
+        setShowAlert(true);
+        setIsSuccess(false);
+      }
+      setAlertMessage(data.message);
+      setIsSuccess(true);
+      setShowAlert(true);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
   const getClasses = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
-      const responseData = await response.json();
-      const data = responseData.data;
+      const data = await response.json();
+      setClasses(data.data);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
-      setClasses(data);
+  const handleDeleteClass = (id) => {
+    setShowDeleteWarning(true);
+    setClassToDelete(id);
+  };
+
+  const handleConfirmDeleteClass = async () => {
+    setShowDeleteWarning(false);
+    try {
+      await deleteClasses(classToDelete);
+      setClasses((prevClasses) =>
+        prevClasses.filter((classItem) => classItem._id !== classToDelete)
+      );
     } catch (error) {
       console.error(error);
     }
   };
 
-  const deleteClasses = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'DELETE'
-      });
-      setClasses([...classes.filter((classes) => classes._id !== id)]);
-      setAlertMessage('Class deleted successfully');
-      setShowAlert(true);
-      console.log('este es el iddddd', id);
-    } catch (error) {
-      console.error('Error deleting item:', error);
-      setAlertMessage('Error deleting classes');
-      setShowAlert(true);
-    }
-  };
-
   const handleAddClass = () => {
-    history.push('/classes/form');
+    history.push('/classes/form/');
   };
 
   const handleUpdateClass = (id) => {
     history.push(`/classes/form/${id}`);
   };
 
-  const handleDeleteClass = (id) => {
-    setModalInformation({ title: 'Warning', body: 'Are you sure?' });
-    setShowDeleteWarning(true);
-    setClassesID(id);
-  };
-
-  const closeDeleteWarning = () => {
-    setShowDeleteWarning(false);
-  };
-
-  const confirmDeleteClass = async () => {
-    deleteClasses(classesID);
-    setShowDeleteWarning(false);
-  };
-
-  const handleExitAlert = () => {
-    setShowSuccessAlert(false);
-    setShowAlert(false);
-  };
-
-  useEffect(() => {
-    getClasses();
-  }, []);
-
   return (
     <section className={styles.container}>
-      <>
+      <div className={styles.classesSection}>
         <h2>Classes</h2>
-        <Button clickAction={handleAddClass} text="Add New" type="add" />
-        <Table
-          data={classes || []}
-          properties={['activity.name', 'day', 'hour', 'slots', 'trainer.firstName']}
-          columnTitles={['Activity', 'Day', 'Hour', 'Slots', 'Trainer']}
-          handleUpdateItem={handleUpdateClass}
-          handleDeleteItem={handleDeleteClass}
-        />
-        <SharedModal
-          show={showDeleteWarning}
-          closeModal={closeDeleteWarning}
-          onConfirm={confirmDeleteClass}
-          title={modalInformation.title}
-          body={modalInformation.body}
-          isDelete={true}
-        />
-        <SharedModal
-          isDelete={false}
-          show={showSuccessAlert}
-          closeModal={handleExitAlert}
-          onConfirm={handleExitAlert}
-          typeStyle={'success'}
-          title={'Success'}
-          body={alertMessage}
-        />
-        <SharedModal
-          isDelete={false}
-          show={showAlert}
-          closeModal={handleExitAlert}
-          onConfirm={handleExitAlert}
-          typeStyle={'success'}
-          title={'Class deleted!'}
-          body={alertMessage}
-        />
-      </>
+        <Button text={'+ Add Class'} type={'add'} clickAction={handleAddClass} />
+      </div>
+      {classes.length !== 0 ? (
+        <>
+          <Table
+            data={classes}
+            handleDeleteItem={handleDeleteClass}
+            handleUpdateItem={handleUpdateClass}
+            columnTitles={['Activity', 'Day', 'Hour', 'Slots', 'Trainer']}
+            properties={['activity.name', 'day', 'hour', 'slots', 'trainer.firstName']}
+          />
+          <SharedModal
+            isDelete={true}
+            show={showDeleteWarning}
+            closeModal={() => setShowDeleteWarning(false)}
+            title={'Delete Class'}
+            body={'Are you sure you want to delete this class?'}
+            onConfirm={handleConfirmDeleteClass}
+          />
+          <SharedModal
+            isDelete={false}
+            show={showAlert}
+            typeStyle={isSuccess ? 'success' : 'error'}
+            closeModal={() => setShowAlert(false)}
+            title={isSuccess ? 'Success' : 'Error'}
+            body={alertMessage}
+          />
+        </>
+      ) : (
+        <h3>There are no Classes in the database</h3>
+      )}
     </section>
   );
 };
