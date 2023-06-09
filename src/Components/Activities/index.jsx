@@ -87,7 +87,7 @@ const Activities = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <section className={styles.containerActivity}>
       <h2>Activities</h2>
       <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem}></Button>
       {activities.length !== 0 ? (
@@ -95,7 +95,7 @@ const Activities = () => {
           <Table
             data={activities}
             properties={['name', 'description']}
-            columnTitles={['name', 'description']}
+            columnTitles={['Name', 'Description']}
             handleUpdateItem={handleEditItem}
             handleDeleteItem={handleDeleteClick}
           />

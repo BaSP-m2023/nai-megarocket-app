@@ -132,7 +132,7 @@ const Form = () => {
         title={'Success'}
         body={alertMessage}
       />
-      <form>
+      <form className={styles.formAdmin}>
         <div>
           <h3 className={styles.h3}>Name</h3>
           <input
