@@ -2,12 +2,16 @@ h2 {
   margin-top: 2rem;
 }
 
+.welcomeActivities {
+  display: flex;
+  justify-content: space-around;
+}
+
 .container {
-  margin-left:10vw; 
+  margin-left:20%; 
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 

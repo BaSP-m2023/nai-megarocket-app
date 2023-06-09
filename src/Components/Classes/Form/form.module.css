@@ -11,7 +11,7 @@
   border-radius: 5px;
   border: 1px solid #373867;
 }
-select {
+.select {
   display: flex;
   width: 106%;
   padding: 3%;
