@@ -5,7 +5,7 @@ function Header() {
   return (
     <header>
       <div className={styles.container}>
-        <div className={styles.brand}>Radium Rocket</div>
+        <div className={styles.brand}>MEGAROCKET</div>
         <div>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
             <img
@@ -28,7 +28,6 @@ function Header() {
         </div>
       </div>
       <nav className={styles.navbar}>
-        <h1 className={styles.appName}>MegaRocket</h1>
         <ul className={styles.rutes}>
           <li>
             {' '}
