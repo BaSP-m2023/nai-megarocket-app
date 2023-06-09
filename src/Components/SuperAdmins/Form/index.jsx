@@ -18,6 +18,7 @@ const Form = () => {
   const [bodyModal, setBodyModal] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const getSuperAdminById = async (id) => {
     try {
@@ -48,12 +49,14 @@ const Form = () => {
         setShowSuccessModal(true);
         setShowErrorModal(false);
         setSuperAdmin({ firstName: '', email: '', password: '' });
+        setIsSuccess(true);
       } else {
         setTypeStyle('error');
         setTitleModal('Error');
         setBodyModal(data.message);
         setShowModal(true);
         setShowSuccessModal(false);
+        setIsSuccess(false);
       }
     } catch (error) {
       console.error(error);
@@ -77,12 +80,14 @@ const Form = () => {
         setBodyModal('Super Admin updated successfully.');
         setShowSuccessModal(true);
         setShowErrorModal(false);
+        setIsSuccess(true);
       } else {
         setTypeStyle('error');
         setTitleModal('Error');
         setBodyModal(data.message);
         setShowModal(true);
         setShowSuccessModal(false);
+        setIsSuccess(false);
       }
     } catch (error) {
       console.error(error);
@@ -119,11 +124,14 @@ const Form = () => {
   const closeModal = () => {
     setShowModal(false);
     setShowSuccessModal(false);
-    history.replace('/super-admins');
   };
 
   const handleConfirm = () => {
-    setShowSuccessModal(false);
+    if (isSuccess) {
+      history.replace('/super-admins');
+    } else {
+      setShowSuccessModal(false);
+    }
   };
 
   return (

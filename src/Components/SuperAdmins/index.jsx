@@ -86,12 +86,12 @@ const SuperAdmins = () => {
     <section className={styles.container}>
       <div className={styles.head}>
         <h2>Super Admins</h2>
-        <Button text="Add New" clickAction={handleAddSuperAdmin} type="add" />
+        <Button text="+ Add new Super Admin" clickAction={handleAddSuperAdmin} type="add" />
       </div>
       <Table
         data={superAdmins || []}
-        properties={['firstName', 'email', 'password']}
-        columnTitles={['First Name', 'Email', 'Password']}
+        properties={['firstName', 'email']}
+        columnTitles={['First Name', 'Email']}
         handleUpdateItem={handleUpdateSuperAdmin}
         handleDeleteItem={handleDeleteSuperAdmin}
       />
