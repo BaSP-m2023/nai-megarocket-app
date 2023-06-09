@@ -17,6 +17,7 @@ const Form = () => {
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const getSuperAdminById = async (id) => {
     try {
@@ -45,12 +46,14 @@ const Form = () => {
         setTitleModal('Success');
         setBodyModal('Super Admin created successfully.');
         setShowSuccessModal(true);
+        setShowErrorModal(false);
         setSuperAdmin({ firstName: '', email: '', password: '' });
       } else {
         setTypeStyle('error');
         setTitleModal('Error');
         setBodyModal(data.message);
         setShowModal(true);
+        setShowSuccessModal(false);
       }
     } catch (error) {
       console.error(error);
@@ -73,11 +76,13 @@ const Form = () => {
         setTitleModal('Success');
         setBodyModal('Super Admin updated successfully.');
         setShowSuccessModal(true);
+        setShowErrorModal(false);
       } else {
         setTypeStyle('error');
         setTitleModal('Error');
         setBodyModal(data.message);
         setShowModal(true);
+        setShowSuccessModal(false);
       }
     } catch (error) {
       console.error(error);
@@ -113,6 +118,8 @@ const Form = () => {
 
   const closeModal = () => {
     setShowModal(false);
+    setShowSuccessModal(false);
+    history.push('/super-admins');
   };
 
   const handleConfirm = () => {
@@ -163,7 +170,7 @@ const Form = () => {
             className={styles.inputForm}
           />
         </div>
-        <div>
+        <div className={styles.modalButtons}>
           <Button text="Cancel" type="cancel" clickAction={handleCancel} />
           {id ? (
             <>
@@ -175,7 +182,7 @@ const Form = () => {
         </div>
       </form>
       <SharedModal
-        show={showModal}
+        show={showModal || showErrorModal}
         typeStyle={typeStyle}
         title={titleModal}
         body={bodyModal}
@@ -186,7 +193,7 @@ const Form = () => {
         show={showSuccessModal}
         typeStyle="success"
         title="Success"
-        body="Super Admin updated successfully."
+        body={id ? 'Super Admin updated successfully.' : 'Super Admin created successfully.'}
         closeModal={closeModal}
         onConfirm={handleConfirm}
       />
