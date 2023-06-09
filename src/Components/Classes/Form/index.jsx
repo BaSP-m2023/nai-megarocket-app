@@ -210,7 +210,7 @@ const Form = () => {
         </div>
         <div className={styles.box}>
           <h4>Trainer</h4>
-          <select value={trainer} onChange={trainerChange} required>
+          <select value={trainer} className={styles.select} onChange={trainerChange} required>
             {renderTrainer()};
           </select>
         </div>

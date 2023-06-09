@@ -14,7 +14,7 @@ const Form = () => {
     description: ''
   });
   const [showModal, setShowModal] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [typeStyle, setTypeStyle] = useState('');
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
@@ -40,16 +40,13 @@ const Form = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        setIsDelete(false);
+        setIsSuccess(true);
         setTypeStyle('success');
         setTitleModal(data.message);
         setBodyModal(data.data.name + ' was edited');
         setShowModal(true);
-        setTimeout(() => {
-          goBack();
-        }, 2000);
       } else {
-        setIsDelete(false);
+        setIsSuccess(false);
         setTypeStyle('error');
         setTitleModal('Error');
         setBodyModal(data.message);
@@ -57,11 +54,6 @@ const Form = () => {
       }
     } catch (error) {
       console.error(error);
-      setIsDelete(false);
-      setTypeStyle('error');
-      setBodyModal('Error to edit an activity');
-      setTitleModal('Error');
-      setShowModal(true);
     }
   };
 
@@ -76,20 +68,13 @@ const Form = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        setIsDelete(false);
+        setIsSuccess(true);
         setTypeStyle('success');
         setTitleModal(data.data.name + 'was added');
         setBodyModal('');
         setShowModal(true);
-        setActivity({
-          name: '',
-          description: ''
-        });
-        setTimeout(() => {
-          goBack();
-        }, 2000);
       } else {
-        setIsDelete(false);
+        setIsSuccess(false);
         setTypeStyle('error');
         setTitleModal('Error');
         setBodyModal(data.message);
@@ -97,11 +82,6 @@ const Form = () => {
       }
     } catch (error) {
       console.error(error);
-      setIsDelete(false);
-      setTypeStyle('error');
-      setBodyModal('Error to add an activity');
-      setTitleModal('Error');
-      setShowModal(true);
     }
   };
 
@@ -111,7 +91,7 @@ const Form = () => {
     }
   }, []);
 
-  const onSubmit = () => {
+  const handleConfirm = () => {
     if (id) {
       editItem(activity, id);
     } else {
@@ -119,27 +99,12 @@ const Form = () => {
     }
   };
 
-  const handleConfirmClick = (e) => {
-    e.preventDefault();
-    setIsDelete(true);
-    setTypeStyle();
-    id
-      ? setTitleModal('Do you want to edit this activity?')
-      : setTitleModal('Do you want to add this activity?');
-    setBodyModal('');
-    setShowModal(true);
-  };
-
-  const handleConfirm = () => {
-    onSubmit();
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const goBack = () => {
-    history.push(`/activities`);
+  const onConfirm = () => {
+    if (isSuccess) {
+      history.push('/activities');
+    } else {
+      setShowModal(false);
+    }
   };
 
   const onChangeInput = (e) => {
@@ -152,7 +117,7 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <h2>Form</h2>
-      <form className={styles.form}>
+      <form className={styles.formActivity}>
         <Input
           id="name"
           name="name"
@@ -169,17 +134,20 @@ const Form = () => {
           onChange={onChangeInput}
           required
         />
-        <Button text={'Submit'} type={'submit'} clickAction={handleConfirmClick}></Button>
-        <Button text={'Cancel'} type={'cancel'} clickAction={goBack}></Button>
       </form>
+      <Button text={'Submit'} type={'submit'} clickAction={handleConfirm}></Button>
+      <Button
+        text={'Cancel'}
+        type={'cancel'}
+        clickAction={() => history.push('/activities')}
+      ></Button>
       <SharedModal
         show={showModal}
         typeStyle={typeStyle}
         title={titleModal}
         body={bodyModal}
-        isDelete={isDelete}
-        onConfirm={handleConfirm}
-        closeModal={handleCloseModal}
+        isDelete={false}
+        closeModal={onConfirm}
       />
     </div>
   );

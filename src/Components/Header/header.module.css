@@ -20,11 +20,24 @@
 }
 
 .socialIcon {
-  margin-left: 5px;
+  margin-left: 15px;
   color: #f9a414;
-  background-color: white;
-  border-radius: 15rem;
-  margin-right: 1rem;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 20%;
+  justify-content: space-around;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #0f232e;
+  letter-spacing: 0.15em;
+  z-index: 1;
 }
 
 .appName {

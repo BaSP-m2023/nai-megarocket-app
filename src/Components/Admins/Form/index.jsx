@@ -132,20 +132,88 @@ const Form = () => {
         title={'Success'}
         body={alertMessage}
       />
-      <form className={styles.adminForm}>
-        <div className={styles.titleAdminForm}>{id ? <h2>Edit Admin</h2> : <h2>Add Admin</h2>}</div>
-        <div className={styles.containerAdminForm}>
-          <div className={styles.boxAdminForm}>
-            <h3>Name</h3>
-            <input
-              className={styles.inputAdminForm}
-              name="firstName"
-              type="text"
-              value={formData.firstName}
-              placeholder="Name"
-              onChange={handleChange}
-              required
-            />
+      <form className={styles.formAdmin}>
+        <div>
+          <h3 className={styles.h3}>Name</h3>
+          <input
+            name="firstName"
+            type="text"
+            value={formData.firstName}
+            placeholder="Name"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <h3 className={styles.h3}>Last Name</h3>
+          <input
+            name="lastName"
+            type="text"
+            value={formData.lastName}
+            placeholder="Last Name"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <h3 className={styles.h3}>DNI</h3>
+          <input
+            name="dni"
+            type="number"
+            value={formData.dni}
+            placeholder="DNI"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <h3 className={styles.h3}>Phone</h3>
+          <input
+            name="phone"
+            type="number"
+            value={formData.phone}
+            placeholder="Phone"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <h3 className={styles.h3}>Email</h3>
+          <input
+            name="email"
+            type="text"
+            value={formData.email}
+            placeholder="Email"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <h3 className={styles.h3}>City</h3>
+          <input
+            name="city"
+            type="text"
+            value={formData.city}
+            placeholder="City"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <h3 className={styles.h3}>Password</h3>
+          <input
+            name="password"
+            type="text"
+            value={formData.password}
+            placeholder="Password"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className={styles.buttonsAdmin}>
+          <div className={styles.buttonsAdmin}>
+            <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
+            <Button text={'Submit'} type={'submit'} clickAction={handleSubmit} />
           </div>
           <div className={styles.boxAdminForm}>
             <h3>Last Name</h3>

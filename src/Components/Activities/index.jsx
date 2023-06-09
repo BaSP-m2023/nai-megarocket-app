@@ -87,15 +87,15 @@ const Activities = () => {
   };
 
   return (
-    <section className={styles.container}>
-      <h2 className={styles.h2}>Activities</h2>
+    <section className={styles.containerActivity}>
+      <h2>Activities</h2>
       <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem}></Button>
       {activities.length !== 0 ? (
         <>
           <Table
             data={activities}
             properties={['name', 'description']}
-            columnTitles={['name', 'description']}
+            columnTitles={['Name', 'Description']}
             handleUpdateItem={handleEditItem}
             handleDeleteItem={handleDeleteClick}
           />
