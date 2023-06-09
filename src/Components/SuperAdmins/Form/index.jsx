@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './form.module.css';
-import Button from '../../Shared/Button/index';
-import SharedModal from '../../Shared/Modal/index';
+import SharedModal from '../../Shared/Modal';
+import Button from '../../Shared/Button';
 
 const Form = () => {
   const { id } = useParams();
@@ -113,13 +113,13 @@ const Form = () => {
   };
 
   const handleCancel = () => {
-    history.goBack();
+    history.push('/super-admins');
   };
 
   const closeModal = () => {
     setShowModal(false);
     setShowSuccessModal(false);
-    history.push('/super-admins');
+    history.replace('/super-admins');
   };
 
   const handleConfirm = () => {
