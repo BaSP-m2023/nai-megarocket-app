@@ -1,11 +1,10 @@
 .formAdmin {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 800px;
-  padding: 4%;
-  padding-bottom: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .inputAdmin {
   width: 50%;
   margin-bottom: 2%;

@@ -117,7 +117,7 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <h2>Form</h2>
-      <form className={styles.formActivities}>
+      <form className={styles.formActivity}>
         <Input
           id="name"
           name="name"

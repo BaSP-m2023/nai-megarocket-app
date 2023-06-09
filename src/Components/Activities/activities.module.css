@@ -2,12 +2,8 @@ h2 {
   margin-top: 2rem;
 }
 
-.welcomeActivities {
-  display: flex;
-  justify-content: space-around;
-}
 
-.container {
+.containerActivity {
   margin-left:20%; 
   flex: 1;
   display: flex;
