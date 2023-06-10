@@ -107,6 +107,7 @@ const SuperAdmins = () => {
         isDelete={false}
         show={showSuccessAlert}
         closeModal={handleExitAlert}
+        typeStyle={'success'}
         title={'Success'}
         body={alertMessage}
       />

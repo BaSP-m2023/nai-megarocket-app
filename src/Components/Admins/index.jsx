@@ -66,7 +66,7 @@ const Admins = () => {
     setModalInformation({ title: 'Warning', body: 'Are you sure?' });
     setIsDelete(true);
     setShowModal(true);
-    setTypeStyle('success');
+    setTypeStyle('default');
     setIdAdmin(id);
   };
 
@@ -102,6 +102,7 @@ const Admins = () => {
             isDelete={false}
             show={showSuccessAlert}
             closeModal={handleExitAlert}
+            typeStyle={'success'}
             title={'Success'}
             body={alertMessage}
           />

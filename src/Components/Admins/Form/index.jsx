@@ -123,6 +123,7 @@ const Form = () => {
         isDelete={false}
         show={showAlert}
         closeModal={handleExitAlert}
+        typeStyle={'error'}
         title={'Something is wrong'}
         body={alertMessage}
       />
@@ -131,6 +132,7 @@ const Form = () => {
         show={showSuccessAlert}
         closeModal={handleCancel}
         title={'Success'}
+        typeStyle={'success'}
         body={alertMessage}
       />
       <form className={styles.formAdmin}>

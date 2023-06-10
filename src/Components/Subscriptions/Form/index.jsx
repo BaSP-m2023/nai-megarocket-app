@@ -180,6 +180,7 @@ const Form = () => {
         show={showSuccessAlert}
         closeModal={handleCancel}
         title={'Success'}
+        typeStyle={'success'}
         body={alertMessage}
       />
       <h2 className={styles.title}>{id ? 'Update Subscription' : 'Add Subscription'}</h2>

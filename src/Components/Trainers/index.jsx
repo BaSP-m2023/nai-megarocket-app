@@ -12,6 +12,7 @@ const Trainers = () => {
   const [modalMessage, setModalMessage] = useState('');
   const [selectedTrainerId, setSelectedTrainerId] = useState(null);
   const [isConfirmationModal, setIsConfirmationModal] = useState(true);
+  const [typeStyle, setTypeStyle] = useState('default');
 
   const getTrainers = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
@@ -35,9 +36,11 @@ const Trainers = () => {
         setTrainers([...trainers.filter((trainer) => trainer._id !== selectedTrainerId)]);
         setModalMessage(data.message);
         setIsConfirmationModal(false);
+        setTypeStyle('success');
       } catch (error) {
         console.error('Error deleting item:', error);
         setModalMessage('Error deleting trainer');
+        setTypeStyle('error');
       }
     }
   };
@@ -52,6 +55,7 @@ const Trainers = () => {
     setSelectedTrainerId(id);
     setModalMessage('Are you sure you want to delete this trainer?');
     setShowModal(true);
+    setTypeStyle('default');
     setIsConfirmationModal(true);
   };
 
@@ -80,7 +84,7 @@ const Trainers = () => {
           title="Delete Trainer"
           body={modalMessage}
           isDelete={isConfirmationModal}
-          typeStyle="error"
+          typeStyle={typeStyle}
           closeModal={handleDeleteCancel}
           onConfirm={handleDeleteConfirmation}
         />
