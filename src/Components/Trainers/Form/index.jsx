@@ -125,6 +125,9 @@ const Form = () => {
   };
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
+      <div className={styles.headContainer}>
+        <h2>{id ? 'Update Trainer' : 'Add Trainer'}</h2>
+      </div>
       <div className={styles.container}>
         <div className={styles.box}>
           <h4>Name</h4>

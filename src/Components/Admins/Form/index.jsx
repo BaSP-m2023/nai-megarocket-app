@@ -117,11 +117,13 @@ const Form = () => {
   };
 
   return (
-    <>
+    <div className={styles.formContainer}>
+      <h2 className={styles.formTitle}>{id ? 'Update Admin' : 'Add Admin'}</h2>
       <SharedModal
         isDelete={false}
         show={showAlert}
         closeModal={handleExitAlert}
+        typeStyle={'error'}
         title={'Something is wrong'}
         body={alertMessage}
       />
@@ -130,94 +132,97 @@ const Form = () => {
         show={showSuccessAlert}
         closeModal={handleCancel}
         title={'Success'}
+        typeStyle={'success'}
         body={alertMessage}
       />
-      <form>
-        <div>
-          <h3 className={styles.h3}>Name</h3>
-          <input
-            name="firstName"
-            type="text"
-            value={formData.firstName}
-            placeholder="Name"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <h3 className={styles.h3}>Last Name</h3>
-          <input
-            name="lastName"
-            type="text"
-            value={formData.lastName}
-            placeholder="Last Name"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <h3 className={styles.h3}>DNI</h3>
-          <input
-            name="dni"
-            type="number"
-            value={formData.dni}
-            placeholder="DNI"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <h3 className={styles.h3}>Phone</h3>
-          <input
-            name="phone"
-            type="number"
-            value={formData.phone}
-            placeholder="Phone"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <h3 className={styles.h3}>Email</h3>
-          <input
-            name="email"
-            type="text"
-            value={formData.email}
-            placeholder="Email"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <h3 className={styles.h3}>City</h3>
-          <input
-            name="city"
-            type="text"
-            value={formData.city}
-            placeholder="City"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <h3 className={styles.h3}>Password</h3>
-          <input
-            name="password"
-            type="text"
-            value={formData.password}
-            placeholder="Password"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className={styles.buttonsAdmin}>
-          <div className={styles.buttonsAdmin}>
-            <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-            <Button text={'Submit'} type={'submit'} clickAction={handleSubmit} />
+      <form className={styles.formAdmin}>
+        <div className={styles.firstInputs}>
+          <div className={styles.formInput}>
+            <h3 className={styles.h3}>Name</h3>
+            <input
+              name="firstName"
+              type="text"
+              value={formData.firstName}
+              placeholder="Name"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className={styles.formInput}>
+            <h3 className={styles.h3}>Last Name</h3>
+            <input
+              name="lastName"
+              type="text"
+              value={formData.lastName}
+              placeholder="Last Name"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className={styles.formInput}>
+            <h3 className={styles.h3}>DNI</h3>
+            <input
+              name="dni"
+              type="number"
+              value={formData.dni}
+              placeholder="DNI"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className={styles.formInput}>
+            <h3 className={styles.h3}>Phone</h3>
+            <input
+              name="phone"
+              type="number"
+              value={formData.phone}
+              placeholder="Phone"
+              onChange={handleChange}
+              required
+            />
           </div>
         </div>
+        <div className={styles.secondInputs}>
+          <div className={styles.formInput}>
+            <h3 className={styles.h3}>Email</h3>
+            <input
+              name="email"
+              type="text"
+              value={formData.email}
+              placeholder="Email"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className={styles.formInput}>
+            <h3 className={styles.h3}>City</h3>
+            <input
+              name="city"
+              type="text"
+              value={formData.city}
+              placeholder="City"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className={styles.formInput}>
+            <h3 className={styles.h3}>Password</h3>
+            <input
+              name="password"
+              type="text"
+              value={formData.password}
+              placeholder="Password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+        <div className={styles.buttonsAdmin}>
+          <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
+          <Button text={'Submit'} type={'submit'} clickAction={handleSubmit} />
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 

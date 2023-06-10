@@ -60,7 +60,7 @@
   margin-left: 2rem;
   padding: 0.5rem;
   border: none;
-  background-color: white;
+  background: none;
   cursor: pointer;
 }
 

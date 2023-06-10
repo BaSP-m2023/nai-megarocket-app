@@ -1,26 +1,40 @@
-.form{
-  margin: 5%;
-  margin-top: 0;
-  border-radius: 20px;
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6%;
+  margin-left: 25%;
+  width: 70%;
+  border-radius: 5px;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
 }
 
 .container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  margin-left: 20%;
   max-width: 800px;
-  padding: 4%;
-  padding-bottom: 0;
-  margin-left: 13%;
 }
+
 .box {
+  display: flex;
+  flex-direction: column;
   width: 40%;
   margin-bottom: 2%;
   padding-right: 3%;
 }
 
-.button:hover, .button:focus {
+.button:hover,
+.button:focus {
   background-color: #6d7298;
   color: #ffffff;
   cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 2%;
+  width: 80%;
 }

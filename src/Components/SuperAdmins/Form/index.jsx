@@ -135,8 +135,9 @@ const Form = () => {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit} className={styles.modalContainer}>
+    <div className={styles.superAdminFormContainer}>
+      <form onSubmit={onSubmit} className={styles.formContainer}>
+        <h2 className={styles.h2Style}>{id ? 'Update Super Admin' : 'Add Super Admin'}</h2>
         <div className={styles.fieldsetForm}>
           <label className={styles.label} htmlFor="firstName">
             Name
@@ -178,7 +179,7 @@ const Form = () => {
             className={styles.inputForm}
           />
         </div>
-        <div className={styles.modalButtons}>
+        <div className={styles.buttonsContainer}>
           <Button text="Cancel" type="cancel" clickAction={handleCancel} />
           {id ? (
             <>
@@ -205,7 +206,7 @@ const Form = () => {
         closeModal={closeModal}
         onConfirm={handleConfirm}
       />
-    </>
+    </div>
   );
 };
 
