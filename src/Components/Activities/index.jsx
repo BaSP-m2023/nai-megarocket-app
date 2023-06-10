@@ -4,60 +4,23 @@ import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import styles from './activities.module.css';
 import { useHistory } from 'react-router-dom';
+import { getActivities, deleteActivities } from '../redux/members/thunks';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Activities = () => {
   const history = useHistory();
-
-  const [activities, setActivities] = useState([]);
   const [activityId, setActivityId] = useState();
   const [showModal, setShowModal] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [typeStyle, setTypeStyle] = useState('');
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
+  const activities = useSelector((state) => state.activities.data);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getActivities();
+    dispatch(getActivities());
   }, []);
-
-  const getActivities = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
-      const { data } = await response.json();
-      setActivities(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const deleteActivities = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setIsDelete(false);
-        setTypeStyle('success');
-        setTitleModal(data.message);
-        setBodyModal('');
-        setShowModal(true);
-      } else {
-        setIsDelete(false);
-        setTypeStyle('error');
-        setTitleModal('Error');
-        setBodyModal('');
-        setShowModal(true);
-      }
-    } catch (error) {
-      console.error(error);
-      setIsDelete(false);
-      setTypeStyle('error');
-      setBodyModal('Error to delete an activity');
-      setTitleModal('Error');
-      setShowModal(true);
-    }
-  };
 
   const handleAddItem = () => {
     history.push('activities/form');
@@ -74,7 +37,7 @@ const Activities = () => {
 
   const handleConfirmDelete = () => {
     deleteActivities(activityId);
-    setActivities(activities.filter((activity) => activity._id !== activityId));
+    // setActivities(activities.filter((activity) => activity._id !== activityId));
     setShowModal(false);
   };
 
