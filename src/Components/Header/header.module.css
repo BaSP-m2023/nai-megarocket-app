@@ -3,61 +3,32 @@
   justify-content: space-between;
   align-items: center;
   height: 10vh;
-  background-color: #0F232E;
+  background-color: #0f232e;
   width: 100%;
   float: right;
-  position:relative;
-  z-index:2;
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .brand {
   font-weight: bold;
   font-size: 1.5rem;
-  color: #F9A414;
-  margin-left: 2rem;
+  color: #f9a414;
+  margin-left: 2.5%;
 }
 
 .socialIcon {
-  margin-left: 15px;
-  color: #F9A414;
-}
-
-.navbar {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  width: 20%;
-  justify-content: space-around;
-  align-items: flex-start;
-  min-height: 100vh;
-  background-color: #0F232E;
-  letter-spacing: 0.15em;
-  z-index:1;
+  margin-left: 5px;
+  color: #f9a414;
+  background-color: white;
+  border-radius: 15rem;
+  margin-right: 1rem;
 }
 
 .appName {
   font-size: 2rem;
   font-weight: bold;
-  color: #F9A414;
-}
-
-.rutes {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  list-style-type: none;
-  margin-top: 6rem;
-  height: 80%;
-  width: 20%;
-}
-
-.rutes > li > a {
-  font-size: 1.3rem;
-  font-weight: 600;
-  text-decoration: none;
-  text-transform: capitalize;
-  color: #F9A414;
+  color: #f9a414;
 }

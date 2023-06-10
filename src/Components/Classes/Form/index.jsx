@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
+import styles from './form.module.css';
+import Button from '../../Shared/Button';
+import SharedModal from '../../Shared/Modal';
 
 const Form = () => {
   const history = useHistory();
@@ -12,6 +14,9 @@ const Form = () => {
   const [slots, setSlots] = useState('');
   const [activities, setActivities] = useState([]);
   const [trainers, setTrainers] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const getClasses = async () => {
     try {
@@ -57,12 +62,16 @@ const Form = () => {
         },
         body: JSON.stringify(formData)
       });
+      const data = await response.json();
       if (!response.ok) {
-        const errorMessage = await response.text;
-        console.log(errorMessage);
-        throw new Error(errorMessage);
+        setAlertMessage(data.message);
+        setIsSuccess(false);
+        setShowAlert(true);
+      } else {
+        setAlertMessage(data.message);
+        setIsSuccess(true);
+        setShowAlert(true);
       }
-      history.push('/classes');
     } catch (error) {
       console.error('Error edited class:', error);
     }
@@ -77,12 +86,16 @@ const Form = () => {
         },
         body: JSON.stringify(formData)
       });
+      const data = await response.json();
       if (!response.ok) {
-        const errorMessage = await response.text;
-        console.log(errorMessage);
-        throw new Error(errorMessage);
+        setAlertMessage(data.message);
+        setIsSuccess(false);
+        setShowAlert(true);
+      } else {
+        setAlertMessage(data.message);
+        setIsSuccess(true);
+        setShowAlert(true);
       }
-      history.push('/classes');
     } catch (error) {
       console.error('Error adding class:', error);
     }
@@ -103,15 +116,10 @@ const Form = () => {
     } else {
       createSubmit(formData);
     }
-    setDay([]);
-    setHour('');
-    setTrainer('');
-    setActivity('');
-    setSlots('');
   };
 
   const handleCancel = () => {
-    history.push('/classes/');
+    history.push('/classes');
   };
 
   useEffect(() => {
@@ -180,60 +188,85 @@ const Form = () => {
     setSlots(selectedSlots);
   };
 
+  const handleCloseAlert = () => {
+    if (isSuccess) {
+      history.push('/classes');
+    } else {
+      setShowAlert(false);
+    }
+  };
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.container}>
-        <div className={styles.box}>
-          <h4>Day</h4>
-          <input
-            className={styles.inputClasses}
-            type="text"
-            placeholder="Day"
-            value={day}
-            onChange={(e) => setDay(e.target.value)}
-            required
+    <>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.container}>
+          <h2>{id ? 'Update Class' : 'Create Class'}</h2>
+          <div className={styles.box}>
+            <h4>Day</h4>
+            <input
+              className={styles.inputClasses}
+              type="text"
+              placeholder="Day"
+              value={day}
+              onChange={(e) => setDay(e.target.value)}
+              required
+            />
+            <small>Enter the days seperated for comas</small>
+          </div>
+          <div className={styles.box}>
+            <h4>Hour</h4>
+            <input
+              className={styles.inputClasses}
+              type="text"
+              placeholder="Hour"
+              pattern="[0-9]{2}:[0-9]{2}"
+              value={hour}
+              onChange={(e) => setHour(e.target.value)}
+              required
+            />
+            <small>Please enter the hour in HH:MM format.</small>
+          </div>
+          <div className={styles.box}>
+            <h4>Trainer</h4>
+            <select value={trainer} className={styles.select} onChange={trainerChange} required>
+              {renderTrainer()};
+            </select>
+          </div>
+          <div className={styles.box}>
+            <h4>Activity</h4>
+            <select value={activity} onChange={activityChange} required>
+              {renderActivity()};
+            </select>
+          </div>
+          <div className={styles.box}>
+            <h4>Slots</h4>
+            <input
+              type="number"
+              placeholder="Slots"
+              value={slots}
+              onChange={slotsChange}
+              required
+            />
+          </div>
+        </div>
+        <div className={styles.buttonsDiv}>
+          <Button type="cancel" text="Cancel" clickAction={handleCancel} />
+          <Button
+            type={id ? 'submit' : 'submit'}
+            text={id ? 'Submit' : 'Confirm'}
+            onSubmit={handleSubmit}
           />
-          <small>Enter the days seperated for comas</small>
         </div>
-        <div className={styles.box}>
-          <h4>Hour</h4>
-          <input
-            className={styles.inputClasses}
-            type="text"
-            placeholder="Hour"
-            pattern="[0-9]{2}:[0-9]{2}"
-            value={hour}
-            onChange={(e) => setHour(e.target.value)}
-            required
-          />
-          <small>Please enter the hour in HH:MM format.</small>
-        </div>
-        <div className={styles.box}>
-          <h4>Trainer</h4>
-          <select value={trainer} className={styles.select} onChange={trainerChange} required>
-            {renderTrainer()};
-          </select>
-        </div>
-        <div className={styles.box}>
-          <h4>Activity</h4>
-          <select value={activity} onChange={activityChange} required>
-            {renderActivity()};
-          </select>
-        </div>
-        <div className={styles.box}>
-          <h4>Slots</h4>
-          <input type="number" placeholder="Slots" value={slots} onChange={slotsChange} required />
-        </div>
-      </div>
-      <div className={styles.buttons}>
-        <button className={styles.button} type="button" onClick={handleCancel}>
-          Cancel
-        </button>
-        <button className={styles.button} type="submit" onSubmit={handleSubmit}>
-          {id ? <p>Edit</p> : <p>Add</p>}
-        </button>
-      </div>
-    </form>
+      </form>
+      <SharedModal
+        isDelete={false}
+        show={showAlert}
+        closeModal={() => handleCloseAlert()}
+        typeStyle={isSuccess ? 'success' : 'error'}
+        title={isSuccess ? 'Success' : 'Something went wrong'}
+        body={alertMessage}
+      />
+    </>
   );
 };
 

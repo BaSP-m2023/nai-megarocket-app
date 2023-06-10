@@ -11,7 +11,7 @@ const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteI
   return (
     <table className={styles.tableShared}>
       <thead className={styles.tableHead}>
-        <tr className={styles.tableTr}>
+        <tr className={styles.tableTrHead}>
           {columnTitles.map((title) => (
             <th className={styles.tableThtd} key={title}>
               {title}
@@ -36,7 +36,7 @@ const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteI
                   </td>
                 );
               })}
-              <td className={styles.tableThtd}>
+              <td className={`${styles.tableThtd} ${styles.tableLastColumn}`}>
                 <Button type="edit" clickAction={() => handleUpdateItem(item._id)} />
                 <Button type="delete" clickAction={() => handleDeleteItem(item._id)} />
               </td>

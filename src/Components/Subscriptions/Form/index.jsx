@@ -167,7 +167,7 @@ const Form = () => {
   };
 
   return (
-    <>
+    <div className={styles.subscriptionContainer}>
       <SharedModal
         isDelete={false}
         show={showAlert}
@@ -180,12 +180,13 @@ const Form = () => {
         show={showSuccessAlert}
         closeModal={handleCancel}
         title={'Success'}
+        typeStyle={'success'}
         body={alertMessage}
       />
-      <h2 className={styles.title}>Form</h2>
+      <h2 className={styles.title}>{id ? 'Update Subscription' : 'Add Subscription'}</h2>
       <form onSubmit={handleSubmit} className={styles['form-container']}>
-        <fieldset>
-          <label>Classes</label>
+        <fieldset className={styles.fieldContainer}>
+          <label className={styles.labelStyle}>Classes</label>
           <select value={users.classes} onChange={onChangeClasses}>
             <option value="">Select a class</option>
             {classes.map((classItem) => (
@@ -195,8 +196,8 @@ const Form = () => {
             ))}
           </select>
         </fieldset>
-        <fieldset>
-          <label>Members</label>
+        <fieldset className={styles.fieldContainer}>
+          <label className={styles.labelStyle}>Members</label>
           <select value={users.member} onChange={onChangeMember}>
             <option value="">Select a member</option>
             {members.map((memberItem) => (
@@ -206,12 +207,12 @@ const Form = () => {
             ))}
           </select>
         </fieldset>
-        <fieldset className={styles.flex_buttons}>
+        <fieldset className={styles.flexButtons}>
           <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
           <Button text={id ? 'Submit' : 'Confirm'} type={'submit'} clickAction={handleSubmit} />
         </fieldset>
       </form>
-    </>
+    </div>
   );
 };
 
