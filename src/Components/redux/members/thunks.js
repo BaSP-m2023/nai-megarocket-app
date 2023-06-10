@@ -11,7 +11,7 @@ export const getMembers = () => {
   return async (dispatch) => {
     dispatch(getMembersPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/members`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
       const data = await response.json();
       dispatch(getMembersSuccess(data));
       return data;
@@ -25,15 +25,11 @@ export const deleteMember = (id) => {
   return async (dispatch) => {
     dispatch(deleteMemberPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/members/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'DELETE'
       });
-
-      if (!response.ok) {
-        throw new Error('An error occurred while trying to delete the member');
-      }
-
       dispatch(deleteMemberSuccess(id));
+      return { success: true, message: 'Member deleted successfully' };
     } catch (error) {
       dispatch(deleteMemberError(error.toString()));
     }
