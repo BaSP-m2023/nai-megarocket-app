@@ -18,7 +18,7 @@
   color: #ffffff;
   cursor: pointer;
 }
-.container {
+.adminContainer {
   flex: 1 1;
   display: flex;
   align-items: center;
@@ -26,4 +26,11 @@
   margin-left: 20%;
   justify-content: center;
   margin-top: 10%;
+}
+
+.topAdminContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
 }

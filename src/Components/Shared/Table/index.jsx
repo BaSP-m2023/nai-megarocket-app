@@ -11,7 +11,7 @@ const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteI
   return (
     <table className={styles.tableShared}>
       <thead className={styles.tableHead}>
-        <tr className={styles.tableTr}>
+        <tr className={styles.tableTrHead}>
           {columnTitles.map((title) => (
             <th className={styles.tableThtd} key={title}>
               {title}

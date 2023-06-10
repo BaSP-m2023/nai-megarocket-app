@@ -13,6 +13,13 @@
   margin-top: 10%;
 }
 
+.topContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+}
+
 .addButton {
   width: 13rem;
   padding: 0.9rem;

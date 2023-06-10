@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './sideBar.module.css';
 import { Link } from 'react-router-dom';
 
-export const SideBar = () => {
+const SideBar = () => {
   return (
-    <sideBar>
+    <aside>
       <nav className={styles.navbar}>
         <ul className={styles.rutes}>
           <li>
@@ -34,6 +34,8 @@ export const SideBar = () => {
           </li>
         </ul>
       </nav>
-    </sideBar>
+    </aside>
   );
 };
+
+export default SideBar;

@@ -84,9 +84,11 @@ const Admins = () => {
   };
 
   return (
-    <section className={styles.container}>
-      <h2>Admins</h2>
-      <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
+    <section className={styles.adminContainer}>
+      <div className={styles.topAdminContainer}>
+        <h2>Admins</h2>
+        <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
+      </div>
       {admins.length !== 0 ? (
         <>
           <SharedModal

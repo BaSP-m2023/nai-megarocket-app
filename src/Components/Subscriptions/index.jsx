@@ -62,10 +62,10 @@ const Subscriptions = () => {
   }, []);
   console.log(subscriptions);
   return (
-    <section className={styles.container}>
+    <section className={styles.subscriptionContainer}>
       <div className={styles.buttonContainer}>
         <h2>Subscriptions</h2>
-        <Button text={'+ Add New Subscription'} type={'add'} clickAction={handleAdd} />
+        <Button text={'+ Add Subscription'} type={'add'} clickAction={handleAdd} />
       </div>
       <Table
         data={subscriptions || []}

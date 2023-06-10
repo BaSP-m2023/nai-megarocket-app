@@ -86,7 +86,7 @@ const SuperAdmins = () => {
     <section className={styles.container}>
       <div className={styles.head}>
         <h2>Super Admins</h2>
-        <Button text="+ Add new Super Admin" clickAction={handleAddSuperAdmin} type="add" />
+        <Button text="+ Add Super Admin" clickAction={handleAddSuperAdmin} type="add" />
       </div>
       <Table
         data={superAdmins || []}

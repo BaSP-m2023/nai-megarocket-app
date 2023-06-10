@@ -1,17 +1,27 @@
-.adminForm {
+.formContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  width: 60%;
+  align-self: center;
   align-items: center;
-  max-width: 50%;
-  margin-left: 33%;
-  margin-top: 6%;
+  border-radius: 5px;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+  margin-top: 10%;
+  margin-left: 20%;
 }
-.containerAdminForm {
+
+.formAdmin {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  max-width: 70%;
+}
+
+.formTitle {
+  text-align: center;
+  color: #0f232e;
+  margin-top: 4%;
+  margin-bottom: 4%;
 }
 
 .inputAdmin {
@@ -19,24 +29,25 @@
   margin-bottom: 2%;
   padding-right: 3%;
 }
-.inputAdminForm {
-  width: 100%;
-  margin-bottom: 2%;
-  padding: 3%;
-  border-radius: 5px;
-  border: 1px solid;
-}
-.buttonsAdminForm {
+
+.firstInputs {
+  margin-right: 10px;
   display: flex;
-  justify-content: space-around;
-  width: 35%;
-  margin: 0;
-  padding: 2%;
-  padding-top: 0;
+  flex-direction: column;
+  align-items: flex-end;
 }
-.titleAdminForm {
-  width: 100%;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  text-align: center;
+
+.secondInputs {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.buttonsAdmin {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+  margin-top: 2%;
+  margin-bottom: 5%;
 }

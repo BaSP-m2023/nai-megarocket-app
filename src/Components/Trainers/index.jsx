@@ -62,9 +62,11 @@ const Trainers = () => {
     history.push(`/trainers/form/${id}`);
   };
   return (
-    <section className={styles.container}>
-      <h2>Trainers</h2>
-      <Button text="Add New Trainer" clickAction={handleAddTrainer} type="add" />
+    <section className={styles.trainerContainer}>
+      <div className={styles.headContainer}>
+        <h2>Trainers</h2>
+        <Button text="+ Add Trainer" clickAction={handleAddTrainer} type="add" />
+      </div>
       <Table
         data={trainers || []}
         properties={['firstName', 'lastName', 'phone', 'email', 'salary']}
