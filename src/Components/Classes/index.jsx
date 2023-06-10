@@ -75,7 +75,7 @@ const Classes = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <section className={styles.classesContainer}>
       <div className={styles.classesSection}>
         <h2>Classes</h2>
         <Button text={'+ Add Class'} type={'add'} clickAction={handleAddClass} />
