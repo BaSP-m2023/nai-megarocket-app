@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 const Members = () => {
   const history = useHistory();
   const members = useSelector((state) => state.members.data.data);
+  const loading = useSelector((state) => state.members.loading);
   const [showWarning, setShowWarning] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -20,7 +21,7 @@ const Members = () => {
 
   useEffect(() => {
     dispatch(getMembers());
-  }, []);
+  }, [alertMessage]);
 
   const handleConfirmDelete = async () => {
     setShowWarning(false);
@@ -30,12 +31,10 @@ const Members = () => {
       setAlertMessage(data.message);
       setIsSuccess(false);
       setShowAlert(true);
-      console.log(data);
     } catch (error) {
       setAlertMessage(error.message);
       setIsSuccess(true);
       setShowAlert(true);
-      console.log(error);
     }
   };
 
@@ -58,31 +57,37 @@ const Members = () => {
         <h2>Members</h2>
         <Button text={'+ Add Member'} type={'add'} clickAction={handleAdd} />
       </div>
-      <>
-        <Table
-          data={members}
-          handleDeleteItem={handleDelete}
-          handleUpdateItem={handleEdit}
-          columnTitles={['Name', 'Surname', 'Email', 'Membership', 'Active']}
-          properties={['firstName', 'lastName', 'email', 'membership', 'isActive']}
-        />
-        <SharedModal
-          isDelete={true}
-          show={showWarning}
-          closeModal={() => setShowWarning(false)}
-          title={'Delete Member'}
-          body={'Are you sure you want to delete this member?'}
-          onConfirm={handleConfirmDelete}
-        />
-        <SharedModal
-          isDelete={false}
-          show={showAlert}
-          typeStyle={isSuccess ? 'success' : 'error'}
-          closeModal={() => setShowAlert(false)}
-          title={isSuccess ? 'Success' : 'Error'}
-          body={alertMessage}
-        />
-      </>
+      {loading ? (
+        <p>Loading members...</p>
+      ) : members && members.length > 0 ? (
+        <>
+          <Table
+            data={members}
+            handleDeleteItem={handleDelete}
+            handleUpdateItem={handleEdit}
+            columnTitles={['Name', 'Surname', 'Email', 'Membership', 'Active']}
+            properties={['firstName', 'lastName', 'email', 'membership', 'isActive']}
+          />
+          <SharedModal
+            isDelete={true}
+            show={showWarning}
+            closeModal={() => setShowWarning(false)}
+            title={'Delete Member'}
+            body={'Are you sure you want to delete this member?'}
+            onConfirm={handleConfirmDelete}
+          />
+          <SharedModal
+            isDelete={false}
+            show={showAlert}
+            typeStyle={isSuccess ? 'success' : 'error'}
+            closeModal={() => setShowAlert(false)}
+            title={isSuccess ? 'Success' : 'Error'}
+            body={alertMessage}
+          />
+        </>
+      ) : (
+        <p>No data available.</p>
+      )}
     </section>
   );
 };

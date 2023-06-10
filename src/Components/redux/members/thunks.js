@@ -16,7 +16,7 @@ export const getMembers = () => {
       dispatch(getMembersSuccess(data));
       return data;
     } catch (error) {
-      dispatch(getMembersError(error.toString()));
+      dispatch(getMembersError(error));
     }
   };
 };
@@ -31,7 +31,7 @@ export const deleteMember = (id) => {
       dispatch(deleteMemberSuccess(id));
       return { success: true, message: 'Member deleted successfully' };
     } catch (error) {
-      dispatch(deleteMemberError(error.toString()));
+      dispatch(deleteMemberError(error));
     }
   };
 };
