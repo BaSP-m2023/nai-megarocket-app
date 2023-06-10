@@ -1,9 +1,16 @@
-.container {
+.trainerContainer {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 0.5rem;
+  margin-top: 10%;
   margin-left: 20%;
+}
+
+.headContainer {
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
+  align-items: center;
 }

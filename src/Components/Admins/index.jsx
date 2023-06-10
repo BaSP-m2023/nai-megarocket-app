@@ -66,7 +66,7 @@ const Admins = () => {
     setModalInformation({ title: 'Warning', body: 'Are you sure?' });
     setIsDelete(true);
     setShowModal(true);
-    setTypeStyle('success');
+    setTypeStyle('default');
     setIdAdmin(id);
   };
 
@@ -84,9 +84,11 @@ const Admins = () => {
   };
 
   return (
-    <section className={styles.container}>
-      <h2>Admins</h2>
-      <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
+    <section className={styles.adminContainer}>
+      <div className={styles.topAdminContainer}>
+        <h2>Admins</h2>
+        <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
+      </div>
       {admins.length !== 0 ? (
         <>
           <SharedModal
@@ -100,6 +102,7 @@ const Admins = () => {
             isDelete={false}
             show={showSuccessAlert}
             closeModal={handleExitAlert}
+            typeStyle={'success'}
             title={'Success'}
             body={alertMessage}
           />

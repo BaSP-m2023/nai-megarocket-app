@@ -1,16 +1,19 @@
-.container {
+.classesContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 15%;
+  margin-top: 10%;
+  margin-left: 20%;
   margin-bottom: 15%;
 }
 .classesSection {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  justify-content: space-around;
+  width: 80%;
 }
 
 .modalContent {

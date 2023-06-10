@@ -70,7 +70,7 @@ const Form = () => {
       if (response.ok) {
         setIsSuccess(true);
         setTypeStyle('success');
-        setTitleModal(data.data.name + 'was added');
+        setTitleModal(data.data.name + ' was added');
         setBodyModal('');
         setShowModal(true);
       } else {
@@ -116,7 +116,7 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Form</h2>
+      <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
       <form className={styles.formActivity}>
         <Input
           id="name"
@@ -135,12 +135,14 @@ const Form = () => {
           required
         />
       </form>
-      <Button text={'Submit'} type={'submit'} clickAction={handleConfirm}></Button>
-      <Button
-        text={'Cancel'}
-        type={'cancel'}
-        clickAction={() => history.push('/activities')}
-      ></Button>
+      <div className={styles.buttonContainer}>
+        <Button
+          text={'Cancel'}
+          type={'cancel'}
+          clickAction={() => history.push('/activities')}
+        ></Button>
+        <Button text={'Submit'} type={'submit'} clickAction={handleConfirm}></Button>
+      </div>
       <SharedModal
         show={showModal}
         typeStyle={typeStyle}

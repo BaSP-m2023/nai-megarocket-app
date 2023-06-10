@@ -200,6 +200,7 @@ const Form = () => {
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.container}>
+          <h2>{id ? 'Update Class' : 'Create Class'}</h2>
           <div className={styles.box}>
             <h4>Day</h4>
             <input

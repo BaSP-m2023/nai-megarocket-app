@@ -1,13 +1,22 @@
-h2 {
+.h2 {
   margin-top: 2rem;
 }
 
-
 .containerActivity {
-  margin-left:20%; 
+  margin-left: 20%;
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin-left: 20%;
+  margin-top: 10%;
+}
+
+.topContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
   align-items: center;
 }
 

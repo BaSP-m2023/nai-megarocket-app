@@ -88,8 +88,10 @@ const Activities = () => {
 
   return (
     <section className={styles.containerActivity}>
-      <h2>Activities</h2>
-      <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem}></Button>
+      <div className={styles.topContainer}>
+        <h2>Activities</h2>
+        <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem}></Button>
+      </div>
       {activities.length !== 0 ? (
         <>
           <Table
