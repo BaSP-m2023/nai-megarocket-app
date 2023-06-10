@@ -5,7 +5,7 @@ import SharedModal from '../Shared/Modal';
 import styles from './members.module.css';
 
 import { useHistory } from 'react-router-dom';
-import { getMembers, deleteMember } from '../redux/members/thunks';
+import { getMembers, deleteMember } from '../../Redux/members/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Members = () => {
