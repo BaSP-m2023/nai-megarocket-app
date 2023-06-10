@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './sideBar.module.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const SideBar = () => {
   return (
@@ -9,28 +9,44 @@ const SideBar = () => {
         <ul className={styles.rutes}>
           <li>
             {' '}
-            <Link to="/">Home</Link>{' '}
+            <NavLink activeClassName={styles.active} exact to="/">
+              Home
+            </NavLink>{' '}
           </li>
           <li>
-            <Link to="/activities">Activities</Link>
+            <NavLink activeClassName={styles.active} to="/activities">
+              Activities
+            </NavLink>
           </li>
           <li>
-            <Link to="/admins">Admins</Link>
+            <NavLink activeClassName={styles.active} to="/admins">
+              Admins
+            </NavLink>
           </li>
           <li>
-            <Link to="/classes">Classes</Link>
+            <NavLink activeClassName={styles.active} to="/classes">
+              Classes
+            </NavLink>
           </li>
           <li>
-            <Link to="/members">Members</Link>
+            <NavLink activeClassName={styles.active} to="/members">
+              Members
+            </NavLink>
           </li>
           <li>
-            <Link to="/subscriptions">Subscriptions</Link>
+            <NavLink activeClassName={styles.active} to="/subscriptions">
+              Subscriptions
+            </NavLink>
           </li>
           <li>
-            <Link to="/super-admins">Super Admins</Link>
+            <NavLink activeClassName={styles.active} to="/super-admins">
+              Super Admins
+            </NavLink>
           </li>
           <li>
-            <Link to="/trainers">Trainers</Link>
+            <NavLink activeClassName={styles.active} to="/trainers">
+              Trainers
+            </NavLink>
           </li>
         </ul>
       </nav>

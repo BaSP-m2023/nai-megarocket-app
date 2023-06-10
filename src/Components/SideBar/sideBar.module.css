@@ -33,15 +33,24 @@
   color: #f9a414;
 }
 
+.rutes > li > a.active {
+  border-bottom: 2px solid #f9a414;
+}
+
+.rutes > li > a {
+  position: relative;
+}
+
 .rutes > li > a::after {
   content: '';
   position: absolute;
-  bottom: -2px;
   left: 0;
+  bottom: 0;
   width: 100%;
   height: 2px;
   background-color: #f9a414;
   transform: scaleX(0);
+  transform-origin: left center;
   transition: transform 0.2s ease-in-out;
 }
 
