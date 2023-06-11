@@ -2,6 +2,9 @@ import {
   GET_CLASSES_PENDING,
   GET_CLASSES_SUCCESS,
   GET_CLASSES_ERROR,
+  GET_CLASS_BY_ID_PENDING,
+  GET_CLASS_BY_ID_SUCCESS,
+  GET_CLASS_BY_ID_ERROR,
   DELETE_CLASS_PENDING,
   DELETE_CLASS_SUCCESS,
   DELETE_CLASS_ERROR
@@ -23,6 +26,26 @@ export const getClassesSuccess = (data) => {
 export const getClassesError = (error) => {
   return {
     type: GET_CLASSES_ERROR,
+    payload: error
+  };
+};
+
+export const getClassByIdPending = () => {
+  return {
+    type: GET_CLASS_BY_ID_PENDING
+  };
+};
+
+export const getClassByIdSuccess = (id) => {
+  return {
+    type: GET_CLASS_BY_ID_SUCCESS,
+    payload: id
+  };
+};
+
+export const getClassByIdError = (error) => {
+  return {
+    type: GET_CLASS_BY_ID_ERROR,
     payload: error
   };
 };

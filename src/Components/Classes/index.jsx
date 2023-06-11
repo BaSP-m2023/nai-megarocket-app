@@ -65,7 +65,7 @@ const Classes = () => {
       </div>
       {isLoading ? (
         <ClipLoader />
-      ) : classes.length !== 0 ? (
+      ) : classes ? (
         <>
           <Table
             data={classes}

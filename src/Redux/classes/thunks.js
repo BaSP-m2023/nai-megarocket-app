@@ -2,6 +2,9 @@ import {
   getClassesPending,
   getClassesSuccess,
   getClassesError,
+  getClassByIdPending,
+  getClassByIdSuccess,
+  getClassByIdError,
   deleteClassPending,
   deleteClassSuccess,
   deleteClassError
@@ -17,6 +20,25 @@ export const getClasses = () => {
       return data;
     } catch (error) {
       dispatch(getClassesError(error));
+    }
+  };
+};
+
+export const getClassById = (id) => {
+  return async (dispatch) => {
+    dispatch(getClassByIdPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(getClassByIdSuccess(id));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(getClassByIdError(error));
+      throw error;
     }
   };
 };
