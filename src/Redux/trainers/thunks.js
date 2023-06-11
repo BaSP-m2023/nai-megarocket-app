@@ -2,6 +2,9 @@ import {
   getTrainersPending,
   getTrainersSuccess,
   getTrainersError,
+  getTrainersByIdPending,
+  getTrainersByIdSuccess,
+  getTrainersByIdError,
   deleteTrainersPending,
   deleteTrainerSuccess,
   deleteTrainerError
@@ -16,6 +19,22 @@ export const getTrainers = () => {
       dispatch(getTrainersSuccess(data.data));
     } catch (error) {
       dispatch(getTrainersError(error));
+    }
+  };
+};
+
+export const getTrainersById = (id) => {
+  return async (dispatch) => {
+    dispatch(getTrainersByIdPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
+        method: 'GET'
+      });
+      const data = await response.json();
+      dispatch(getTrainersByIdSuccess(data.data));
+      return data;
+    } catch (error) {
+      dispatch(getTrainersByIdError(error));
     }
   };
 };

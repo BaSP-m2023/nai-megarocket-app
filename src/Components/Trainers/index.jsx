@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-//import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrainers, deleteTrainer } from '../../Redux/trainers/thunks';
 import { useHistory } from 'react-router-dom';
@@ -20,7 +19,6 @@ const Trainers = () => {
 
   const dispatch = useDispatch();
   const trainers = useSelector((state) => state.trainers.data);
-  // const [isLoading, setIsLoading] = useState(true);
   const isLoading = useSelector((state) => state.trainers.loading);
 
   useEffect(() => {
