@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 
 import membersReducer from './members/reducer';
+import activitiesReducer from './activities/reducer';
 
 const rootReducer = combineReducers({
-  members: membersReducer
+  members: membersReducer,
   // ,admins: adminsReducer,
   // ,superAdmins: superAdminsReducer
-  // ,activities: activitiesReducer
+  activities: activitiesReducer
   // ,classes: classesReducer
   // ,subscriptions: subscriptionsReducer
 });
