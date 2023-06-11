@@ -19,11 +19,13 @@ const Trainers = () => {
 
   const dispatch = useDispatch();
   const trainers = useSelector((state) => state.trainers.data);
-  const pending = useSelector((state) => state.trainers.isPending);
-  const isLoading = useSelector((state) => state.trainers.isLoading);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getTrainers());
+    setTimeout(() => {
+      dispatch(getTrainers());
+      setIsLoading(false);
+    }, 1000);
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -82,7 +84,7 @@ const Trainers = () => {
           <Button text="+ Add Trainer" clickAction={handleAddTrainer} type="add" />
         </Link>
       </div>
-      {pending || isLoading ? (
+      {isLoading ? (
         <Spinner />
       ) : (
         <>
