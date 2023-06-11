@@ -20,11 +20,11 @@ const Trainers = () => {
 
   const dispatch = useDispatch();
   const trainers = useSelector((state) => state.trainers.data);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
+  const isLoading = useSelector((state) => state.trainers.loading);
 
   useEffect(() => {
     dispatch(getTrainers());
-    setIsLoading(false);
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -76,7 +76,9 @@ const Trainers = () => {
         <ClipLoader />
       ) : (
         <>
-          {trainers && trainers.length > 0 ? (
+          {!trainers ? (
+            <h3>No trainers to show</h3>
+          ) : trainers.length > 0 ? (
             <Table
               data={trainers}
               properties={['firstName', 'lastName', 'phone', 'email', 'salary']}
@@ -85,7 +87,7 @@ const Trainers = () => {
               handleDeleteItem={handleDelete}
             />
           ) : (
-            'No trainers to show'
+            <h3>Server not found</h3>
           )}
         </>
       )}
