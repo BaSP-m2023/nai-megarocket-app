@@ -18,11 +18,12 @@ const Members = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [memberToDelete, setMemberToDelete] = useState(null);
+  const [showTable, setShowTable] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMembers());
-  }, [alertMessage]);
+  }, [showTable]);
 
   const handleConfirmDelete = async () => {
     setShowWarning(false);
@@ -31,6 +32,7 @@ const Members = () => {
       setAlertMessage(data.message);
       setIsSuccess(true);
       setShowAlert(true);
+      setShowTable(true);
     } catch (error) {
       setAlertMessage(error.message);
       setIsSuccess(false);

@@ -4,7 +4,10 @@ import {
   getMembersError,
   deleteMemberPending,
   deleteMemberSuccess,
-  deleteMemberError
+  deleteMemberError,
+  getMemberByIdPending,
+  getMemberByIdSuccess,
+  getMemberByIdError
 } from './actions';
 
 export const getMembers = () => {
@@ -17,6 +20,21 @@ export const getMembers = () => {
       return data;
     } catch (error) {
       dispatch(getMembersError(error));
+    }
+  };
+};
+
+export const getMembersById = (id) => {
+  return async (dispatch) => {
+    dispatch(getMemberByIdPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`);
+      const data = await response.json();
+      dispatch(getMemberByIdSuccess(data));
+      return data;
+    } catch (error) {
+      dispatch(getMemberByIdError(error));
+      throw error;
     }
   };
 };
