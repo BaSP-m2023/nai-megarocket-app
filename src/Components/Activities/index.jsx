@@ -6,6 +6,7 @@ import styles from './activities.module.css';
 import { useHistory } from 'react-router-dom';
 import { getActivities, deleteActivities } from '../../Redux/activities/thunks';
 import { useSelector, useDispatch } from 'react-redux';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Activities = () => {
   const history = useHistory();
@@ -72,7 +73,7 @@ const Activities = () => {
         <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem} />
       </div>
       {loading ? (
-        <p>loading</p>
+        <ClipLoader />
       ) : activities && activities.length !== 0 ? (
         <>
           <Table
