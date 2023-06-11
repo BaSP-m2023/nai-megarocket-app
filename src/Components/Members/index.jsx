@@ -61,7 +61,7 @@ const Members = () => {
       </div>
       {loading ? (
         <ClipLoader />
-      ) : members && members.length > 0 ? (
+      ) : members && members.length >= 0 ? (
         <>
           <Table
             data={members}
