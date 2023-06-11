@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import SharedModal from '../Shared/Modal';
@@ -7,6 +7,7 @@ import styles from './members.module.css';
 import { useHistory } from 'react-router-dom';
 import { getMembers, deleteMember } from '../../Redux/members/thunks';
 import { useSelector, useDispatch } from 'react-redux';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Members = () => {
   const history = useHistory();
@@ -26,14 +27,13 @@ const Members = () => {
   const handleConfirmDelete = async () => {
     setShowWarning(false);
     try {
-      const response = await dispatch(deleteMember(memberToDelete));
-      const data = response.data;
+      const data = await dispatch(deleteMember(memberToDelete));
       setAlertMessage(data.message);
-      setIsSuccess(false);
+      setIsSuccess(true);
       setShowAlert(true);
     } catch (error) {
       setAlertMessage(error.message);
-      setIsSuccess(true);
+      setIsSuccess(false);
       setShowAlert(true);
     }
   };
@@ -58,7 +58,7 @@ const Members = () => {
         <Button text={'+ Add Member'} type={'add'} clickAction={handleAdd} />
       </div>
       {loading ? (
-        <p>Loading members...</p>
+        <ClipLoader />
       ) : members && members.length > 0 ? (
         <>
           <Table

@@ -25,13 +25,19 @@ export const deleteMember = (id) => {
   return async (dispatch) => {
     dispatch(deleteMemberPending());
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'DELETE'
       });
-      dispatch(deleteMemberSuccess(id));
-      return { success: true, message: 'Member deleted successfully' };
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(deleteMemberSuccess(id));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
     } catch (error) {
       dispatch(deleteMemberError(error));
+      throw error;
     }
   };
 };
