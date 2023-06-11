@@ -2,9 +2,9 @@ import {
   GET_SUPERADMINS_PENDING,
   GET_SUPERADMINS_SUCCESS,
   GET_SUPERADMINS_ERROR,
-  GET_SUPERADMINSID_PENDING,
-  GET_SUPERADMINSID_SUCCESS,
-  GET_SUPERADMINSID_ERROR,
+  GET_SUPERADMINS_BY_ID_PENDING,
+  GET_SUPERADMINS_BY_ID_SUCCESS,
+  GET_SUPERADMINS_BY_ID_ERROR,
   DELETE_SUPERADMINS_PENDING,
   DELETE_SUPERADMINS_SUCCESS,
   DELETE_SUPERADMINS_ERROR
@@ -36,19 +36,19 @@ const superAdminReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: action.payload
       };
-    case GET_SUPERADMINSID_PENDING:
+    case GET_SUPERADMINS_BY_ID_PENDING:
       return {
         ...state,
         loading: true,
         error: null
       };
-    case GET_SUPERADMINSID_SUCCESS:
+    case GET_SUPERADMINS_BY_ID_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
       };
-    case GET_SUPERADMINSID_ERROR:
+    case GET_SUPERADMINS_BY_ID_ERROR:
       return {
         ...state,
         loading: false,

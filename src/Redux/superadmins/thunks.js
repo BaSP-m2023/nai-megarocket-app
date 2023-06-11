@@ -26,7 +26,7 @@ export const getSuperAdmins = () => {
 
 export const getSuperAdminById = (id) => {
   return async (dispatch) => {
-    dispatch(getSuperAdminsIdPending);
+    dispatch(getSuperAdminsIdPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'GET'
