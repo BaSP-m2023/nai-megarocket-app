@@ -4,60 +4,28 @@ import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import styles from './activities.module.css';
 import { useHistory } from 'react-router-dom';
+import { getActivities, deleteActivities } from '../../Redux/activities/thunks';
+import { useSelector, useDispatch } from 'react-redux';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Activities = () => {
   const history = useHistory();
-
-  const [activities, setActivities] = useState([]);
   const [activityId, setActivityId] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [reload, setReload] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [typeStyle, setTypeStyle] = useState('');
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
+  const dispatch = useDispatch();
+
+  const loading = useSelector((state) => state.activities.loading);
+  const activities = useSelector((state) => state.activities.data.data);
 
   useEffect(() => {
-    getActivities();
-  }, []);
-
-  const getActivities = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
-      const { data } = await response.json();
-      setActivities(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const deleteActivities = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setIsDelete(false);
-        setTypeStyle('success');
-        setTitleModal(data.message);
-        setBodyModal('');
-        setShowModal(true);
-      } else {
-        setIsDelete(false);
-        setTypeStyle('error');
-        setTitleModal('Error');
-        setBodyModal('');
-        setShowModal(true);
-      }
-    } catch (error) {
-      console.error(error);
-      setIsDelete(false);
-      setTypeStyle('error');
-      setBodyModal('Error to delete an activity');
-      setTitleModal('Error');
-      setShowModal(true);
-    }
-  };
+    dispatch(getActivities());
+    setReload(false);
+  }, [reload]);
 
   const handleAddItem = () => {
     history.push('activities/form');
@@ -72,10 +40,22 @@ const Activities = () => {
     setShowModal(true);
   };
 
-  const handleConfirmDelete = () => {
-    deleteActivities(activityId);
-    setActivities(activities.filter((activity) => activity._id !== activityId));
-    setShowModal(false);
+  const handleConfirmDelete = async () => {
+    try {
+      const data = await dispatch(deleteActivities(activityId));
+      setShowModal(true);
+      setTitleModal('Success');
+      setBodyModal(data.message);
+      setTypeStyle('success');
+      setIsDelete(false);
+      setReload(true);
+    } catch (error) {
+      setShowModal(true);
+      setBodyModal(error.message);
+      setTitleModal('error');
+      setTypeStyle('error');
+      setIsDelete(false);
+    }
   };
 
   const handleCloseModal = () => {
@@ -90,9 +70,11 @@ const Activities = () => {
     <section className={styles.containerActivity}>
       <div className={styles.topContainer}>
         <h2>Activities</h2>
-        <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem}></Button>
+        <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem} />
       </div>
-      {activities.length !== 0 ? (
+      {loading ? (
+        <ClipLoader />
+      ) : activities && activities.length !== 0 ? (
         <>
           <Table
             data={activities}

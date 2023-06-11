@@ -1,67 +1,48 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import SharedModal from '../Shared/Modal';
 import styles from './members.module.css';
+
 import { useHistory } from 'react-router-dom';
+import { getMembers, deleteMember } from '../../Redux/members/thunks';
+import { useSelector, useDispatch } from 'react-redux';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Members = () => {
   const history = useHistory();
-  const [members, setMembers] = useState([]);
+  const members = useSelector((state) => state.members.data.data);
+  const loading = useSelector((state) => state.members.loading);
   const [showWarning, setShowWarning] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [memberToDelete, setMemberToDelete] = useState(null);
+  const [showTable, setShowTable] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getMembers();
-  }, []);
+    dispatch(getMembers());
+  }, [showTable]);
 
-  const deleteMember = async (id) => {
+  const handleConfirmDelete = async () => {
+    setShowWarning(false);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setShowAlert(true);
-        setIsSuccess(false);
-      }
+      const data = await dispatch(deleteMember(memberToDelete));
       setAlertMessage(data.message);
       setIsSuccess(true);
       setShowAlert(true);
+      setShowTable(true);
     } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  const getMembers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
-      const data = await response.json();
-      setMembers(data.data);
-    } catch (error) {
-      console.error(error);
-      throw error;
+      setAlertMessage(error.message);
+      setIsSuccess(false);
+      setShowAlert(true);
     }
   };
 
   const handleDelete = (id) => {
     setShowWarning(true);
     setMemberToDelete(id);
-  };
-
-  const handleConfirmDelete = async () => {
-    setShowWarning(false);
-    try {
-      await deleteMember(memberToDelete);
-      setMembers((prevMembers) => prevMembers.filter((member) => member._id !== memberToDelete));
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const handleAdd = () => {
@@ -78,7 +59,9 @@ const Members = () => {
         <h2>Members</h2>
         <Button text={'+ Add Member'} type={'add'} clickAction={handleAdd} />
       </div>
-      {members.length !== 0 ? (
+      {loading ? (
+        <ClipLoader />
+      ) : members && members.length >= 0 ? (
         <>
           <Table
             data={members}
@@ -105,7 +88,7 @@ const Members = () => {
           />
         </>
       ) : (
-        <h3>There are no Members in the database</h3>
+        <p>No data available.</p>
       )}
     </section>
   );
