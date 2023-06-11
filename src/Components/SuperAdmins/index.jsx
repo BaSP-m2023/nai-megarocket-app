@@ -4,49 +4,26 @@ import Table from '../Shared/Table/index';
 import SharedModal from '../Shared/Modal';
 import Button from '../Shared/Button/index';
 import { useHistory } from 'react-router-dom';
+import { getSuperAdmins, deleteSuperAdmin } from '../../Redux/superadmins/thunks';
+import { useSelector, useDispatch } from 'react-redux';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const SuperAdmins = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
-  const [superAdmins, setSuperAdmins] = useState([]);
+  const superAdmins = useSelector((state) => state.superAdmin.data.data);
+  const loading = useSelector((state) => state.superAdmin.loading);
+  const [reload, setReload] = useState(false);
   const [superAdminId, setSuperAdminId] = useState();
   const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [showAlert, setShowAlert] = useState(false);
 
-  const getSuperAdmins = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`);
-      const data = await response.json();
-      setSuperAdmins(data.data);
-    } catch (error) {
-      console.error(error);
-      throw new Error('An error has ocurred, cannot get the Super Admins');
-    }
-  };
-
   useEffect(() => {
-    getSuperAdmins();
-  }, []);
-
-  const deleteSuperAdmin = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setShowAlert(true);
-      } else {
-        setAlertMessage(data.message);
-        setShowSuccessAlert(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    dispatch(getSuperAdmins());
+  }, [reload]);
 
   const handleDeleteSuperAdmin = (id) => {
     setModalInformation({ title: 'Warning', body: 'Are you sure?' });
@@ -60,12 +37,15 @@ const SuperAdmins = () => {
 
   const confirmDeleteSuperAdmin = async () => {
     try {
-      await deleteSuperAdmin(superAdminId);
-      setSuperAdmins((prevSuperAdmins) =>
-        prevSuperAdmins.filter((superAdmin) => superAdmin._id !== superAdminId)
-      );
+      const data = await dispatch(deleteSuperAdmin(superAdminId));
       setShowDeleteWarning(false);
+      setAlertMessage(data.message);
+      setShowSuccessAlert(true);
+      setReload(true);
     } catch (error) {
+      setShowDeleteWarning(false);
+      setAlertMessage(error.message);
+      setShowAlert(true);
       console.error(error);
     }
   };
@@ -80,6 +60,7 @@ const SuperAdmins = () => {
 
   const handleExitAlert = () => {
     setShowSuccessAlert(false);
+    setShowAlert(false);
   };
 
   return (
@@ -88,36 +69,44 @@ const SuperAdmins = () => {
         <h2>Super Admins</h2>
         <Button text="+ Add Super Admin" clickAction={handleAddSuperAdmin} type="add" />
       </div>
-      <Table
-        data={superAdmins || []}
-        properties={['firstName', 'email']}
-        columnTitles={['First Name', 'Email']}
-        handleUpdateItem={handleUpdateSuperAdmin}
-        handleDeleteItem={handleDeleteSuperAdmin}
-      />
-      <SharedModal
-        show={showDeleteWarning}
-        closeModal={closeDeleteWarning}
-        onConfirm={confirmDeleteSuperAdmin}
-        title={modalInformation.title}
-        body={modalInformation.body}
-        isDelete={true}
-      />
-      <SharedModal
-        isDelete={false}
-        show={showSuccessAlert}
-        closeModal={handleExitAlert}
-        typeStyle={'success'}
-        title={'Success'}
-        body={alertMessage}
-      />
-      <SharedModal
-        isDelete={false}
-        show={showAlert}
-        closeModal={handleExitAlert}
-        title={'Something is wrong'}
-        body={alertMessage}
-      />
+      {loading ? (
+        <ClipLoader />
+      ) : superAdmins && superAdmins.length > 0 ? (
+        <>
+          <Table
+            data={superAdmins || []}
+            properties={['firstName', 'email']}
+            columnTitles={['First Name', 'Email']}
+            handleUpdateItem={handleUpdateSuperAdmin}
+            handleDeleteItem={handleDeleteSuperAdmin}
+          />
+          <SharedModal
+            show={showDeleteWarning}
+            closeModal={closeDeleteWarning}
+            onConfirm={confirmDeleteSuperAdmin}
+            title={modalInformation.title}
+            body={modalInformation.body}
+            isDelete={true}
+          />
+          <SharedModal
+            isDelete={false}
+            show={showSuccessAlert}
+            closeModal={handleExitAlert}
+            typeStyle={'success'}
+            title={'Success'}
+            body={alertMessage}
+          />
+          <SharedModal
+            isDelete={false}
+            show={showAlert}
+            closeModal={handleExitAlert}
+            title={'Something is wrong'}
+            body={alertMessage}
+          />
+        </>
+      ) : (
+        <p>No data available.</p>
+      )}
     </section>
   );
 };

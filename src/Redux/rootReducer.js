@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import membersReducer from './members/reducer';
 import trainersReducer from './trainers/reducer';
 import activitiesReducer from './activities/reducer';
+import superAdminReducer from './superadmins/reducer';
 
 const rootReducer = combineReducers({
   // ,admins: adminsReducer,
@@ -10,7 +11,7 @@ const rootReducer = combineReducers({
   // ,classes: classesReducer
   members: membersReducer,
   // ,subscriptions: subscriptionsReducer
-  // ,superAdmins: superAdminsReducer
+  superAdmin: superAdminReducer,
   trainers: trainersReducer
 });
 
