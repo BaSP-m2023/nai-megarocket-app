@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrainers, deleteTrainer } from '../../Redux/trainers/thunks';
 import { useHistory } from 'react-router-dom';
@@ -7,6 +7,7 @@ import styles from './trainers.module.css';
 import Table from '../Shared/Table/index';
 import Button from '../Shared/Button/index';
 import SharedModal from '../Shared/Modal';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Trainers = () => {
   const history = useHistory();
@@ -22,10 +23,8 @@ const Trainers = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(getTrainers());
-      setIsLoading(false);
-    }, 1000);
+    dispatch(getTrainers());
+    setIsLoading(false);
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -60,32 +59,21 @@ const Trainers = () => {
   };
 
   const handleAddTrainer = () => {
-    history.push('/src/Components/Trainers/Form/index.jsx');
+    history.push('/trainers/form');
   };
 
   const editItem = (id) => {
     history.push(`/trainers/form/${id}`);
   };
 
-  const Spinner = () => {
-    return (
-      <div className={styles.spinner}>
-        <div className={styles.dot1}></div>
-        <div className={styles.dot2}></div>
-      </div>
-    );
-  };
-
   return (
     <section className={styles.trainerContainer}>
       <div className={styles.headContainer}>
         <h2>Trainers</h2>
-        <Link to="/trainers/form">
-          <Button text="+ Add Trainer" clickAction={handleAddTrainer} type="add" />
-        </Link>
+        <Button text="+ Add Trainer" clickAction={handleAddTrainer} type="add" />
       </div>
       {isLoading ? (
-        <Spinner />
+        <ClipLoader />
       ) : (
         <>
           {trainers && trainers.length > 0 ? (
