@@ -6,6 +6,7 @@ import Button from '../Shared/Button/index';
 import { useHistory } from 'react-router-dom';
 import { getSuperAdmins, deleteSuperAdmin } from '../../Redux/superadmins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const SuperAdmins = () => {
   const history = useHistory();
@@ -70,7 +71,7 @@ const SuperAdmins = () => {
         <Button text="+ Add Super Admin" clickAction={handleAddSuperAdmin} type="add" />
       </div>
       {loading ? (
-        <p>Loading super admins...</p>
+        <ClipLoader />
       ) : superAdmins && superAdmins.length > 0 ? (
         <>
           <Table
