@@ -23,7 +23,6 @@ const SuperAdmins = () => {
 
   useEffect(() => {
     dispatch(getSuperAdmins());
-    setReload(false);
   }, [reload]);
 
   const handleDeleteSuperAdmin = (id) => {

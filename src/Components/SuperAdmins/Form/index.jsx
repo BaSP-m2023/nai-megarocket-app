@@ -3,10 +3,14 @@ import { useParams, useHistory } from 'react-router-dom';
 import styles from './form.module.css';
 import SharedModal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
+import { getSuperAdminById } from '../../../Redux/superadmins/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const item = useSelector((state) => state.superAdmin.data);
   const [superAdmin, setSuperAdmin] = useState({
     firstName: '',
     email: '',
@@ -19,18 +23,6 @@ const Form = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
-  const getSuperAdminById = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'GET'
-      });
-      const { data } = await response.json();
-      setSuperAdmin({ firstName: data.firstName, email: data.email, password: data.password });
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const addSuperAdmin = async (superAdmin) => {
     try {
@@ -97,9 +89,19 @@ const Form = () => {
 
   useEffect(() => {
     if (id) {
-      getSuperAdminById(id);
+      dispatch(getSuperAdminById(id));
     }
   }, [id]);
+
+  useEffect(() => {
+    if (id && item) {
+      setSuperAdmin({
+        firstName: item.firstName,
+        email: item.email,
+        password: item.password
+      });
+    }
+  }, [item]);
 
   const onChange = (e) => {
     setSuperAdmin({
