@@ -25,10 +25,12 @@ export const deleteSuperAdmin = (id) => {
   return async (dispatch) => {
     dispatch(deleteSuperAdminsPending());
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'DELETE'
       });
+      const data = await response.json();
       dispatch(deleteSuperAdminsSuccess(id));
+      return data;
     } catch (error) {
       dispatch(deleteSuperAdminsError(error));
     }
