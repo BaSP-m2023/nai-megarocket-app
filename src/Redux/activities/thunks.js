@@ -4,7 +4,10 @@ import {
   getActivitiesError,
   deleteActivitiesPending,
   deleteActivitiesSuccess,
-  deleteActivitiesError
+  deleteActivitiesError,
+  getActivitiesByIdPending,
+  getActivitiesByIdSuccess,
+  getActivitiesByIdError
 } from './actions';
 
 export const getActivities = () => {
@@ -16,7 +19,23 @@ export const getActivities = () => {
       dispatch(getActivitiesSuccess(data));
       return data;
     } catch (error) {
-      dispatch(getActivitiesError(error.toString()));
+      dispatch(getActivitiesError(error));
+    }
+  };
+};
+
+export const getActivitiesById = (id) => {
+  return async (dispatch) => {
+    dispatch(getActivitiesByIdPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
+        method: 'GET'
+      });
+      const { data } = await response.json();
+      dispatch(getActivitiesByIdSuccess(data));
+      return data;
+    } catch (error) {
+      dispatch(getActivitiesByIdError(error));
     }
   };
 };
