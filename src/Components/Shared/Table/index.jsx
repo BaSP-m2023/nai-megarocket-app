@@ -21,7 +21,7 @@ const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteI
         </tr>
       </thead>
       <tbody>
-        {data.map((item) => {
+        {data?.map((item) => {
           return (
             <tr className={styles.tableTr} key={item._id}>
               {properties.map((property) => {
