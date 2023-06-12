@@ -3,34 +3,24 @@ import { useParams, useHistory } from 'react-router-dom';
 import styles from './form.module.css';
 import SharedModal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
+import { getSuperAdminById } from '../../../Redux/superadmins/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const item = useSelector((state) => state.superAdmin.data);
   const [superAdmin, setSuperAdmin] = useState({
     firstName: '',
     email: '',
     password: ''
   });
-  const [showModal, setShowModal] = useState(false);
   const [typeStyle, setTypeStyle] = useState('');
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const getSuperAdminById = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'GET'
-      });
-      const { data } = await response.json();
-      setSuperAdmin({ firstName: data.firstName, email: data.email, password: data.password });
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const addSuperAdmin = async (superAdmin) => {
     try {
@@ -42,22 +32,19 @@ const Form = () => {
         body: JSON.stringify(superAdmin)
       });
       const data = await response.json();
-      if (response.ok) {
+      if (data.ok) {
         setTypeStyle('success');
         setTitleModal('Success');
         setBodyModal('Super Admin created successfully.');
         setShowSuccessModal(true);
         setShowErrorModal(false);
         setSuperAdmin({ firstName: '', email: '', password: '' });
-        setIsSuccess(true);
-      } else {
-        setTypeStyle('error');
-        setTitleModal('Error');
-        setBodyModal(data.message);
-        setShowModal(true);
-        setShowSuccessModal(false);
-        setIsSuccess(false);
       }
+      setTypeStyle('error');
+      setTitleModal('Error');
+      setBodyModal(data.message);
+      setShowErrorModal(true);
+      setShowSuccessModal(false);
     } catch (error) {
       console.error(error);
       throw new Error('An error has occurred creating the Super Admin');
@@ -75,19 +62,14 @@ const Form = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        setTypeStyle('success');
-        setTitleModal('Success');
-        setBodyModal('Super Admin updated successfully.');
         setShowSuccessModal(true);
         setShowErrorModal(false);
-        setIsSuccess(true);
       } else {
         setTypeStyle('error');
         setTitleModal('Error');
         setBodyModal(data.message);
-        setShowModal(true);
+        setShowErrorModal(true);
         setShowSuccessModal(false);
-        setIsSuccess(false);
       }
     } catch (error) {
       console.error(error);
@@ -97,9 +79,19 @@ const Form = () => {
 
   useEffect(() => {
     if (id) {
-      getSuperAdminById(id);
+      dispatch(getSuperAdminById(id));
     }
   }, [id]);
+
+  useEffect(() => {
+    if (id && item) {
+      setSuperAdmin({
+        firstName: item.firstName,
+        email: item.email,
+        password: item.password
+      });
+    }
+  }, [item]);
 
   const onChange = (e) => {
     setSuperAdmin({
@@ -122,16 +114,12 @@ const Form = () => {
   };
 
   const closeModal = () => {
-    setShowModal(false);
     setShowSuccessModal(false);
+    setShowErrorModal(false);
   };
 
   const handleConfirm = () => {
-    if (isSuccess) {
-      history.replace('/super-admins');
-    } else {
-      setShowSuccessModal(false);
-    }
+    history.push('/super-admins');
   };
 
   return (
@@ -191,20 +179,18 @@ const Form = () => {
         </div>
       </form>
       <SharedModal
-        show={showModal || showErrorModal}
+        show={showErrorModal}
         typeStyle={typeStyle}
         title={titleModal}
         body={bodyModal}
         closeModal={closeModal}
-        onConfirm={handleConfirm}
       />
       <SharedModal
         show={showSuccessModal}
         typeStyle="success"
         title="Success"
         body={id ? 'Super Admin updated successfully.' : 'Super Admin created successfully.'}
-        closeModal={closeModal}
-        onConfirm={handleConfirm}
+        closeModal={handleConfirm}
       />
     </div>
   );

@@ -121,7 +121,7 @@ const Form = () => {
     }
   };
   const handleCancel = () => {
-    history.goBack();
+    history.push('/trainers');
   };
   return (
     <form className={styles.form} onSubmit={handleSubmit}>

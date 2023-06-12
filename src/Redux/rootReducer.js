@@ -1,15 +1,19 @@
 import { combineReducers } from 'redux';
 
 import membersReducer from './members/reducer';
+import trainersReducer from './trainers/reducer';
+import activitiesReducer from './activities/reducer';
+import superAdminReducer from './superadmins/reducer';
 import classesReducer from './classes/reducer';
 
 const rootReducer = combineReducers({
-  members: membersReducer,
   // ,admins: adminsReducer,
-  // ,superAdmins: superAdminsReducer
-  // ,activities: activitiesReducer
-  classes: classesReducer
+  activities: activitiesReducer,
+  classes: classesReducer,
+  members: membersReducer,
   // ,subscriptions: subscriptionsReducer
+  superAdmin: superAdminReducer,
+  trainers: trainersReducer
 });
 
 export default rootReducer;
