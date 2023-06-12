@@ -80,7 +80,7 @@ const membersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isAddingMember: false,
-        data: [...state.data, action.payload.member],
+        data: [...state.data.data, action.payload.member],
         addMemberError: null
       };
     case ADD_MEMBER_ERROR:

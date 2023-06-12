@@ -65,7 +65,6 @@ const MemberForm = () => {
       setShowAlert(true);
     } catch (error) {
       setAlertMessage(error.message);
-      console.log(error);
       setIsSuccess(false);
       setShowAlert(true);
     }
@@ -79,7 +78,6 @@ const MemberForm = () => {
       setShowAlert(true);
     } catch (error) {
       setAlertMessage(error.message);
-      console.log(error);
       setIsSuccess(false);
       setShowAlert(true);
     }

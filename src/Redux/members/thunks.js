@@ -92,7 +92,6 @@ export const updateMember = (id, member) => {
 };
 
 export const addMember = (member) => {
-  console.log(member);
   return async (dispatch) => {
     dispatch(addMemberPending());
     try {
