@@ -3,11 +3,16 @@ import Button from '../Button';
 import styles from './table.module.css';
 const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteItem }) => {
   const isBoolean = (value) => {
+    if (!Array.isArray(data)) {
+      return <div>No data available</div>;
+    }
+
     if (typeof value === 'boolean') {
       return value === true ? 'Yes' : 'No';
     }
     return value;
   };
+
   return (
     <table className={styles.tableShared}>
       <thead className={styles.tableHead}>
@@ -21,7 +26,7 @@ const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteI
         </tr>
       </thead>
       <tbody>
-        {data.map((item) => {
+        {data?.map((item) => {
           return (
             <tr className={styles.tableTr} key={item._id}>
               {properties.map((property) => {
