@@ -4,7 +4,10 @@ import {
   getSubscriptionsError,
   deleteSubscriptionsPending,
   deleteSubscriptionsSuccess,
-  deleteSubscriptionsError
+  deleteSubscriptionsError,
+  getSubscriptionsByIdPending,
+  getSubscriptionsByIdSuccess,
+  getSubscriptionsByIdError
 } from './actions';
 
 export const getSubscriptions = () => {
@@ -17,6 +20,23 @@ export const getSubscriptions = () => {
       return data;
     } catch (error) {
       dispatch(getSubscriptionsError);
+    }
+  };
+};
+
+export const getSubscriptionById = (id) => {
+  return async (dispatch) => {
+    dispatch(getSubscriptionsByIdPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
+        method: 'GET'
+      });
+      const { data } = await response.json();
+      dispatch(getSubscriptionsByIdSuccess(data));
+      return data;
+    } catch (error) {
+      dispatch(getSubscriptionsByIdError(error));
+      throw error;
     }
   };
 };

@@ -4,7 +4,10 @@ import {
   GET_SUBSCRIPTIONS_ERROR,
   DELETE_SUBSCRIPTIONS_PENDING,
   DELETE_SUBSCRIPTIONS_SUCCESS,
-  DELETE_SUBSCRIPTIONS_ERROR
+  DELETE_SUBSCRIPTIONS_ERROR,
+  GET_SUBSCRIPTIONS_BY_ID_PENDING,
+  GET_SUBSCRIPTIONS_BY_ID_SUCCESS,
+  GET_SUBSCRIPTIONS_BY_ID_ERROR
 } from './constants';
 
 const INITIAL_STATE = {
@@ -52,6 +55,25 @@ const subscriptionsReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case DELETE_SUBSCRIPTIONS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case GET_SUBSCRIPTIONS_BY_ID_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case GET_SUBSCRIPTIONS_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+        error: false
+      };
+    case GET_SUBSCRIPTIONS_BY_ID_ERROR:
       return {
         ...state,
         loading: false,
