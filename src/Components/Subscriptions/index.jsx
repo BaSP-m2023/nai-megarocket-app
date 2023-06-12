@@ -21,7 +21,6 @@ const Subscriptions = () => {
   const [bodyModal, setBodyModal] = useState('');
   const [subscriptionId, setSubscriptionId] = useState('');
 
-  console.log('subscriptions', subscriptions);
   useEffect(() => {
     dispatch(getSubscriptions());
     setReload(false);
@@ -101,14 +100,4 @@ const Subscriptions = () => {
   );
 };
 
-{
-  /*       <SharedModal
-  isDelete={false}
-  show={showAlert}
-  typeStyle={isSuccess ? 'success' : 'error'}
-  closeModal={() => setShowAlert(false)}
-  title={isSuccess ? 'Success' : 'Error'}
-  body={alertMessage}
-/> */
-}
 export default Subscriptions;
