@@ -12,7 +12,6 @@ const Activities = () => {
   const history = useHistory();
   const [activityId, setActivityId] = useState();
   const [showModal, setShowModal] = useState(false);
-  const [reload, setReload] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [typeStyle, setTypeStyle] = useState('');
   const [titleModal, setTitleModal] = useState('');
@@ -22,10 +21,13 @@ const Activities = () => {
   const loading = useSelector((state) => state.activities.loading);
   const activities = useSelector((state) => state.activities.data.data);
 
-  useEffect(() => {
+  const refreshTable = () => {
     dispatch(getActivities());
-    setReload(false);
-  }, [reload]);
+  };
+
+  useEffect(() => {
+    refreshTable();
+  }, []);
 
   const handleAddItem = () => {
     history.push('activities/form');
@@ -48,7 +50,7 @@ const Activities = () => {
       setBodyModal(data.message);
       setTypeStyle('success');
       setIsDelete(false);
-      setReload(true);
+      refreshTable();
     } catch (error) {
       setShowModal(true);
       setBodyModal(error.message);

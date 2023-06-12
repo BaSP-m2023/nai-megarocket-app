@@ -4,8 +4,8 @@ import Input from '../Input';
 import Button from '../../Shared/Button';
 import SharedModal from '../../Shared/Modal';
 import styles from './form.module.css';
-import { getActivitiesById, putActivities, postActivities } from '../../../Redux/activities/thunks';
-import { useDispatch } from 'react-redux';
+import { putActivities, postActivities } from '../../../Redux/activities/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const history = useHistory();
@@ -21,27 +21,68 @@ const Form = () => {
   const [bodyModal, setBodyModal] = useState('');
   const dispatch = useDispatch();
 
+  const activities = useSelector((state) => state.activities.data.data);
+
   useEffect(() => {
-    dispatch(getActivitiesById());
-  }, []);
-
-  // useEffect(() => {
-  //   if (id) {
-  //     getActivitiesById(id);
-  //   }
-  // }, []);
-
-  const handleConfirm = () => {
     if (id) {
-      putActivities(activity, id);
+      activitiesById(id);
+    }
+  }, [id]);
+
+  const activitiesById = (id) => {
+    const activity = activities.find((activity) => activity._id === id);
+    if (activity) {
+      setActivity(activity);
     } else {
-      postActivities(activity);
+      console.error('Member not found');
+    }
+  };
+
+  const handleConfirm = async (e) => {
+    e.preventDefault();
+    if (id) {
+      try {
+        const updatedActivity = { ...activity };
+        delete updatedActivity._id;
+        delete updatedActivity.__v;
+        const data = await dispatch(putActivities(updatedActivity, id));
+        setIsSuccess(true);
+        setShowModal(true);
+        setTypeStyle('success');
+        setTitleModal('Success');
+        setBodyModal(data.message);
+      } catch (error) {
+        setIsSuccess(false);
+        setShowModal(true);
+        setTypeStyle('error');
+        setTitleModal('Error');
+        setBodyModal(error.message);
+      }
+    } else {
+      try {
+        const newActivity = { ...activity };
+        delete newActivity._id;
+        delete newActivity.__v;
+        const data = await dispatch(postActivities(newActivity));
+        setIsSuccess(true);
+        setShowModal(true);
+        setTypeStyle('success');
+        setTitleModal('Success');
+        setBodyModal(data.message);
+      } catch (error) {
+        setIsSuccess(false);
+        setShowModal(true);
+        setTypeStyle('error');
+        setTitleModal('error');
+        setBodyModal(error.message);
+      }
     }
   };
 
   const onConfirm = () => {
     if (isSuccess) {
       history.push('/activities');
+      setIsSuccess(true);
     } else {
       setShowModal(false);
     }
@@ -52,6 +93,10 @@ const Form = () => {
       ...activity,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleCancel = () => {
+    history.push('/activities');
   };
 
   return (
@@ -76,19 +121,17 @@ const Form = () => {
         />
       </form>
       <div className={styles.buttonContainer}>
-        <Button
-          text={'Cancel'}
-          type={'cancel'}
-          clickAction={() => history.push('/activities')}
-        ></Button>
-        <Button text={'Submit'} type={'submit'} clickAction={handleConfirm}></Button>
+        <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
+        <Button text={'Submit'} type={'submit'} clickAction={handleConfirm} />
       </div>
       <SharedModal
+        data={activities}
         show={showModal}
         typeStyle={typeStyle}
         title={titleModal}
         body={bodyModal}
         isDelete={false}
+        onConfirm={handleConfirm}
         closeModal={onConfirm}
       />
     </div>

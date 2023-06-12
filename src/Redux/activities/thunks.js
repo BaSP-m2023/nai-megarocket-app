@@ -67,7 +67,7 @@ export const deleteActivities = (id) => {
   };
 };
 
-export const putActivities = async (activity, id) => {
+export const putActivities = (activity, id) => {
   return async (dispatch) => {
     dispatch(putActivitiesPending());
     try {
@@ -92,7 +92,7 @@ export const putActivities = async (activity, id) => {
   };
 };
 
-export const postActivities = async (activity) => {
+export const postActivities = (activity) => {
   return async (dispatch) => {
     dispatch(postActivitiesPending());
     try {

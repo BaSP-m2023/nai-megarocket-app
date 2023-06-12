@@ -42,13 +42,12 @@ const activitiesReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: action.payload
       };
-    case DELETE_ACTIVITIES_PENDING: {
+    case DELETE_ACTIVITIES_PENDING:
       return {
         ...state,
         loading: true,
         error: null
       };
-    }
     case DELETE_ACTIVITIES_SUCCESS: {
       const filteredData = state.data.data?.filter(
         (activities) => activities.id !== action.payload
@@ -59,13 +58,12 @@ const activitiesReducer = (state = INITIAL_STATE, action) => {
         data: filteredData
       };
     }
-    case DELETE_ACTIVITIES_ERROR: {
+    case DELETE_ACTIVITIES_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload
       };
-    }
     case GET_ACTIVITIES_BY_ID_PENDING:
       return {
         ...state,
