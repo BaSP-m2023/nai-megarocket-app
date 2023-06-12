@@ -5,7 +5,8 @@ import {
   DELETE_MEMBER_SUCCESS,
   GET_MEMBER_BY_ID_PENDING,
   GET_MEMBER_BY_ID_SUCCESS,
-  GET_MEMBER_BY_ID_ERROR
+  GET_MEMBER_BY_ID_ERROR,
+  UPDATE_MEMBER_SUCCESS
 } from './constants';
 
 const INITIAL_STATE = {
@@ -55,7 +56,16 @@ const membersReducer = (state = INITIAL_STATE, action) => {
     case DELETE_MEMBER_SUCCESS:
       return {
         ...state,
-        data: state.data.data?.filter((member) => member.id !== action.payload)
+        data: {
+          ...state.data,
+          data: state.data.data.filter((member) => member._id !== action.payload)
+        }
+      };
+    case UPDATE_MEMBER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload
       };
     default:
       return state;

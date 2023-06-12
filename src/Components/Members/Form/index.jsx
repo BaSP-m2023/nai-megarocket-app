@@ -3,6 +3,8 @@ import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import SharedModal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
+import { useDispatch } from 'react-redux';
+import { getMembersById, updateMember } from '../../../Redux/members/thunks';
 
 const MemberForm = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -11,6 +13,7 @@ const MemberForm = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const { id } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [member, setMember] = useState({
     firstName: '',
@@ -26,12 +29,51 @@ const MemberForm = () => {
     membership: ''
   });
 
+  useEffect(() => {
+    if (id) {
+      memberById(id);
+    }
+  }, [id]);
+
+  const memberById = async (id) => {
+    try {
+      const response = await dispatch(getMembersById(id));
+      const data = response.data;
+      if (data) {
+        setMember(data);
+      } else {
+        console.error('No data available');
+      }
+    } catch (error) {
+      console.error(error.message);
+      throw error;
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (id) {
-      updateMember(id);
+      const memberUpdate = { ...member };
+      delete memberUpdate._id;
+      delete memberUpdate.__v;
+      memberUpdateFunction(id, memberUpdate);
     } else {
       addMember(member);
+    }
+  };
+
+  const memberUpdateFunction = async (id, member) => {
+    try {
+      const data = await dispatch(updateMember(id, member));
+      console.log(data);
+      setAlertMessage(data.message);
+      setIsSuccess(true);
+      setShowAlert(true);
+    } catch (error) {
+      setAlertMessage(error.message);
+      console.log(error);
+      setIsSuccess(false);
+      setShowAlert(true);
     }
   };
 
@@ -40,45 +82,6 @@ const MemberForm = () => {
       ...member,
       [e.target.name]: e.target.value
     });
-  };
-
-  const getMemberById = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`);
-      const data = await response.json();
-      setMember(data.data);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  const updateMember = async (id) => {
-    try {
-      const memberWithoutId = { ...member };
-      delete memberWithoutId._id;
-      delete memberWithoutId.__v;
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(memberWithoutId)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setIsSuccess(false);
-        setShowAlert(true);
-      } else {
-        setAlertMessage(data.message);
-        setIsSuccess(true);
-        setShowAlert(true);
-      }
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
   };
 
   const addMember = async (member) => {
@@ -127,12 +130,6 @@ const MemberForm = () => {
 
     return `${formattedYear}-${formattedMonth}-${formattedDay}`;
   };
-
-  useEffect(() => {
-    if (id) {
-      getMemberById(id);
-    }
-  }, [id]);
 
   return (
     <>

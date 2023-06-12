@@ -18,12 +18,11 @@ const Members = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [memberToDelete, setMemberToDelete] = useState(null);
-  const [showTable, setShowTable] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMembers());
-  }, [showTable]);
+  }, []);
 
   const handleConfirmDelete = async () => {
     setShowWarning(false);
@@ -32,7 +31,6 @@ const Members = () => {
       setAlertMessage(data.message);
       setIsSuccess(true);
       setShowAlert(true);
-      setShowTable(true);
     } catch (error) {
       setAlertMessage(error.message);
       setIsSuccess(false);
@@ -52,7 +50,6 @@ const Members = () => {
   const handleEdit = (id) => {
     history.push(`/members/form/${id}`);
   };
-
   return (
     <section className={styles.membersContainer}>
       <div className={styles.membersSection}>
@@ -61,7 +58,7 @@ const Members = () => {
       </div>
       {loading ? (
         <ClipLoader />
-      ) : members && members.length >= 0 ? (
+      ) : members ? (
         <>
           <Table
             data={members}
