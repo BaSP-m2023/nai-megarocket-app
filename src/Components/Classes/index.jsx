@@ -4,65 +4,47 @@ import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import SharedModal from '../Shared/Modal';
 import { useHistory } from 'react-router-dom';
+import { getClasses, deleteClass } from '../../Redux/classes/thunks';
+import { useSelector, useDispatch } from 'react-redux';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Classes = () => {
   const history = useHistory();
-  const [classes, setClasses] = useState([]);
+  const classes = useSelector((state) => state.classes.data.data);
+  const isLoading = useSelector((state) => state.classes.loading);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [classToDelete, setClassToDelete] = useState(null);
 
+  const refreshTable = () => {
+    dispatch(getClasses());
+  };
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    getClasses();
+    refreshTable();
   }, []);
-
-  const deleteClasses = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setShowAlert(true);
-        setIsSuccess(false);
-      }
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  const getClasses = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
-      const data = await response.json();
-      setClasses(data.data);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
 
   const handleDeleteClass = (id) => {
     setShowDeleteWarning(true);
     setClassToDelete(id);
   };
 
-  const handleConfirmDeleteClass = async () => {
+  const handleConfirmDeleteClass = () => {
     setShowDeleteWarning(false);
     try {
-      await deleteClasses(classToDelete);
-      setClasses((prevClasses) =>
-        prevClasses.filter((classItem) => classItem._id !== classToDelete)
-      );
+      const data = dispatch(deleteClass(classToDelete));
+      setAlertMessage(data.message);
+      setIsSuccess(true);
+      setShowAlert(true);
+      refreshTable();
     } catch (error) {
-      console.error(error);
+      setAlertMessage(error);
+      setShowAlert(true);
+      setIsSuccess(false);
     }
   };
 
@@ -80,7 +62,9 @@ const Classes = () => {
         <h2>Classes</h2>
         <Button text={'+ Add Class'} type={'add'} clickAction={handleAddClass} />
       </div>
-      {classes.length !== 0 ? (
+      {isLoading ? (
+        <ClipLoader />
+      ) : classes ? (
         <>
           <Table
             data={classes}
