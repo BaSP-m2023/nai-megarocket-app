@@ -1,57 +1,57 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdmins, deleteAdmin } from '../../Redux/admins/thunks';
 import styles from './admins.module.css';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import SharedModal from '../Shared/Modal';
-import { useHistory } from 'react-router-dom';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Admins = () => {
+  const history = useHistory();
+  const admins = useSelector((state) => state.admins.data);
+  const isLoading = useSelector((state) => state.admins.loading);
   const [isDelete, setIsDelete] = useState(false);
-  const [typeStyle, setTypeStyle] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
-  const [admins, setAdmins] = useState([]);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [idAdmin, setIdAdmin] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const getAdmins = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
-      if (!response.ok) {
-        throw new Error('Error retrieving admins');
+  useEffect(() => {
+    dispatch(getAdmins());
+  }, []);
+
+  const confirmDelete = async () => {
+    if (idAdmin) {
+      try {
+        const data = await dispatch(deleteAdmin(idAdmin));
+        setModalInformation({ title: 'Success:', body: data.message });
+        setIsSuccess(true);
+        setShowModal(true);
+        setIsDelete(false);
+        dispatch(getAdmins());
+      } catch (error) {
+        setModalInformation({ title: 'Error:', body: error.message });
+        setIsDelete(false);
+        setIsSuccess(false);
+        setShowModal(true);
       }
-      const data = await response.json();
-      setAdmins(data.data);
-    } catch (error) {
-      console.error(error);
     }
   };
 
-  useEffect(() => {
-    getAdmins();
-  });
+  const handleDeleteAdmin = (id) => {
+    setIdAdmin(id);
+    setModalInformation({ title: 'Warning:', body: 'Are you sure?' });
+    setIsDelete(true);
+    setShowModal(true);
+    setIsSuccess(false);
+  };
 
-  const deleteAdmins = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setShowAlert(true);
-      } else {
-        setAlertMessage(data.message);
-        setShowSuccessAlert(true);
-      }
-      setAdmins([...admins.filter((admin) => admin._id !== data.data._id)]);
-      setShowModal(false);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleExitAlert = () => {
+    setShowModal(false);
+    dispatch(getAdmins());
   };
 
   const handleAddAdmin = () => {
@@ -62,70 +62,45 @@ const Admins = () => {
     history.push(`/admins/form/${id}`);
   };
 
-  const handleDeleteAdmin = (id) => {
-    setModalInformation({ title: 'Warning', body: 'Are you sure?' });
-    setIsDelete(true);
-    setShowModal(true);
-    setTypeStyle('default');
-    setIdAdmin(id);
-  };
-
-  const confirmDelete = () => {
-    deleteAdmins(idAdmin);
-  };
-
-  const handleCancelDelete = () => {
-    setShowModal(false);
-  };
-
-  const handleExitAlert = () => {
-    setShowAlert(false);
-    setShowSuccessAlert(false);
-  };
-
   return (
     <section className={styles.adminContainer}>
       <div className={styles.topAdminContainer}>
         <h2>Admins</h2>
         <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
       </div>
-      {admins.length !== 0 ? (
-        <>
-          <SharedModal
-            isDelete={false}
-            show={showAlert}
-            closeModal={handleExitAlert}
-            title={'Something is wrong'}
-            body={alertMessage}
-          />
-          <SharedModal
-            isDelete={false}
-            show={showSuccessAlert}
-            closeModal={handleExitAlert}
-            typeStyle={'success'}
-            title={'Success'}
-            body={alertMessage}
-          />
-          <SharedModal
-            show={showModal}
-            typeStyle={typeStyle}
-            title={modalInformation.title}
-            body={modalInformation.body}
-            isDelete={isDelete}
-            onConfirm={confirmDelete}
-            closeModal={handleCancelDelete}
-          />
-          <Table
-            data={admins}
-            properties={['firstName', 'lastName', 'phone', 'email']}
-            columnTitles={['First Name', 'Last Name', 'Phone Number', 'Email']}
-            handleUpdateItem={handleUpdateAdmin}
-            handleDeleteItem={handleDeleteAdmin}
-          />
-        </>
+      {isLoading ? (
+        <ClipLoader />
       ) : (
         <>
-          <h3>There are no admins in the database</h3>
+          {admins && admins.length > 0 ? (
+            <>
+              <Table
+                data={admins}
+                properties={['firstName', 'lastName', 'phone', 'email']}
+                columnTitles={['First Name', 'Last Name', 'Phone Number', 'Email']}
+                handleUpdateItem={handleUpdateAdmin}
+                handleDeleteItem={handleDeleteAdmin}
+              />
+
+              <SharedModal
+                isDelete={isDelete}
+                show={showModal}
+                closeModal={handleExitAlert}
+                typeStyle={isSuccess ? 'success' : 'error'}
+                title={modalInformation.title}
+                body={modalInformation.body}
+                onConfirm={confirmDelete}
+              />
+            </>
+          ) : (
+            <>
+              {!admins ? (
+                <h3>There are no admins in the database</h3>
+              ) : (
+                <h3>Server out of service</h3>
+              )}
+            </>
+          )}
         </>
       )}
     </section>
