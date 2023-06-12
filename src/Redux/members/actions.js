@@ -10,7 +10,10 @@ import {
   GET_MEMBER_BY_ID_ERROR,
   UPDATE_MEMBER_PENDING,
   UPDATE_MEMBER_SUCCESS,
-  UPDATE_MEMBER_ERROR
+  UPDATE_MEMBER_ERROR,
+  ADD_MEMBER_PENDING,
+  ADD_MEMBER_SUCCESS,
+  ADD_MEMBER_ERROR
 } from './constants';
 
 export const getMembersPending = () => {
@@ -89,6 +92,26 @@ export const updateMemberSuccess = (id) => {
 export const updateMemberError = (error) => {
   return {
     type: UPDATE_MEMBER_ERROR,
+    payload: error
+  };
+};
+
+export const addMemberPending = () => {
+  return {
+    type: ADD_MEMBER_PENDING
+  };
+};
+
+export const addMemberSuccess = (member) => {
+  return {
+    type: ADD_MEMBER_SUCCESS,
+    payload: member
+  };
+};
+
+export const addMemberError = (error) => {
+  return {
+    type: ADD_MEMBER_ERROR,
     payload: error
   };
 };

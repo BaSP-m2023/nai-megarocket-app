@@ -10,7 +10,10 @@ import {
   getMemberByIdError,
   updateMemberPending,
   updateMemberSuccess,
-  updateMemberError
+  updateMemberError,
+  addMemberPending,
+  addMemberSuccess,
+  addMemberError
 } from './actions';
 
 export const getMembers = () => {
@@ -83,6 +86,32 @@ export const updateMember = (id, member) => {
       }
     } catch (error) {
       dispatch(updateMemberError(error));
+      throw error;
+    }
+  };
+};
+
+export const addMember = (member) => {
+  console.log(member);
+  return async (dispatch) => {
+    dispatch(addMemberPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(member)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(addMemberSuccess({ member }));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(addMemberError(error));
       throw error;
     }
   };
