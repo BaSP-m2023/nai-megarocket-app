@@ -33,17 +33,16 @@ const Classes = () => {
     setClassToDelete(id);
   };
 
-  const handleConfirmDeleteClass = async () => {
+  const handleConfirmDeleteClass = () => {
     setShowDeleteWarning(false);
-    let data;
     try {
-      data = dispatch(deleteClass(classToDelete));
+      const data = dispatch(deleteClass(classToDelete));
       setAlertMessage(data.message);
       setIsSuccess(true);
       setShowAlert(true);
       refreshTable();
     } catch (error) {
-      setAlertMessage(data.message);
+      setAlertMessage(error);
       setShowAlert(true);
       setIsSuccess(false);
     }
