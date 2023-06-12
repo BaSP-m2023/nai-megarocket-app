@@ -4,11 +4,12 @@ import membersReducer from './members/reducer';
 import trainersReducer from './trainers/reducer';
 import activitiesReducer from './activities/reducer';
 import superAdminReducer from './superadmins/reducer';
+import classesReducer from './classes/reducer';
 
 const rootReducer = combineReducers({
   // ,admins: adminsReducer,
   activities: activitiesReducer,
-  // ,classes: classesReducer
+  classes: classesReducer,
   members: membersReducer,
   // ,subscriptions: subscriptionsReducer
   superAdmin: superAdminReducer,
