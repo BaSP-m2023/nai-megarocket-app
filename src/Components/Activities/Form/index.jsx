@@ -34,7 +34,7 @@ const Form = () => {
     if (activity) {
       setActivity(activity);
     } else {
-      console.error('Member not found');
+      console.error('Activity not found');
     }
   };
 
