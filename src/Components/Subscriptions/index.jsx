@@ -47,7 +47,7 @@ const Subscriptions = () => {
     try {
       const data = await dispatch(deleteSubscription(subscriptionId));
       setTitleModal('Success');
-      setBodyModal(data.message);
+      setBodyModal(data.msg);
       setTypeStyle('success');
       setIsDelete(false);
       setReload(true);
