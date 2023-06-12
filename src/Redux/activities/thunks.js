@@ -87,7 +87,7 @@ export const putActivities = (activity, id) => {
       }
     } catch (error) {
       dispatch(putActivitiesError(error));
-      console.error(error);
+      throw error;
     }
   };
 };
@@ -105,14 +105,14 @@ export const postActivities = (activity) => {
       });
       const data = await response.json();
       if (response.ok) {
-        dispatch(postActivitiesSuccess(data));
+        dispatch(postActivitiesSuccess(data.data));
         return data;
       } else {
         throw new Error(data.message);
       }
     } catch (error) {
       dispatch(postActivitiesError(error));
-      console.error(error);
+      throw error;
     }
   };
 };
