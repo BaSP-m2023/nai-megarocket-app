@@ -12,7 +12,7 @@ const Subscriptions = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.subscriptions.loading);
-  const subscriptions = useSelector((state) => state.subscriptions.data);
+  const subscriptions = useSelector((state) => state.subscriptions.data.data);
   const [reload, setReload] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
