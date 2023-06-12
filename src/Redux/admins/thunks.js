@@ -2,6 +2,9 @@ import {
   getAdminsPending,
   getAdminsSuccess,
   getAdminsError,
+  getAdminByIdPending,
+  getAdminByIdSuccess,
+  getAdminByIdError,
   deleteAdminPending,
   deleteAdminSuccess,
   deleteAdminError
@@ -20,6 +23,22 @@ export const getAdmins = () => {
   };
 };
 
+export const getAdminById = (id) => {
+  return async (dispatch) => {
+    dispatch(getAdminByIdPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+        method: 'GET'
+      });
+      const data = await response.json();
+      dispatch(getAdminByIdSuccess(data.data));
+      return data;
+    } catch (error) {
+      dispatch(getAdminByIdError(error));
+    }
+  };
+};
+
 export const deleteAdmin = (adminId) => {
   return async (dispatch) => {
     dispatch(deleteAdminPending());
@@ -27,7 +46,6 @@ export const deleteAdmin = (adminId) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
         method: 'DELETE'
       });
-
       const data = await response.json();
       if (response.ok) {
         dispatch(deleteAdminSuccess(adminId));

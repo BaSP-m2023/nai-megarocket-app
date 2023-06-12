@@ -24,18 +24,20 @@ const Admins = () => {
   }, []);
 
   const confirmDelete = async () => {
-    try {
-      const data = await dispatch(deleteAdmin(idAdmin));
-      setModalInformation({ title: 'Success:', body: data.message });
-      setIsSuccess(true);
-      setShowModal(true);
-      setIsDelete(false);
-      dispatch(getAdmins());
-    } catch (error) {
-      setModalInformation({ title: 'Error:', body: error.message });
-      setIsDelete(false);
-      setIsSuccess(false);
-      setShowModal(true);
+    if (idAdmin) {
+      try {
+        const data = await dispatch(deleteAdmin(idAdmin));
+        setModalInformation({ title: 'Success:', body: data.message });
+        setIsSuccess(true);
+        setShowModal(true);
+        setIsDelete(false);
+        dispatch(getAdmins());
+      } catch (error) {
+        setModalInformation({ title: 'Error:', body: error.message });
+        setIsDelete(false);
+        setIsSuccess(false);
+        setShowModal(true);
+      }
     }
   };
 
