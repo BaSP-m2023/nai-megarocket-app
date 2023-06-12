@@ -4,11 +4,12 @@ import Input from '../Input';
 import Button from '../../Shared/Button';
 import SharedModal from '../../Shared/Modal';
 import styles from './form.module.css';
+import { getActivitiesById, putActivities, postActivities } from '../../../Redux/activities/thunks';
+import { useDispatch } from 'react-redux';
 
 const Form = () => {
   const history = useHistory();
   const { id } = useParams();
-
   const [activity, setActivity] = useState({
     name: '',
     description: ''
@@ -18,84 +19,23 @@ const Form = () => {
   const [typeStyle, setTypeStyle] = useState('');
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
-
-  const getActivityById = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`);
-      const { data } = await response.json();
-      setActivity({ name: data.name, description: data.description });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const editItem = async (activity, id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(activity)
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setIsSuccess(true);
-        setTypeStyle('success');
-        setTitleModal(data.message);
-        setBodyModal(data.data.name + ' was edited');
-        setShowModal(true);
-      } else {
-        setIsSuccess(false);
-        setTypeStyle('error');
-        setTitleModal('Error');
-        setBodyModal(data.message);
-        setShowModal(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const addItem = async (activity) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(activity)
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setIsSuccess(true);
-        setTypeStyle('success');
-        setTitleModal(data.data.name + ' was added');
-        setBodyModal('');
-        setShowModal(true);
-      } else {
-        setIsSuccess(false);
-        setTypeStyle('error');
-        setTitleModal('Error');
-        setBodyModal(data.message);
-        setShowModal(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (id) {
-      getActivityById(id);
-    }
+    dispatch(getActivitiesById());
   }, []);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     getActivitiesById(id);
+  //   }
+  // }, []);
 
   const handleConfirm = () => {
     if (id) {
-      editItem(activity, id);
+      putActivities(activity, id);
     } else {
-      addItem(activity);
+      postActivities(activity);
     }
   };
 

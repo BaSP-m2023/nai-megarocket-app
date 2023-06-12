@@ -7,7 +7,13 @@ import {
   DELETE_ACTIVITIES_ERROR,
   GET_ACTIVITIES_BY_ID_PENDING,
   GET_ACTIVITIES_BY_ID_SUCCESS,
-  GET_ACTIVITIES_BY_ID_ERROR
+  GET_ACTIVITIES_BY_ID_ERROR,
+  PUT_ACTIVITIES_PENDING,
+  PUT_ACTIVITIES_SUCCESS,
+  PUT_ACTIVITIES_ERROR,
+  POST_ACTIVITIES_PENDING,
+  POST_ACTIVITIES_SUCCESS,
+  POST_ACTIVITIES_ERROR
 } from './constants';
 
 export const getActivitiesPending = () => {
@@ -66,6 +72,46 @@ export const getActivitiesByIdSuccess = (id) => {
 export const getActivitiesByIdError = (error) => {
   return {
     type: GET_ACTIVITIES_BY_ID_ERROR,
+    payload: error
+  };
+};
+
+export const putActivitiesPending = () => {
+  return {
+    type: PUT_ACTIVITIES_PENDING
+  };
+};
+
+export const putActivitiesSuccess = (data) => {
+  return {
+    type: PUT_ACTIVITIES_SUCCESS,
+    payload: data
+  };
+};
+
+export const putActivitiesError = (error) => {
+  return {
+    type: PUT_ACTIVITIES_ERROR,
+    payload: error
+  };
+};
+
+export const postActivitiesPending = () => {
+  return {
+    type: POST_ACTIVITIES_PENDING
+  };
+};
+
+export const postActivitiesSuccess = (data) => {
+  return {
+    type: POST_ACTIVITIES_SUCCESS,
+    payload: data
+  };
+};
+
+export const postActivitiesError = (error) => {
+  return {
+    type: POST_ACTIVITIES_ERROR,
     payload: error
   };
 };
