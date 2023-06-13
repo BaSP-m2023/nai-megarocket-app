@@ -6,9 +6,10 @@ import activitiesReducer from './activities/reducer';
 import superAdminReducer from './superadmins/reducer';
 import subscriptionsReducer from './subscriptions/reducer';
 import classesReducer from './classes/reducer';
+import adminsReducer from './admins/reducer';
 
 const rootReducer = combineReducers({
-  // ,admins: adminsReducer,
+  admins: adminsReducer,
   activities: activitiesReducer,
   classes: classesReducer,
   members: membersReducer,
