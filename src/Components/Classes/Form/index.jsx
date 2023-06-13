@@ -12,7 +12,6 @@ const Form = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-
   const {
     trainers = [],
     activities = [],
@@ -22,7 +21,6 @@ const Form = () => {
     activities: state.activities.data.data,
     gymClasses: state.classes.data.data
   }));
-
   const [day, setDay] = useState([]);
   const [hour, setHour] = useState('');
   const [trainer, setTrainer] = useState('');
@@ -31,20 +29,14 @@ const Form = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-
-  useEffect(() => {
-    dispatch(getTrainers());
-    dispatch(getActivities());
-    if (id) {
-      const classToUpdate = gymClasses.find((gymClass) => gymClass._id === id);
-      setDay(classToUpdate.day);
-      setHour(classToUpdate.hour);
-      setTrainer(classToUpdate.trainer._id);
-      setActivity(classToUpdate.activity._id);
-      setSlots(classToUpdate.slots);
-    }
-  }, [id]);
-
+  const loadClassData = () => {
+    const classToUpdate = gymClasses.find((gymClass) => gymClass._id === id);
+    setDay(classToUpdate.day);
+    setHour(classToUpdate.hour);
+    setTrainer(classToUpdate.trainer._id);
+    setActivity(classToUpdate.activity._id);
+    setSlots(classToUpdate.slots);
+  };
   const dayArray = Array.isArray(day) ? day : day.split(',').map((d) => d.trim());
   const gymClass = {
     day: dayArray,
@@ -53,30 +45,40 @@ const Form = () => {
     activity: activity,
     slots: parseInt(slots)
   };
+  const showSuccesModal = (data) => {
+    setAlertMessage(data.message);
+    setIsSuccess(true);
+    setShowAlert(true);
+  };
+  const showErrorModal = (error) => {
+    setAlertMessage(error.message);
+    setIsSuccess(false);
+    setShowAlert(true);
+  };
+
+  useEffect(() => {
+    dispatch(getTrainers());
+    dispatch(getActivities());
+    if (id) {
+      loadClassData();
+    }
+  }, [id]);
 
   const updateClass = async () => {
     try {
       const data = await dispatch(editClass(id, gymClass));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
+      showSuccesModal(data);
     } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
+      showErrorModal(error);
     }
   };
 
   const createClass = async () => {
     try {
       const data = await dispatch(addClass(gymClass));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
+      showSuccesModal(data);
     } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
+      showErrorModal(error);
     }
   };
 
@@ -133,11 +135,6 @@ const Form = () => {
     setTrainer(selectedTrainer);
   };
 
-  const slotsChange = (e) => {
-    const selectedSlots = e.target.value;
-    setSlots(selectedSlots);
-  };
-
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -185,7 +182,7 @@ const Form = () => {
               type="number"
               placeholder="5"
               value={slots}
-              onChange={slotsChange}
+              onChange={(e) => setSlots(e.target.value)}
               required
             />
           </div>
