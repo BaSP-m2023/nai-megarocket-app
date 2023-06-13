@@ -12,8 +12,7 @@ const Subscriptions = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.subscriptions.loading);
-  const subscriptions = useSelector((state) => state.subscriptions.data.data);
-  const [reload, setReload] = useState(false);
+  const subscriptions = useSelector((state) => state.subscriptions.data);
   const [showModal, setShowModal] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [typeStyle, setTypeStyle] = useState('');
@@ -23,8 +22,7 @@ const Subscriptions = () => {
 
   useEffect(() => {
     dispatch(getSubscriptions());
-    setReload(false);
-  }, [reload]);
+  }, []);
 
   const handleAdd = () => {
     history.push('/subscriptions/form');
@@ -37,7 +35,7 @@ const Subscriptions = () => {
   const handleDeleteSubscription = (id) => {
     setSubscriptionId(id);
     setIsDelete(true);
-    setTypeStyle();
+    setTypeStyle('');
     setTitleModal('Do you want to delete this subscription?');
     setBodyModal('');
     setShowModal(true);
@@ -50,16 +48,16 @@ const Subscriptions = () => {
       setBodyModal(data.msg);
       setTypeStyle('success');
       setIsDelete(false);
-      setReload(true);
       setShowModal(true);
     } catch (error) {
-      setBodyModal(error.message);
+      setBodyModal(error.msg);
       setTitleModal('error');
       setTypeStyle('error');
       setIsDelete(false);
       setShowModal(true);
     }
   };
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -72,10 +70,10 @@ const Subscriptions = () => {
       </div>
       {loading ? (
         <ClipLoader />
-      ) : subscriptions && subscriptions.length !== 0 ? (
+      ) : subscriptions ? (
         <>
           <Table
-            data={subscriptions || []}
+            data={subscriptions}
             properties={['member.firstName', 'member.lastName', 'classes.activity.name']}
             columnTitles={['First Name', 'Last Name', 'Class Name']}
             handleUpdateItem={handleEdit}
