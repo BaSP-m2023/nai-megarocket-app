@@ -12,11 +12,17 @@ const Form = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const gymClasses = useSelector((state) => state.classes.data.data);
-  const { trainers = [], activities = [] } = useSelector((state) => ({
+
+  const {
+    trainers = [],
+    activities = [],
+    gymClasses = []
+  } = useSelector((state) => ({
     trainers: state.trainers.data,
-    activities: state.activities.data.data
+    activities: state.activities.data.data,
+    gymClasses: state.classes.data.data
   }));
+
   const [day, setDay] = useState([]);
   const [hour, setHour] = useState('');
   const [trainer, setTrainer] = useState('');
@@ -97,7 +103,7 @@ const Form = () => {
 
   const renderTrainer = () => (
     <>
-      {!id && <option value="">Select a trainer</option>}
+      {!id && <option value="">Choose a trainer</option>}
       {trainers.map((trainer) => (
         <option key={trainer._id} value={trainer._id}>
           {trainer.firstName}
@@ -108,7 +114,7 @@ const Form = () => {
 
   const renderActivity = () => (
     <>
-      {!id && <option value="">Select activity</option>}
+      {!id && <option value="">Choose a activity</option>}
       {activities.map((activity) => (
         <option key={activity._id} value={activity._id}>
           {activity.name}
@@ -138,47 +144,46 @@ const Form = () => {
         <div className={styles.container}>
           <h2>{id ? 'Update Class' : 'Create Class'}</h2>
           <div className={styles.box}>
-            <h4>Day</h4>
+            <label>Day</label>
             <input
               className={styles.inputClasses}
               type="text"
-              placeholder="Day"
+              placeholder="Monday,Thursday"
               value={day}
               onChange={(e) => setDay(e.target.value)}
               required
             />
-            <small>Enter the days seperated for comas</small>
           </div>
           <div className={styles.box}>
-            <h4>Hour</h4>
+            <label>Hour</label>
             <input
               className={styles.inputClasses}
               type="text"
-              placeholder="Hour"
+              placeholder="08:00"
               pattern="[0-9]{2}:[0-9]{2}"
               value={hour}
               onChange={(e) => setHour(e.target.value)}
               required
             />
-            <small>Please enter the hour in HH:MM format.</small>
           </div>
           <div className={styles.box}>
-            <h4>Trainer</h4>
+            <label>Trainer</label>
             <select value={trainer} className={styles.select} onChange={trainerChange} required>
               {renderTrainer()};
             </select>
           </div>
           <div className={styles.box}>
-            <h4>Activity</h4>
-            <select value={activity} onChange={activityChange} required>
+            <label>Activity</label>
+            <select value={activity} className={styles.select} onChange={activityChange} required>
               {renderActivity()};
             </select>
           </div>
           <div className={styles.box}>
-            <h4>Slots</h4>
+            <label>Slots</label>
             <input
+              className={styles.inputClasses}
               type="number"
-              placeholder="Slots"
+              placeholder="5"
               value={slots}
               onChange={slotsChange}
               required
@@ -187,11 +192,9 @@ const Form = () => {
         </div>
         <div className={styles.buttonsDiv}>
           <Button type="cancel" text="Cancel" clickAction={handleCancel} />
-          <Button
-            type={id ? 'submit' : 'submit'}
-            text={id ? 'Submit' : 'Confirm'}
-            onSubmit={handleSubmit}
-          />
+          <div className={styles.confirmButton}>
+            <Button type={'submit'} text={id ? 'Update' : 'Add'} onSubmit={handleSubmit} />
+          </div>
         </div>
       </form>
       <SharedModal
