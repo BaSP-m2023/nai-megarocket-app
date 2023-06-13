@@ -59,8 +59,8 @@ const MemberForm = () => {
 
   const memberUpdateFunction = async (id, member) => {
     try {
-      const { data } = await dispatch(updateMember(id, member));
-      setAlertMessage(`Member ${data.firstName} ${data.lastName} updated.`);
+      const data = await dispatch(updateMember(id, member));
+      setAlertMessage(data.message);
       setIsSuccess(true);
       setShowAlert(true);
     } catch (error) {
@@ -72,8 +72,8 @@ const MemberForm = () => {
 
   const memberAddFunction = async (member) => {
     try {
-      const { data } = await dispatch(addMember(member));
-      setAlertMessage(`Member ${data.firstName} ${data.lastName} created.`);
+      const data = await dispatch(addMember(member));
+      setAlertMessage(data.message);
       setIsSuccess(true);
       setShowAlert(true);
     } catch (error) {
