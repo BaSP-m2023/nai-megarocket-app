@@ -1,120 +1,85 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { editClass, addClass } from '../../../Redux/classes/thunks';
+import { getActivities } from '../../../Redux/activities/thunks';
+import { getTrainers } from '../../../Redux/trainers/thunks';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './form.module.css';
 import Button from '../../Shared/Button';
 import SharedModal from '../../Shared/Modal';
 
 const Form = () => {
-  const history = useHistory();
   const { id } = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const gymClasses = useSelector((state) => state.classes.data.data);
+  const { trainers = [], activities = [] } = useSelector((state) => ({
+    trainers: state.trainers.data,
+    activities: state.activities.data.data
+  }));
   const [day, setDay] = useState([]);
   const [hour, setHour] = useState('');
   const [trainer, setTrainer] = useState('');
   const [activity, setActivity] = useState('');
   const [slots, setSlots] = useState('');
-  const [activities, setActivities] = useState([]);
-  const [trainers, setTrainers] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const getClasses = async () => {
+  useEffect(() => {
+    dispatch(getTrainers());
+    dispatch(getActivities());
+    if (id) {
+      const classToUpdate = gymClasses.find((gymClass) => gymClass._id === id);
+      setDay(classToUpdate.day);
+      setHour(classToUpdate.hour);
+      setTrainer(classToUpdate.trainer._id);
+      setActivity(classToUpdate.activity._id);
+      setSlots(classToUpdate.slots);
+    }
+  }, [id]);
+
+  const dayArray = Array.isArray(day) ? day : day.split(',').map((d) => d.trim());
+  const gymClass = {
+    day: dayArray,
+    hour,
+    trainer: trainer,
+    activity: activity,
+    slots: parseInt(slots)
+  };
+
+  const updateClass = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
-      const data = await response.json();
-      const classes = data.data;
-      setDay(classes.day);
-      setHour(classes.hour);
-      setTrainer(classes.trainer?._id);
-      setActivity(classes.activity?._id);
-      setSlots(classes.slots);
+      const data = await dispatch(editClass(id, gymClass));
+      setAlertMessage(data.message);
+      setIsSuccess(true);
+      setShowAlert(true);
     } catch (error) {
-      throw new Error(error);
+      setAlertMessage(error.message);
+      setIsSuccess(false);
+      setShowAlert(true);
     }
   };
 
-  const fetchActivities = async () => {
+  const createClass = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
-      const data = await response.json();
-      setActivities(data.data);
+      const data = await dispatch(addClass(gymClass));
+      setAlertMessage(data.message);
+      setIsSuccess(true);
+      setShowAlert(true);
     } catch (error) {
-      console.error('Error fetching activities:', error);
-    }
-  };
-
-  const fetchTrainers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
-      const data = await response.json();
-      setTrainers(data.data);
-    } catch (error) {
-      console.error('Error fetching trainers:', error);
-    }
-  };
-
-  const updateSubmit = async (formData) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setIsSuccess(false);
-        setShowAlert(true);
-      } else {
-        setAlertMessage(data.message);
-        setIsSuccess(true);
-        setShowAlert(true);
-      }
-    } catch (error) {
-      console.error('Error edited class:', error);
-    }
-  };
-
-  const createSubmit = async (formData) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setIsSuccess(false);
-        setShowAlert(true);
-      } else {
-        setAlertMessage(data.message);
-        setIsSuccess(true);
-        setShowAlert(true);
-      }
-    } catch (error) {
-      console.error('Error adding class:', error);
+      setAlertMessage(error.message);
+      setIsSuccess(false);
+      setShowAlert(true);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const dayArray = Array.isArray(day) ? day : day.split(',').map((d) => d.trim());
-    const formData = {
-      day: dayArray,
-      hour,
-      trainer: trainer,
-      activity: activity,
-      slots: parseInt(slots)
-    };
     if (id) {
-      updateSubmit(formData);
+      updateClass();
     } else {
-      createSubmit(formData);
+      createClass();
     }
   };
 
@@ -122,56 +87,35 @@ const Form = () => {
     history.push('/classes');
   };
 
-  useEffect(() => {
-    if (id) {
-      getClasses();
+  const handleCloseAlert = () => {
+    if (isSuccess) {
+      history.push('/classes');
+    } else {
+      setShowAlert(false);
     }
-    fetchActivities();
-    fetchTrainers();
-  }, []);
+  };
 
-  const renderTrainer = () => {
-    if (id) {
-      return trainers.map((trainer) => (
+  const renderTrainer = () => (
+    <>
+      {!id && <option value="">Select a trainer</option>}
+      {trainers.map((trainer) => (
         <option key={trainer._id} value={trainer._id}>
           {trainer.firstName}
         </option>
-      ));
-    } else {
-      return (
-        <>
-          <option value="">Select a trainer</option>
-          {trainers.map((trainer) => (
-            <option key={trainer._id} value={trainer._id}>
-              {trainer.firstName}
-            </option>
-          ))}
-        </>
-      );
-    }
-  };
+      ))}
+    </>
+  );
 
-  const renderActivity = () => {
-    if (id) {
-      return activities.map((activity) => (
+  const renderActivity = () => (
+    <>
+      {!id && <option value="">Select activity</option>}
+      {activities.map((activity) => (
         <option key={activity._id} value={activity._id}>
           {activity.name}
         </option>
-      ));
-    } else {
-      return (
-        <>
-          <option value="">Select activity</option>
-          {activities.map((activity) => (
-            <option key={activity._id} value={activity._id}>
-              {activity.name}
-            </option>
-          ))}
-          ;
-        </>
-      );
-    }
-  };
+      ))}
+    </>
+  );
 
   const activityChange = (e) => {
     const selectedActivity = e.target.value;
@@ -186,14 +130,6 @@ const Form = () => {
   const slotsChange = (e) => {
     const selectedSlots = e.target.value;
     setSlots(selectedSlots);
-  };
-
-  const handleCloseAlert = () => {
-    if (isSuccess) {
-      history.push('/classes');
-    } else {
-      setShowAlert(false);
-    }
   };
 
   return (
