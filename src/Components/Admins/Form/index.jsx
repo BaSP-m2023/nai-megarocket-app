@@ -1,13 +1,21 @@
 import { useParams, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { putAdmin, postAdmin } from '../../../Redux/admins/thunks';
 import styles from './form.module.css';
 import Button from '../../Shared/Button';
 import SharedModal from '../../Shared/Modal';
 
 const Form = () => {
-  const history = useHistory();
+  const admins = useSelector((state) => state.admins.data);
   const { id } = useParams();
-  const [formData, setFormData] = useState({
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [showAlert, setShowAlert] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const [admin, setAdmin] = useState({
     firstName: '',
     lastName: '',
     dni: '',
@@ -16,104 +24,82 @@ const Form = () => {
     city: '',
     password: ''
   });
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-
-  const getAdminById = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
-      const data = await response.json();
-      setFormData({
-        firstName: data.data.firstName,
-        lastName: data.data.lastName,
-        dni: data.data.dni,
-        phone: data.data.phone,
-        email: data.data.email,
-        city: data.data.city,
-        password: data.data.password
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     if (id) {
       getAdminById(id);
     }
   }, []);
+
+  const getAdminById = (id) => {
+    const admin = admins.find((admin) => admin._id === id);
+    if (admin) {
+      delete admin._id;
+      delete admin.__v;
+      delete admin.createdAt;
+      delete admin.updatedAt;
+      setAdmin(admin);
+    } else {
+      console.error('Admin not found');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (id) {
-      putAdmin(formData, id);
+      putAdminFunction(id, admin);
     } else {
-      postAdmin(formData);
+      postAdminFunction(admin);
     }
   };
 
-  const postAdmin = async (admin) => {
+  const postAdminFunction = async (admin) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(admin)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setShowAlert(true);
-      } else {
-        setAlertMessage(data.message);
-        setShowSuccessAlert(true);
-      }
+      const data = await dispatch(postAdmin(admin));
+      setAlertMessage(data.message);
+      setIsSuccess(true);
+      setShowAlert(true);
     } catch (error) {
-      alert(error);
+      setAlertMessage(error.message);
+      setIsSuccess(false);
+      setShowAlert(true);
     }
   };
 
-  const putAdmin = async (admin, id) => {
+  const putAdminFunction = async (id, admin) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(admin)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setShowAlert(true);
-      } else {
-        setAlertMessage(data.message);
-        setShowSuccessAlert(true);
-      }
+      const data = await dispatch(putAdmin(id, admin));
+      setAlertMessage(data.message);
+      setIsSuccess(true);
+      setShowAlert(true);
     } catch (error) {
-      alert(error);
+      setAlertMessage(error.message);
+      setIsSuccess(false);
+      setShowAlert(true);
     }
+  };
+
+  const handleCloseAlert = () => {
+    if (isSuccess) {
+      history.push('/admins');
+    } else {
+      setShowAlert(false);
+    }
+  };
+
+  const handleOnChange = (e) => {
+    setAdmin({
+      ...admin,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleCancel = () => {
-    if (showSuccessAlert) {
+    if (showAlert) {
       setShowAlert(false);
     }
     setShowAlert(false);
     history.push('/admins');
-  };
-
-  const handleExitAlert = () => {
-    setShowAlert(false);
-    setShowSuccessAlert(false);
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
   };
 
   return (
@@ -122,17 +108,9 @@ const Form = () => {
       <SharedModal
         isDelete={false}
         show={showAlert}
-        closeModal={handleExitAlert}
-        typeStyle={'error'}
-        title={'Something is wrong'}
-        body={alertMessage}
-      />
-      <SharedModal
-        isDelete={false}
-        show={showSuccessAlert}
-        closeModal={handleCancel}
-        title={'Success'}
-        typeStyle={'success'}
+        closeModal={handleCloseAlert}
+        typeStyle={isSuccess ? 'success' : 'error'}
+        title={isSuccess ? 'Success' : 'Something went wrong'}
         body={alertMessage}
       />
       <form className={styles.formAdmin}>
@@ -142,9 +120,9 @@ const Form = () => {
             <input
               name="firstName"
               type="text"
-              value={formData.firstName}
+              value={admin.firstName}
               placeholder="Name"
-              onChange={handleChange}
+              onChange={handleOnChange}
               required
             />
           </div>
@@ -153,9 +131,9 @@ const Form = () => {
             <input
               name="lastName"
               type="text"
-              value={formData.lastName}
+              value={admin.lastName}
               placeholder="Last Name"
-              onChange={handleChange}
+              onChange={handleOnChange}
               required
             />
           </div>
@@ -164,9 +142,9 @@ const Form = () => {
             <input
               name="dni"
               type="number"
-              value={formData.dni}
+              value={admin.dni}
               placeholder="DNI"
-              onChange={handleChange}
+              onChange={handleOnChange}
               required
             />
           </div>
@@ -175,9 +153,9 @@ const Form = () => {
             <input
               name="phone"
               type="number"
-              value={formData.phone}
+              value={admin.phone}
               placeholder="Phone"
-              onChange={handleChange}
+              onChange={handleOnChange}
               required
             />
           </div>
@@ -188,9 +166,9 @@ const Form = () => {
             <input
               name="email"
               type="text"
-              value={formData.email}
+              value={admin.email}
               placeholder="Email"
-              onChange={handleChange}
+              onChange={handleOnChange}
               required
             />
           </div>
@@ -199,9 +177,9 @@ const Form = () => {
             <input
               name="city"
               type="text"
-              value={formData.city}
+              value={admin.city}
               placeholder="City"
-              onChange={handleChange}
+              onChange={handleOnChange}
               required
             />
           </div>
@@ -210,9 +188,9 @@ const Form = () => {
             <input
               name="password"
               type="text"
-              value={formData.password}
+              value={admin.password}
               placeholder="Password"
-              onChange={handleChange}
+              onChange={handleOnChange}
               required
             />
           </div>
