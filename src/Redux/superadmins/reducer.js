@@ -7,7 +7,13 @@ import {
   GET_SUPERADMINS_BY_ID_ERROR,
   DELETE_SUPERADMINS_PENDING,
   DELETE_SUPERADMINS_SUCCESS,
-  DELETE_SUPERADMINS_ERROR
+  DELETE_SUPERADMINS_ERROR,
+  ADD_SUPERADMINS_PENDING,
+  ADD_SUPERADMINS_SUCCESS,
+  ADD_SUPERADMINS_ERROR,
+  UPDATE_SUPERADMINS_PENDING,
+  UPDATE_SUPERADMINS_SUCCESS,
+  UPDATE_SUPERADMINS_ERROR
 } from './constants';
 
 const INITIAL_STATE = {
@@ -67,6 +73,42 @@ const superAdminReducer = (state = INITIAL_STATE, action) => {
         error: null
       };
     case DELETE_SUPERADMINS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case ADD_SUPERADMINS_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case ADD_SUPERADMINS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload
+      };
+    case ADD_SUPERADMINS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case UPDATE_SUPERADMINS_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case UPDATE_SUPERADMINS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload
+      };
+    case UPDATE_SUPERADMINS_ERROR:
       return {
         ...state,
         loading: false,
