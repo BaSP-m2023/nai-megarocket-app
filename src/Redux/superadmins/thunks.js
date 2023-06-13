@@ -86,6 +86,7 @@ export const updateSuperAdmin = (id, superAdmin) => {
       }
     } catch (error) {
       dispatch(updateSuperAdminsError(error));
+      throw error;
     }
   };
 };
@@ -103,7 +104,8 @@ export const addSuperAdmin = (superAdmin) => {
       });
       const data = await response.json();
       if (data.ok) {
-        dispatch(addSuperAdminsSuccess(data));
+        dispatch(addSuperAdminsSuccess(superAdmin));
+        return data;
       }
     } catch (error) {
       dispatch(addSuperAdminsError(error));

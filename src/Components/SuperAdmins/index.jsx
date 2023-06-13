@@ -14,7 +14,6 @@ const SuperAdmins = () => {
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const superAdmins = useSelector((state) => state.superAdmin.data.data);
   const loading = useSelector((state) => state.superAdmin.loading);
-  const [reload, setReload] = useState(false);
   const [superAdminId, setSuperAdminId] = useState();
   const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -23,7 +22,7 @@ const SuperAdmins = () => {
 
   useEffect(() => {
     dispatch(getSuperAdmins());
-  }, [reload]);
+  }, []);
 
   const handleDeleteSuperAdmin = (id) => {
     setModalInformation({ title: 'Warning', body: 'Are you sure?' });
@@ -41,7 +40,6 @@ const SuperAdmins = () => {
       setShowDeleteWarning(false);
       setAlertMessage(data.message);
       setShowSuccessAlert(true);
-      setReload(true);
     } catch (error) {
       setShowDeleteWarning(false);
       setAlertMessage(error.message);
