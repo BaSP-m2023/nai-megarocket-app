@@ -31,6 +31,8 @@ const Form = () => {
   const superAdminById = (id) => {
     const superAdmin = superAdmins.find((superAdmin) => superAdmin._id === id);
     if (superAdmin) {
+      delete superAdmin._id;
+      delete superAdmin.__v;
       setSuperAdmin(superAdmin);
     } else {
       console.error('Super Admin not found');
@@ -40,12 +42,9 @@ const Form = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (id) {
-      const superAdminUpdate = { ...superAdmin };
-      delete superAdminUpdate._id;
-      delete superAdminUpdate.__v;
-      handleUpdate(id, superAdminUpdate);
+      handleUpdate(id, superAdmin);
     } else {
-      addSuperAdmin(superAdmin);
+      handleAdd(superAdmin);
     }
   };
 
@@ -55,6 +54,21 @@ const Form = () => {
       setTypeStyle('success');
       setTitleModal('Success');
       setBodyModal(`The Super Admin ${data.firstName} was updated`);
+      setShowSuccessModal(true);
+    } catch (error) {
+      setTypeStyle('error');
+      setTitleModal('Error');
+      setBodyModal(error.message);
+      setShowErrorModal(true);
+    }
+  };
+
+  const handleAdd = async (superAdmin) => {
+    try {
+      const data = await dispatch(addSuperAdmin(superAdmin));
+      setTypeStyle('success');
+      setTitleModal('Success');
+      setBodyModal(`The Super Admin ${data.firstName} was created`);
       setShowSuccessModal(true);
     } catch (error) {
       setTypeStyle('error');

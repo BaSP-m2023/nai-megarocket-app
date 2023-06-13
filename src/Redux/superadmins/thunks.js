@@ -103,12 +103,15 @@ export const addSuperAdmin = (superAdmin) => {
         body: JSON.stringify(superAdmin)
       });
       const data = await response.json();
-      if (data.ok) {
-        dispatch(addSuperAdminsSuccess(superAdmin));
+      if (response.ok) {
+        dispatch(addSuperAdminsSuccess({ superAdmin }));
         return data;
+      } else {
+        throw new Error(data.message);
       }
     } catch (error) {
       dispatch(addSuperAdminsError(error));
+      throw error;
     }
   };
 };
