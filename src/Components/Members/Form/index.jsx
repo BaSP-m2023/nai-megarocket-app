@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import styles from './form.module.css';
 import { useHistory, useParams } from 'react-router-dom';
-import SharedModal from '../../Shared/Modal';
-import Button from '../../Shared/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateMember, addMember } from '../../../Redux/members/thunks';
+import styles from './form.module.css';
+import SharedModal from '../../Shared/Modal';
+import Button from '../../Shared/Button';
 
 const MemberForm = () => {
   const members = useSelector((state) => state.members.data.data);
@@ -59,8 +59,8 @@ const MemberForm = () => {
 
   const memberUpdateFunction = async (id, member) => {
     try {
-      const data = await dispatch(updateMember(id, member));
-      setAlertMessage(data.message);
+      const { data } = await dispatch(updateMember(id, member));
+      setAlertMessage(`Member ${data.firstName} ${data.lastName} updated.`);
       setIsSuccess(true);
       setShowAlert(true);
     } catch (error) {
@@ -72,8 +72,8 @@ const MemberForm = () => {
 
   const memberAddFunction = async (member) => {
     try {
-      const data = await dispatch(addMember(member));
-      setAlertMessage(data.message);
+      const { data } = await dispatch(addMember(member));
+      setAlertMessage(`Member ${data.firstName} ${data.lastName} created.`);
       setIsSuccess(true);
       setShowAlert(true);
     } catch (error) {
