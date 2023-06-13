@@ -39,6 +39,8 @@ const MemberForm = () => {
   const memberById = (id) => {
     const member = members.find((member) => member._id === id);
     if (member) {
+      delete member._id;
+      delete member.__v;
       setMember(member);
     } else {
       console.error('Member not found');
@@ -48,10 +50,7 @@ const MemberForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (id) {
-      const memberUpdate = { ...member };
-      delete memberUpdate._id;
-      delete memberUpdate.__v;
-      memberUpdateFunction(id, memberUpdate);
+      memberUpdateFunction(id, member);
     } else {
       memberAddFunction(member);
     }
