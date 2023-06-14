@@ -7,7 +7,13 @@ import {
   deleteMemberError,
   getMemberByIdPending,
   getMemberByIdSuccess,
-  getMemberByIdError
+  getMemberByIdError,
+  updateMemberPending,
+  updateMemberSuccess,
+  updateMemberError,
+  addMemberPending,
+  addMemberSuccess,
+  addMemberError
 } from './actions';
 
 export const getMembers = () => {
@@ -55,6 +61,56 @@ export const deleteMember = (id) => {
       }
     } catch (error) {
       dispatch(deleteMemberError(error));
+      throw error;
+    }
+  };
+};
+
+export const updateMember = (id, member) => {
+  return async (dispatch) => {
+    dispatch(updateMemberPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(member)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(updateMemberSuccess({ id, member }));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(updateMemberError(error));
+      throw error;
+    }
+  };
+};
+
+export const addMember = (member) => {
+  return async (dispatch) => {
+    dispatch(addMemberPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(member)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(addMemberSuccess({ member }));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(addMemberError(error));
       throw error;
     }
   };
