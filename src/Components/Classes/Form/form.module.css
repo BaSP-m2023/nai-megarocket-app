@@ -1,19 +1,22 @@
 .form {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 50%;
   margin: 5%;
   margin-top: 10%;
   border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   margin-left: 25%;
   padding-bottom: 5vh;
+  height: 40%;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  align-content: center;
-  max-width: 800px;
 }
 
 .box {
@@ -28,12 +31,14 @@
   display: flex;
   width: 100%;
   padding: 3%;
+  margin-top: 2%;
   border-radius: 5px;
   border: 1px solid #373867;
 }
 .select {
   display: flex;
   width: 106%;
+  margin-top: 2%;
   padding: 3%;
   border-radius: 5px;
   border: 1px solid #373867;
@@ -41,6 +46,10 @@
 
 .buttonsDiv {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+}
+
+.confirmButton {
+  margin-left: 2%;
 }

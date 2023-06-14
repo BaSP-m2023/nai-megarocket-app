@@ -18,14 +18,10 @@ const Classes = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [classToDelete, setClassToDelete] = useState(null);
 
-  const refreshTable = () => {
-    dispatch(getClasses());
-  };
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    refreshTable();
+    dispatch(getClasses());
   }, []);
 
   const handleDeleteClass = (id) => {
@@ -33,14 +29,13 @@ const Classes = () => {
     setClassToDelete(id);
   };
 
-  const handleConfirmDeleteClass = () => {
+  const handleConfirmDeleteClass = async () => {
     setShowDeleteWarning(false);
     try {
-      const data = dispatch(deleteClass(classToDelete));
+      const data = await dispatch(deleteClass(classToDelete));
       setAlertMessage(data.message);
       setIsSuccess(true);
       setShowAlert(true);
-      refreshTable();
     } catch (error) {
       setAlertMessage(error);
       setShowAlert(true);

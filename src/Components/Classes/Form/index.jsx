@@ -1,120 +1,93 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { editClass, addClass } from '../../../Redux/classes/thunks';
+import { getActivities } from '../../../Redux/activities/thunks';
+import { getTrainers } from '../../../Redux/trainers/thunks';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './form.module.css';
 import Button from '../../Shared/Button';
 import SharedModal from '../../Shared/Modal';
 
 const Form = () => {
-  const history = useHistory();
   const { id } = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const {
+    trainers = [],
+    activities = [],
+    gymClasses = []
+  } = useSelector((state) => ({
+    trainers: state.trainers.data,
+    activities: state.activities.data.data,
+    gymClasses: state.classes.data.data
+  }));
   const [day, setDay] = useState([]);
   const [hour, setHour] = useState('');
   const [trainer, setTrainer] = useState('');
   const [activity, setActivity] = useState('');
   const [slots, setSlots] = useState('');
-  const [activities, setActivities] = useState([]);
-  const [trainers, setTrainers] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const loadClassData = () => {
+    const classToUpdate = gymClasses.find((gymClass) => gymClass._id === id);
+    setDay(classToUpdate.day);
+    setHour(classToUpdate.hour);
+    setTrainer(classToUpdate.trainer._id);
+    setActivity(classToUpdate.activity._id);
+    setSlots(classToUpdate.slots);
+  };
+  const dayArray = Array.isArray(day) ? day : day.split(',').map((d) => d.trim());
+  const gymClass = {
+    day: dayArray,
+    hour,
+    trainer: trainer,
+    activity: activity,
+    slots: parseInt(slots)
+  };
+  const showSuccesModal = (data) => {
+    setAlertMessage(data.message);
+    setIsSuccess(true);
+    setShowAlert(true);
+  };
+  const showErrorModal = (error) => {
+    setAlertMessage(error.message);
+    setIsSuccess(false);
+    setShowAlert(true);
+  };
 
-  const getClasses = async () => {
+  useEffect(() => {
+    dispatch(getTrainers());
+    dispatch(getActivities());
+    if (id) {
+      loadClassData();
+    }
+  }, [id]);
+
+  const updateClass = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
-      const data = await response.json();
-      const classes = data.data;
-      setDay(classes.day);
-      setHour(classes.hour);
-      setTrainer(classes.trainer?._id);
-      setActivity(classes.activity?._id);
-      setSlots(classes.slots);
+      const data = await dispatch(editClass(id, gymClass));
+      showSuccesModal(data);
     } catch (error) {
-      throw new Error(error);
+      showErrorModal(error);
     }
   };
 
-  const fetchActivities = async () => {
+  const createClass = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
-      const data = await response.json();
-      setActivities(data.data);
+      const data = await dispatch(addClass(gymClass));
+      showSuccesModal(data);
     } catch (error) {
-      console.error('Error fetching activities:', error);
-    }
-  };
-
-  const fetchTrainers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
-      const data = await response.json();
-      setTrainers(data.data);
-    } catch (error) {
-      console.error('Error fetching trainers:', error);
-    }
-  };
-
-  const updateSubmit = async (formData) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setIsSuccess(false);
-        setShowAlert(true);
-      } else {
-        setAlertMessage(data.message);
-        setIsSuccess(true);
-        setShowAlert(true);
-      }
-    } catch (error) {
-      console.error('Error edited class:', error);
-    }
-  };
-
-  const createSubmit = async (formData) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAlertMessage(data.message);
-        setIsSuccess(false);
-        setShowAlert(true);
-      } else {
-        setAlertMessage(data.message);
-        setIsSuccess(true);
-        setShowAlert(true);
-      }
-    } catch (error) {
-      console.error('Error adding class:', error);
+      showErrorModal(error);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const dayArray = Array.isArray(day) ? day : day.split(',').map((d) => d.trim());
-    const formData = {
-      day: dayArray,
-      hour,
-      trainer: trainer,
-      activity: activity,
-      slots: parseInt(slots)
-    };
     if (id) {
-      updateSubmit(formData);
+      updateClass();
     } else {
-      createSubmit(formData);
+      createClass();
     }
   };
 
@@ -122,56 +95,35 @@ const Form = () => {
     history.push('/classes');
   };
 
-  useEffect(() => {
-    if (id) {
-      getClasses();
+  const handleCloseAlert = () => {
+    if (isSuccess) {
+      history.push('/classes');
+    } else {
+      setShowAlert(false);
     }
-    fetchActivities();
-    fetchTrainers();
-  }, []);
+  };
 
-  const renderTrainer = () => {
-    if (id) {
-      return trainers.map((trainer) => (
+  const renderTrainer = () => (
+    <>
+      {!id && <option value="">Choose a trainer</option>}
+      {trainers.map((trainer) => (
         <option key={trainer._id} value={trainer._id}>
           {trainer.firstName}
         </option>
-      ));
-    } else {
-      return (
-        <>
-          <option value="">Select a trainer</option>
-          {trainers.map((trainer) => (
-            <option key={trainer._id} value={trainer._id}>
-              {trainer.firstName}
-            </option>
-          ))}
-        </>
-      );
-    }
-  };
+      ))}
+    </>
+  );
 
-  const renderActivity = () => {
-    if (id) {
-      return activities.map((activity) => (
+  const renderActivity = () => (
+    <>
+      {!id && <option value="">Choose a activity</option>}
+      {activities.map((activity) => (
         <option key={activity._id} value={activity._id}>
           {activity.name}
         </option>
-      ));
-    } else {
-      return (
-        <>
-          <option value="">Select activity</option>
-          {activities.map((activity) => (
-            <option key={activity._id} value={activity._id}>
-              {activity.name}
-            </option>
-          ))}
-          ;
-        </>
-      );
-    }
-  };
+      ))}
+    </>
+  );
 
   const activityChange = (e) => {
     const selectedActivity = e.target.value;
@@ -183,79 +135,63 @@ const Form = () => {
     setTrainer(selectedTrainer);
   };
 
-  const slotsChange = (e) => {
-    const selectedSlots = e.target.value;
-    setSlots(selectedSlots);
-  };
-
-  const handleCloseAlert = () => {
-    if (isSuccess) {
-      history.push('/classes');
-    } else {
-      setShowAlert(false);
-    }
-  };
-
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.container}>
           <h2>{id ? 'Update Class' : 'Create Class'}</h2>
           <div className={styles.box}>
-            <h4>Day</h4>
+            <label>Day</label>
             <input
               className={styles.inputClasses}
               type="text"
-              placeholder="Day"
+              placeholder="Monday,Thursday"
               value={day}
               onChange={(e) => setDay(e.target.value)}
               required
             />
-            <small>Enter the days seperated for comas</small>
           </div>
           <div className={styles.box}>
-            <h4>Hour</h4>
+            <label>Hour</label>
             <input
               className={styles.inputClasses}
               type="text"
-              placeholder="Hour"
+              placeholder="08:00"
               pattern="[0-9]{2}:[0-9]{2}"
               value={hour}
               onChange={(e) => setHour(e.target.value)}
               required
             />
-            <small>Please enter the hour in HH:MM format.</small>
           </div>
           <div className={styles.box}>
-            <h4>Trainer</h4>
+            <label>Trainer</label>
             <select value={trainer} className={styles.select} onChange={trainerChange} required>
               {renderTrainer()};
             </select>
           </div>
           <div className={styles.box}>
-            <h4>Activity</h4>
-            <select value={activity} onChange={activityChange} required>
+            <label>Activity</label>
+            <select value={activity} className={styles.select} onChange={activityChange} required>
               {renderActivity()};
             </select>
           </div>
           <div className={styles.box}>
-            <h4>Slots</h4>
+            <label>Slots</label>
             <input
+              className={styles.inputClasses}
               type="number"
-              placeholder="Slots"
+              placeholder="5"
               value={slots}
-              onChange={slotsChange}
+              onChange={(e) => setSlots(e.target.value)}
               required
             />
           </div>
         </div>
         <div className={styles.buttonsDiv}>
           <Button type="cancel" text="Cancel" clickAction={handleCancel} />
-          <Button
-            type={id ? 'submit' : 'submit'}
-            text={id ? 'Submit' : 'Confirm'}
-            onSubmit={handleSubmit}
-          />
+          <div className={styles.confirmButton}>
+            <Button type={'submit'} text={id ? 'Update' : 'Add'} onSubmit={handleSubmit} />
+          </div>
         </div>
       </form>
       <SharedModal
