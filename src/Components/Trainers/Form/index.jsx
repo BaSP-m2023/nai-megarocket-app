@@ -3,36 +3,28 @@ import { useHistory, useParams } from 'react-router-dom';
 import styles from './form.module.css';
 import Button from '../../Shared/Button/index';
 import SharedModal from '../../Shared/Modal/index';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateTrainer, addTrainer } from '../../../Redux/trainers/thunks';
 
 const Form = () => {
   const history = useHistory();
   const { id } = useParams();
-  const [firstName, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [dni, setDNI] = useState('');
-  const [phone, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [city, setCity] = useState('');
-  const [password, setPassword] = useState('');
-  const [salary, setSalary] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalTypeStyle, setModalTypeStyle] = useState('success');
   const [shouldRedirect, setShouldRedirect] = useState(false);
-
-  const getTrainerById = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
-    const data = await response.json();
-    const trainer = data.data;
-    setName(trainer.firstName);
-    setLastName(trainer.lastName);
-    setDNI(trainer.dni);
-    setPhoneNumber(trainer.phone);
-    setEmail(trainer.email);
-    setCity(trainer.city);
-    setSalary(trainer.salary);
-    setPassword(trainer.password);
-  };
+  const dispatch = useDispatch();
+  const trainers = useSelector((state) => state.trainers.data);
+  const [trainer, setTrainer] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    email: '',
+    city: '',
+    salary: '',
+    password: ''
+  });
 
   useEffect(() => {
     if (id) {
@@ -40,51 +32,31 @@ const Form = () => {
     }
   }, []);
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    if (shouldRedirect) {
-      history.push('/trainers');
+  const getTrainerById = () => {
+    const trainerToUpdate = trainers.find((trainer) => trainer._id === id);
+    if (trainerToUpdate) {
+      setTrainer({
+        firstName: trainerToUpdate.firstName,
+        lastName: trainerToUpdate.lastName,
+        dni: trainerToUpdate.dni,
+        phone: trainerToUpdate.phone,
+        email: trainerToUpdate.email,
+        city: trainerToUpdate.city,
+        password: trainerToUpdate.password,
+        salary: trainerToUpdate.salary
+      });
+    } else {
+      console.error('Trainer not found');
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = {
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      password,
-      salary
-    };
-    if (id) {
-      editTrainer(id, formData);
-    } else {
-      addTrainer(formData);
-    }
-  };
-  const addTrainer = async (formData) => {
+  const createTrainer = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setModalMessage(data.message);
-        setModalTypeStyle('error');
-        setShowModal(true);
-      } else {
-        setModalMessage('Trainer added successfully');
-        setModalTypeStyle('success');
-        setShowModal(true);
-        setShouldRedirect(true);
-      }
+      await dispatch(addTrainer(trainerData));
+      setModalMessage('Trainer added successfully');
+      setModalTypeStyle('success');
+      setShowModal(true);
+      setShouldRedirect(true);
     } catch (error) {
       console.error('Error to add trainer:', error);
       setModalMessage('Error to add trainer');
@@ -93,36 +65,50 @@ const Form = () => {
     }
   };
 
-  const editTrainer = async (id, formData) => {
+  const updateTrainerFunction = async (id, trainer) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setModalMessage(data.message);
-        setModalTypeStyle('error');
-        setShowModal(true);
-      } else {
-        setModalMessage('Trainer edited successfully');
-        setModalTypeStyle('success');
-        setShowModal(true);
-        setShouldRedirect(true);
-      }
+      await dispatch(updateTrainer(id, trainer));
+      setModalMessage('trainer updated successfully');
+      setShouldRedirect(true);
+      setShowModal(true);
     } catch (error) {
-      console.error('Error to edit trainer:', error);
-      setModalMessage('Error to edit trainer');
-      setModalTypeStyle('error');
+      setModalMessage('error');
       setShowModal(true);
     }
   };
+
+  const trainerData = {
+    firstName: trainer.firstName,
+    lastName: trainer.lastName,
+    dni: trainer.dni,
+    phone: trainer.phone,
+    email: trainer.email,
+    city: trainer.city,
+    salary: trainer.salary,
+    password: trainer.password
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (id) {
+      updateTrainerFunction(id, trainerData);
+    } else {
+      createTrainer(trainerData);
+      handleCloseModal();
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    if (shouldRedirect) {
+      history.push('/trainers');
+    }
+  };
+
   const handleCancel = () => {
     history.push('/trainers');
   };
+
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.headContainer}>
@@ -134,8 +120,8 @@ const Form = () => {
           <input
             type="text"
             placeholder="Name"
-            value={firstName}
-            onChange={(e) => setName(e.target.value)}
+            value={trainer.firstName}
+            onChange={(e) => setTrainer({ ...trainer, firstName: e.target.value })}
             required
           />
         </div>
@@ -144,8 +130,8 @@ const Form = () => {
           <input
             type="text"
             placeholder="Last Name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            value={trainer.lastName}
+            onChange={(e) => setTrainer({ ...trainer, lastName: e.target.value })}
             required
           />
         </div>
@@ -154,8 +140,8 @@ const Form = () => {
           <input
             type="number"
             placeholder="DNI"
-            value={dni}
-            onChange={(e) => setDNI(e.target.value)}
+            value={trainer.dni}
+            onChange={(e) => setTrainer({ ...trainer, dni: e.target.value })}
             required
           />
         </div>
@@ -164,8 +150,8 @@ const Form = () => {
           <input
             type="number"
             placeholder="Phone Number"
-            value={phone}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={trainer.phone}
+            onChange={(e) => setTrainer({ ...trainer, phone: e.target.value })}
             required
           />
         </div>
@@ -174,8 +160,8 @@ const Form = () => {
           <input
             type="text"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={trainer.email}
+            onChange={(e) => setTrainer({ ...trainer, email: e.target.value })}
             required
           />
         </div>
@@ -184,8 +170,8 @@ const Form = () => {
           <input
             type="text"
             placeholder="City"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            value={trainer.city}
+            onChange={(e) => setTrainer({ ...trainer, city: e.target.value })}
             required
           />
         </div>
@@ -194,8 +180,8 @@ const Form = () => {
           <input
             type="number"
             placeholder="Salary"
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
+            value={trainer.salary}
+            onChange={(e) => setTrainer({ ...trainer, salary: e.target.value })}
             required
           />
         </div>
@@ -204,8 +190,8 @@ const Form = () => {
           <input
             type="text"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={trainer.password}
+            onChange={(e) => setTrainer({ ...trainer, password: e.target.value })}
             required
           />
         </div>

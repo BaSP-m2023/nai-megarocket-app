@@ -7,7 +7,13 @@ import {
   getTrainersByIdError,
   deleteTrainersPending,
   deleteTrainerSuccess,
-  deleteTrainerError
+  deleteTrainerError,
+  updateTrainerPending,
+  updateTrainerSuccess,
+  updateTrainerError,
+  addTrainerPending,
+  addTrainerSuccess,
+  addTrainerError
 } from './actions';
 
 export const getTrainers = () => {
@@ -51,10 +57,61 @@ export const deleteTrainer = (trainerId) => {
       if (!response.ok) {
         throw new Error('Failed to delete trainer');
       }
-
+      const data = await response.json();
       dispatch(deleteTrainerSuccess(trainerId));
+      return data;
     } catch (error) {
       dispatch(deleteTrainerError(error.message));
+      throw error;
+    }
+  };
+};
+
+export const updateTrainer = (id, trainer) => {
+  return async (dispatch) => {
+    dispatch(updateTrainerPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(trainer)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(updateTrainerSuccess({ id, trainer }));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(updateTrainerError(error));
+      throw error;
+    }
+  };
+};
+
+export const addTrainer = (trainer) => {
+  return async (dispatch) => {
+    dispatch(addTrainerPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(trainer)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(addTrainerSuccess({ trainer }));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(addTrainerError(error));
       throw error;
     }
   };
