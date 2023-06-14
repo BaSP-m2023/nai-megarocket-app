@@ -65,7 +65,7 @@ const Form = () => {
 
   const handleAdd = async (superAdmin) => {
     try {
-      const data = await dispatch(addSuperAdmin(superAdmin));
+      const { data } = await dispatch(addSuperAdmin(superAdmin));
       setTypeStyle('success');
       setTitleModal('Success');
       setBodyModal(`The Super Admin ${data.firstName} was created`);
