@@ -23,7 +23,7 @@ const Trainers = () => {
 
   useEffect(() => {
     dispatch(getTrainers());
-  }, [dispatch]);
+  }, []);
 
   const handleDelete = (id) => {
     setSelectedTrainerId(id);
