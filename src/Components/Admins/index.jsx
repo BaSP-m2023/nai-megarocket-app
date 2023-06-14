@@ -15,7 +15,7 @@ const Admins = () => {
   const [isDelete, setIsDelete] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState('');
   const [idAdmin, setIdAdmin] = useState('');
   const dispatch = useDispatch();
 
@@ -28,14 +28,13 @@ const Admins = () => {
       try {
         const data = await dispatch(deleteAdmin(idAdmin));
         setModalInformation({ title: 'Success:', body: data.message });
-        setIsSuccess(true);
+        setIsSuccess('success');
         setShowModal(true);
         setIsDelete(false);
-        dispatch(getAdmins());
       } catch (error) {
         setModalInformation({ title: 'Error:', body: error.message });
         setIsDelete(false);
-        setIsSuccess(false);
+        setIsSuccess('error');
         setShowModal(true);
       }
     }
@@ -45,13 +44,12 @@ const Admins = () => {
     setIdAdmin(id);
     setModalInformation({ title: 'Warning:', body: 'Are you sure?' });
     setIsDelete(true);
+    setIsSuccess('default');
     setShowModal(true);
-    setIsSuccess(false);
   };
 
   const handleExitAlert = () => {
     setShowModal(false);
-    dispatch(getAdmins());
   };
 
   const handleAddAdmin = () => {
@@ -72,7 +70,7 @@ const Admins = () => {
         <ClipLoader />
       ) : (
         <>
-          {admins && admins.length > 0 ? (
+          {Array.isArray(admins) && admins.length > 0 ? (
             <>
               <Table
                 data={admins}
@@ -86,7 +84,7 @@ const Admins = () => {
                 isDelete={isDelete}
                 show={showModal}
                 closeModal={handleExitAlert}
-                typeStyle={isSuccess ? 'success' : 'error'}
+                typeStyle={isSuccess}
                 title={modalInformation.title}
                 body={modalInformation.body}
                 onConfirm={confirmDelete}

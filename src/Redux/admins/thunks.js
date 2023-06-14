@@ -7,7 +7,13 @@ import {
   getAdminByIdError,
   deleteAdminPending,
   deleteAdminSuccess,
-  deleteAdminError
+  deleteAdminError,
+  putAdminPending,
+  putAdminSuccess,
+  putAdminError,
+  postAdminPending,
+  postAdminSuccess,
+  postAdminError
 } from './actions';
 
 export const getAdmins = () => {
@@ -55,6 +61,56 @@ export const deleteAdmin = (adminId) => {
       }
     } catch (error) {
       dispatch(deleteAdminError(error.message));
+      throw error;
+    }
+  };
+};
+
+export const putAdmin = (id, admin) => {
+  return async (dispatch) => {
+    dispatch(putAdminPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(admin)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(putAdminSuccess(id, admin));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(putAdminError(error));
+      throw error;
+    }
+  };
+};
+
+export const postAdmin = (admin) => {
+  return async (dispatch) => {
+    dispatch(postAdminPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(admin)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(postAdminSuccess({ admin }));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(postAdminError(error));
       throw error;
     }
   };
