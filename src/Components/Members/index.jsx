@@ -15,7 +15,7 @@ const Members = () => {
   const members = useSelector((state) => state.members.data.data);
   const loading = useSelector((state) => state.members.loading);
   const [showAlert, setShowAlert] = useState(false);
-  const [typeStyle, SetTypeStyle] = useState('');
+  const [typeStyle, setTypeStyle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [memberToDelete, setMemberToDelete] = useState(null);
   const [isDelete, setIsDelete] = useState(false);
@@ -32,12 +32,12 @@ const Members = () => {
       const { data } = await dispatch(deleteMember(memberToDelete));
       setAlertMessage(`Member ${data.firstName} ${data.lastName} deleted.`);
       setTitle('Success');
-      SetTypeStyle('success');
+      setTypeStyle('success');
       setShowAlert(true);
     } catch (error) {
       setAlertMessage(error.message);
       setTitle('Error');
-      SetTypeStyle('error');
+      setTypeStyle('error');
       setShowAlert(true);
     }
   };

@@ -34,7 +34,7 @@ const MemberForm = () => {
     if (id) {
       memberById(id);
     }
-  }, [id]);
+  }, []);
 
   const memberById = (id) => {
     const member = members.find((member) => member._id === id);
