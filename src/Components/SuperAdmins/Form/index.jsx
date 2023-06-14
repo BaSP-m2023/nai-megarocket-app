@@ -3,14 +3,14 @@ import { useParams, useHistory } from 'react-router-dom';
 import styles from './form.module.css';
 import SharedModal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
-import { getSuperAdminById } from '../../../Redux/superadmins/thunks';
+import { updateSuperAdmin, addSuperAdmin } from '../../../Redux/superadmins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const item = useSelector((state) => state.superAdmin.data);
+  const superAdmins = useSelector((state) => state.superAdmin.data.data);
   const [superAdmin, setSuperAdmin] = useState({
     firstName: '',
     email: '',
@@ -22,90 +22,59 @@ const Form = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
-  const addSuperAdmin = async (superAdmin) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(superAdmin)
-      });
-      const data = await response.json();
-      if (data.ok) {
-        setTypeStyle('success');
-        setTitleModal('Success');
-        setBodyModal('Super Admin created successfully.');
-        setShowSuccessModal(true);
-        setShowErrorModal(false);
-        setSuperAdmin({ firstName: '', email: '', password: '' });
-      }
-      setTypeStyle('error');
-      setTitleModal('Error');
-      setBodyModal(data.message);
-      setShowErrorModal(true);
-      setShowSuccessModal(false);
-    } catch (error) {
-      console.error(error);
-      throw new Error('An error has occurred creating the Super Admin');
-    }
-  };
-
-  const updateSuperAdmin = async (id, superAdmin) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(superAdmin)
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setShowSuccessModal(true);
-        setShowErrorModal(false);
-      } else {
-        setTypeStyle('error');
-        setTitleModal('Error');
-        setBodyModal(data.message);
-        setShowErrorModal(true);
-        setShowSuccessModal(false);
-      }
-    } catch (error) {
-      console.error(error);
-      throw new Error('An error has occurred updating the Super Admin');
-    }
-  };
-
   useEffect(() => {
     if (id) {
-      dispatch(getSuperAdminById(id));
+      superAdminById(id);
     }
   }, [id]);
 
-  useEffect(() => {
-    if (id && item) {
-      setSuperAdmin({
-        firstName: item.firstName,
-        email: item.email,
-        password: item.password
-      });
+  const superAdminById = (id) => {
+    const superAdmin = superAdmins.find((superAdmin) => superAdmin._id === id);
+    if (superAdmin) {
+      delete superAdmin._id;
+      delete superAdmin.__v;
+      setSuperAdmin(superAdmin);
+    } else {
+      console.error('Super Admin not found');
     }
-  }, [item]);
-
-  const onChange = (e) => {
-    setSuperAdmin({
-      ...superAdmin,
-      [e.target.name]: e.target.value
-    });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (event) => {
+    event.preventDefault();
     if (id) {
-      updateSuperAdmin(id, superAdmin);
+      handleUpdate(id, superAdmin);
     } else {
-      addSuperAdmin(superAdmin);
+      handleAdd(superAdmin);
+    }
+  };
+
+  const handleUpdate = async (id, superAdmin) => {
+    try {
+      const { data } = await dispatch(updateSuperAdmin(id, superAdmin));
+      setTypeStyle('success');
+      setTitleModal('Success');
+      setBodyModal(`The Super Admin ${data.firstName} was updated`);
+      setShowSuccessModal(true);
+    } catch (error) {
+      setTypeStyle('error');
+      setTitleModal('Error');
+      setBodyModal(error.message);
+      setShowErrorModal(true);
+    }
+  };
+
+  const handleAdd = async (superAdmin) => {
+    try {
+      const { data } = await dispatch(addSuperAdmin(superAdmin));
+      setTypeStyle('success');
+      setTitleModal('Success');
+      setBodyModal(`The Super Admin ${data.firstName} was created`);
+      setShowSuccessModal(true);
+    } catch (error) {
+      setTypeStyle('error');
+      setTitleModal('Error');
+      setBodyModal(error.message);
+      setShowErrorModal(true);
     }
   };
 
@@ -122,9 +91,16 @@ const Form = () => {
     history.push('/super-admins');
   };
 
+  const onChange = (e) => {
+    setSuperAdmin({
+      ...superAdmin,
+      [e.target.name]: e.target.value
+    });
+  };
+
   return (
     <div className={styles.superAdminFormContainer}>
-      <form onSubmit={onSubmit} className={styles.formContainer}>
+      <form className={styles.formContainer}>
         <h2 className={styles.h2Style}>{id ? 'Update Super Admin' : 'Add Super Admin'}</h2>
         <div className={styles.fieldsetForm}>
           <label className={styles.label} htmlFor="firstName">
@@ -187,9 +163,9 @@ const Form = () => {
       />
       <SharedModal
         show={showSuccessModal}
-        typeStyle="success"
-        title="Success"
-        body={id ? 'Super Admin updated successfully.' : 'Super Admin created successfully.'}
+        typeStyle={typeStyle}
+        title={titleModal}
+        body={bodyModal}
         closeModal={handleConfirm}
       />
     </div>

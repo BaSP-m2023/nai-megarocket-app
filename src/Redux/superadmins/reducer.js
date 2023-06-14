@@ -1,14 +1,4 @@
-import {
-  GET_SUPERADMINS_PENDING,
-  GET_SUPERADMINS_SUCCESS,
-  GET_SUPERADMINS_ERROR,
-  GET_SUPERADMINS_BY_ID_PENDING,
-  GET_SUPERADMINS_BY_ID_SUCCESS,
-  GET_SUPERADMINS_BY_ID_ERROR,
-  DELETE_SUPERADMINS_PENDING,
-  DELETE_SUPERADMINS_SUCCESS,
-  DELETE_SUPERADMINS_ERROR
-} from './constants';
+import * as types from './constants';
 
 const INITIAL_STATE = {
   loading: false,
@@ -18,55 +8,95 @@ const INITIAL_STATE = {
 
 const superAdminReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GET_SUPERADMINS_PENDING:
+    case types.GET_SUPERADMINS_PENDING:
       return {
         ...state,
         loading: true,
         error: null
       };
-    case GET_SUPERADMINS_SUCCESS:
+    case types.GET_SUPERADMINS_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
       };
-    case GET_SUPERADMINS_ERROR:
+    case types.GET_SUPERADMINS_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload
       };
-    case GET_SUPERADMINS_BY_ID_PENDING:
+    case types.GET_SUPERADMINS_BY_ID_PENDING:
       return {
         ...state,
         loading: true,
         error: null
       };
-    case GET_SUPERADMINS_BY_ID_SUCCESS:
+    case types.GET_SUPERADMINS_BY_ID_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
       };
-    case GET_SUPERADMINS_BY_ID_ERROR:
+    case types.GET_SUPERADMINS_BY_ID_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload
       };
-    case DELETE_SUPERADMINS_PENDING:
+    case types.DELETE_SUPERADMINS_PENDING:
       return {
         ...state,
         loading: true,
         error: null
       };
-    case DELETE_SUPERADMINS_SUCCESS:
+    case types.DELETE_SUPERADMINS_SUCCESS:
       return {
         ...state,
         loading: false,
+        error: null,
+        data: {
+          ...state.data,
+          data: state.data.data.filter((superAdmin) => superAdmin._id !== action.payload)
+        }
+      };
+    case types.DELETE_SUPERADMINS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case types.ADD_SUPERADMINS_PENDING:
+      return {
+        ...state,
+        loading: true,
         error: null
       };
-    case DELETE_SUPERADMINS_ERROR:
+    case types.ADD_SUPERADMINS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload
+      };
+    case types.ADD_SUPERADMINS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case types.UPDATE_SUPERADMINS_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case types.UPDATE_SUPERADMINS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload
+      };
+    case types.UPDATE_SUPERADMINS_ERROR:
       return {
         ...state,
         loading: false,
