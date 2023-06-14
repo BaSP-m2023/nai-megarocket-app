@@ -49,7 +49,7 @@ const trainersReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case types.DELETE_TRAINER_SUCCESS: {
-      const filteredData = state.data.filter((trainer) => trainer.id !== action.payload);
+      const filteredData = state.data.filter((trainer) => trainer._id !== action.payload);
       return {
         ...state,
         loading: false,
@@ -90,7 +90,7 @@ const trainersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        data: [...state.data, action.payload.trainer]
+        data: action.payload
       };
     case types.ADD_TRAINER_ERROR:
       return {

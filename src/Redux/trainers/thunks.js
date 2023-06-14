@@ -57,8 +57,9 @@ export const deleteTrainer = (trainerId) => {
       if (!response.ok) {
         throw new Error('Failed to delete trainer');
       }
-
+      const data = await response.json();
       dispatch(deleteTrainerSuccess(trainerId));
+      return data;
     } catch (error) {
       dispatch(deleteTrainerError(error.message));
       throw error;

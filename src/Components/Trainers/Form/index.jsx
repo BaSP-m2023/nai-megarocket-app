@@ -30,7 +30,7 @@ const Form = () => {
     if (id) {
       getTrainerById();
     }
-  }, [id]);
+  }, []);
 
   const getTrainerById = () => {
     const trainerToUpdate = trainers.find((trainer) => trainer._id === id);
@@ -52,10 +52,10 @@ const Form = () => {
 
   const createTrainer = async () => {
     try {
-      const data = await dispatch(addTrainer(trainerData));
+      await dispatch(addTrainer(trainerData));
       setModalMessage('Trainer added successfully');
       setModalTypeStyle('success');
-      setShowModal(data);
+      setShowModal(true);
       setShouldRedirect(true);
     } catch (error) {
       console.error('Error to add trainer:', error);
