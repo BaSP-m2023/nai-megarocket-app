@@ -1,86 +1,51 @@
-import {
-  GET_SUBSCRIPTIONS_PENDING,
-  GET_SUBSCRIPTIONS_SUCCESS,
-  GET_SUBSCRIPTIONS_ERROR,
-  DELETE_SUBSCRIPTIONS_PENDING,
-  DELETE_SUBSCRIPTIONS_SUCCESS,
-  DELETE_SUBSCRIPTIONS_ERROR,
-  GET_SUBSCRIPTIONS_BY_ID_PENDING,
-  GET_SUBSCRIPTIONS_BY_ID_SUCCESS,
-  GET_SUBSCRIPTIONS_BY_ID_ERROR
-} from './constants';
+import * as types from './constants';
 
 const INITIAL_STATE = {
   loading: false,
-  data: [],
-  error: null
+  error: null,
+  data: []
 };
 
 const subscriptionsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GET_SUBSCRIPTIONS_PENDING:
+    case types.GET_SUBSCRIPTIONS_PENDING:
+    case types.DELETE_SUBSCRIPTION_PENDING:
+    case types.GET_SUBSCRIPTION_BY_ID_PENDING:
+    case types.CREATE_SUBSCRIPTION_PENDING:
+    case types.UPDATE_SUBSCRIPTION_PENDING:
       return {
         ...state,
         loading: true,
         error: null
       };
-    case GET_SUBSCRIPTIONS_SUCCESS:
+    case types.GET_SUBSCRIPTIONS_SUCCESS:
       return {
         ...state,
         loading: false,
-        data: action.payload,
-        error: false
+        data: action.payload
       };
-    case GET_SUBSCRIPTIONS_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload
-      };
-    case DELETE_SUBSCRIPTIONS_PENDING:
-      return {
-        ...state,
-        loading: true,
-        error: null
-      };
-    case DELETE_SUBSCRIPTIONS_SUCCESS: {
-      const filteredData = state.data.data?.filter(
-        (subscriptions) => subscriptions.id !== action.payload
-      );
-      return {
-        ...state,
-        loading: false,
-        data: filteredData,
-        error: false
-      };
-    }
-    case DELETE_SUBSCRIPTIONS_ERROR:
+    case types.GET_SUBSCRIPTIONS_ERROR:
+    case types.DELETE_SUBSCRIPTION_ERROR:
+    case types.GET_SUBSCRIPTION_BY_ID_ERROR:
+    case types.CREATE_SUBSCRIPTION_ERROR:
+    case types.UPDATE_SUBSCRIPTION_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload
       };
-    case GET_SUBSCRIPTIONS_BY_ID_PENDING:
-      return {
-        ...state,
-        loading: true,
-        error: null
-      };
-    case GET_SUBSCRIPTIONS_BY_ID_SUCCESS:
+    case types.DELETE_SUBSCRIPTION_SUCCESS:
       return {
         ...state,
         loading: false,
-        data: action.payload,
-        error: false
+        data: state.data.filter((subscription) => subscription._id !== action.payload)
       };
-    case GET_SUBSCRIPTIONS_BY_ID_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload
-      };
+    case types.GET_SUBSCRIPTION_BY_ID_SUCCESS:
+    case types.CREATE_SUBSCRIPTION_SUCCESS:
+    case types.UPDATE_SUBSCRIPTION_SUCCESS:
     default:
       return state;
   }
 };
+
 export default subscriptionsReducer;

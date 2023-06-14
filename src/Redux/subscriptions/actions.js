@@ -1,53 +1,84 @@
-import {
-  GET_SUBSCRIPTIONS_PENDING,
-  GET_SUBSCRIPTIONS_SUCCESS,
-  GET_SUBSCRIPTIONS_ERROR,
-  DELETE_SUBSCRIPTIONS_PENDING,
-  DELETE_SUBSCRIPTIONS_SUCCESS,
-  DELETE_SUBSCRIPTIONS_ERROR,
-  GET_SUBSCRIPTIONS_BY_ID_PENDING,
-  GET_SUBSCRIPTIONS_BY_ID_SUCCESS,
-  GET_SUBSCRIPTIONS_BY_ID_ERROR
-} from './constants';
+import * as types from './constants';
 
 export const getSubscriptionsPending = () => ({
-  type: GET_SUBSCRIPTIONS_PENDING
+  type: types.GET_SUBSCRIPTIONS_PENDING
 });
 
 export const getSubscriptionsSuccess = (data) => ({
-  type: GET_SUBSCRIPTIONS_SUCCESS,
+  type: types.GET_SUBSCRIPTIONS_SUCCESS,
   payload: data
 });
 
 export const getSubscriptionsError = (error) => ({
-  type: GET_SUBSCRIPTIONS_ERROR,
+  type: types.GET_SUBSCRIPTIONS_ERROR,
   payload: error
 });
 
-export const deleteSubscriptionsPending = () => ({
-  type: DELETE_SUBSCRIPTIONS_PENDING
+export const deleteSubscriptionPending = () => ({
+  type: types.DELETE_SUBSCRIPTION_PENDING
 });
 
-export const deleteSubscriptionsSuccess = (id) => ({
-  type: DELETE_SUBSCRIPTIONS_SUCCESS,
-  payload: id
+export const deleteSubscriptionSuccess = (subscriptionId) => ({
+  type: types.DELETE_SUBSCRIPTION_SUCCESS,
+  payload: subscriptionId
 });
 
-export const deleteSubscriptionsError = (error) => ({
-  type: DELETE_SUBSCRIPTIONS_ERROR,
+export const deleteSubscriptionError = (error) => ({
+  type: types.DELETE_SUBSCRIPTION_ERROR,
   payload: error
 });
 
+export const getSubscriptionByIdPending = () => ({
+  type: types.GET_SUBSCRIPTION_BY_ID_PENDING
+});
+
+export const getSubscriptionByIdSuccess = (subscription) => ({
+  type: types.GET_SUBSCRIPTION_BY_ID_SUCCESS,
+  payload: subscription
+});
+
+export const getSubscriptionByIdError = (error) => ({
+  type: types.GET_SUBSCRIPTION_BY_ID_ERROR,
+  payload: error
+});
+
+export const createSubscriptionPending = () => ({
+  type: types.CREATE_SUBSCRIPTION_PENDING
+});
+
+export const createSubscriptionSuccess = (subscription) => ({
+  type: types.CREATE_SUBSCRIPTION_SUCCESS,
+  payload: subscription
+});
+
+export const createSubscriptionError = (error) => ({
+  type: types.CREATE_SUBSCRIPTION_ERROR,
+  payload: error
+});
+
+export const updateSubscriptionPending = () => ({
+  type: types.UPDATE_SUBSCRIPTION_PENDING
+});
+
+export const updateSubscriptionSuccess = (subscription) => ({
+  type: types.UPDATE_SUBSCRIPTION_SUCCESS,
+  payload: subscription
+});
+
+export const updateSubscriptionError = (error) => ({
+  type: types.UPDATE_SUBSCRIPTION_ERROR,
+  payload: error
+});
 export const getSubscriptionsByIdPending = () => ({
-  type: GET_SUBSCRIPTIONS_BY_ID_PENDING
+  type: types.GET_SUBSCRIPTIONS_BY_ID_PENDING
 });
 
 export const getSubscriptionsByIdSuccess = (id) => ({
-  type: GET_SUBSCRIPTIONS_BY_ID_SUCCESS,
+  type: types.GET_SUBSCRIPTIONS_BY_ID_SUCCESS,
   payload: id
 });
 
 export const getSubscriptionsByIdError = (error) => ({
-  type: GET_SUBSCRIPTIONS_BY_ID_ERROR,
+  type: types.GET_SUBSCRIPTIONS_BY_ID_ERROR,
   payload: error
 });

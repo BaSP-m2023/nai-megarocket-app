@@ -3,126 +3,78 @@ import styles from './form.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import SharedModal from '../../Shared/Modal';
+import { useSelector, useDispatch } from 'react-redux';
+import { getClasses } from '../../../Redux/classes/thunks';
+import { getMembers } from '../../../Redux/members/thunks';
+import { createSubscription, updateSubscription } from '../../../Redux/subscriptions/thunks';
 
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
-  const [classes, setClasses] = useState([]);
-  const [members, setMembers] = useState([]);
-  const [subscription, setsubscription] = useState([]);
+  const dispatch = useDispatch();
+  const classes = useSelector((state) => state.classes.data.data || []);
+  const members = useSelector((state) => state.members.data.data || []);
+  const subscription = useSelector((state) => state.subscriptions.data);
+
   const [users, setUsers] = useState({
     classes: '',
     member: '',
     date: new Date()
   });
   const [showAlert, setShowAlert] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [bodyModal, setBodyModal] = useState('');
 
   useEffect(() => {
     if (id) {
-      getsubscriptionById(id);
+      loadSubData();
     }
-    getClasses();
-    getMembers();
+    dispatch(getClasses());
+    dispatch(getMembers());
   }, [id]);
-
-  const getsubscriptionById = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'GET'
-      });
-      if (!response.ok) {
-        throw new Error('Failed to get subscription');
-      }
-      const { data } = await response.json();
-      setsubscription(data);
-      setUsers({
-        classes: data.classes?._id || '',
-        member: data.member?._id || '',
-        date: new Date(data.date) || new Date()
-      });
-    } catch (error) {
-      console.error(error);
-    }
+  const loadSubData = () => {
+    const subToUpdate = subscription.find((sub) => sub._id === id);
+    setUsers({
+      classes: subToUpdate.classes._id,
+      member: subToUpdate.member._id
+    });
+  };
+  const handleCancel = () => {
+    history.push('/subscriptions');
   };
 
-  const getClasses = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
-      if (!response.ok) {
-        throw new Error('Failed to get classes');
-      }
-      const { data } = await response.json();
-      setClasses(data);
-    } catch (error) {
-      console.error(error);
-    }
+  const showSuccesModal = (data) => {
+    setAlertMessage(data.msg);
+    setIsSuccess(true);
+    setShowAlert(true);
   };
 
-  const getMembers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
-      if (!response.ok) {
-        throw new Error('Failed to get members');
-      }
-      const { data } = await response.json();
-      setMembers(data);
-    } catch (error) {
-      console.error(error);
-    }
+  const showErrorModal = (error) => {
+    setAlertMessage(error.msg);
+    setIsSuccess(false);
+    setShowAlert(true);
   };
 
-  const addSubscription = async ({ member: newMember, classes }) => {
-    const newSubscription = {
-      classes,
-      member: newMember,
-      date: new Date()
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newSubscription)
-      });
-      const { data } = await response.json();
-      if (!response.ok) {
-        setAlertMessage('Failed to add subscription');
-        setShowAlert(true);
+      if (id) {
+        const data = await dispatch(updateSubscription(users, id));
+        showSuccesModal({ message: 'Success' });
+        setBodyModal(data.msg);
       } else {
-        setAlertMessage('Subscription created!');
-        setShowSuccessAlert(true);
-        setsubscription([...subscription, data]);
+        const newSubscription = {
+          classes: users.classes,
+          member: users.member,
+          date: users.date
+        };
+        const data = await dispatch(createSubscription(newSubscription));
+        showSuccesModal({ message: 'Success' });
+        setBodyModal(data.message);
       }
     } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updateSubscription = async (subscription, id) => {
-    try {
-      if (!subscription) {
-        throw new Error('Invalid subscription ID');
-      }
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(users)
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setAlertMessage('Subscription updated!');
-        setShowSuccessAlert(true);
-      } else if (!response.ok) {
-        setAlertMessage(data.message);
-        setShowSuccessAlert(true);
-      }
-    } catch (error) {
-      alert(error);
+      showErrorModal(error);
     }
   };
 
@@ -140,50 +92,16 @@ const Form = () => {
     }));
   };
 
-  const handleCancel = () => {
-    if (showSuccessAlert) {
+  const handleCloseAlert = () => {
+    if (isSuccess) {
+      history.push('/subscriptions');
+    } else {
       setShowAlert(false);
     }
-    setShowAlert(false);
-    history.push('/subscriptions');
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (id) {
-      updateSubscription(users, id);
-    } else {
-      const newSubscription = {
-        classes: users.classes,
-        member: users.member,
-        date: users.date
-      };
-      addSubscription(newSubscription);
-    }
-  };
-  const handleExitAlert = () => {
-    setShowAlert(false);
-    setShowSuccessAlert(false);
   };
 
   return (
     <div className={styles.subscriptionContainer}>
-      <SharedModal
-        isDelete={false}
-        show={showAlert}
-        closeModal={handleExitAlert}
-        title={'Something is wrong'}
-        body={alertMessage}
-      />
-      <SharedModal
-        isDelete={false}
-        show={showSuccessAlert}
-        closeModal={handleCancel}
-        title={'Success'}
-        typeStyle={'success'}
-        body={alertMessage}
-      />
-      <h2 className={styles.title}>{id ? 'Update Subscription' : 'Add Subscription'}</h2>
       <form onSubmit={handleSubmit} className={styles['form-container']}>
         <fieldset className={styles.fieldContainer}>
           <label className={styles.labelStyle}>Classes</label>
@@ -200,18 +118,30 @@ const Form = () => {
           <label className={styles.labelStyle}>Members</label>
           <select value={users.member} onChange={onChangeMember}>
             <option value="">Select a member</option>
-            {members.map((memberItem) => (
-              <option key={memberItem?._id} value={memberItem?._id}>
-                {memberItem?.firstName}
-              </option>
-            ))}
+            {Array.isArray(members) &&
+              members.map((memberItem) => (
+                <option key={memberItem._id} value={memberItem._id}>
+                  {memberItem.firstName}
+                </option>
+              ))}
           </select>
         </fieldset>
         <fieldset className={styles.flexButtons}>
           <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-          <Button text={id ? 'Submit' : 'Confirm'} type={'submit'} clickAction={handleSubmit} />
+          <Button text={id ? 'Submit' : 'Confirm'} type={'submit'} />
         </fieldset>
       </form>
+      {showAlert && (
+        <SharedModal
+          show={showAlert}
+          closeModal={handleCloseAlert}
+          title={isSuccess ? 'Success' : 'Something is wrong'}
+          typeStyle={isSuccess ? 'success' : 'error'}
+          body={bodyModal}
+        >
+          {alertMessage}
+        </SharedModal>
+      )}
     </div>
   );
 };
