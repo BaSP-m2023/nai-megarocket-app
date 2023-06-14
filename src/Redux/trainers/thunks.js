@@ -70,7 +70,6 @@ export const updateTrainer = (id, trainer) => {
   return async (dispatch) => {
     dispatch(updateTrainerPending());
     try {
-      console.log('asdasdasdsa', trainer);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
         method: 'PUT',
         headers: {
