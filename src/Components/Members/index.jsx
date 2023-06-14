@@ -10,39 +10,44 @@ import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 const Members = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const members = useSelector((state) => state.members.data.data);
   const loading = useSelector((state) => state.members.loading);
-  const [showWarning, setShowWarning] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [typeStyle, setTypeStyle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [memberToDelete, setMemberToDelete] = useState(null);
-  const [showTable, setShowTable] = useState(false);
-  const dispatch = useDispatch();
+  const [isDelete, setIsDelete] = useState(false);
+  const [title, setTitle] = useState('');
 
   useEffect(() => {
     dispatch(getMembers());
-  }, [showTable]);
+  }, []);
 
   const handleConfirmDelete = async () => {
-    setShowWarning(false);
+    setIsDelete(false);
+    setShowAlert(false);
     try {
-      const data = await dispatch(deleteMember(memberToDelete));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
+      const { data } = await dispatch(deleteMember(memberToDelete));
+      setAlertMessage(`Member ${data.firstName} ${data.lastName} deleted.`);
+      setTitle('Success');
+      setTypeStyle('success');
       setShowAlert(true);
-      setShowTable(true);
     } catch (error) {
       setAlertMessage(error.message);
-      setIsSuccess(false);
+      setTitle('Error');
+      setTypeStyle('error');
       setShowAlert(true);
     }
   };
 
   const handleDelete = (id) => {
-    setShowWarning(true);
     setMemberToDelete(id);
+    setIsDelete(true);
+    setTitle('Delete Member');
+    setAlertMessage('Are you sure you want to delete this member?');
+    setShowAlert(true);
   };
 
   const handleAdd = () => {
@@ -52,7 +57,6 @@ const Members = () => {
   const handleEdit = (id) => {
     history.push(`/members/form/${id}`);
   };
-
   return (
     <section className={styles.membersContainer}>
       <div className={styles.membersSection}>
@@ -61,7 +65,7 @@ const Members = () => {
       </div>
       {loading ? (
         <ClipLoader />
-      ) : members && members.length >= 0 ? (
+      ) : members ? (
         <>
           <Table
             data={members}
@@ -71,20 +75,13 @@ const Members = () => {
             properties={['firstName', 'lastName', 'email', 'membership', 'isActive']}
           />
           <SharedModal
-            isDelete={true}
-            show={showWarning}
-            closeModal={() => setShowWarning(false)}
-            title={'Delete Member'}
-            body={'Are you sure you want to delete this member?'}
-            onConfirm={handleConfirmDelete}
-          />
-          <SharedModal
-            isDelete={false}
+            isDelete={isDelete}
             show={showAlert}
-            typeStyle={isSuccess ? 'success' : 'error'}
+            typeStyle={typeStyle}
             closeModal={() => setShowAlert(false)}
-            title={isSuccess ? 'Success' : 'Error'}
+            title={title}
             body={alertMessage}
+            onConfirm={handleConfirmDelete}
           />
         </>
       ) : (

@@ -23,7 +23,7 @@ const Trainers = () => {
 
   useEffect(() => {
     dispatch(getTrainers());
-  }, [dispatch]);
+  }, []);
 
   const handleDelete = (id) => {
     setSelectedTrainerId(id);
@@ -40,7 +40,6 @@ const Trainers = () => {
         setModalMessage('Trainer deleted successfully');
         setIsConfirmationModal(false);
         setTypeStyle('success');
-        dispatch(getTrainers());
       } catch (error) {
         console.error('Error deleting trainer:', error);
         setModalMessage('Error deleting trainer');
@@ -85,7 +84,7 @@ const Trainers = () => {
               handleDeleteItem={handleDelete}
             />
           ) : (
-            <h3>Server not found</h3>
+            <h3>No data to retrieve</h3>
           )}
         </>
       )}
