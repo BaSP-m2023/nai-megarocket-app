@@ -138,7 +138,7 @@ const Form = () => {
           show={showAlert}
           closeModal={handleCloseAlert}
           title={isSuccess ? 'Success' : 'Something is wrong'}
-          typeStyle={isSuccess ? 'success' : ''}
+          typeStyle={isSuccess ? 'success' : 'error'}
           body={bodyModal}
         >
           {alertMessage}

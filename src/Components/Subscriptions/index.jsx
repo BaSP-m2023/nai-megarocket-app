@@ -46,7 +46,7 @@ const Subscriptions = () => {
       const data = await dispatch(deleteSubscription(subscriptionId));
       setTitleModal('Success');
       setBodyModal(data.msg);
-      setTypeStyle('success');
+      setTypeStyle('error');
       setIsDelete(false);
       setShowModal(true);
     } catch (error) {
@@ -68,9 +68,9 @@ const Subscriptions = () => {
         <h2>Subscriptions</h2>
         <Button text={'+ Add Subscription'} type={'add'} clickAction={handleAdd} />
       </div>
-      {loading ? (
+      {loading && subscriptions.length > 0 ? (
         <ClipLoader />
-      ) : subscriptions ? (
+      ) : subscriptions && subscriptions.length > 0 ? (
         <>
           <Table
             data={subscriptions}
