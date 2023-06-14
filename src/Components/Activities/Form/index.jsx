@@ -25,11 +25,11 @@ const Form = () => {
 
   useEffect(() => {
     if (id) {
-      activitiesById(id);
+      activityById(id);
     }
-  }, [id]);
+  }, []);
 
-  const activitiesById = (id) => {
+  const activityById = (id) => {
     const activity = activities.find((activity) => activity._id === id);
     if (activity) {
       setActivity(activity);
