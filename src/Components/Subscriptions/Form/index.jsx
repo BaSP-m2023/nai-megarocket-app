@@ -35,7 +35,6 @@ const Form = () => {
   }, [id]);
   const loadSubData = () => {
     const subToUpdate = subscription.find((sub) => sub._id === id);
-    console.log(subToUpdate);
     setUsers({
       classes: subToUpdate.classes._id,
       member: subToUpdate.member._id
@@ -64,7 +63,6 @@ const Form = () => {
         const data = await dispatch(updateSubscription(users, id));
         showSuccesModal({ message: 'Success' });
         setBodyModal(data.msg);
-        console.log(data);
       } else {
         const newSubscription = {
           classes: users.classes,

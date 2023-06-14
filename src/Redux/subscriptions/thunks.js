@@ -104,7 +104,6 @@ export const updateSubscription = (subscription, subscriptionId) => async (dispa
       }
     );
     const data = await response.json();
-    console.log(data);
     if (!response.ok) {
       throw new Error(data.msg);
     }
