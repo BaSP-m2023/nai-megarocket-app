@@ -21,12 +21,8 @@ const Activities = () => {
   const loading = useSelector((state) => state.activities.loading);
   const activities = useSelector((state) => state.activities.data.data);
 
-  const refreshTable = () => {
-    dispatch(getActivities());
-  };
-
   useEffect(() => {
-    refreshTable();
+    dispatch(getActivities());
   }, []);
 
   const handleAddItem = () => {
@@ -50,7 +46,6 @@ const Activities = () => {
       setBodyModal(data.message);
       setTypeStyle('success');
       setIsDelete(false);
-      refreshTable();
     } catch (error) {
       setShowModal(true);
       setBodyModal(error.message);
@@ -76,7 +71,7 @@ const Activities = () => {
       </div>
       {loading ? (
         <ClipLoader />
-      ) : activities && activities.length !== 0 ? (
+      ) : activities ? (
         <>
           <Table
             data={activities}
