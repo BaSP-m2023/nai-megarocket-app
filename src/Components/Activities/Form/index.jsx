@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import Input from '../Input';
+import InputComponent from '../../Shared/Input';
 import Button from '../../Shared/Button';
 import SharedModal from '../../Shared/Modal';
 import styles from './form.module.css';
@@ -103,20 +103,22 @@ const Form = () => {
     <div className={styles.container}>
       <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
       <form className={styles.formActivity}>
-        <Input
-          id="name"
-          name="name"
-          placeholder="Activity"
+        <InputComponent
+          inputName="name"
+          inputType="text"
           value={activity.name}
+          labelName="Activity"
           onChange={onChangeInput}
+          placeholder="Activity"
           required
         />
-        <Input
-          id="description"
-          name="description"
-          placeholder="Description"
+        <InputComponent
+          inputName="description"
+          inputType="text"
           value={activity.description}
+          labelName="Description"
           onChange={onChangeInput}
+          placeholder="Description"
           required
         />
       </form>

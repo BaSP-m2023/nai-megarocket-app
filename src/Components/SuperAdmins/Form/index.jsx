@@ -5,6 +5,7 @@ import SharedModal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
 import { updateSuperAdmin, addSuperAdmin } from '../../../Redux/superadmins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import InputComponent from '../../Shared/Input';
 
 const Form = () => {
   const { id } = useParams();
@@ -103,42 +104,33 @@ const Form = () => {
       <form className={styles.formContainer}>
         <h2 className={styles.h2Style}>{id ? 'Update Super Admin' : 'Add Super Admin'}</h2>
         <div className={styles.fieldsetForm}>
-          <label className={styles.label} htmlFor="firstName">
-            Name
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
+          <InputComponent
+            inputName="firstName"
+            inputType="text"
             value={superAdmin.firstName}
+            labelName="Name"
             onChange={onChange}
             required
             className={styles.inputForm}
           />
         </div>
         <div className={styles.fieldsetForm}>
-          <label className={styles.label} htmlFor="email">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
+          <InputComponent
+            inputName="email"
+            inputType="email"
             value={superAdmin.email}
+            labelName="Email"
             onChange={onChange}
             required
             className={styles.inputForm}
           />
         </div>
         <div className={styles.fieldsetForm}>
-          <label className={styles.label} htmlFor="password">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
+          <InputComponent
+            inputName="password"
+            inputType="password"
             value={superAdmin.password}
+            labelName="Password"
             onChange={onChange}
             className={styles.inputForm}
           />
