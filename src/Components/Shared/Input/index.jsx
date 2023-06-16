@@ -8,17 +8,21 @@ const InputComponent = ({
   listProp,
   labelName,
   onChange,
-  placeholder
+  placeholder,
+  register,
+  error
 }) => {
   const renderList = () => (
     <>
-      <option value="">Select an option</option>
-      {list.map((e) => {
+      <option value="" className={error ? error : null}>
+        Select an option
+      </option>
+      {list.map((item) => {
         const properties = listProp.split('.');
-        const value = properties.reduce((obj, prop) => obj[prop], e);
+        const value = properties.reduce((obj, prop) => obj[prop], item);
 
         return (
-          <option key={e._id} value={e._id}>
+          <option key={item._id} value={item._id}>
             {value}
           </option>
         );
@@ -26,20 +30,51 @@ const InputComponent = ({
     </>
   );
 
+  const renderSelect = () => (
+    <div className={styles.inputDiv}>
+      <label>{labelName}</label>
+      <select
+        {...register(inputName)}
+        name={inputName}
+        className={error ? styles.formSelectError : styles.formSelect}
+        value={value}
+        onChange={onChange}
+      >
+        {renderList()}
+      </select>
+      {error && <p className={styles.errorMsg}>{error}</p>}
+    </div>
+  );
+
   const renderInput = (type) => (
     <div className={styles.inputDiv}>
       <label>{labelName}</label>
       <input
+        {...register(inputName)}
         name={inputName}
-        required
-        className={styles.formInput}
+        className={error ? styles.formInputError : styles.formInput}
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
       />
+      {error && <p className={styles.errorMsg}>{error}</p>}
     </div>
   );
+
+  const renderIsActive = () => {
+    <div>
+      <label>{labelName}</label>
+      <input
+        {...register(inputName)}
+        name={inputName}
+        type="checkbox"
+        checked={value}
+        onChange={onChange}
+      />
+      {error && <p className={styles.errorMsg}>{error}</p>}
+    </div>;
+  };
 
   const renderInputType = (inputType) => {
     switch (inputType) {
@@ -50,27 +85,9 @@ const InputComponent = ({
       case 'date':
         return renderInput(inputType);
       case 'isActive':
-        return (
-          <div>
-            <label>{labelName}</label>
-            <input name={inputName} required type="checkbox" checked={value} onChange={onChange} />
-          </div>
-        );
+        return renderIsActive();
       case 'list':
-        return (
-          <div className={styles.inputDiv}>
-            <label>{labelName}</label>
-            <select
-              name={inputName}
-              required
-              className={styles.formInput}
-              value={value}
-              onChange={onChange}
-            >
-              {renderList()}
-            </select>
-          </div>
-        );
+        return renderSelect();
       default:
         return null;
     }
