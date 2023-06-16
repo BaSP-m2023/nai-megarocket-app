@@ -2,14 +2,58 @@
   height: 2rem;
   border-radius: 5px;
   margin-top: 2%;
-  width: 100%;
+  margin-bottom: 2%;
+  width: 20vw;
   border: solid 1px;
   border-color: #0f232e;
 }
 
-.inputDiv {
+.formInputError {
+  height: 2rem;
+  border-radius: 5px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 20vw;
+  border: solid 1px;
+  border-color: red;
+}
+
+.formSelect {
+  height: 2.3rem;
+  font-size: 80%;
+  border-radius: 5px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 20.35vw;
+  border: solid 1px;
+  border-color: #0f232e;
+}
+
+.formSelectError {
+  height: 2.3rem;
+  font-size: 80%;
+  border-radius: 5px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 20.35vw;
+  border: solid 1px;
+  border-color: red;
+}
+
+.error {
+  color: red;
+}
+
+
+.inputDiv  {
   display: flex;
   flex-direction: column;
   text-align: left;
-  color: rgb(24, 24, 24);
+}
+
+.errorMsg {
+  color: red;
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 90%;
 }
