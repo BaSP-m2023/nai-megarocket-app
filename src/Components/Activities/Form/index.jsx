@@ -34,7 +34,6 @@ const Form = () => {
     try {
       const response = await dispatch(getActivitiesById(id));
       const activityData = response.data;
-      console.log(activityData);
       delete activityData._id;
       delete activityData.__v;
       reset(activityData);
