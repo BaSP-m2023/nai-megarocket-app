@@ -111,6 +111,7 @@ const Form = () => {
 
   return (
     <div className={styles.subscriptionContainer}>
+      <h2>{id ? 'Update subscription' : 'Create subscription'}</h2>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <InputComponent
           inputName="classes"
@@ -132,7 +133,7 @@ const Form = () => {
         />
         <fieldset className={styles.flexButtons}>
           <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-          <Button text={id ? 'Submit' : 'Confirm'} type={'submit'} info={'submit'} />
+          <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
           <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
         </fieldset>
       </form>
