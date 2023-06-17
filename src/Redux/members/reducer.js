@@ -44,13 +44,26 @@ const membersReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: action.payload
       };
+    case types.DELETE_MEMBER_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
     case types.DELETE_MEMBER_SUCCESS:
       return {
         ...state,
+        loading: false,
         data: {
           ...state.data,
           data: state.data.data.filter((member) => member._id !== action.payload)
         }
+      };
+    case types.DELETE_MEMBER_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
       };
     case types.UPDATE_MEMBER_SUCCESS:
       return {
@@ -61,21 +74,21 @@ const membersReducer = (state = INITIAL_STATE, action) => {
     case types.ADD_MEMBER_PENDING:
       return {
         ...state,
-        isAddingMember: true,
-        addMemberError: null
+        loading: true,
+        error: null
       };
     case types.ADD_MEMBER_SUCCESS:
       return {
         ...state,
-        isAddingMember: false,
+        loading: false,
         data: [...state.data.data, action.payload.member],
-        addMemberError: null
+        error: null
       };
     case types.ADD_MEMBER_ERROR:
       return {
         ...state,
-        isAddingMember: false,
-        addMemberError: action.payload
+        loading: false,
+        error: action.payload
       };
     default:
       return state;
