@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './button.module.css';
 import { FaEdit, FaTimes } from 'react-icons/fa';
 
-const Button = ({ text, clickAction, type }) => {
+const Button = ({ text, clickAction, type, info }) => {
   let buttonStyle = styles.button;
   let icon = null;
 
@@ -32,9 +32,8 @@ const Button = ({ text, clickAction, type }) => {
   }
 
   return (
-    <button onClick={clickAction} className={buttonStyle}>
-      {icon}
-      {text}
+    <button onClick={clickAction} type={info} className={buttonStyle}>
+      {icon ? icon : text}
     </button>
   );
 };
