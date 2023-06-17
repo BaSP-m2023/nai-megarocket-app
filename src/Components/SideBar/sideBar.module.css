@@ -1,11 +1,11 @@
 .navbar {
   display: flex;
   flex-direction: column;
+  width: 20%;
   position: fixed;
   bottom: 0;
   left: 0;
   height: 100%;
-  width: 20%;
   justify-content: space-around;
   align-items: flex-start;
   min-height: 100px;
@@ -15,12 +15,16 @@
 }
 .rutes {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  flex-direction: column;
+  gap: 8vh;
+  flex-wrap: nowrap;
   list-style-type: none;
   margin-top: 6rem;
   height: 80%;
-  width: 20%;
+  padding-left: 0px;
+  justify-content: center;
+  align-self: center;
+  align-items: flex-start;
 }
 
 .rutes > li > a {
@@ -56,4 +60,47 @@
 
 .rutes > li > a:hover::after {
   transform: scaleX(1);
+}
+
+.button {
+  width: 12rem;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  background-color: #f9a414;
+  border: solid 1px;
+  border-color: #f9a414;
+  color: #0f232e;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button:hover{
+  background-color: #0f232e;
+  border: solid 1px;
+  border-color: #0f232e;
+  color: #f9a414;
+}
+.button::before {  
+  transform: scaleX(0);
+  transform-origin: bottom right;
+}
+
+.button:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.button::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  inset: 0 0 0 0;
+  background: #ac730f;
+  z-index: -1;
+  transition: transform .3s ease;
 }
