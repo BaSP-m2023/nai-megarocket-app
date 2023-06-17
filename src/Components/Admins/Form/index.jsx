@@ -144,7 +144,8 @@ const Form = () => {
               error={errors.phone?.message}
             />
           </div>
-
+        </div>
+        <div className={styles.secondInputs}>
           <div className={styles.formInput}>
             <Input
               register={register}
@@ -172,14 +173,14 @@ const Form = () => {
               error={errors.password?.message}
             />
           </div>
-          <div>
-            <div className={styles.buttonsAdmin}>
-              <Button text="Back" type="cancel" clickAction={handleCancel} />
-              <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
-            </div>
-            <div className={styles.buttonsAdmin}>
-              <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
-            </div>
+        </div>
+        <div className={styles.buttonsDiv}>
+          <div className={styles.buttonsAdmin}>
+            <Button text="Back" type="cancel" clickAction={handleCancel} />
+            <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
+          </div>
+          <div className={styles.buttonsAdmin}>
+            <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
           </div>
         </div>
 

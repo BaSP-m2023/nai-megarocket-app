@@ -55,11 +55,11 @@ const adminsValidation = Joi.object({
     .regex(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])/)
     .trim()
     .min(8)
-    .max(20)
+    .max(16)
     .messages({
       'string.empty': 'Password can not be empty',
-      'string.min': 'Password must have between 8 and 20 characters',
-      'string.max': 'Password must have between 8 and 20 characters',
+      'string.min': 'Password must have between 8 and 16 characters',
+      'string.max': 'Password must have between 8 and 16 characters',
       'string.pattern.base':
         'Password must contain at least 1 number, 1 uppercase letter, and 1 lowercase letter'
     })
