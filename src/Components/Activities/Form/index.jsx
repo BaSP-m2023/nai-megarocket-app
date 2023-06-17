@@ -4,16 +4,15 @@ import InputComponent from '../../Shared/Input';
 import Button from '../../Shared/Button';
 import SharedModal from '../../Shared/Modal';
 import styles from './form.module.css';
-import { putActivities, postActivities } from '../../../Redux/activities/thunks';
-import { useDispatch, useSelector } from 'react-redux';
+import { putActivities, postActivities, getActivitiesById } from '../../../Redux/activities/thunks';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import activityValidation from '../../../validations/activities';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const Form = () => {
   const history = useHistory();
   const { id } = useParams();
-  const [activity, setActivity] = useState({
-    name: '',
-    description: ''
-  });
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [typeStyle, setTypeStyle] = useState('');
@@ -21,36 +20,44 @@ const Form = () => {
   const [bodyModal, setBodyModal] = useState('');
   const dispatch = useDispatch();
 
-  const activities = useSelector((state) => state.activities.data.data);
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(activityValidation)
+  });
 
-  useEffect(() => {
-    if (id) {
-      activityById(id);
-    }
-  }, []);
-
-  const activityById = (id) => {
-    const activity = activities.find((activity) => activity._id === id);
-    if (activity) {
-      setActivity(activity);
-    } else {
-      console.error('Activity not found');
+  const getActivityData = async () => {
+    try {
+      const response = await dispatch(getActivitiesById(id));
+      const activityData = response.data;
+      console.log(activityData);
+      delete activityData._id;
+      delete activityData.__v;
+      reset(activityData);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleConfirm = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (id) {
+      getActivityData();
+    }
+  }, []);
+
+  const onSubmit = async (data) => {
     if (id) {
       try {
-        const updatedActivity = { ...activity };
-        delete updatedActivity._id;
-        delete updatedActivity.__v;
-        const data = await dispatch(putActivities(updatedActivity, id));
+        const response = await dispatch(putActivities(data, id));
         setIsSuccess(true);
         setShowModal(true);
         setTypeStyle('success');
         setTitleModal('Success');
-        setBodyModal(data.message);
+        setBodyModal(response.message);
       } catch (error) {
         setIsSuccess(false);
         setShowModal(true);
@@ -60,15 +67,12 @@ const Form = () => {
       }
     } else {
       try {
-        const newActivity = { ...activity };
-        delete newActivity._id;
-        delete newActivity.__v;
-        const data = await dispatch(postActivities(newActivity));
+        const response = await dispatch(postActivities(data));
         setIsSuccess(true);
         setShowModal(true);
         setTypeStyle('success');
         setTitleModal('Success');
-        setBodyModal(data.message);
+        setBodyModal(response.message);
       } catch (error) {
         setIsSuccess(false);
         setShowModal(true);
@@ -88,13 +92,6 @@ const Form = () => {
     }
   };
 
-  const onChangeInput = (e) => {
-    setActivity({
-      ...activity,
-      [e.target.name]: e.target.value
-    });
-  };
-
   const handleCancel = () => {
     history.push('/activities');
   };
@@ -102,38 +99,37 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
-      <form className={styles.formActivity}>
+      <form className={styles.formActivity} onSubmit={handleSubmit(onSubmit)}>
         <InputComponent
+          register={register}
           inputName="name"
           inputType="text"
-          value={activity.name}
           labelName="Activity"
-          onChange={onChangeInput}
           placeholder="Activity"
-          required
+          error={errors.name?.message}
         />
         <InputComponent
+          register={register}
           inputName="description"
           inputType="text"
-          value={activity.description}
           labelName="Description"
-          onChange={onChangeInput}
           placeholder="Description"
-          required
+          error={errors.description?.message}
         />
+        <div className={styles.buttonContainer}>
+          <div className={styles.buttons}>
+            <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
+            <Button text={'Submit'} type={'submit'} info={'submit'} />
+          </div>
+        </div>
+        <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
       </form>
-      <div className={styles.buttonContainer}>
-        <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-        <Button text={'Submit'} type={'submit'} clickAction={handleConfirm} />
-      </div>
       <SharedModal
-        data={activities}
         show={showModal}
         typeStyle={typeStyle}
         title={titleModal}
         body={bodyModal}
         isDelete={false}
-        onConfirm={handleConfirm}
         closeModal={onConfirm}
       />
     </div>
