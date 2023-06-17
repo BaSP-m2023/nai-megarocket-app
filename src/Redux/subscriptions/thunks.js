@@ -47,7 +47,7 @@ export const deleteSubscription = (subscriptionId) => async (dispatch) => {
     dispatch(deleteSubscriptionSuccess(subscriptionId));
     return data;
   } catch (error) {
-    dispatch(deleteSubscriptionError(error.msg));
+    dispatch(deleteSubscriptionError(error.message));
     throw error;
   }
 };
@@ -63,8 +63,9 @@ export const getSubscriptionById = (subscriptionId) => async (dispatch) => {
     }
     const data = await response.json();
     dispatch(getSubscriptionByIdSuccess(data));
+    return data;
   } catch (error) {
-    dispatch(getSubscriptionByIdError(error.msg));
+    dispatch(getSubscriptionByIdError(error.message));
   }
 };
 
@@ -80,12 +81,12 @@ export const createSubscription = (subscription) => async (dispatch) => {
     });
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.msg);
+      throw new Error(data.message);
     }
-    dispatch(createSubscriptionSuccess(data));
+    dispatch(createSubscriptionSuccess({ subscription }));
     return data;
   } catch (error) {
-    dispatch(createSubscriptionError(error.message));
+    dispatch(createSubscriptionError(error));
     throw error;
   }
 };
@@ -104,13 +105,14 @@ export const updateSubscription = (subscription, subscriptionId) => async (dispa
       }
     );
     const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.msg);
+    if (response.ok) {
+      dispatch(updateSubscriptionSuccess(subscription, subscriptionId));
+      return data;
+    } else {
+      throw new Error(data.message);
     }
-    dispatch(updateSubscriptionSuccess(data));
-    return data;
   } catch (error) {
-    dispatch(updateSubscriptionError(error.msg));
+    dispatch(updateSubscriptionError(error));
     throw error;
   }
 };
