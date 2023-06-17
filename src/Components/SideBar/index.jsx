@@ -4,8 +4,6 @@ import { NavLink } from 'react-router-dom';
 
 const SideBar = () => {
   const [rol, setRole] = useState();
-  console.log(rol);
-
   return (
     <aside>
       <nav className={styles.navbar}>

@@ -1,12 +1,12 @@
 import React from 'react';
 import Button from 'Components/Shared/Button';
 import styles from './table.module.css';
-const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteItem }) => {
-  const isBoolean = (value) => {
-    if (!Array.isArray(data)) {
-      return <div>No data available</div>;
-    }
 
+const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteItem }) => {
+  if (!Array.isArray(data)) {
+    return <div>No data available</div>;
+  }
+  const isBoolean = (value) => {
     if (typeof value === 'boolean') {
       return value === true ? 'Yes' : 'No';
     }
