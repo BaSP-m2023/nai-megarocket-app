@@ -18,7 +18,7 @@ const MemberForm = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const membership = ['Black', 'Silver', 'Gold'];
+  const membership = ['Black', 'Gold', 'Silver'];
   const {
     register,
     reset,
@@ -208,35 +208,32 @@ const MemberForm = () => {
                 error={errors.postalCode?.message}
               />
             </div>
-            <div className={styles.formInputsDiv}>
-              <div className={styles.membershipActive}>
-                <div>
-                  <Input
-                    register={register}
-                    labelName={'Memberships'}
-                    inputType={'list'}
-                    list={membership}
-                    inputName={'membership'}
-                  />
-                </div>
-                <div>
-                  <Input
-                    register={register}
-                    labelName={'Active ?'}
-                    inputType={'isActive'}
-                    inputName={'isActive'}
-                    error={errors.isActive}
-                  />
-                </div>
-              </div>
+            <div className={styles.formInputs}>
+              <Input
+                register={register}
+                labelName={'Memberships'}
+                inputType={'list'}
+                list={membership}
+                inputName={'membership'}
+                error={errors.membership?.message}
+              />
+              <Input
+                register={register}
+                labelName={'Active ?'}
+                inputType={'isActive'}
+                inputName={'isActive'}
+                error={errors.isActive}
+              />
             </div>
           </div>
+          <div className={styles.buttonContainer}>
+            <div className={styles.buttonsLowContainer}>
+              <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
+              <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
+            </div>
+            <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
+          </div>
         </form>
-        <div className={styles.buttonContainer}>
-          <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-          <Button text={id ? 'Update' : 'Add'} type={'submit'} />
-        </div>
-        <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
       </div>
     </>
   );

@@ -65,12 +65,14 @@ const memberValidation = Joi.object({
   postalCode: Joi.number().integer().min(1000).max(99999).messages({
     'number.max': 'Postal code cannot have more than 5 numbers',
     'number.min': 'Postal code cannot have less than 4 numbers',
-    'any.required': 'Postal code cannot be empty'
+    'any.required': 'Postal code is required',
+    'number.empty': 'Postal code cannot be empty'
   }),
   isActive: Joi.boolean(),
   membership: Joi.string().valid('Black', 'Gold', 'Silver').messages({
     'string.valid': 'Please enter a valid membership: Black, Gold or Silver',
-    'any.required': 'Membership cannot be empty'
+    'any.required': 'Membership is required.',
+    'string.empty': 'Membership cannot be empty'
   })
 });
 
