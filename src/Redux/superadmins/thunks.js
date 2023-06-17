@@ -37,7 +37,7 @@ export const getSuperAdminById = (id) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'GET'
       });
-      const { data } = await response.json();
+      const data = await response.json();
       dispatch(getSuperAdminsIdSuccess(data));
       return data;
     } catch (error) {
@@ -79,7 +79,7 @@ export const updateSuperAdmin = (id, superAdmin) => {
       });
       const data = await response.json();
       if (response.ok) {
-        dispatch(updateSuperAdminsSuccess({ id, superAdmin }));
+        dispatch(updateSuperAdminsSuccess(id, superAdmin));
         return data;
       } else {
         throw new Error(data.message);

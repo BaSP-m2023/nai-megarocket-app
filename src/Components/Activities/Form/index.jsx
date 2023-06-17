@@ -13,12 +13,12 @@ import { joiResolver } from '@hookform/resolvers/joi';
 const Form = () => {
   const history = useHistory();
   const { id } = useParams();
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [typeStyle, setTypeStyle] = useState('');
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
-  const dispatch = useDispatch();
 
   const {
     register,
@@ -39,7 +39,7 @@ const Form = () => {
       delete activityData.__v;
       reset(activityData);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
