@@ -32,9 +32,8 @@ const Button = ({ text, clickAction, type, info }) => {
   }
 
   return (
-    <button onClick={clickAction} className={buttonStyle} type={info}>
-      {icon}
-      {text}
+    <button onClick={clickAction} type={info} className={buttonStyle}>
+      {icon ? icon : text}
     </button>
   );
 };
