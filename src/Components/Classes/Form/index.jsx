@@ -20,7 +20,14 @@ const Form = () => {
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
-    resolver: joiResolver(classValidation)
+    resolver: joiResolver(classValidation),
+    defaultValues: {
+      day: '',
+      hour: '',
+      trainer: '',
+      activity: '',
+      slots: ''
+    }
   });
   const { id } = useParams();
   const history = useHistory();
@@ -57,7 +64,7 @@ const Form = () => {
       classData.activity = classData.activity._id;
       reset(classData);
     } catch (error) {
-      console.log(error);
+      showErrorModal(error);
     }
   };
 
@@ -76,7 +83,6 @@ const Form = () => {
       showSuccesModal(response);
     } catch (error) {
       showErrorModal(error);
-      console.log(data);
     }
   };
 
