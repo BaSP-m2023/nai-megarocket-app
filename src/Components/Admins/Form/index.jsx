@@ -175,10 +175,10 @@ const Form = () => {
           <div>
             <div className={styles.buttonsAdmin}>
               <Button text="Back" type="cancel" clickAction={handleCancel} />
-              <Button text={id ? 'Update' : 'Add'} type="submit" />
+              <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
             </div>
             <div className={styles.buttonsAdmin}>
-              <Button type={'cancel'} clickAction={handleReset} text={'Reset'} />
+              <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
             </div>
           </div>
         </div>
