@@ -2,32 +2,31 @@ import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateMember, addMember } from '../../../Redux/members/thunks';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './form.module.css';
 import SharedModal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
+import Input from '../../Shared/Input';
+import memberValidation from '../../../validations/members';
 
 const MemberForm = () => {
   const members = useSelector((state) => state.members.data.data);
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-
-  const [member, setMember] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    password: '',
-    city: '',
-    birthDay: '',
-    postalCode: '',
-    isActive: false,
-    membership: ''
+  const membership = ['Black', 'Silver', 'Gold'];
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(memberValidation)
   });
 
   useEffect(() => {
@@ -39,20 +38,20 @@ const MemberForm = () => {
   const memberById = (id) => {
     const member = members.find((member) => member._id === id);
     if (member) {
+      member.birthDay = formatDate(member.birthDay);
       delete member._id;
       delete member.__v;
-      setMember(member);
+      reset(member);
     } else {
       console.error('Member not found');
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = (data) => {
     if (id) {
-      memberUpdateFunction(id, member);
+      memberUpdateFunction(id, data);
     } else {
-      memberAddFunction(member);
+      memberAddFunction(data);
     }
   };
 
@@ -82,13 +81,6 @@ const MemberForm = () => {
     }
   };
 
-  const onChange = (e) => {
-    setMember({
-      ...member,
-      [e.target.name]: e.target.value
-    });
-  };
-
   const handleCloseAlert = () => {
     if (isSuccess) {
       history.push('/members');
@@ -99,6 +91,10 @@ const MemberForm = () => {
 
   const handleCancel = () => {
     history.push('/members');
+  };
+
+  const handleReset = () => {
+    reset();
   };
 
   const formatDate = (dateString) => {
@@ -127,80 +123,109 @@ const MemberForm = () => {
           title={isSuccess ? 'Success' : 'Something went wrong'}
           body={alertMessage}
         />
-        <form className={styles.formMembers}>
+        <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <div className={styles.formInputs}>
-              <label>Name</label>
-              <input type="text" value={member.firstName} onChange={onChange} name="firstName" />
+              <Input
+                register={register}
+                labelName={'First Name'}
+                inputType={'text'}
+                inputName={'firstName'}
+                error={errors.firstName?.message}
+              />
             </div>
             <div className={styles.formInputs}>
-              <label>Last Name</label>
-              <input type="text" value={member.lastName} onChange={onChange} name="lastName" />
+              <Input
+                register={register}
+                labelName={'Last Name'}
+                inputType={'text'}
+                inputName={'lastName'}
+                error={errors.lastName?.message}
+              />
             </div>
             <div className={styles.formInputs}>
-              <label>DNI</label>
-              <input type="text" value={member.dni} onChange={onChange} name="dni" />
+              <Input
+                register={register}
+                labelName={'DNI'}
+                inputType={'number'}
+                inputName={'dni'}
+                error={errors.dni?.message}
+              />
             </div>
             <div className={styles.formInputs}>
-              <label>Phone</label>
-              <input type="text" value={member.phone} onChange={onChange} name="phone" />
+              <Input
+                register={register}
+                labelName={'Phone'}
+                inputType={'number'}
+                inputName={'phone'}
+                error={errors.phone?.message}
+              />
             </div>
             <div className={styles.formInputs}>
-              <label>Email</label>
-              <input type="email" value={member.email} onChange={onChange} name="email" />
+              <Input
+                register={register}
+                labelName={'Email'}
+                inputType={'text'}
+                inputName={'email'}
+                error={errors.email?.message}
+              />
             </div>
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
             <div className={styles.formInputs}>
-              <label>Password</label>
-              <input type="password" value={member.password} onChange={onChange} name="password" />
-            </div>
-            <div className={styles.formInputs}>
-              <label>City</label>
-              <input type="text" value={member.city} onChange={onChange} name="city" />
-            </div>
-            <div className={styles.formInputs}>
-              <label>Date of birth</label>
-              <input
-                type="date"
-                onClick={() => setIsEditing(true)}
-                value={isEditing ? member.birthDay : formatDate(member.birthDay)}
-                onChange={onChange}
-                name="birthDay"
+              <Input
+                register={register}
+                labelName={'Password'}
+                inputType={'password'}
+                inputName={'password'}
+                error={errors.password?.message}
               />
             </div>
             <div className={styles.formInputs}>
-              <label>ZIP code</label>
-              <input type="text" value={member.postalCode} onChange={onChange} name="postalCode" />
+              <Input
+                register={register}
+                labelName={'City'}
+                inputType={'text'}
+                inputName={'city'}
+                error={errors.city?.message}
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <Input
+                register={register}
+                labelName={'Date of birth'}
+                inputType={'date'}
+                inputName={'birthDay'}
+                error={errors.birthDay?.message}
+              />
+            </div>
+            <div className={styles.formInputs}>
+              <Input
+                register={register}
+                labelName={'Postal Code'}
+                inputType={'number'}
+                inputName={'postalCode'}
+                error={errors.postalCode?.message}
+              />
             </div>
             <div className={styles.formInputsDiv}>
               <div className={styles.membershipActive}>
                 <div>
-                  <label>Memberships</label>
-                  <select
-                    className={styles.formSelect}
-                    value={member.membership}
-                    onChange={onChange}
-                    name="membership"
-                  >
-                    <option value="">Select an option</option>
-                    <option value="Black">Black</option>
-                    <option value="Gold">Gold</option>
-                    <option value="Silver">Silver</option>
-                  </select>
+                  <Input
+                    register={register}
+                    labelName={'Memberships'}
+                    inputType={'list'}
+                    list={membership}
+                    inputName={'membership'}
+                  />
                 </div>
                 <div>
-                  <label>Active?</label>
-                  <input
-                    type="checkbox"
-                    checked={member.isActive}
-                    onChange={(e) => {
-                      setMember({
-                        ...member,
-                        isActive: e.target.checked
-                      });
-                    }}
-                    name="isActive"
+                  <Input
+                    register={register}
+                    labelName={'Active ?'}
+                    inputType={'isActive'}
+                    inputName={'isActive'}
+                    error={errors.isActive}
                   />
                 </div>
               </div>
@@ -209,8 +234,9 @@ const MemberForm = () => {
         </form>
         <div className={styles.buttonContainer}>
           <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-          <Button text={id ? 'Update' : 'Add'} type={'submit'} clickAction={handleSubmit} />
+          <Button text={id ? 'Update' : 'Add'} type={'submit'} />
         </div>
+        <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
       </div>
     </>
   );

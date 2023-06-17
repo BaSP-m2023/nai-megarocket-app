@@ -2,6 +2,7 @@ import Joi from 'joi';
 
 const memberValidation = Joi.object({
   firstName: Joi.string()
+    .trim()
     .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
     .messages({
       'string.pattern.base': 'Name must have only letters',
@@ -9,6 +10,7 @@ const memberValidation = Joi.object({
       'string.empty': 'Name is required'
     }),
   lastName: Joi.string()
+    .trim()
     .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
     .messages({
       'string.pattern.base': 'Last name must have only letters',
