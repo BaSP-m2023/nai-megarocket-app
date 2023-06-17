@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { updateTrainer, addTrainer } from '../../../Redux/trainers/thunks';
+import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import trainerValidation from '../../../validations/trainers';
 import styles from './form.module.css';
 import Button from '../../Shared/Button/index';
 import SharedModal from '../../Shared/Modal/index';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateTrainer, addTrainer } from '../../../Redux/trainers/thunks';
+import Input from '../../Shared/Input';
 
 const Form = () => {
   const history = useHistory();
@@ -15,86 +19,68 @@ const Form = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const dispatch = useDispatch();
   const trainers = useSelector((state) => state.trainers.data);
-  const [trainer, setTrainer] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    salary: '',
-    password: ''
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(trainerValidation)
   });
 
   useEffect(() => {
     if (id) {
-      getTrainerById();
+      getTrainerById(id);
     }
   }, []);
 
-  const getTrainerById = () => {
-    const trainerToUpdate = trainers.find((trainer) => trainer._id === id);
-    if (trainerToUpdate) {
-      setTrainer({
-        firstName: trainerToUpdate.firstName,
-        lastName: trainerToUpdate.lastName,
-        dni: trainerToUpdate.dni,
-        phone: trainerToUpdate.phone,
-        email: trainerToUpdate.email,
-        city: trainerToUpdate.city,
-        password: trainerToUpdate.password,
-        salary: trainerToUpdate.salary
-      });
+  const getTrainerById = (id) => {
+    const trainer = trainers.find((trainer) => trainer._id === id);
+    if (trainer) {
+      delete trainer._id;
+      delete trainer.__v;
+      reset(trainer);
     } else {
       console.error('Trainer not found');
     }
   };
 
-  const createTrainer = async () => {
+  const showSuccesModal = (data) => {
+    setModalMessage(data.message);
+    setModalTypeStyle('success');
+    setShowModal(true);
+    setShouldRedirect(true);
+  };
+  const showErrorModal = (error) => {
+    setModalMessage(error.message);
+    setModalTypeStyle('error');
+    setShowModal(true);
+  };
+
+  const createTrainer = async (data) => {
     try {
-      await dispatch(addTrainer(trainerData));
-      setModalMessage('Trainer added successfully');
-      setModalTypeStyle('success');
-      setShowModal(true);
-      setShouldRedirect(true);
+      const response = await dispatch(addTrainer(data));
+      showSuccesModal(response);
     } catch (error) {
-      console.error('Error to add trainer:', error);
-      setModalMessage('Error to add trainer');
-      setModalTypeStyle('error');
-      setShowModal(true);
+      showErrorModal(error);
     }
   };
 
-  const updateTrainerFunction = async (id, trainer) => {
+  const updateTrainerFunction = async (id, data) => {
     try {
-      await dispatch(updateTrainer(id, trainer));
-      setModalMessage('trainer updated successfully');
-      setShouldRedirect(true);
-      setShowModal(true);
+      const response = await dispatch(updateTrainer(id, data));
+      showSuccesModal(response);
     } catch (error) {
-      setModalMessage('error');
-      setShowModal(true);
+      showErrorModal(error);
     }
   };
 
-  const trainerData = {
-    firstName: trainer.firstName,
-    lastName: trainer.lastName,
-    dni: trainer.dni,
-    phone: trainer.phone,
-    email: trainer.email,
-    city: trainer.city,
-    salary: trainer.salary,
-    password: trainer.password
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
     if (id) {
-      updateTrainerFunction(id, trainerData);
+      updateTrainerFunction(id, data);
     } else {
-      createTrainer(trainerData);
-      handleCloseModal();
+      createTrainer(data);
     }
   };
 
@@ -109,96 +95,97 @@ const Form = () => {
     history.push('/trainers');
   };
 
+  const handleReset = () => {
+    reset();
+  };
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.headContainer}>
         <h2>{id ? 'Update Trainer' : 'Add Trainer'}</h2>
       </div>
       <div className={styles.container}>
         <div className={styles.box}>
-          <h4>Name</h4>
-          <input
-            type="text"
-            placeholder="Name"
-            value={trainer.firstName}
-            onChange={(e) => setTrainer({ ...trainer, firstName: e.target.value })}
-            required
+          <Input
+            register={register}
+            labelName={'Name'}
+            inputType={'text'}
+            inputName={'firstName'}
+            error={errors.firstName?.message}
           />
         </div>
         <div className={styles.box}>
-          <h4>Last Name</h4>
-          <input
-            type="text"
-            placeholder="Last Name"
-            value={trainer.lastName}
-            onChange={(e) => setTrainer({ ...trainer, lastName: e.target.value })}
-            required
+          <Input
+            register={register}
+            labelName={'Last Name'}
+            inputType={'text'}
+            inputName={'lastName'}
+            error={errors.lastName?.message}
           />
         </div>
         <div className={styles.box}>
-          <h4>DNI</h4>
-          <input
-            type="number"
-            placeholder="DNI"
-            value={trainer.dni}
-            onChange={(e) => setTrainer({ ...trainer, dni: e.target.value })}
-            required
+          <Input
+            register={register}
+            labelName={'DNI'}
+            inputType={'number'}
+            inputName={'dni'}
+            error={errors.dni?.message}
           />
         </div>
         <div className={styles.box}>
-          <h4>Phone Number</h4>
-          <input
-            type="number"
-            placeholder="Phone Number"
-            value={trainer.phone}
-            onChange={(e) => setTrainer({ ...trainer, phone: e.target.value })}
-            required
+          <Input
+            register={register}
+            labelName={'Phone Number'}
+            inputType={'number'}
+            inputName={'phone'}
+            error={errors.phone?.message}
           />
         </div>
         <div className={styles.box}>
-          <h4>Email</h4>
-          <input
-            type="text"
-            placeholder="Email"
-            value={trainer.email}
-            onChange={(e) => setTrainer({ ...trainer, email: e.target.value })}
-            required
+          <Input
+            register={register}
+            labelName={'Email'}
+            inputType={'text'}
+            inputName={'email'}
+            error={errors.email?.message}
           />
         </div>
         <div className={styles.box}>
-          <h4>City</h4>
-          <input
-            type="text"
-            placeholder="City"
-            value={trainer.city}
-            onChange={(e) => setTrainer({ ...trainer, city: e.target.value })}
-            required
+          <Input
+            register={register}
+            labelName={'City'}
+            inputType={'text'}
+            inputName={'city'}
+            error={errors.city?.message}
           />
         </div>
         <div className={styles.box}>
-          <h4>Salary</h4>
-          <input
-            type="number"
-            placeholder="Salary"
-            value={trainer.salary}
-            onChange={(e) => setTrainer({ ...trainer, salary: e.target.value })}
-            required
+          <Input
+            register={register}
+            labelName={'Salary'}
+            inputType={'number'}
+            inputName={'salary'}
+            error={errors.salary?.message}
           />
         </div>
         <div className={styles.box}>
-          <h4>Password</h4>
-          <input
-            type="text"
-            placeholder="Password"
-            value={trainer.password}
-            onChange={(e) => setTrainer({ ...trainer, password: e.target.value })}
-            required
+          <Input
+            register={register}
+            labelName={'Password'}
+            inputType={'text'}
+            inputName={'password'}
+            error={errors.password?.message}
           />
         </div>
       </div>
-      <div className={styles.buttons}>
-        <Button text="Cancel" type="cancel" clickAction={handleCancel} />
-        <Button text={id ? 'Confirm' : 'Submit'} type="submit" clickAction={handleSubmit} />
+      <div>
+        <div className={styles.buttons}>
+          <Button text="Back" type="cancel" clickAction={handleCancel} />
+          <Button text={id ? 'Update' : 'Add'} type="submit" />
+        </div>
+        <div className={styles.buttons}>
+          <Button type={'cancel'} clickAction={handleReset} text={'Reset'} />
+        </div>
       </div>
       <SharedModal
         show={showModal}
@@ -207,9 +194,6 @@ const Form = () => {
         isDelete={false}
         typeStyle={modalTypeStyle}
         closeModal={handleCloseModal}
-        onConfirm={() => {
-          handleSubmit;
-        }}
       />
     </form>
   );
