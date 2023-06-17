@@ -7,7 +7,6 @@ const InputComponent = ({
   list,
   listProp,
   labelName,
-  onChange,
   placeholder,
   register,
   error
@@ -17,13 +16,13 @@ const InputComponent = ({
       <option value="" className={error ? error : null}>
         Select an option
       </option>
-      {list.map((item) => {
-        const properties = listProp.split('.');
-        const value = properties.reduce((obj, prop) => obj[prop], item);
+      {list?.map((item) => {
+        const properties = listProp?.split('.');
+        const value = properties?.reduce((obj, prop) => obj[prop], item);
 
         return (
-          <option key={item._id} value={item._id}>
-            {value}
+          <option key={item._id ? item._id : item} value={item._id ? item._id : item}>
+            {value ? value : item}
           </option>
         );
       })}
@@ -38,7 +37,6 @@ const InputComponent = ({
         name={inputName}
         className={error ? styles.formSelectError : styles.formSelect}
         value={value}
-        onChange={onChange}
       >
         {renderList()}
       </select>
@@ -55,26 +53,19 @@ const InputComponent = ({
         className={error ? styles.formInputError : styles.formInput}
         type={type}
         value={value}
-        onChange={onChange}
         placeholder={placeholder}
       />
       {error && <p className={styles.errorMsg}>{error}</p>}
     </div>
   );
 
-  const renderIsActive = () => {
+  const renderIsActive = () => (
     <div>
       <label>{labelName}</label>
-      <input
-        {...register(inputName)}
-        name={inputName}
-        type="checkbox"
-        checked={value}
-        onChange={onChange}
-      />
+      <input {...register(inputName)} name={inputName} type="checkbox" />
       {error && <p className={styles.errorMsg}>{error}</p>}
-    </div>;
-  };
+    </div>
+  );
 
   const renderInputType = (inputType) => {
     switch (inputType) {
