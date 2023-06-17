@@ -1,28 +1,33 @@
+import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { putAdmin, postAdmin } from '../../../Redux/admins/thunks';
+import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import adminsValidation from '../../../validations/admins';
 import styles from './form.module.css';
 import Button from '../../Shared/Button';
 import SharedModal from '../../Shared/Modal';
+import Input from '../../Shared/Input';
 
 const Form = () => {
-  const admins = useSelector((state) => state.admins.data);
-  const { id } = useParams();
   const history = useHistory();
+  const { id } = useParams();
   const dispatch = useDispatch();
+  const admins = useSelector((state) => state.admins.data);
+
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const [admin, setAdmin] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: ''
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(adminsValidation)
   });
 
   useEffect(() => {
@@ -38,18 +43,17 @@ const Form = () => {
       delete admin.__v;
       delete admin.createdAt;
       delete admin.updatedAt;
-      setAdmin(admin);
+      reset(admin);
     } else {
       console.error('Admin not found');
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     if (id) {
-      putAdminFunction(id, admin);
+      putAdminFunction(id, data);
     } else {
-      postAdminFunction(admin);
+      postAdminFunction(data);
     }
   };
 
@@ -87,13 +91,6 @@ const Form = () => {
     }
   };
 
-  const handleOnChange = (e) => {
-    setAdmin({
-      ...admin,
-      [e.target.name]: e.target.value
-    });
-  };
-
   const handleCancel = () => {
     if (showAlert) {
       setShowAlert(false);
@@ -101,104 +98,100 @@ const Form = () => {
     setShowAlert(false);
     history.push('/admins');
   };
+  const handleReset = () => {
+    reset();
+  };
 
   return (
     <div className={styles.formContainer}>
       <h2 className={styles.formTitle}>{id ? 'Update Admin' : 'Add Admin'}</h2>
-      <SharedModal
-        isDelete={false}
-        show={showAlert}
-        closeModal={handleCloseAlert}
-        typeStyle={isSuccess ? 'success' : 'error'}
-        title={isSuccess ? 'Success' : 'Something went wrong'}
-        body={alertMessage}
-      />
-      <form className={styles.formAdmin}>
+
+      <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.firstInputs}>
           <div className={styles.formInput}>
-            <h3 className={styles.h3}>Name</h3>
-            <input
-              name="firstName"
-              type="text"
-              value={admin.firstName}
-              placeholder="Name"
-              onChange={handleOnChange}
-              required
+            <Input
+              register={register}
+              labelName={'Name'}
+              inputType={'text'}
+              inputName={'firstName'}
+              error={errors.firstName?.message}
             />
           </div>
           <div className={styles.formInput}>
-            <h3 className={styles.h3}>Last Name</h3>
-            <input
-              name="lastName"
-              type="text"
-              value={admin.lastName}
-              placeholder="Last Name"
-              onChange={handleOnChange}
-              required
+            <Input
+              register={register}
+              labelName={'Last Name'}
+              inputType={'text'}
+              inputName={'lastName'}
+              error={errors.lastName?.message}
             />
           </div>
           <div className={styles.formInput}>
-            <h3 className={styles.h3}>DNI</h3>
-            <input
-              name="dni"
-              type="number"
-              value={admin.dni}
-              placeholder="DNI"
-              onChange={handleOnChange}
-              required
+            <Input
+              register={register}
+              labelName={'DNI'}
+              inputType={'number'}
+              inputName={'dni'}
+              error={errors.dni?.message}
             />
           </div>
           <div className={styles.formInput}>
-            <h3 className={styles.h3}>Phone</h3>
-            <input
-              name="phone"
-              type="number"
-              value={admin.phone}
-              placeholder="Phone"
-              onChange={handleOnChange}
-              required
+            <Input
+              register={register}
+              labelName={'Phone Number'}
+              inputType={'number'}
+              inputName={'phone'}
+              error={errors.phone?.message}
             />
           </div>
         </div>
         <div className={styles.secondInputs}>
           <div className={styles.formInput}>
-            <h3 className={styles.h3}>Email</h3>
-            <input
-              name="email"
-              type="text"
-              value={admin.email}
-              placeholder="Email"
-              onChange={handleOnChange}
-              required
+            <Input
+              register={register}
+              labelName={'Email'}
+              inputType={'text'}
+              inputName={'email'}
+              error={errors.email?.message}
             />
           </div>
           <div className={styles.formInput}>
-            <h3 className={styles.h3}>City</h3>
-            <input
-              name="city"
-              type="text"
-              value={admin.city}
-              placeholder="City"
-              onChange={handleOnChange}
-              required
+            <Input
+              register={register}
+              labelName={'City'}
+              inputType={'text'}
+              inputName={'city'}
+              error={errors.city?.message}
             />
           </div>
           <div className={styles.formInput}>
-            <h3 className={styles.h3}>Password</h3>
-            <input
-              name="password"
-              type="text"
-              value={admin.password}
-              placeholder="Password"
-              onChange={handleOnChange}
-              required
+            <Input
+              register={register}
+              labelName={'Password'}
+              inputType={'text'}
+              inputName={'password'}
+              error={errors.password?.message}
             />
           </div>
         </div>
-        <div className={styles.buttonsAdmin}>
-          <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-          <Button text={'Submit'} type={'submit'} clickAction={handleSubmit} />
+        <div className={styles.buttonsDiv}>
+          <div className={styles.buttonsAdmin}>
+            <Button text="Back" type="cancel" clickAction={handleCancel} />
+            <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
+          </div>
+          <div className={styles.buttonsAdmin}>
+            <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
+          </div>
         </div>
+
+        <SharedModal
+          isDelete={false}
+          show={showAlert}
+          closeModal={handleCloseAlert}
+          typeStyle={isSuccess ? 'success' : 'error'}
+          title={isSuccess ? 'Success' : 'Something went wrong'}
+          body={alertMessage}
+        />
       </form>
     </div>
   );
