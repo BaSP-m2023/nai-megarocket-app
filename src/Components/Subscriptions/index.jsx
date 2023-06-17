@@ -19,7 +19,6 @@ const Subscriptions = () => {
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const [subscriptionId, setSubscriptionId] = useState('');
-  console.log(subscriptions);
   useEffect(() => {
     dispatch(getSubscriptions());
   }, []);
