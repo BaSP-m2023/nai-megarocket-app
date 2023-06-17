@@ -51,9 +51,14 @@
   text-align: left;
 }
 
+.inputDiv > input {
+  align-self: center;
+}
+
 .errorMsg {
   color: red;
   margin: 0;
   margin-bottom: 10px;
   font-size: 90%;
+  max-width: 20vw;
 }
