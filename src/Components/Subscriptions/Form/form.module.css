@@ -14,13 +14,16 @@
   flex-direction: column;
   width: 70%;
 }
-
+.form {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .flexButtons {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
   border: none;
+  gap: 2rem;
 }
 
 .fieldContainer {
