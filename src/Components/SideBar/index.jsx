@@ -3,12 +3,12 @@ import styles from './sideBar.module.css';
 import { NavLink } from 'react-router-dom';
 
 const SideBar = () => {
-  const [rol, setRole] = useState();
+  const [role, setRole] = useState();
   return (
     <aside>
       <nav className={styles.navbar}>
         <ul className={styles.rutes}>
-          {!rol && (
+          {!role && (
             <>
               <button className={styles.button} onClick={() => setRole('super-admin')}>
                 Super Admin
@@ -22,82 +22,82 @@ const SideBar = () => {
             </>
           )}
 
-          {rol && (
+          {role && (
             <>
               <li>
                 <NavLink activeClassName={styles.active} exact to="/" onClick={() => setRole()}>
                   Home
                 </NavLink>
               </li>
-              {rol === 'admin' && (
+              {role === 'admin' && (
                 <>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/activities`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/activities`}>
                       Activities
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/admins`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/admins`}>
                       Admins
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/classes`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/classes`}>
                       Classes
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/members`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/members`}>
                       Members
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/subscriptions`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/subscriptions`}>
                       Subscriptions
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/trainers`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/trainers`}>
                       Trainers
                     </NavLink>
                   </li>
                 </>
               )}
 
-              {rol === 'super-admin' && (
+              {role === 'super-admin' && (
                 <>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/admins`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/admins`}>
                       Admins
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/super-admins`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/super-admins`}>
                       Super Admins
                     </NavLink>
                   </li>
                 </>
               )}
 
-              {rol === 'member' && (
+              {role === 'member' && (
                 <>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/activities`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/activities`}>
                       Activities
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/profile`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/profile`}>
                       Profile
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/memberships`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/memberships`}>
                       Memberships
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${rol}/schedule`}>
+                    <NavLink activeClassName={styles.active} to={`/${role}/schedule`}>
                       Schedule
                     </NavLink>
                   </li>
