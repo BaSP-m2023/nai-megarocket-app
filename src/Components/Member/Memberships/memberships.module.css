@@ -165,6 +165,7 @@ li {
   font-size: 20px;
   color: white;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+  animation: blink 2s infinite;
 }
 
 .button {
@@ -182,4 +183,16 @@ li {
   align-self: center;
   margin-left: 20%;
   margin-bottom: 2%;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
