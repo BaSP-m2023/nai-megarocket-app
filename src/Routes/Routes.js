@@ -10,7 +10,6 @@ import SuperAdminSuperAdminsForm from 'Components/SuperAdmin/SuperAdmins/Form';
 import MemberActivities from 'Components/Member/Activities';
 import MemberMembership from 'Components/Member/Memberships';
 import MemberProfile from 'Components/Member/Profile';
-import MemberReports from 'Components/Member/Reports';
 import MemberSchedule from 'Components/Member/Schedule';
 
 import MemberProfileForm from 'Components/Member/Profile/Form';
@@ -19,6 +18,7 @@ import AdminActivities from 'Components/Admin/Activities';
 import AdminAdmins from 'Components/Admin/Admins/index';
 import AdminClasses from 'Components/Admin/Classes';
 import AdminMembers from 'Components/Admin/Members';
+import AdminReports from 'Components/Admin/Reports';
 import AdminSubscriptions from 'Components/Admin/Subscriptions';
 import AdminTrainers from 'Components/Admin/Trainers';
 
@@ -52,7 +52,6 @@ const Routes = () => {
           <Route path="/member/membership" component={MemberMembership} />
           <Route exact path="/member/profile" component={MemberProfile} />
           <Route path="/member/profile/form/:id" component={MemberProfileForm} />
-          <Route exact path="/member/reports" component={MemberReports} />
           <Route exact path="/member/schedule" component={MemberSchedule} />
         </Route>
 
@@ -69,6 +68,7 @@ const Routes = () => {
           <Route exact path="/admin/members" component={AdminMembers} />
           <Route exact path="/admin/members/form" component={AdminMembersForm} />
           <Route path="/admin/members/form/:id" component={AdminMembersForm} />
+          <Route exact path="/admin/reports" component={AdminReports} />
           <Route exact path="/admin/subscriptions" component={AdminSubscriptions} />
           <Route exact path="/admin/subscriptions/form" component={AdminSubscriptionsForm} />
           <Route path="/admin/subscriptions/form/:id" component={AdminSubscriptionsForm} />
