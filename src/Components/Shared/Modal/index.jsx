@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './modal.module.css';
-import Button from 'Components/Shared/Button';
+import Button from '../Button';
 
 const SharedModal = (data) => {
   let containerStyle;

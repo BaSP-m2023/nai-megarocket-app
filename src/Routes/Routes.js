@@ -10,6 +10,7 @@ import SuperAdminSuperAdminsForm from 'Components/SuperAdmin/SuperAdmins/Form';
 import MemberActivities from 'Components/Member/Activities';
 import MemberMembership from 'Components/Member/Memberships';
 import MemberProfile from 'Components/Member/Profile';
+import MemberReports from 'Components/Member/Reports';
 import MemberSchedule from 'Components/Member/Schedule';
 
 import MemberProfileForm from 'Components/Member/Profile/Form';
@@ -51,6 +52,7 @@ const Routes = () => {
           <Route path="/member/membership" component={MemberMembership} />
           <Route exact path="/member/profile" component={MemberProfile} />
           <Route path="/member/profile/form/:id" component={MemberProfileForm} />
+          <Route exact path="/member/reports" component={MemberReports} />
           <Route exact path="/member/schedule" component={MemberSchedule} />
         </Route>
 

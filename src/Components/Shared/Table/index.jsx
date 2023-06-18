@@ -1,7 +1,6 @@
 import React from 'react';
-import Button from 'Components/Shared/Button';
+import Button from '../Button';
 import styles from './table.module.css';
-
 const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteItem }) => {
   if (!Array.isArray(data)) {
     return <div>No data available</div>;

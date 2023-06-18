@@ -87,13 +87,18 @@ const SideBar = () => {
                     </NavLink>
                   </li>
                   <li>
+                    <NavLink activeClassName={styles.active} to={`/${role}/memberships`}>
+                      Memberships
+                    </NavLink>
+                  </li>
+                  <li>
                     <NavLink activeClassName={styles.active} to={`/${role}/profile`}>
                       Profile
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/memberships`}>
-                      Memberships
+                    <NavLink activeClassName={styles.active} to={`/${role}/reports`}>
+                      Reports
                     </NavLink>
                   </li>
                   <li>

@@ -6,92 +6,97 @@ import SharedModal from '../../Shared/Modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses } from 'Redux/classes/thunks';
 import { getMembers } from 'Redux/members/thunks';
-import { createSubscription, updateSubscription } from 'Redux/subscriptions/thunks';
-
+import {
+  createSubscription,
+  updateSubscription,
+  getSubscriptionById
+} from 'Redux/subscriptions/thunks';
+import InputComponent from '../../Shared/Input';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import subscriptionValidation from 'Validations/subscriptions';
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const classes = useSelector((state) => state.classes.data.data || []);
   const members = useSelector((state) => state.members.data.data || []);
-  const subscription = useSelector((state) => state.subscriptions.data);
-
-  const [users, setUsers] = useState({
-    classes: '',
-    member: '',
-    date: new Date()
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(subscriptionValidation),
+    defaultValues: {
+      classes: '',
+      member: '',
+      date: new Date()
+    }
   });
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [bodyModal, setBodyModal] = useState('');
 
   useEffect(() => {
     if (id) {
-      loadSubData();
+      getSubscriptionData();
     }
     dispatch(getClasses());
     dispatch(getMembers());
   }, [id]);
-  const loadSubData = () => {
-    const subToUpdate = subscription.find((sub) => sub._id === id);
-    setUsers({
-      classes: subToUpdate.classes._id,
-      member: subToUpdate.member._id
-    });
-  };
+
   const handleCancel = () => {
     history.push('/subscriptions');
   };
 
   const showSuccesModal = (data) => {
-    setAlertMessage(data.msg);
+    setAlertMessage(data.message);
     setIsSuccess(true);
     setShowAlert(true);
   };
 
   const showErrorModal = (error) => {
-    setAlertMessage(error.msg);
+    setAlertMessage(error.message);
     setIsSuccess(false);
     setShowAlert(true);
   };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const getSubscriptionData = async () => {
     try {
-      if (id) {
-        const data = await dispatch(updateSubscription(users, id));
-        showSuccesModal({ message: 'Success' });
-        setBodyModal(data.msg);
-      } else {
-        const newSubscription = {
-          classes: users.classes,
-          member: users.member,
-          date: users.date
-        };
-        const data = await dispatch(createSubscription(newSubscription));
-        showSuccesModal({ message: 'Success' });
-        setBodyModal(data.message);
-      }
+      const response = await dispatch(getSubscriptionById(id));
+      const subscriptionData = response.data;
+      delete subscriptionData._id;
+      delete subscriptionData.createdAt;
+      delete subscriptionData.updatedAt;
+      delete subscriptionData.__v;
+      subscriptionData.classes = subscriptionData.classes._id;
+      subscriptionData.member = subscriptionData.member._id;
+      reset(subscriptionData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const addSubscription = async (data) => {
+    try {
+      const response = await dispatch(createSubscription(data));
+      showSuccesModal(response);
     } catch (error) {
       showErrorModal(error);
     }
   };
-
-  const onChangeClasses = (e) => {
-    setUsers((prevState) => ({
-      ...prevState,
-      classes: e.target.value
-    }));
+  const editSubscription = async (data) => {
+    try {
+      const response = await dispatch(updateSubscription(data, id));
+      showSuccesModal(response);
+    } catch (error) {
+      showErrorModal(error);
+    }
   };
-
-  const onChangeMember = (e) => {
-    setUsers((prevState) => ({
-      ...prevState,
-      member: e.target.value
-    }));
+  const onSubmit = (data) => {
+    console.log(data);
+    id ? editSubscription(data) : addSubscription(data);
   };
-
   const handleCloseAlert = () => {
     if (isSuccess) {
       history.push('/subscriptions');
@@ -100,35 +105,36 @@ const Form = () => {
     }
   };
 
+  const handleReset = () => {
+    reset();
+  };
+
   return (
     <div className={styles.subscriptionContainer}>
-      <form onSubmit={handleSubmit} className={styles['form-container']}>
-        <fieldset className={styles.fieldContainer}>
-          <label className={styles.labelStyle}>Classes</label>
-          <select value={users.classes} onChange={onChangeClasses}>
-            <option value="">Select a class</option>
-            {classes.map((classItem) => (
-              <option key={classItem?._id} value={classItem?._id}>
-                {classItem?.activity?.name || ''}
-              </option>
-            ))}
-          </select>
-        </fieldset>
-        <fieldset className={styles.fieldContainer}>
-          <label className={styles.labelStyle}>Members</label>
-          <select value={users.member} onChange={onChangeMember}>
-            <option value="">Select a member</option>
-            {Array.isArray(members) &&
-              members.map((memberItem) => (
-                <option key={memberItem._id} value={memberItem._id}>
-                  {memberItem.firstName}
-                </option>
-              ))}
-          </select>
-        </fieldset>
+      <h2>{id ? 'Update subscription' : 'Create subscription'}</h2>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <InputComponent
+          inputName="classes"
+          inputType="list"
+          labelName="Classes"
+          list={classes}
+          listProp={'activity.name'}
+          register={register}
+          error={errors.classes?.message}
+        />
+        <InputComponent
+          inputName="member"
+          inputType="list"
+          labelName="Member"
+          list={members}
+          listProp={'firstName'}
+          register={register}
+          error={errors.member?.message}
+        />
         <fieldset className={styles.flexButtons}>
           <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-          <Button text={id ? 'Submit' : 'Confirm'} type={'submit'} />
+          <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
+          <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
         </fieldset>
       </form>
       {showAlert && (
@@ -137,10 +143,8 @@ const Form = () => {
           closeModal={handleCloseAlert}
           title={isSuccess ? 'Success' : 'Something is wrong'}
           typeStyle={isSuccess ? 'success' : 'error'}
-          body={bodyModal}
-        >
-          {alertMessage}
-        </SharedModal>
+          body={alertMessage}
+        />
       )}
     </div>
   );

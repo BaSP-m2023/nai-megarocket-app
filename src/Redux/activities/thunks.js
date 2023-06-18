@@ -37,7 +37,7 @@ export const getActivitiesById = (id) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'GET'
       });
-      const { data } = await response.json();
+      const data = await response.json();
       dispatch(getActivitiesByIdSuccess(data));
       return data;
     } catch (error) {

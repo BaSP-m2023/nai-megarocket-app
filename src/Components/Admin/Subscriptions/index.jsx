@@ -19,7 +19,6 @@ const Subscriptions = () => {
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const [subscriptionId, setSubscriptionId] = useState('');
-
   useEffect(() => {
     dispatch(getSubscriptions());
   }, []);
@@ -28,16 +27,15 @@ const Subscriptions = () => {
     history.push('/subscriptions/form');
   };
 
-  const handleEdit = (id) => {
-    history.push(`/subscriptions/form/${id}`);
+  const handleEdit = (_id) => {
+    history.push(`/subscriptions/form/${_id}`);
   };
 
   const handleDeleteSubscription = (id) => {
     setSubscriptionId(id);
     setIsDelete(true);
-    setTypeStyle('');
-    setTitleModal('Do you want to delete this subscription?');
-    setBodyModal('');
+    setTitleModal('Delete subscription');
+    setBodyModal('Do you want to delete this subscription?');
     setShowModal(true);
   };
 
@@ -45,12 +43,12 @@ const Subscriptions = () => {
     try {
       const data = await dispatch(deleteSubscription(subscriptionId));
       setTitleModal('Success');
-      setBodyModal(data.msg);
+      setBodyModal(data.message);
       setTypeStyle('success');
       setIsDelete(false);
       setShowModal(true);
     } catch (error) {
-      setBodyModal(error.msg);
+      setBodyModal(error.message);
       setTitleModal('error');
       setTypeStyle('error');
       setIsDelete(false);

@@ -46,10 +46,15 @@
 
 .buttonsDiv {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+
+
 .confirmButton {
-  margin-left: 2%;
+  display: flex;
+  width: 30%;
+  justify-content: space-around;
 }

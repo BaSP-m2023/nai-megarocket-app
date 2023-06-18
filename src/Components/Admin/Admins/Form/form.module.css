@@ -1,7 +1,7 @@
 .formContainer {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 50%;
   align-self: center;
   align-items: center;
   border-radius: 5px;
@@ -25,12 +25,13 @@
 }
 
 .inputAdmin {
-  width: 50%;
+  width: 40%;
   margin-bottom: 2%;
   padding-right: 3%;
 }
 
 .firstInputs {
+  width: 40%;
   margin-right: 10px;
   display: flex;
   flex-direction: column;
@@ -38,6 +39,7 @@
 }
 
 .secondInputs {
+  width: 40%;
   margin-left: 10px;
   display: flex;
   flex-direction: column;
@@ -50,4 +52,9 @@
   justify-content: space-between;
   margin-top: 2%;
   margin-bottom: 5%;
+}
+
+.buttonsDiv {
+  display: flex;
+  justify-content: space-between;
 }

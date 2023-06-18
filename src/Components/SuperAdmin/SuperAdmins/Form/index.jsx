@@ -1,59 +1,67 @@
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import styles from './form.module.css';
 import SharedModal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
-import { updateSuperAdmin, addSuperAdmin } from 'Redux/superadmins/thunks';
-import { useDispatch, useSelector } from 'react-redux';
+import InputComponent from '../../Shared/Input';
+import styles from './form.module.css';
+import { useDispatch } from 'react-redux';
+import { updateSuperAdmin, addSuperAdmin, getSuperAdminById } from 'Redux/superadmins/thunks';
+import { useForm } from 'react-hook-form';
+import superAdminValidation from 'Validations/super-admins';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const superAdmins = useSelector((state) => state.superAdmin.data.data);
-  const [superAdmin, setSuperAdmin] = useState({
-    firstName: '',
-    email: '',
-    password: ''
-  });
   const [typeStyle, setTypeStyle] = useState('');
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(superAdminValidation)
+  });
+
+  const getSuperAdminData = async () => {
+    try {
+      const response = await dispatch(getSuperAdminById(id));
+      const superAdminData = response.data;
+      delete superAdminData._id;
+      delete superAdminData.__v;
+      reset(superAdminData);
+    } catch (error) {
+      showErrorModal(error);
+    }
+  };
+
   useEffect(() => {
     if (id) {
-      superAdminById(id);
+      getSuperAdminData(id);
     }
-  }, [id]);
+  }, []);
 
-  const superAdminById = (id) => {
-    const superAdmin = superAdmins.find((superAdmin) => superAdmin._id === id);
-    if (superAdmin) {
-      delete superAdmin._id;
-      delete superAdmin.__v;
-      setSuperAdmin(superAdmin);
-    } else {
-      console.error('Super Admin not found');
-    }
-  };
-
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = (data) => {
     if (id) {
-      handleUpdate(id, superAdmin);
+      handleUpdate(id, data);
     } else {
-      handleAdd(superAdmin);
+      handleAdd(data);
     }
   };
 
-  const handleUpdate = async (id, superAdmin) => {
+  const handleUpdate = async (id, data) => {
     try {
-      const { data } = await dispatch(updateSuperAdmin(id, superAdmin));
+      const response = await dispatch(updateSuperAdmin(id, data));
       setTypeStyle('success');
       setTitleModal('Success');
-      setBodyModal(`The Super Admin ${data.firstName} was updated`);
+      setBodyModal(response.message);
       setShowSuccessModal(true);
     } catch (error) {
       setTypeStyle('error');
@@ -63,12 +71,12 @@ const Form = () => {
     }
   };
 
-  const handleAdd = async (superAdmin) => {
+  const handleAdd = async (data) => {
     try {
-      const { data } = await dispatch(addSuperAdmin(superAdmin));
+      const response = await dispatch(addSuperAdmin(data));
       setTypeStyle('success');
       setTitleModal('Success');
-      setBodyModal(`The Super Admin ${data.firstName} was created`);
+      setBodyModal(response.message);
       setShowSuccessModal(true);
     } catch (error) {
       setTypeStyle('error');
@@ -91,68 +99,47 @@ const Form = () => {
     history.push('/super-admins');
   };
 
-  const onChange = (e) => {
-    setSuperAdmin({
-      ...superAdmin,
-      [e.target.name]: e.target.value
-    });
-  };
-
   return (
     <div className={styles.superAdminFormContainer}>
-      <form className={styles.formContainer}>
+      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={styles.h2Style}>{id ? 'Update Super Admin' : 'Add Super Admin'}</h2>
         <div className={styles.fieldsetForm}>
-          <label className={styles.label} htmlFor="firstName">
-            Name
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={superAdmin.firstName}
-            onChange={onChange}
+          <InputComponent
+            register={register}
+            inputName="firstName"
+            inputType="text"
+            labelName="Name"
             required
             className={styles.inputForm}
+            error={errors.firstName?.message}
           />
         </div>
         <div className={styles.fieldsetForm}>
-          <label className={styles.label} htmlFor="email">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={superAdmin.email}
-            onChange={onChange}
+          <InputComponent
+            register={register}
+            inputName="email"
+            inputType="email"
+            labelName="Email"
             required
             className={styles.inputForm}
+            error={errors.email?.message}
           />
         </div>
         <div className={styles.fieldsetForm}>
-          <label className={styles.label} htmlFor="password">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={superAdmin.password}
-            onChange={onChange}
+          <InputComponent
+            register={register}
+            inputName="password"
+            inputType="password"
+            labelName="Password"
             className={styles.inputForm}
+            error={errors.password?.message}
           />
         </div>
         <div className={styles.buttonsContainer}>
           <Button text="Cancel" type="cancel" clickAction={handleCancel} />
-          {id ? (
-            <>
-              <Button text="Confirm" type="submit" clickAction={onSubmit} />
-            </>
-          ) : (
-            <Button text="Submit" type="submit" clickAction={onSubmit} />
-          )}
+          <Button text={id ? 'Submit' : 'Confirm'} type="submit" info={'submit'} />
         </div>
+        <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
       </form>
       <SharedModal
         show={showErrorModal}

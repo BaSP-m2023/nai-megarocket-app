@@ -60,7 +60,7 @@ const Activities = () => {
   };
 
   const handleEditItem = (id) => {
-    history.push(`/super-admin/activities/form/${id}`);
+    history.push(`activities/form/${id}`);
   };
 
   return (
