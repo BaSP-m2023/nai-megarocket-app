@@ -1,0 +1,104 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 70%;
+  margin: 1%;
+  margin-top: 6%;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  margin-left: 20%;
+  height: auto;
+  padding: 1%;
+  padding-bottom: 5vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1%;
+}
+
+.buttonContainer {
+  display: flex;
+  width: auto;
+  padding: 1%;
+}
+
+.column {
+  width: 120px;
+  max-width: 120px;
+  height: 30px;
+  padding: 0;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.hourColumn {
+  background-color: #F7F9ED;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.emptyButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.scheduledButton {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 2px;
+  background-color: #FDDBA1;
+  color: #0F232E;
+  cursor: pointer;
+  border: none;
+  font-size: 0.8rem;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.scheduledButton:hover {
+  background-color: #F9A414;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.2rem;
+  margin:0;
+}
+
+.select select {
+  font-size: 1rem;
+  height: auto;
+  font-weight:normal;
+  border-radius: 10px;
+  background-color: #FDDBA1;
+  text-align: center;
+}
+
+.select label {
+  font-size: 1rem;
+  font-weight:bold;
+}
+
+.buttonText {
+  white-space: pre-line;
+  font-weight: bold;
+}
+
+.headerTable th{
+  width: 10%;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 1% 0 1% 0;
+  background-color:#0F232E;
+  color: #F7F9ED;
+  font-weight: normal;
+  font-size: 0.9rem;
+}
