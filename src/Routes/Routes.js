@@ -49,7 +49,7 @@ const Routes = () => {
 
         <Route path="/member">
           <Route path="/member/activities" component={MemberActivities} />
-          <Route path="/member/membership" component={MemberMembership} />
+          <Route path="/member/memberships" component={MemberMembership} />
           <Route exact path="/member/profile" component={MemberProfile} />
           <Route path="/member/profile/form/:id" component={MemberProfileForm} />
           <Route exact path="/member/schedule" component={MemberSchedule} />
