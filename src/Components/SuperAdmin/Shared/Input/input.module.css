@@ -1,0 +1,15 @@
+.formInput {
+  height: 2rem;
+  border-radius: 5px;
+  margin-top: 2%;
+  width: 100%;
+  border: solid 1px;
+  border-color: #0f232e;
+}
+
+.inputDiv {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: rgb(24, 24, 24);
+}
