@@ -28,19 +28,44 @@ const classesReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: action.payload
       };
+    case types.DELETE_CLASS_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
     case types.DELETE_CLASS_SUCCESS:
       return {
         ...state,
+        loading: false,
         data: {
           ...state.data,
           data: state.data.data.filter((gymClass) => gymClass._id !== action.payload)
         }
+      };
+    case types.DELETE_CLASS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case types.PUT_CLASS_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: null
       };
     case types.PUT_CLASS_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
+      };
+    case types.PUT_CLASS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
       };
     case types.POST_CLASS_PENDING:
       return {
