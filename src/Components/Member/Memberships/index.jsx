@@ -87,7 +87,7 @@ const Memberships = () => {
               Black
             </button>
             <button className={styles.button} onClick={() => setMemberType(false)}>
-              Sin uasurio
+              No active membership
             </button>
           </ul>
         </div>
