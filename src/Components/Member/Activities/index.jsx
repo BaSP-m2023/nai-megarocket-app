@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styles from './activities.module.css';
 import { getActivities } from 'Redux/activities/thunks';
 import { useSelector, useDispatch } from 'react-redux';
-//import ClipLoader from 'react-spinners/ClipLoader';
 
 const Activities = () => {
   const dispatch = useDispatch();
@@ -14,7 +13,6 @@ const Activities = () => {
   console.log('activities: ', activities);
 
   if (!activities) {
-    // spinners goes here.
     return (
       <div className={styles.bodyNotAvailable}>
         <div>
