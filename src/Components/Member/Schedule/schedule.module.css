@@ -50,20 +50,31 @@
   cursor: pointer;
 }
 
-.scheduledButton {
+.classesButton {
   width: 100%;
   border-radius: 5px;
-  padding: 5px 10px;
-  margin: 2px;
   background-color: #FDDBA1;
-  color: #0F232E;
+  color:#0F232E;
   cursor: pointer;
   border: none;
-  font-size: 0.8rem;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
+  margin:0;
+  padding:0;
 }
 
-.scheduledButton:hover {
+.addedButton {
+  margin:0;
+  padding:0;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #F9A414;
+  color:#0F232E;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+}
+
+.classesButton:hover {
   background-color: #F9A414;
 }
 

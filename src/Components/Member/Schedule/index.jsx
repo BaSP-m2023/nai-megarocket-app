@@ -1,16 +1,26 @@
 import { useEffect, useState } from 'react';
 import styles from './schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { BiStar } from 'react-icons/bi';
 import { getClasses } from '../../../Redux/classes/thunks';
 import { getActivities } from '../../../Redux/activities/thunks';
+import { getMembersById } from '../../../Redux/members/thunks';
+import { getSubscriptions } from '../../../Redux/subscriptions/thunks';
 
 const Schedule = () => {
   const dispatch = useDispatch();
-  const { classes = [], activities = [] } = useSelector((state) => ({
+  const {
+    classes = [],
+    activities = [],
+    subscriptions = []
+  } = useSelector((state) => ({
     classes: state.classes.data.data,
-    activities: state.activities.data.data
+    activities: state.activities.data.data,
+    subscriptions: state.subscriptions.data
   }));
 
+  const [memberData, setMemberData] = useState(null);
+  const [classMemberId, setClassMemberId] = useState('');
   const [activity, setActivity] = useState(activities.length > 0 ? activities[0].name : '');
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -36,35 +46,62 @@ const Schedule = () => {
   useEffect(() => {
     dispatch(getClasses());
     dispatch(getActivities());
+    dispatch(getSubscriptions());
+    getMemberData();
   }, []);
+
+  useEffect(() => {
+    if (subscriptions.length > 0 && memberData) {
+      getMemberClasses(memberData);
+    }
+  }, [memberData, activity]);
+
+  const getMemberData = async () => {
+    const idMember = '648cf236ace9aaef8ae7656c';
+    const response = await dispatch(getMembersById(idMember));
+    setMemberData(response.data);
+  };
+
+  const getMemberClasses = (memberData) => {
+    const subscription = subscriptions.find((sub) => sub.member._id === memberData._id);
+    if (subscription) {
+      setClassMemberId(subscription.classes._id);
+    } else {
+      console.error('Subscription not found');
+    }
+  };
 
   const handleActivityChange = (e) => {
     setActivity(e.target.value);
   };
 
-  const getActivityButtonText = (hour, day) => {
+  const getClassButton = (hour, day) => {
     const classItem = classes.find(
-      (item) =>
-        item.day.includes(day) &&
-        item.hour === hour &&
-        item.activity?.name === activity &&
-        item.trainer
+      (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
     );
 
+    const classMemberFound = classMemberId === classItem?._id;
     return classItem ? (
-      <span>
-        <span className={styles.buttonText}>{activity}</span> (Slots {classItem.slots}){'\n'}
+      <div className={classMemberFound ? styles.addedButton : styles.classesButton}>
+        <div className={styles.buttonText}>{activity}</div>
         {classItem.trainer.firstName}
-      </span>
+        {classMemberFound && (
+          <div>
+            <BiStar /> Added
+          </div>
+        )}
+      </div>
     ) : (
-      ''
+      <div className={styles.emptyButton}></div>
     );
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Scheduled Classes</h2>
+        <h2 className={styles.title}>
+          Scheduled Classes - Member: {memberData?.firstName} {memberData?.lastName}
+        </h2>
         <div className={styles.select}>
           <label htmlFor="activity">Select Activity: </label>
           <select id="activity" value={activity} onChange={handleActivityChange}>
@@ -91,17 +128,7 @@ const Schedule = () => {
               <td className={styles.hourColumn}>{hour.label} </td>
               {daysOfWeek?.map((day) => (
                 <td className={styles.column} key={day}>
-                  <div className={styles.buttonContainer}>
-                    <button
-                      className={
-                        getActivityButtonText(hour.label, day)
-                          ? styles.scheduledButton
-                          : styles.emptyButton
-                      }
-                    >
-                      {getActivityButtonText(hour.label, day)}
-                    </button>
-                  </div>
+                  <div className={styles.buttonContainer}>{getClassButton(hour.label, day)}</div>
                 </td>
               ))}
             </tr>
