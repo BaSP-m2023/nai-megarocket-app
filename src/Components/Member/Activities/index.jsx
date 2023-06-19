@@ -15,17 +15,28 @@ const Activities = () => {
 
   if (!activities) {
     // spinners goes here.
-    return <h2>No available activities</h2>;
+    return (
+      <div className={styles.bodyNotAvailable}>
+        <div>
+          <h2 className={styles.noActivitiesTitle}>No available activities</h2>
+          <p className={styles.noActivitiesParagraph}>
+            Sorry, at this moment we have no published activities.
+          </p>
+        </div>
+      </div>
+    );
   } else {
     return (
       <div className={styles.body}>
         <h1 className={styles.tittle}>Activities</h1>
-        {activities.map((activity, idx) => (
-          <div key={idx}>
-            <h2>{activity.name}</h2>
-            <p>{activity.description}</p>
-          </div>
-        ))}
+        <div className={styles.cardsContainer}>
+          {activities.map((activity, idx) => (
+            <div key={idx} className={styles.cards}>
+              <h2 className={styles.cardTittle}>{activity.name}</h2>
+              <p className={styles.cardDescription}>{activity.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

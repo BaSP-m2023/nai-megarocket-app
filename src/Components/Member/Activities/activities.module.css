@@ -1,8 +1,58 @@
 .body {
+  display: flex;
+  flex-direction: column;
   margin-left: 20%;
-  margin-top: 10%;
+  margin-top: 5rem;
 }
 
 .tittle {
+  display: flex;
+  justify-content: center;
   color: #f9a414;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  padding: 1rem;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1rem 1rem 0;
+  width: 10rem;
+  background-color: #0F232E;
+  border-radius: 15px;
+  color: white;
+  padding: 0 2rem 2rem 2rem;
+}
+
+.cardTittle {
+  border-bottom: 1px solid white;
+}
+
+.cardDescription {
+  height: 8rem;
+}
+
+.bodyNotAvailable {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20%;
+  margin-top: 10rem;
+}
+
+.noActivitiesTitle {
+  text-align: center;
+}
+
+.noActivitiesParagraph {
+  text-align: center;
 }
