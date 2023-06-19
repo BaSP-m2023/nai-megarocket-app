@@ -1,0 +1,114 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    align-self: center;
+    border-radius: 5px;
+    box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+    margin-top: 10%;
+    margin-left: 20%;
+    margin-bottom: 2%;
+  }
+  .formTitle {
+    text-align: center;
+    color: #0f232e;
+    margin-top: 4%;
+    margin-bottom: 2%;
+  }
+  .formMembers {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .formColumn {
+    flex: 1;
+  }
+  
+  .formLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .formRight {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .formInputs {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 5rem;
+    align-items: flex-start;
+    color: #0F232E;
+    font-weight: 600;
+  }
+  
+  .formInputs > input {
+    height: 2rem;
+    border-radius: 5px;
+    width: 120;
+    border: solid 1px;
+    border-color: #0f232e;
+  }
+  
+  .formInputsDiv {
+    display: flex;
+  }
+  
+  .membershipActive {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+  }
+  
+  .formSelect {
+    width: 60%;
+    border-radius: 5px;
+    font-size: 1rem;
+    height: 2rem;
+    border: solid 1px;
+    border-color: #0f232e;
+    margin-bottom: 2%;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 100%;
+  }
+  
+  .buttonContainer > button {
+    margin-left: 1.4%;
+    margin-right: 1.4%;
+  }
+  
+  .buttonsLowContainer {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .formTitleTwo {
+    color: #F9A414;
+    border-bottom: solid 2px #F9A414;
+    margin: 2rem 5rem 2rem 5rem;
+    text-transform: uppercase;
+    line-height: 3rem;
+    font-weight: 100;
+    letter-spacing: 2px;
+  }
+
+  .toggleButton {
+    border-radius: 20rem;
+    background-color: #0f232e;
+    color: white;
+    align-self: flex-end;
+    margin-bottom: 0.8rem;
+  }
