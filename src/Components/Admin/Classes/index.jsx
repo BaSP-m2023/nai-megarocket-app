@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button';
-import SharedModal from '../Shared/Modal';
+import Table from 'Components/Shared/Table';
+import Button from 'Components/Shared/Button';
+import SharedModal from 'Components/Shared/Modal';
 import { useHistory } from 'react-router-dom';
 import { getClasses, deleteClass } from 'Redux/classes/thunks';
 import { useSelector, useDispatch } from 'react-redux';
@@ -44,11 +44,11 @@ const Classes = () => {
   };
 
   const handleAddClass = () => {
-    history.push('/classes/form/');
+    history.push('/admin/classes/form/');
   };
 
   const handleUpdateClass = (id) => {
-    history.push(`/classes/form/${id}`);
+    history.push(`/admin/classes/form/${id}`);
   };
 
   return (

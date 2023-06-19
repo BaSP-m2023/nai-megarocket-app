@@ -26,7 +26,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
+    mode: 'all',
     resolver: joiResolver(activityValidation)
   });
 
@@ -116,12 +116,12 @@ const Form = () => {
           error={errors.description?.message}
         />
         <div className={styles.buttonContainer}>
-          <div className={styles.buttons}>
-            <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-            <Button text={'Submit'} type={'submit'} info={'submit'} />
-          </div>
+          <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
         </div>
-        <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
+        <div className={styles.buttons}>
+          <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
+          <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
+        </div>
       </form>
       <SharedModal
         show={showModal}

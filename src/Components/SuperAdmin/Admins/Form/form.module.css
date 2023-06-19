@@ -1,20 +1,21 @@
 .formContainer {
   display: flex;
   flex-direction: column;
-  width: 50%;
   align-self: center;
-  align-items: center;
-  border-radius: 5px;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+  width: 50%;
+  margin: 5%;
   margin-top: 10%;
-  margin-left: 20%;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  margin-left: 25%;
+  padding-bottom: 5vh;
+  height: 40%;
 }
 
 .formAdmin {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 70%;
 }
 
 .formTitle {
@@ -46,15 +47,22 @@
   align-items: flex-start;
 }
 
+.buttonsDiv > button {
+  width: 20vw;
+}
+
 .buttonsAdmin {
   display: flex;
-  width: 50%;
-  justify-content: space-between;
-  margin-top: 2%;
-  margin-bottom: 5%;
+  gap: 1vw;
+  justify-content: center;
+}
+
+.buttonsAdmin > button {
+  width: 9.5vw;
 }
 
 .buttonsDiv {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
