@@ -6,6 +6,7 @@ import { getClasses } from '../../../Redux/classes/thunks';
 import { getActivities } from '../../../Redux/activities/thunks';
 import { getMembersById } from '../../../Redux/members/thunks';
 import { getSubscriptions } from '../../../Redux/subscriptions/thunks';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Schedule = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Schedule = () => {
   }));
 
   const [memberData, setMemberData] = useState(null);
-  const [classMemberId, setClassMemberId] = useState('');
+  const [suscriptionsMember, setSuscriptionsMember] = useState('');
   const [activity, setActivity] = useState(activities.length > 0 ? activities[0].name : '');
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -63,11 +64,13 @@ const Schedule = () => {
   };
 
   const getMemberClasses = (memberData) => {
-    const subscription = subscriptions.find((sub) => sub.member._id === memberData._id);
-    if (subscription) {
-      setClassMemberId(subscription.classes._id);
+    const memberSubscriptions = subscriptions.filter((sub) => sub.member._id === memberData._id);
+
+    if (memberSubscriptions.length > 0) {
+      const classIds = memberSubscriptions?.map((sub) => sub.classes?._id);
+      setSuscriptionsMember(classIds);
     } else {
-      console.error('Subscription not found');
+      console.error('Subscriptions not found');
     }
   };
 
@@ -79,8 +82,8 @@ const Schedule = () => {
     const classItem = classes.find(
       (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
     );
+    const classMemberFound = suscriptionsMember.includes(classItem?._id);
 
-    const classMemberFound = classMemberId === classItem?._id;
     return classItem ? (
       <div className={classMemberFound ? styles.addedButton : styles.classesButton}>
         <div className={styles.buttonText}>{activity}</div>
@@ -97,46 +100,51 @@ const Schedule = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>
-          Scheduled Classes - Member: {memberData?.firstName} {memberData?.lastName}
-        </h2>
-        <div className={styles.select}>
-          <label htmlFor="activity">Select Activity: </label>
-          <select id="activity" value={activity} onChange={handleActivityChange}>
-            {activities?.map((activityItem, index) => (
-              <option value={activityItem.name} key={index}>
-                {activityItem.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-      <table>
-        <thead>
-          <tr className={styles.headerTable}>
-            <th>Hours</th>
-            {daysOfWeek?.map((day) => (
-              <th key={day}>{day}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {hoursOfDay?.map((hour) => (
-            <tr key={hour.value}>
-              <td className={styles.hourColumn}>{hour.label} </td>
-              {daysOfWeek?.map((day) => (
-                <td className={styles.column} key={day}>
-                  <div className={styles.buttonContainer}>{getClassButton(hour.label, day)}</div>
-                </td>
+    <div>
+      {activity ? (
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Scheduled Classes - Member: {memberData?.firstName}</h2>
+            <div className={styles.select}>
+              <label htmlFor="activity">Select Activity: </label>
+              <select id="activity" value={activity} onChange={handleActivityChange}>
+                {activities?.map((activityItem, index) => (
+                  <option value={activityItem.name} key={index}>
+                    {activityItem.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr className={styles.headerTable}>
+                <th>Hours</th>
+                {daysOfWeek?.map((day) => (
+                  <th key={day}>{day}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {hoursOfDay?.map((hour) => (
+                <tr key={hour.value}>
+                  <td className={styles.hourColumn}>{hour.label} </td>
+                  {daysOfWeek?.map((day) => (
+                    <td className={styles.column} key={day}>
+                      <div className={styles.buttonContainer}>
+                        {getClassButton(hour.label, day)}
+                      </div>
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <ClipLoader />
+      )}
     </div>
   );
 };
-
 export default Schedule;
