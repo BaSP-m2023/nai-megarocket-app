@@ -21,7 +21,7 @@ const Schedule = () => {
 
   const [memberData, setMemberData] = useState(null);
   const [suscriptionsMember, setSuscriptionsMember] = useState('');
-  const [activity, setActivity] = useState(activities.length > 0 ? activities[0].name : '');
+  const [activity, setActivity] = useState('');
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -47,8 +47,14 @@ const Schedule = () => {
     dispatch(getClasses());
     dispatch(getActivities());
     dispatch(getSubscriptions());
-    getMemberData();
   }, []);
+
+  useEffect(() => {
+    if (activities.length > 0) {
+      setActivity(activities[0].name);
+    }
+    getMemberData();
+  }, [activities]);
 
   useEffect(() => {
     if (subscriptions.length > 0 && memberData) {
@@ -104,12 +110,7 @@ const Schedule = () => {
         <h2 className={styles.title}>Scheduled Classes - Member: {memberData?.firstName}</h2>
         <div className={styles.select}>
           <label htmlFor="activity">Select Activity: </label>
-          <select
-            id="activity"
-            value={activity ? activity : activities[0]}
-            onChange={handleActivityChange}
-          >
-            {console.log(activity)}
+          <select id="activity" value={activity} onChange={handleActivityChange}>
             {activities?.map((activityItem, index) => (
               <option value={activityItem.name} key={index}>
                 {activityItem.name}
