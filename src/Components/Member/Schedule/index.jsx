@@ -47,20 +47,20 @@ const Schedule = () => {
     dispatch(getClasses());
     dispatch(getActivities());
     dispatch(getSubscriptions());
+    getMemberData();
   }, []);
 
   useEffect(() => {
     if (activities.length > 0) {
       setActivity(activities[0].name);
     }
-    getMemberData();
   }, [activities]);
 
   useEffect(() => {
     if (subscriptions.length > 0 && memberData) {
       getMemberClasses(memberData);
     }
-  }, [memberData, activity]);
+  }, [activity, memberData]);
 
   const getMemberData = async () => {
     const idMember = '648cf236ace9aaef8ae7656c';
