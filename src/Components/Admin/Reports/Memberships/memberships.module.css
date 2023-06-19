@@ -2,4 +2,5 @@
   display: flex;
   min-height: 55vh;
   align-items: flex-end;
+  gap: 1rem;
 }
