@@ -5,33 +5,34 @@
 
 .formContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  margin-left: 25%;
-  margin-top: 12%;
+  align-items: center;
   width: 50%;
-  border-radius: 5px;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+  margin: 5%;
+  margin-top: 10%;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  margin-left: 25%;
+  padding-bottom: 5vh;
+  height: 40%;
 }
 
-.fieldsetForm {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 2vh;
-}
-
-.label {
-  margin: 2vh;
-  font-weight: bold;
-}
 
 .buttonsContainer {
   display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  flex-direction: column;;
+}
+
+.buttonsLow {
+  display: flex;
+  justify-content: center;
+  gap: 1vw;
+}
+
+.buttonsContainer > button {
+  width: 20vw;
+}
+
+.buttonsLow > button {
+  width: 9.5vw;
 }

@@ -5,12 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import adminsValidation from 'Validations/admins';
-import styles from './form.module.css';
-import Button from '../../Shared/Button';
-import SharedModal from '../../Shared/Modal';
-import Input from '../../Shared/Input';
+import styles from './profile.module.css';
+import Button from 'Components/Shared/Button';
+import SharedModal from 'Components/Shared/Modal';
+import Input from 'Components/Shared/Input';
 
-const Form = () => {
+const AdminProfile = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
+    mode: 'all',
     resolver: joiResolver(adminsValidation)
   });
 
@@ -197,4 +197,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default AdminProfile;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button';
-import SharedModal from '../Shared/Modal';
+import Table from 'Components/Shared/Table';
+import Button from 'Components/Shared/Button';
+import SharedModal from 'Components/Shared/Modal';
 import styles from './members.module.css';
 
 import { useHistory } from 'react-router-dom';
@@ -51,11 +51,11 @@ const Members = () => {
   };
 
   const handleAdd = () => {
-    history.push('/members/form/');
+    history.push('/admin/members/form/');
   };
 
   const handleEdit = (id) => {
-    history.push(`/members/form/${id}`);
+    history.push(`/admin/members/form/${id}`);
   };
   return (
     <section className={styles.membersContainer}>

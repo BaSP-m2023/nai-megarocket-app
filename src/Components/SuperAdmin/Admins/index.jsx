@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdmins, deleteAdmin } from 'Redux/admins/thunks';
 import styles from './admins.module.css';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button';
-import SharedModal from '../Shared/Modal';
+import Table from 'Components/Shared/Table';
+import Button from 'Components/Shared/Button';
+import SharedModal from 'Components/Shared/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 const Admins = () => {
@@ -53,11 +53,11 @@ const Admins = () => {
   };
 
   const handleAddAdmin = () => {
-    history.push('/admins/form');
+    history.push('/super-admin/admins/form');
   };
 
   const handleUpdateAdmin = (id) => {
-    history.push(`/admins/form/${id}`);
+    history.push(`/super-admin/admins/form/${id}`);
   };
 
   return (

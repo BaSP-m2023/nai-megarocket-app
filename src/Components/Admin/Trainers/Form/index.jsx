@@ -6,11 +6,11 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import trainerValidation from 'Validations/trainers';
 import styles from './form.module.css';
-import Button from '../../Shared/Button/index';
-import SharedModal from '../../Shared/Modal/index';
-import Input from '../../Shared/Input';
+import Button from 'Components/Shared/Button/index';
+import SharedModal from 'Components/Shared/Modal/index';
+import Input from 'Components/Shared/Input';
 
-const Form = () => {
+const AdminTrainerForm = () => {
   const history = useHistory();
   const { id } = useParams();
   const [showModal, setShowModal] = useState(false);
@@ -25,7 +25,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
+    mode: 'all',
     resolver: joiResolver(trainerValidation)
   });
 
@@ -41,8 +41,6 @@ const Form = () => {
       delete trainer._id;
       delete trainer.__v;
       reset(trainer);
-    } else {
-      console.error('Trainer not found');
     }
   };
 
@@ -87,12 +85,12 @@ const Form = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     if (shouldRedirect) {
-      history.push('/trainers');
+      history.push('/admin/trainers');
     }
   };
 
   const handleCancel = () => {
-    history.push('/trainers');
+    history.push('/admin/trainers');
   };
 
   const handleReset = () => {
@@ -105,7 +103,7 @@ const Form = () => {
         <h2>{id ? 'Update Trainer' : 'Add Trainer'}</h2>
       </div>
       <div className={styles.container}>
-        <div className={styles.box}>
+        <div>
           <Input
             register={register}
             labelName={'Name'}
@@ -113,8 +111,6 @@ const Form = () => {
             inputName={'firstName'}
             error={errors.firstName?.message}
           />
-        </div>
-        <div className={styles.box}>
           <Input
             register={register}
             labelName={'Last Name'}
@@ -122,8 +118,6 @@ const Form = () => {
             inputName={'lastName'}
             error={errors.lastName?.message}
           />
-        </div>
-        <div className={styles.box}>
           <Input
             register={register}
             labelName={'DNI'}
@@ -131,8 +125,6 @@ const Form = () => {
             inputName={'dni'}
             error={errors.dni?.message}
           />
-        </div>
-        <div className={styles.box}>
           <Input
             register={register}
             labelName={'Phone Number'}
@@ -141,7 +133,7 @@ const Form = () => {
             error={errors.phone?.message}
           />
         </div>
-        <div className={styles.box}>
+        <div>
           <Input
             register={register}
             labelName={'Email'}
@@ -149,8 +141,6 @@ const Form = () => {
             inputName={'email'}
             error={errors.email?.message}
           />
-        </div>
-        <div className={styles.box}>
           <Input
             register={register}
             labelName={'City'}
@@ -158,8 +148,6 @@ const Form = () => {
             inputName={'city'}
             error={errors.city?.message}
           />
-        </div>
-        <div className={styles.box}>
           <Input
             register={register}
             labelName={'Salary'}
@@ -167,8 +155,6 @@ const Form = () => {
             inputName={'salary'}
             error={errors.salary?.message}
           />
-        </div>
-        <div className={styles.box}>
           <Input
             register={register}
             labelName={'Password'}
@@ -180,11 +166,12 @@ const Form = () => {
       </div>
       <div>
         <div className={styles.buttons}>
-          <Button text="Back" type="cancel" clickAction={handleCancel} />
           <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
-        </div>
-        <div className={styles.buttons}>
-          <Button type={'cancel'} clickAction={handleReset} text={'Reset'} info={'reset'} />
+
+          <div className={styles.buttonsLow}>
+            <Button text="Back" type="cancel" clickAction={handleCancel} />
+            <Button type={'cancel'} clickAction={handleReset} text={'Reset'} info={'reset'} />
+          </div>
         </div>
       </div>
       <SharedModal
@@ -198,4 +185,5 @@ const Form = () => {
     </form>
   );
 };
-export default Form;
+
+export default AdminTrainerForm;
