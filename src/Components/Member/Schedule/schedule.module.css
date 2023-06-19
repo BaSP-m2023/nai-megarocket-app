@@ -13,6 +13,11 @@
   padding-bottom: 5vh;
 }
 
+.loadingContainer{
+  width: 70%;
+  margin-top: 6%;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -84,7 +89,7 @@
   margin:0;
 }
 
-.select select {
+.select{
   font-size: 1rem;
   height: auto;
   font-weight:normal;
@@ -93,7 +98,7 @@
   text-align: center;
 }
 
-.select label {
+.selectLabel {
   font-size: 1rem;
   font-weight:bold;
 }
