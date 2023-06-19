@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTrainers, deleteTrainer } from 'Redux/trainers/thunks';
 import { useHistory } from 'react-router-dom';
 import styles from './trainers.module.css';
-import Table from '../Shared/Table/index';
-import Button from '../Shared/Button/index';
-import SharedModal from '../Shared/Modal';
+import Table from 'Components/Shared/Table/index';
+import Button from 'Components/Shared/Button/index';
+import SharedModal from 'Components/Shared/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 const Trainers = () => {
@@ -56,11 +56,11 @@ const Trainers = () => {
   };
 
   const handleAddTrainer = () => {
-    history.push('/trainers/form');
+    history.push('/admin/trainers/form');
   };
 
   const editItem = (id) => {
-    history.push(`/trainers/form/${id}`);
+    history.push(`/admin/trainers/form/${id}`);
   };
 
   return (

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import SharedModal from '../../Shared/Modal';
-import Button from '../../Shared/Button';
-import InputComponent from '../../Shared/Input';
+import SharedModal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button';
+import InputComponent from 'Components/Shared/Input';
 import styles from './form.module.css';
 import { useDispatch } from 'react-redux';
 import { updateSuperAdmin, addSuperAdmin, getSuperAdminById } from 'Redux/superadmins/thunks';
@@ -26,7 +26,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
+    mode: 'all',
     resolver: joiResolver(superAdminValidation)
   });
 
@@ -87,7 +87,7 @@ const Form = () => {
   };
 
   const handleCancel = () => {
-    history.push('/super-admins');
+    history.push('/super-admin/super-admins');
   };
 
   const closeModal = () => {
@@ -96,7 +96,7 @@ const Form = () => {
   };
 
   const handleConfirm = () => {
-    history.push('/super-admins');
+    history.push('/super-admin/super-admins');
   };
 
   return (
@@ -136,10 +136,12 @@ const Form = () => {
           />
         </div>
         <div className={styles.buttonsContainer}>
-          <Button text="Cancel" type="cancel" clickAction={handleCancel} />
-          <Button text={id ? 'Submit' : 'Confirm'} type="submit" info={'submit'} />
+          <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
+          <div className={styles.buttonsLow}>
+            <Button text="Back" type="cancel" clickAction={handleCancel} />
+            <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
+          </div>
         </div>
-        <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
       </form>
       <SharedModal
         show={showErrorModal}

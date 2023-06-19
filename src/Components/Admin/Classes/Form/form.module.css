@@ -35,6 +35,7 @@
   border-radius: 5px;
   border: 1px solid #373867;
 }
+
 .select {
   display: flex;
   width: 106%;
@@ -51,10 +52,15 @@
   align-items: center;
 }
 
-
+.buttonsDiv > button {
+  width: 20vw;
+}
 
 .confirmButton {
   display: flex;
-  width: 30%;
-  justify-content: space-around;
+  gap: 1vw;
+}
+
+.confirmButton > button {
+  width: 9.5vw;
 }

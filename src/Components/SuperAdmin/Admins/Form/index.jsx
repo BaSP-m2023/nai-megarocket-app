@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import adminsValidation from 'Validations/admins';
 import styles from './form.module.css';
-import Button from '../../Shared/Button';
-import SharedModal from '../../Shared/Modal';
-import Input from '../../Shared/Input';
+import Button from 'Components/Shared/Button';
+import SharedModal from 'Components/Shared/Modal';
+import Input from 'Components/Shared/Input';
 
 const Form = () => {
   const history = useHistory();
@@ -26,7 +26,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
+    mode: 'all',
     resolver: joiResolver(adminsValidation)
   });
 
@@ -85,7 +85,7 @@ const Form = () => {
 
   const handleCloseAlert = () => {
     if (isSuccess) {
-      history.push('/admins');
+      history.push('/super-admin/admins');
     } else {
       setShowAlert(false);
     }
@@ -96,7 +96,7 @@ const Form = () => {
       setShowAlert(false);
     }
     setShowAlert(false);
-    history.push('/admins');
+    history.push('/super-admin/admins');
   };
   const handleReset = () => {
     reset();
@@ -175,11 +175,9 @@ const Form = () => {
           </div>
         </div>
         <div className={styles.buttonsDiv}>
+          <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
           <div className={styles.buttonsAdmin}>
             <Button text="Back" type="cancel" clickAction={handleCancel} />
-            <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
-          </div>
-          <div className={styles.buttonsAdmin}>
             <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
           </div>
         </div>

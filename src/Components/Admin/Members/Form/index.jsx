@@ -5,9 +5,9 @@ import { updateMember, addMember } from 'Redux/members/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './form.module.css';
-import SharedModal from '../../Shared/Modal';
-import Button from '../../Shared/Button';
-import Input from '../../Shared/Input';
+import SharedModal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Input from 'Components/Shared/Input';
 import memberValidation from 'Validations/members';
 
 const MemberForm = () => {
@@ -25,7 +25,7 @@ const MemberForm = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
+    mode: 'all',
     resolver: joiResolver(memberValidation)
   });
 
@@ -83,14 +83,14 @@ const MemberForm = () => {
 
   const handleCloseAlert = () => {
     if (isSuccess) {
-      history.push('/members');
+      history.push('/admin/members');
     } else {
       setShowAlert(false);
     }
   };
 
   const handleCancel = () => {
-    history.push('/members');
+    history.push('/admin/members');
   };
 
   const handleReset = () => {
@@ -125,113 +125,93 @@ const MemberForm = () => {
         />
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'First Name'}
-                inputType={'text'}
-                inputName={'firstName'}
-                error={errors.firstName?.message}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Last Name'}
-                inputType={'text'}
-                inputName={'lastName'}
-                error={errors.lastName?.message}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'DNI'}
-                inputType={'number'}
-                inputName={'dni'}
-                error={errors.dni?.message}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Phone'}
-                inputType={'number'}
-                inputName={'phone'}
-                error={errors.phone?.message}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Email'}
-                inputType={'text'}
-                inputName={'email'}
-                error={errors.email?.message}
-              />
-            </div>
+            <Input
+              register={register}
+              labelName={'First Name'}
+              inputType={'text'}
+              inputName={'firstName'}
+              error={errors.firstName?.message}
+            />
+            <Input
+              register={register}
+              labelName={'Last Name'}
+              inputType={'text'}
+              inputName={'lastName'}
+              error={errors.lastName?.message}
+            />
+            <Input
+              register={register}
+              labelName={'DNI'}
+              inputType={'number'}
+              inputName={'dni'}
+              error={errors.dni?.message}
+            />
+            <Input
+              register={register}
+              labelName={'Phone'}
+              inputType={'number'}
+              inputName={'phone'}
+              error={errors.phone?.message}
+            />
+            <Input
+              register={register}
+              labelName={'Email'}
+              inputType={'text'}
+              inputName={'email'}
+              error={errors.email?.message}
+            />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Password'}
-                inputType={'password'}
-                inputName={'password'}
-                error={errors.password?.message}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'City'}
-                inputType={'text'}
-                inputName={'city'}
-                error={errors.city?.message}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Date of birth'}
-                inputType={'date'}
-                inputName={'birthDay'}
-                error={errors.birthDay?.message}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Postal Code'}
-                inputType={'number'}
-                inputName={'postalCode'}
-                error={errors.postalCode?.message}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Memberships'}
-                inputType={'list'}
-                list={membership}
-                inputName={'membership'}
-                error={errors.membership?.message}
-              />
-              <Input
-                register={register}
-                labelName={'Active ?'}
-                inputType={'isActive'}
-                inputName={'isActive'}
-                error={errors.isActive}
-              />
-            </div>
+            <Input
+              register={register}
+              labelName={'Password'}
+              inputType={'password'}
+              inputName={'password'}
+              error={errors.password?.message}
+            />
+            <Input
+              register={register}
+              labelName={'City'}
+              inputType={'text'}
+              inputName={'city'}
+              error={errors.city?.message}
+            />
+            <Input
+              register={register}
+              labelName={'Date of birth'}
+              inputType={'date'}
+              inputName={'birthDay'}
+              error={errors.birthDay?.message}
+            />
+            <Input
+              register={register}
+              labelName={'Postal Code'}
+              inputType={'number'}
+              inputName={'postalCode'}
+              error={errors.postalCode?.message}
+            />
+            <Input
+              register={register}
+              labelName={'Memberships'}
+              inputType={'list'}
+              list={membership}
+              inputName={'membership'}
+              error={errors.membership?.message}
+            />
+            <Input
+              register={register}
+              labelName={'Active ?'}
+              inputType={'isActive'}
+              inputName={'isActive'}
+              error={errors.isActive}
+            />
           </div>
           <div className={styles.buttonContainer}>
+            <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
             <div className={styles.buttonsLowContainer}>
               <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-              <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
+              <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
             </div>
-            <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
           </div>
         </form>
       </div>
