@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-
-import styles from './reports.module.css';
 import Activities from './Activities';
-import ButtonGroup from './ButtonGroup';
+import ButtonGroup from './Buttons';
 import ReportsMemberships from './Memberships';
 import ReportsMembers from './Members';
+import styles from './reports.module.css';
 
 const Reports = () => {
   const [activeComponent, setActiveComponent] = useState('activities');

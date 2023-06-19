@@ -4,6 +4,7 @@ import styles from '../reports.module.css';
 import { getClasses } from 'Redux/classes/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
+import newstyles from './activities.module.css';
 
 const Activities = () => {
   const dispatch = useDispatch();
@@ -17,8 +18,6 @@ const Activities = () => {
   if (loading) {
     return <ClipLoader />;
   }
-
-  console.log(classes);
 
   const activityCount = {};
 
@@ -34,7 +33,7 @@ const Activities = () => {
     : [];
 
   return (
-    <div>
+    <div className={newstyles.container}>
       {uniqueActivities.map((activityName, idx) => (
         <div key={idx} className={styles.progressBar}>
           <h2 className={styles.h2}>{activityName}</h2>
