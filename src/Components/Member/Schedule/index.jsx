@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import styles from './schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiStar } from 'react-icons/bi';
-import { getClasses } from '../../../Redux/classes/thunks';
-import { getActivities } from '../../../Redux/activities/thunks';
-import { getMembersById } from '../../../Redux/members/thunks';
-import { getSubscriptions } from '../../../Redux/subscriptions/thunks';
-import ClipLoader from 'react-spinners/ClipLoader';
+import { getClasses } from 'Redux/classes/thunks';
+import { getActivities } from 'Redux/activities/thunks';
+import { getMembersById } from 'Redux/members/thunks';
+import { getSubscriptions } from 'Redux/subscriptions/thunks';
 
 const Schedule = () => {
   const dispatch = useDispatch();
@@ -100,50 +99,47 @@ const Schedule = () => {
   };
 
   return (
-    <div>
-      {activity ? (
-        <div className={styles.container}>
-          <div className={styles.header}>
-            <h2 className={styles.title}>Scheduled Classes - Member: {memberData?.firstName}</h2>
-            <div className={styles.select}>
-              <label htmlFor="activity">Select Activity: </label>
-              <select id="activity" value={activity} onChange={handleActivityChange}>
-                {activities?.map((activityItem, index) => (
-                  <option value={activityItem.name} key={index}>
-                    {activityItem.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <table>
-            <thead>
-              <tr className={styles.headerTable}>
-                <th>Hours</th>
-                {daysOfWeek?.map((day) => (
-                  <th key={day}>{day}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {hoursOfDay?.map((hour) => (
-                <tr key={hour.value}>
-                  <td className={styles.hourColumn}>{hour.label} </td>
-                  {daysOfWeek?.map((day) => (
-                    <td className={styles.column} key={day}>
-                      <div className={styles.buttonContainer}>
-                        {getClassButton(hour.label, day)}
-                      </div>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>Scheduled Classes - Member: {memberData?.firstName}</h2>
+        <div className={styles.select}>
+          <label htmlFor="activity">Select Activity: </label>
+          <select
+            id="activity"
+            value={activity ? activity : activities[0]}
+            onChange={handleActivityChange}
+          >
+            {console.log(activity)}
+            {activities?.map((activityItem, index) => (
+              <option value={activityItem.name} key={index}>
+                {activityItem.name}
+              </option>
+            ))}
+          </select>
         </div>
-      ) : (
-        <ClipLoader />
-      )}
+      </div>
+      <table>
+        <thead>
+          <tr className={styles.headerTable}>
+            <th>Hours</th>
+            {daysOfWeek?.map((day) => (
+              <th key={day}>{day}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {hoursOfDay?.map((hour) => (
+            <tr key={hour.value}>
+              <td className={styles.hourColumn}>{hour.label} </td>
+              {daysOfWeek?.map((day) => (
+                <td className={styles.column} key={day}>
+                  <div className={styles.buttonContainer}>{getClassButton(hour.label, day)}</div>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
