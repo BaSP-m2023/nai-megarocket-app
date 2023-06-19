@@ -1,12 +1,16 @@
 .subscriptionContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 15%;
-  margin-left: 35%;
+  align-self: center;
   width: 50%;
-  border-radius: 5px;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+  margin: 5%;
+  text-align: center;
+  margin-top: 10%;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  margin-left: 25%;
+  padding-bottom: 5vh;
+  height: 40%;
 }
 
 .form-container {
@@ -22,8 +26,22 @@
 }
 .flexButtons {
   display: flex;
+  flex-direction: column;
   border: none;
-  gap: 2rem;
+}
+
+.flexButtons > button {
+  width: 20vw;
+}
+
+.cleanButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1vw;
+}
+
+.cleanButtons > button {
+  width: 9.5vw;
 }
 
 .fieldContainer {

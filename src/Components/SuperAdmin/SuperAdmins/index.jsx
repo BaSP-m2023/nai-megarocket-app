@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-import Table from '../Shared/Table/index';
-import SharedModal from '../Shared/Modal';
-import Button from '../Shared/Button/index';
+import Table from 'Components/Shared/Table/index';
+import SharedModal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button/index';
 import { useHistory } from 'react-router-dom';
 import { getSuperAdmins, deleteSuperAdmin } from 'Redux/superadmins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
@@ -49,11 +49,11 @@ const SuperAdmins = () => {
   };
 
   const handleAddSuperAdmin = () => {
-    history.push('/super-admins/form');
+    history.push('/super-admin/super-admins/form');
   };
 
   const handleUpdateSuperAdmin = (id) => {
-    history.push(`/super-admins/form/${id}`);
+    history.push(`/super-admin/super-admins/form/${id}`);
   };
 
   const handleExitAlert = () => {
