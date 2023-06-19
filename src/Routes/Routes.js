@@ -26,7 +26,7 @@ import AdminActivitiesForm from 'Components/Admin/Activities/Form';
 import AdminClassesForm from 'Components/Admin/Classes/Form';
 import AdminMembersForm from 'Components/Admin/Members/Form';
 import AdminSubscriptionsForm from 'Components/Admin/Subscriptions/Form';
-import AdminTrainersForm from 'Components/Admin/Trainers/Form/';
+import AdminTrainersForm from 'Components/Admin/Trainers/Form';
 
 const Routes = () => {
   return (
@@ -70,8 +70,8 @@ const Routes = () => {
           <Route exact path="/admin/subscriptions/form" component={AdminSubscriptionsForm} />
           <Route path="/admin/subscriptions/form/:id" component={AdminSubscriptionsForm} />
           <Route exact path="/admin/trainers" component={AdminTrainers} />
-          <Route exact path="/admin/trainers/form" component={() => AdminTrainersForm} />
-          <Route path="/admin/trainers/form/:id?" component={AdminTrainersForm} />
+          <Route exact path="/admin/trainers/form" component={AdminTrainersForm} />
+          <Route path="/admin/trainers/form/:id" component={AdminTrainersForm} />
         </Route>
 
         <Route exact path="/">
