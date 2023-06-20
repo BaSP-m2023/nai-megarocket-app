@@ -162,6 +162,13 @@ const AdminTrainerForm = () => {
             inputName={'password'}
             error={errors.password?.message}
           />
+          <Input
+            register={register}
+            labelName={'Active ?'}
+            inputType={'isActive'}
+            inputName={'isActive'}
+            error={errors.isActive}
+          />
         </div>
       </div>
       <div>

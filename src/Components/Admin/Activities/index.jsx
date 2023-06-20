@@ -75,8 +75,8 @@ const Activities = () => {
         <>
           <Table
             data={activities}
-            properties={['name', 'description']}
-            columnTitles={['Name', 'Description']}
+            properties={['name', 'description', 'isActive']}
+            columnTitles={['Name', 'Description', 'Active']}
             handleUpdateItem={handleEditItem}
             handleDeleteItem={handleDeleteClick}
           />

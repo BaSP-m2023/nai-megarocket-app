@@ -115,6 +115,13 @@ const Form = () => {
           placeholder="Description"
           error={errors.description?.message}
         />
+        <InputComponent
+          register={register}
+          labelName={'Active ?'}
+          inputType={'isActive'}
+          inputName={'isActive'}
+          error={errors.isActive}
+        />
         <div className={styles.buttonContainer}>
           <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
         </div>
