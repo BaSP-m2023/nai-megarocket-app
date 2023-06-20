@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateMember, getMembersById } from '../../../Redux/members/thunks';
+import { updateMember, getMembersById } from 'Redux/members/thunks';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './profile.module.css';
-import SharedModal from '../../Shared/Modal';
-import Button from '../../Shared/Button';
-import Input from '../../Shared/Input/index';
-import memberValidation from '../../../Validations/members';
+import SharedModal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Input from 'Components/Shared/Input/index';
+import memberValidation from 'Validations/members';
 
 const MemberForm = ({ memberData }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const history = useHistory();
+  const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
   const membership = ['Black', 'Gold', 'Silver'];
   const {
@@ -61,6 +60,7 @@ const MemberForm = ({ memberData }) => {
       setAlertMessage(data.message);
       setIsSuccess(true);
       setShowAlert(true);
+      handleDisableEditMode();
     } catch (error) {
       setAlertMessage(error.message);
       setIsSuccess(false);
@@ -70,10 +70,6 @@ const MemberForm = ({ memberData }) => {
 
   const handleCloseAlert = () => {
     setShowAlert(false);
-  };
-
-  const handleCancel = () => {
-    history.push('/member');
   };
 
   const formatDate = (dateString) => {
@@ -88,6 +84,14 @@ const MemberForm = ({ memberData }) => {
     const formattedDay = date.getDate().toString().padStart(2, '0');
 
     return `${formattedYear}-${formattedMonth}-${formattedDay}`;
+  };
+
+  const handleEnableEditMode = () => {
+    setEditMode(true);
+  };
+
+  const handleDisableEditMode = () => {
+    setEditMode(false);
   };
 
   return (
@@ -111,6 +115,7 @@ const MemberForm = ({ memberData }) => {
                 inputType={'text'}
                 inputName={'firstName'}
                 error={errors.firstName?.message}
+                disabled={!editMode}
               />
             </div>
             <div className={styles.formInputs}>
@@ -120,6 +125,7 @@ const MemberForm = ({ memberData }) => {
                 inputType={'text'}
                 inputName={'lastName'}
                 error={errors.lastName?.message}
+                disabled={!editMode}
               />
             </div>
             <div className={styles.formInputs}>
@@ -129,6 +135,7 @@ const MemberForm = ({ memberData }) => {
                 inputType={'number'}
                 inputName={'dni'}
                 error={errors.dni?.message}
+                disabled={!editMode}
               />
             </div>
             <div className={styles.formInputs}>
@@ -138,6 +145,7 @@ const MemberForm = ({ memberData }) => {
                 inputType={'number'}
                 inputName={'phone'}
                 error={errors.phone?.message}
+                disabled={!editMode}
               />
             </div>
             <div className={styles.formInputs}>
@@ -147,6 +155,7 @@ const MemberForm = ({ memberData }) => {
                 inputType={'text'}
                 inputName={'email'}
                 error={errors.email?.message}
+                disabled={!editMode}
               />
             </div>
           </div>
@@ -159,6 +168,7 @@ const MemberForm = ({ memberData }) => {
                   inputType={showPassword ? 'text' : 'password'}
                   inputName={'password'}
                   error={errors.password?.message}
+                  disabled={!editMode}
                 />
                 <button
                   className={styles.toggleButton}
@@ -176,6 +186,7 @@ const MemberForm = ({ memberData }) => {
                 inputType={'text'}
                 inputName={'city'}
                 error={errors.city?.message}
+                disabled={!editMode}
               />
             </div>
             <div className={styles.formInputs}>
@@ -185,6 +196,7 @@ const MemberForm = ({ memberData }) => {
                 inputType={'date'}
                 inputName={'birthDay'}
                 error={errors.birthDay?.message}
+                disabled={!editMode}
               />
             </div>
             <div className={styles.formInputs}>
@@ -194,6 +206,7 @@ const MemberForm = ({ memberData }) => {
                 inputType={'number'}
                 inputName={'postalCode'}
                 error={errors.postalCode?.message}
+                disabled={!editMode}
               />
             </div>
             <div className={styles.formInputs}>
@@ -204,22 +217,27 @@ const MemberForm = ({ memberData }) => {
                 list={membership}
                 inputName={'membership'}
                 error={errors.membership?.message}
-                readOnly
-              />
-              <Input
-                register={register}
-                labelName={'Active ?'}
-                inputType={'checkbox'}
-                inputName={'isActive'}
-                error={errors.isActive}
+                disabled={true}
               />
             </div>
           </div>
           <div className={styles.buttonContainer}>
-            <div className={styles.buttonsLowContainer}>
-              <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
-              <Button text={'Confirm'} type={'submit'} info={'submit'} />
-            </div>
+            {!editMode && (
+              <Button
+                className={styles.editButton}
+                text={'Edit'}
+                type={'submit'}
+                clickAction={handleEnableEditMode}
+              />
+            )}
+            {editMode && (
+              <>
+                <div className={styles.buttonsLowContainer}>
+                  <Button text={'Cancel'} type={'cancel'} clickAction={handleDisableEditMode} />
+                  <Button text={'Confirm'} type={'submit'} info={'submit'} />
+                </div>
+              </>
+            )}
           </div>
         </form>
       </div>
