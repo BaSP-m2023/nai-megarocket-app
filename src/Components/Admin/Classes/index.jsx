@@ -88,6 +88,9 @@ const Classes = () => {
     setActivity(e.target.value);
   };
 
+  const handleCloseModalCalendar = () => {
+    setCalendarAlert(false);
+  };
   const handleClass = (id) => {
     setClassToDelete(id);
     setCalendarAlert(true);
@@ -180,6 +183,7 @@ const Classes = () => {
             show={calendarAlert}
             title={'Class Options'}
             body={'What do you want to do ?'}
+            onClose={handleCloseModalCalendar}
             closeModal={handleUpdateClass}
             onConfirm={handleDeleteClass}
           />

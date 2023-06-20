@@ -17,6 +17,10 @@ const CalendarModal = (data) => {
     data.onConfirm();
   };
 
+  const onClose = () => {
+    data.onClose();
+  };
+
   switch (data.typeStyle) {
     case 'success':
       containerStyle = styles.modalContentSuccess;
@@ -32,6 +36,9 @@ const CalendarModal = (data) => {
   return (
     <div className={styles.modalContainer}>
       <div className={containerStyle}>
+        <div className={styles.closeContainer}>
+          <Button type={'delete'} clickAction={onClose} />
+        </div>
         <h3 className={styles.h3Container}>{data.title}</h3>
         <p className={styles.pContainer}>{data.body}</p>
         <div className={styles.buttonContainer}>
