@@ -11,7 +11,8 @@ const ProgressBar = (props) => {
     height: '100%',
     width: `${completed}rem`,
     backgroundColor: '#0F232E',
-    textAlign: 'right'
+    textAlign: 'right',
+    borderRadius: '5px'
   };
 
   return (

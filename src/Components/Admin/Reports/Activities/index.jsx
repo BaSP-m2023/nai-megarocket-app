@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import ProgressBar from './ProgressBar';
 import styles from '../reports.module.css';
-import { getClasses } from 'Redux/classes/thunks';
+import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import newstyles from './activities.module.css';
 
 const Activities = () => {
   const dispatch = useDispatch();
-  const classes = useSelector((state) => state.classes.data.data);
-  const loading = useSelector((state) => state.classes.loading);
+  const subscriptions = useSelector((state) => state.subscriptions.data);
+  const loading = useSelector((state) => state.subscriptions.loading);
 
   useEffect(() => {
-    dispatch(getClasses());
+    dispatch(getSubscriptions());
   }, []);
 
   if (loading) {
@@ -21,17 +21,23 @@ const Activities = () => {
 
   const activityCount = {};
 
-  if (classes) {
-    classes.forEach((item) => {
-      const activityName = item.activity.name;
+  if (subscriptions) {
+    subscriptions.forEach((item) => {
+      const activityName = item.classes?.activity?.name || 'No activity';
       activityCount[activityName] = (activityCount[activityName] || 0) + 1;
     });
+
+    // Verificar si no se encontraron actividades
+    if (Object.keys(activityCount).length === 0) {
+      activityCount['No activity'] = 1;
+    }
   }
 
-  const uniqueActivities = classes
-    ? Array.from(new Set(classes.map((item) => item.activity.name)))
+  const uniqueActivities = subscriptions
+    ? Array.from(new Set(subscriptions.map((item) => item.classes?.activity?.name)))
     : [];
 
+  console.log(uniqueActivities);
   return (
     <div className={newstyles.container}>
       {uniqueActivities.map((activityName, idx) => (
