@@ -15,6 +15,7 @@ const MemberForm = ({ memberData }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [editMode, setEditMode] = useState(false);
+  const [showUnsavedChangesModal, setShowUnsavedChangesModal] = useState(false);
   const dispatch = useDispatch();
   const membership = ['Black', 'Gold', 'Silver'];
   const {
@@ -56,11 +57,12 @@ const MemberForm = ({ memberData }) => {
 
   const memberUpdateFunction = async (id, member) => {
     try {
-      const data = await dispatch(updateMember(id, member));
-      setAlertMessage(data.message);
+      await dispatch(updateMember(id, member));
+      setAlertMessage('Saved changes');
       setIsSuccess(true);
       setShowAlert(true);
       handleDisableEditMode();
+      fetchMemberById(id);
     } catch (error) {
       setAlertMessage(error.message);
       setIsSuccess(false);
@@ -92,6 +94,14 @@ const MemberForm = ({ memberData }) => {
 
   const handleDisableEditMode = () => {
     setEditMode(false);
+    reset(memberData);
+  };
+
+  const handleCloseUnsavedChangesModal = (discardChanges) => {
+    setShowUnsavedChangesModal(false);
+    if (discardChanges) {
+      handleDisableEditMode();
+    }
   };
 
   return (
@@ -106,120 +116,113 @@ const MemberForm = ({ memberData }) => {
           title={isSuccess ? 'Success' : 'Something went wrong'}
           body={alertMessage}
         />
+        <SharedModal
+          show={showUnsavedChangesModal}
+          closeModal={() => handleCloseUnsavedChangesModal(false)}
+          onConfirm={() => handleCloseUnsavedChangesModal(true)}
+          typeStyle="default"
+          isDelete={true}
+          title="Unsaved Changes"
+          body="You have unsaved changes. Do you want to discard the changes?"
+        />
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'First Name'}
-                inputType={'text'}
-                inputName={'firstName'}
-                error={errors.firstName?.message}
-                disabled={!editMode}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Last Name'}
-                inputType={'text'}
-                inputName={'lastName'}
-                error={errors.lastName?.message}
-                disabled={!editMode}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'DNI'}
-                inputType={'number'}
-                inputName={'dni'}
-                error={errors.dni?.message}
-                disabled={!editMode}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Phone'}
-                inputType={'number'}
-                inputName={'phone'}
-                error={errors.phone?.message}
-                disabled={!editMode}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Email'}
-                inputType={'text'}
-                inputName={'email'}
-                error={errors.email?.message}
-                disabled={!editMode}
-              />
-            </div>
+            <Input
+              register={register}
+              labelName={'First Name'}
+              inputType={'text'}
+              inputName={'firstName'}
+              error={errors.firstName?.message}
+              disabled={!editMode}
+            />
+            <Input
+              register={register}
+              labelName={'Last Name'}
+              inputType={'text'}
+              inputName={'lastName'}
+              error={errors.lastName?.message}
+              disabled={!editMode}
+            />
+            <Input
+              register={register}
+              labelName={'DNI'}
+              inputType={'number'}
+              inputName={'dni'}
+              error={errors.dni?.message}
+              disabled={!editMode}
+            />
+            <Input
+              register={register}
+              labelName={'Phone'}
+              inputType={'number'}
+              inputName={'phone'}
+              error={errors.phone?.message}
+              disabled={!editMode}
+            />
+            <Input
+              register={register}
+              labelName={'Email'}
+              inputType={'text'}
+              inputName={'email'}
+              error={errors.email?.message}
+              disabled={!editMode}
+            />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
-            <div className={styles.formInputs}>
-              <div style={{ display: 'flex' }}>
-                <Input
-                  register={register}
-                  labelName={'Password'}
-                  inputType={showPassword ? 'text' : 'password'}
-                  inputName={'password'}
-                  error={errors.password?.message}
-                  disabled={!editMode}
-                />
-                <button
-                  className={styles.toggleButton}
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? 'Hide' : 'Show'}
-                </button>
-              </div>
-            </div>
-            <div className={styles.formInputs}>
+            <div style={{ display: 'flex', gap: '10px' }}>
               <Input
                 register={register}
-                labelName={'City'}
-                inputType={'text'}
-                inputName={'city'}
-                error={errors.city?.message}
+                labelName={'Password'}
+                inputType={showPassword ? 'text' : 'password'}
+                inputName={'password'}
+                error={errors.password?.message}
                 disabled={!editMode}
               />
+              <button
+                className={styles.toggleButton}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </button>
             </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Date of birth'}
-                inputType={'date'}
-                inputName={'birthDay'}
-                error={errors.birthDay?.message}
-                disabled={!editMode}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Postal Code'}
-                inputType={'number'}
-                inputName={'postalCode'}
-                error={errors.postalCode?.message}
-                disabled={!editMode}
-              />
-            </div>
-            <div className={styles.formInputs}>
-              <Input
-                register={register}
-                labelName={'Memberships'}
-                inputType={'text'}
-                list={membership}
-                inputName={'membership'}
-                error={errors.membership?.message}
-                disabled={true}
-              />
-            </div>
+
+            <Input
+              register={register}
+              labelName={'City'}
+              inputType={'text'}
+              inputName={'city'}
+              error={errors.city?.message}
+              disabled={!editMode}
+            />
+
+            <Input
+              register={register}
+              labelName={'Date of birth'}
+              inputType={'date'}
+              inputName={'birthDay'}
+              error={errors.birthDay?.message}
+              disabled={!editMode}
+            />
+
+            <Input
+              register={register}
+              labelName={'Postal Code'}
+              inputType={'number'}
+              inputName={'postalCode'}
+              error={errors.postalCode?.message}
+              disabled={!editMode}
+            />
+
+            <Input
+              register={register}
+              labelName={'Memberships'}
+              inputType={'text'}
+              list={membership}
+              inputName={'membership'}
+              error={errors.membership?.message}
+              disabled={true}
+            />
           </div>
           <div className={styles.buttonContainer}>
             {!editMode && (
