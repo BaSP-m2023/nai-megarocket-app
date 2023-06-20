@@ -172,7 +172,6 @@ const MemberForm = () => {
                 </button>
               </div>
             </div>
-
             <Input
               register={register}
               labelName={'City'}
@@ -181,7 +180,6 @@ const MemberForm = () => {
               error={errors.city?.message}
               disabled={!editMode}
             />
-
             <Input
               register={register}
               labelName={'Date of birth'}
@@ -190,7 +188,6 @@ const MemberForm = () => {
               error={errors.birthDay?.message}
               disabled={!editMode}
             />
-
             <Input
               register={register}
               labelName={'Postal Code'}
@@ -199,7 +196,6 @@ const MemberForm = () => {
               error={errors.postalCode?.message}
               disabled={!editMode}
             />
-
             <Input
               register={register}
               labelName={'Memberships'}
