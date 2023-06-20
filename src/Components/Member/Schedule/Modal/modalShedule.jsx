@@ -42,7 +42,6 @@ const Modal = (data) => {
           member: data.idMember,
           date: newDate.setHours(newDate.getHours() - 3)
         };
-        console.log(newDate);
         await dispatch(createSubscription(newSuscription));
         setShowAlert(true);
         setIsSuccess(true);
@@ -64,7 +63,7 @@ const Modal = (data) => {
             <BsXLg />
           </div>
         </div>
-        <h3 className={styles.h3Container}>
+        <h3>
           Class {data.day.length > 1 ? data.day.join(' - ') : data.day} {data.hour} Hs
         </h3>
         <div className={styles.activity}>{data.activity}</div>
