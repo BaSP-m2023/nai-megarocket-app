@@ -1,5 +1,4 @@
 import styles from './input.module.css';
-
 const InputComponent = ({
   inputName,
   inputType,
@@ -20,7 +19,6 @@ const InputComponent = ({
       {list?.map((item) => {
         const properties = listProp?.split('.');
         const value = properties?.reduce((obj, prop) => obj[prop], item);
-
         return (
           <option key={item._id ? item._id : item} value={item._id ? item._id : item}>
             {value ? value : item}
@@ -29,15 +27,12 @@ const InputComponent = ({
       })}
     </>
   );
-
   const renderSelect = () => (
     <div className={styles.inputDiv}>
-      <label htmlFor={inputName}>{labelName}</label>
+      <label>{labelName}</label>
       <select
         {...register(inputName)}
         name={inputName}
-        id={inputName}
-        autoComplete="off"
         className={error ? styles.formSelectError : styles.formSelect}
         value={value}
         disabled={disabled}
@@ -47,15 +42,12 @@ const InputComponent = ({
       {error && <p className={styles.errorMsg}>{error}</p>}
     </div>
   );
-
   const renderInput = (type) => (
     <div className={styles.inputDiv}>
-      <label htmlFor={inputName}>{labelName}</label>
+      <label>{labelName}</label>
       <input
         {...register(inputName)}
         name={inputName}
-        id={inputName}
-        autoComplete="off"
         className={error ? styles.formInputError : styles.formInput}
         type={type}
         value={value}
@@ -65,7 +57,6 @@ const InputComponent = ({
       {error && <p className={styles.errorMsg}>{error}</p>}
     </div>
   );
-
   const renderIsActive = () => (
     <div>
       <label>{labelName}</label>
@@ -73,7 +64,6 @@ const InputComponent = ({
       {error && <p className={styles.errorMsg}>{error}</p>}
     </div>
   );
-
   const renderInputType = (inputType) => {
     switch (inputType) {
       case 'text':
@@ -90,8 +80,6 @@ const InputComponent = ({
         return null;
     }
   };
-
   return renderInputType(inputType);
 };
-
 export default InputComponent;
