@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { putAdmin, postAdmin } from 'Redux/admins/thunks';
-import { useSelector, useDispatch } from 'react-redux';
+import { putAdmin, getAdminById } from 'Redux/admins/thunks';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import adminsValidation from 'Validations/admins';
@@ -9,16 +8,18 @@ import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import SharedModal from 'Components/Shared/Modal';
 import Input from 'Components/Shared/Input';
+import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 
 const AdminProfile = () => {
-  const history = useHistory();
-  const { id } = useParams();
   const dispatch = useDispatch();
-  const admins = useSelector((state) => state.admins.data);
+  const [editMode, setEditMode] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const id = '648dbbd7413c4e8c07551b9e';
 
   const {
     register,
@@ -32,50 +33,36 @@ const AdminProfile = () => {
 
   useEffect(() => {
     if (id) {
-      getAdminById(id);
+      fetchAdminById(id);
     }
-  }, []);
+  }, [id]);
 
-  const getAdminById = (id) => {
-    const admin = admins.find((admin) => admin._id === id);
-    if (admin) {
+  const fetchAdminById = async (id) => {
+    try {
+      const response = await dispatch(getAdminById(id));
+      const admin = response.data;
       delete admin._id;
       delete admin.__v;
       delete admin.createdAt;
       delete admin.updatedAt;
       reset(admin);
-    } else {
-      console.error('Admin not found');
+    } catch (error) {
+      console.error('Member not found');
     }
   };
 
   const onSubmit = async (data) => {
-    if (id) {
-      putAdminFunction(id, data);
-    } else {
-      postAdminFunction(data);
-    }
-  };
-
-  const postAdminFunction = async (admin) => {
-    try {
-      const data = await dispatch(postAdmin(admin));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
-    } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
-    }
+    putAdminFunction(id, data);
+    reset(data);
   };
 
   const putAdminFunction = async (id, admin) => {
     try {
-      const data = await dispatch(putAdmin(id, admin));
-      setAlertMessage(data.message);
+      await dispatch(putAdmin(id, admin));
+      setAlertMessage('Saved changes');
       setIsSuccess(true);
       setShowAlert(true);
+      handleDisableEditMode();
     } catch (error) {
       setAlertMessage(error.message);
       setIsSuccess(false);
@@ -84,27 +71,21 @@ const AdminProfile = () => {
   };
 
   const handleCloseAlert = () => {
-    if (isSuccess) {
-      history.push('/admins');
-    } else {
-      setShowAlert(false);
-    }
+    setShowAlert(false);
   };
 
-  const handleCancel = () => {
-    if (showAlert) {
-      setShowAlert(false);
-    }
-    setShowAlert(false);
-    history.push('/admins');
+  const handleEnableEditMode = () => {
+    setEditMode(true);
   };
-  const handleReset = () => {
+
+  const handleDisableEditMode = () => {
+    setEditMode(false);
     reset();
   };
 
   return (
     <div className={styles.formContainer}>
-      <h2 className={styles.formTitle}>{id ? 'Update Admin' : 'Add Admin'}</h2>
+      <h2 className={styles.formTitleTwo}>user data</h2>
 
       <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.firstInputs}>
@@ -115,6 +96,7 @@ const AdminProfile = () => {
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
+              disabled={!editMode}
             />
           </div>
           <div className={styles.formInput}>
@@ -124,6 +106,7 @@ const AdminProfile = () => {
               inputType={'text'}
               inputName={'lastName'}
               error={errors.lastName?.message}
+              disabled={!editMode}
             />
           </div>
           <div className={styles.formInput}>
@@ -133,6 +116,7 @@ const AdminProfile = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
+              disabled={!editMode}
             />
           </div>
           <div className={styles.formInput}>
@@ -142,6 +126,7 @@ const AdminProfile = () => {
               inputType={'number'}
               inputName={'phone'}
               error={errors.phone?.message}
+              disabled={!editMode}
             />
           </div>
         </div>
@@ -153,6 +138,7 @@ const AdminProfile = () => {
               inputType={'text'}
               inputName={'email'}
               error={errors.email?.message}
+              disabled={!editMode}
             />
           </div>
           <div className={styles.formInput}>
@@ -162,28 +148,45 @@ const AdminProfile = () => {
               inputType={'text'}
               inputName={'city'}
               error={errors.city?.message}
+              disabled={!editMode}
             />
           </div>
-          <div className={styles.formInput}>
+          <div className={styles.formInput} style={{ display: 'flex', gap: '10px' }}>
             <Input
               register={register}
               labelName={'Password'}
-              inputType={'text'}
+              inputType={showPassword ? 'text' : 'password'}
               inputName={'password'}
               error={errors.password?.message}
+              disabled={!editMode}
             />
+            <button
+              className={styles.toggleButton}
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaRegEye />}
+            </button>
           </div>
         </div>
-        <div className={styles.buttonsDiv}>
-          <div className={styles.buttonsAdmin}>
-            <Button text="Back" type="cancel" clickAction={handleCancel} />
-            <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
-          </div>
-          <div className={styles.buttonsAdmin}>
-            <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
-          </div>
+        <div className={styles.buttonContainer}>
+          {!editMode && (
+            <Button
+              className={styles.editButton}
+              text={'Edit'}
+              type={'submit'}
+              clickAction={handleEnableEditMode}
+            />
+          )}
+          {editMode && (
+            <>
+              <div className={styles.buttonsLowContainer}>
+                <Button text={'Cancel'} type={'cancel'} clickAction={handleDisableEditMode} />
+                <Button text={'Confirm'} type={'submit'} info={'submit'} />
+              </div>
+            </>
+          )}
         </div>
-
         <SharedModal
           isDelete={false}
           show={showAlert}
