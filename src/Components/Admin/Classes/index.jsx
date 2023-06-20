@@ -7,6 +7,7 @@ import { getClasses, deleteClass } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
+import CalendarModal from './Modal';
 
 const Classes = () => {
   const history = useHistory();
@@ -22,7 +23,7 @@ const Classes = () => {
     activities: state.activities.data.data
   }));
   const [activity, setActivity] = useState('');
-
+  const [calendarAlert, setCalendarAlert] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,9 +37,9 @@ const Classes = () => {
     }
   }, [activities]);
 
-  const handleDeleteClass = (id) => {
+  const handleDeleteClass = () => {
+    setCalendarAlert(false);
     setShowDeleteWarning(true);
-    setClassToDelete(id);
   };
 
   const handleConfirmDeleteClass = async () => {
@@ -59,9 +60,9 @@ const Classes = () => {
     history.push('/admin/classes/form/');
   };
 
-  // const handleUpdateClass = (id) => {
-  //   history.push(`/admin/classes/form/${id}`);
-  // };
+  const handleUpdateClass = () => {
+    history.push(`/admin/classes/form/${classToDelete}`);
+  };
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -87,12 +88,17 @@ const Classes = () => {
     setActivity(e.target.value);
   };
 
+  const handleClass = (id) => {
+    setClassToDelete(id);
+    setCalendarAlert(true);
+  };
+
   const getClassButton = (hour, day) => {
     const classItem = classes.find(
       (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
     );
     return classItem ? (
-      <div onClick={() => handleDeleteClass(classItem._id)} className={styles.classesButton}>
+      <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
         <div className={styles.buttonText}>{activity}</div>
         {classItem.trainer.firstName}
       </div>
@@ -119,7 +125,7 @@ const Classes = () => {
                 <select
                   id="activity"
                   value={activity ? activity : activities[0]}
-                  onChange={() => handleActivityChange}
+                  onChange={handleActivityChange}
                 >
                   {console.log(activity)}
                   {activities?.map((activityItem, index) => (
@@ -170,6 +176,13 @@ const Classes = () => {
             closeModal={() => setShowAlert(false)}
             title={isSuccess ? 'Success' : 'Error'}
             body={alertMessage}
+          />
+          <CalendarModal
+            show={calendarAlert}
+            title={'Class Options'}
+            body={'What do you want to do ?'}
+            closeModal={handleUpdateClass}
+            onConfirm={handleDeleteClass}
           />
         </>
       ) : (
