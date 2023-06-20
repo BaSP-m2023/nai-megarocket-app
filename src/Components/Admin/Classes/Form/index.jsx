@@ -8,9 +8,9 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import classValidation from 'Validations/classes';
 import styles from './form.module.css';
-import Button from '../../Shared/Button';
-import Input from '../../Shared/Input';
-import SharedModal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Input from 'Components/Shared/Input';
+import SharedModal from 'Components/Shared/Modal';
 
 const Form = () => {
   const {
@@ -19,7 +19,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
+    mode: 'all',
     resolver: joiResolver(classValidation),
     defaultValues: {
       day: '',
@@ -55,13 +55,13 @@ const Form = () => {
     try {
       const response = await dispatch(getClassById(id));
       const classData = response.data;
-      delete classData._id;
-      delete classData.createdAt;
-      delete classData.updatedAt;
-      delete classData.__v;
-      classData.day = Object.values(classData.day).join(',');
-      classData.trainer = classData.trainer._id;
-      classData.activity = classData.activity._id;
+      delete classData?._id;
+      delete classData?.createdAt;
+      delete classData?.updatedAt;
+      delete classData?.__v;
+      classData.day = Object.values(classData?.day).join(',');
+      classData.trainer = classData.trainer?._id;
+      classData.activity = classData.activity?._id;
       reset(classData);
     } catch (error) {
       showErrorModal(error);
@@ -104,19 +104,15 @@ const Form = () => {
   };
 
   const handleCancel = () => {
-    history.push('/classes');
+    history.push('/admin/classes');
   };
 
   const handleCloseAlert = () => {
     if (isSuccess) {
-      history.push('/classes');
+      history.push('/admin/classes');
     } else {
       setShowAlert(false);
     }
-  };
-
-  const handleReset = () => {
-    reset();
   };
 
   return (
@@ -165,11 +161,11 @@ const Form = () => {
           />
         </div>
         <div className={styles.buttonsDiv}>
+          <Button type={'submit'} info={'submit'} text={id ? 'Update' : 'Add'} />
           <div className={styles.confirmButton}>
-            <Button type="submit" text="Back" clickAction={handleCancel} />
-            <Button type={'submit'} info={'submit'} text={id ? 'Update' : 'Add'} />
+            <Button type="cancel" text="Back" clickAction={handleCancel} />
+            <Button type={'cancel'} onClick={() => reset()} info={'reset'} text={'Reset'} />
           </div>
-          <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
         </div>
       </form>
 
