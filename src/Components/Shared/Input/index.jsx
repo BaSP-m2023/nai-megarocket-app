@@ -32,10 +32,12 @@ const InputComponent = ({
 
   const renderSelect = () => (
     <div className={styles.inputDiv}>
-      <label>{labelName}</label>
+      <label htmlFor={inputName}>{labelName}</label>
       <select
         {...register(inputName)}
         name={inputName}
+        id={inputName}
+        autoComplete="off"
         className={error ? styles.formSelectError : styles.formSelect}
         value={value}
         disabled={disabled}
@@ -48,10 +50,12 @@ const InputComponent = ({
 
   const renderInput = (type) => (
     <div className={styles.inputDiv}>
-      <label>{labelName}</label>
+      <label htmlFor={inputName}>{labelName}</label>
       <input
         {...register(inputName)}
         name={inputName}
+        id={inputName}
+        autoComplete="off"
         className={error ? styles.formInputError : styles.formInput}
         type={type}
         value={value}

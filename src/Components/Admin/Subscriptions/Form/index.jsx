@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useParams, useHistory } from 'react-router-dom';
-import Button from '../../Shared/Button';
-import SharedModal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import SharedModal from 'Components/Shared/Modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses } from 'Redux/classes/thunks';
 import { getMembers } from 'Redux/members/thunks';
@@ -11,7 +11,7 @@ import {
   updateSubscription,
   getSubscriptionById
 } from 'Redux/subscriptions/thunks';
-import InputComponent from '../../Shared/Input';
+import InputComponent from 'Components/Shared/Input';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import subscriptionValidation from 'Validations/subscriptions';
@@ -27,7 +27,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
+    mode: 'all',
     resolver: joiResolver(subscriptionValidation),
     defaultValues: {
       classes: '',
@@ -48,7 +48,7 @@ const Form = () => {
   }, [id]);
 
   const handleCancel = () => {
-    history.push('/subscriptions');
+    history.push('/admin/subscriptions');
   };
 
   const showSuccesModal = (data) => {
@@ -99,7 +99,7 @@ const Form = () => {
   };
   const handleCloseAlert = () => {
     if (isSuccess) {
-      history.push('/subscriptions');
+      history.push('/admin/subscriptions');
     } else {
       setShowAlert(false);
     }
@@ -132,9 +132,11 @@ const Form = () => {
           error={errors.member?.message}
         />
         <fieldset className={styles.flexButtons}>
-          <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
           <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
-          <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
+          <div className={styles.cleanButtons}>
+            <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
+            <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
+          </div>
         </fieldset>
       </form>
       {showAlert && (
