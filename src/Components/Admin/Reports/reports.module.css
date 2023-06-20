@@ -6,11 +6,3 @@
   gap: 5rem;
   align-items: center;
 }
-.progressBar {
-  display: flex;
-  gap: 3rem;
-  align-items: center;
-}
-.h2 {
-  width: 20%;
-}

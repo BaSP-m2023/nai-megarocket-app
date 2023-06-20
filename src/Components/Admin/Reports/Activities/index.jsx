@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import ProgressBar from './ProgressBar';
-import styles from '../reports.module.css';
+import styles from './activities.module.css';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
-import newstyles from './activities.module.css';
 
 const Activities = () => {
   const dispatch = useDispatch();
@@ -37,11 +36,11 @@ const Activities = () => {
     : [];
 
   return (
-    <div className={newstyles.container}>
+    <div className={styles.container}>
       {uniqueActivities.map((activityName, idx) => (
         <div key={idx} className={styles.progressBar}>
           <h2 className={styles.h2}>{activityName}</h2>
-          <ProgressBar completed={activityCount[activityName] * 5} />
+          <ProgressBar completed={activityCount[activityName] * 3.14} />
         </div>
       ))}
     </div>
