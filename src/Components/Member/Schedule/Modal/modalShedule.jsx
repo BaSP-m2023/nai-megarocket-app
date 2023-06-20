@@ -35,13 +35,12 @@ const Modal = (data) => {
         setAlertMessage(error.message);
       }
     } else {
-      const currentDate = new Date();
-      const newSuscription = {
-        classes: data.idClass,
-        member: data.idMember,
-        date: currentDate
-      };
       try {
+        const newSuscription = {
+          classes: data.idClass,
+          member: data.idMember,
+          date: new Date()
+        };
         await dispatch(createSubscription(newSuscription));
         setShowAlert(true);
         setIsSuccess(true);
