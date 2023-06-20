@@ -9,7 +9,8 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import activityValidation from 'Validations/activities';
 import { joiResolver } from '@hookform/resolvers/joi';
-import Container from 'Components/Container';
+import Container from 'Components/Shared/Container';
+import SharedForm from 'Components/Shared/Form';
 
 const Form = () => {
   const history = useHistory();
@@ -98,9 +99,9 @@ const Form = () => {
 
   return (
     <Container>
-      <div className={styles.container}>
-        <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
-        <form className={styles.formActivity} onSubmit={handleSubmit(onSubmit)}>
+      <SharedForm onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.container}>
+          <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
           <InputComponent
             register={register}
             inputName="name"
@@ -124,16 +125,16 @@ const Form = () => {
             <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
             <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
           </div>
-        </form>
-        <SharedModal
-          show={showModal}
-          typeStyle={typeStyle}
-          title={titleModal}
-          body={bodyModal}
-          isDelete={false}
-          closeModal={onConfirm}
-        />
-      </div>
+          <SharedModal
+            show={showModal}
+            typeStyle={typeStyle}
+            title={titleModal}
+            body={bodyModal}
+            isDelete={false}
+            closeModal={onConfirm}
+          />
+        </div>
+      </SharedForm>
     </Container>
   );
 };

@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { getActivities, deleteActivities } from 'Redux/activities/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
-import Container from 'Components/Container';
+import Container from 'Components/Shared/Container';
 
 const Activities = () => {
   const history = useHistory();
