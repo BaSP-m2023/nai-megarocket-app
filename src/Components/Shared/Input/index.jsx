@@ -9,7 +9,8 @@ const InputComponent = ({
   labelName,
   placeholder,
   register,
-  error
+  error,
+  disabled
 }) => {
   const renderList = () => (
     <>
@@ -39,6 +40,7 @@ const InputComponent = ({
         autoComplete="off"
         className={error ? styles.formSelectError : styles.formSelect}
         value={value}
+        disabled={disabled}
       >
         {renderList()}
       </select>
@@ -58,6 +60,7 @@ const InputComponent = ({
         type={type}
         value={value}
         placeholder={placeholder}
+        disabled={disabled}
       />
       {error && <p className={styles.errorMsg}>{error}</p>}
     </div>
@@ -65,14 +68,8 @@ const InputComponent = ({
 
   const renderIsActive = () => (
     <div>
-      <label htmlFor={inputName}>{labelName}</label>
-      <input
-        autoComplete="off"
-        {...register(inputName)}
-        id={inputName}
-        name={inputName}
-        type="checkbox"
-      />
+      <label>{labelName}</label>
+      <input {...register(inputName)} name={inputName} type="checkbox" disabled={disabled} />{' '}
       {error && <p className={styles.errorMsg}>{error}</p>}
     </div>
   );
