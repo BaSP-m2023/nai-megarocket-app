@@ -162,13 +162,15 @@ const MemberForm = () => {
                 error={errors.password?.message}
                 disabled={!editMode}
               />
-              <button
-                className={styles.toggleButton}
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaRegEye />}
-              </button>
+              <div className={styles.buttonHideContainer}>
+                <button
+                  className={styles.toggleButton}
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaRegEye />}
+                </button>
+              </div>
             </div>
 
             <Input

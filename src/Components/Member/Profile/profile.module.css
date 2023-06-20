@@ -90,9 +90,15 @@
 .toggleButton {
   display: flex;
   align-items: center;
-  height: 5.5rem;
   font-size: 1vw;
   background-color: inherit;
-  border-radius: none;
   border: none;
+  height: fit-content;
+}
+
+.buttonHideContainer {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
 }
