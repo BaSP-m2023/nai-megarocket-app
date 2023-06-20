@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 const SideBar = () => {
   const [role, setRole] = useState();
   return (
-    <aside>
+    <aside className={styles.aside}>
       <nav className={styles.navbar}>
         <ul className={styles.rutes}>
           {!role && (

@@ -2,15 +2,12 @@
   margin-top: 2rem;
 }
 
-.containerActivity {
-  margin-left: 20%;
-  flex: 1;
+.container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 80%;
-  margin-left: 20%;
-  margin-top: 10%;
+  justify-content: center;
+  align-items: center;
 }
 
 .topContainer {

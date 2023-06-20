@@ -64,7 +64,7 @@ const Activities = () => {
   };
 
   return (
-    <section className={styles.containerActivity}>
+    <section className={styles.container}>
       <div className={styles.topContainer}>
         <h2>Activities</h2>
         <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem} />
