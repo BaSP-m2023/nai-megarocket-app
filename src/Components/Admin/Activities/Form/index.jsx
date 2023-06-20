@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import activityValidation from 'Validations/activities';
 import { joiResolver } from '@hookform/resolvers/joi';
+import Container from 'Components/Container';
 
 const Form = () => {
   const history = useHistory();
@@ -96,42 +97,44 @@ const Form = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
-      <form className={styles.formActivity} onSubmit={handleSubmit(onSubmit)}>
-        <InputComponent
-          register={register}
-          inputName="name"
-          inputType="text"
-          labelName="Activity"
-          placeholder="Activity"
-          error={errors.name?.message}
+    <Container>
+      <div className={styles.container}>
+        <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
+        <form className={styles.formActivity} onSubmit={handleSubmit(onSubmit)}>
+          <InputComponent
+            register={register}
+            inputName="name"
+            inputType="text"
+            labelName="Activity"
+            placeholder="Activity"
+            error={errors.name?.message}
+          />
+          <InputComponent
+            register={register}
+            inputName="description"
+            inputType="text"
+            labelName="Description"
+            placeholder="Description"
+            error={errors.description?.message}
+          />
+          <div className={styles.buttonContainer}>
+            <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
+          </div>
+          <div className={styles.buttons}>
+            <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
+            <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
+          </div>
+        </form>
+        <SharedModal
+          show={showModal}
+          typeStyle={typeStyle}
+          title={titleModal}
+          body={bodyModal}
+          isDelete={false}
+          closeModal={onConfirm}
         />
-        <InputComponent
-          register={register}
-          inputName="description"
-          inputType="text"
-          labelName="Description"
-          placeholder="Description"
-          error={errors.description?.message}
-        />
-        <div className={styles.buttonContainer}>
-          <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
-        </div>
-        <div className={styles.buttons}>
-          <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
-          <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
-        </div>
-      </form>
-      <SharedModal
-        show={showModal}
-        typeStyle={typeStyle}
-        title={titleModal}
-        body={bodyModal}
-        isDelete={false}
-        closeModal={onConfirm}
-      />
-    </div>
+      </div>
+    </Container>
   );
 };
 

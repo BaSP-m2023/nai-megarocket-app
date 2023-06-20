@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { getActivities, deleteActivities } from 'Redux/activities/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
+import Container from 'Components/Container';
 
 const Activities = () => {
   const history = useHistory();
@@ -64,7 +65,7 @@ const Activities = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <Container>
       <div className={styles.topContainer}>
         <h2>Activities</h2>
         <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem} />
@@ -95,7 +96,7 @@ const Activities = () => {
       ) : (
         <h3>There are no activities in the database</h3>
       )}
-    </section>
+    </Container>
   );
 };
 
