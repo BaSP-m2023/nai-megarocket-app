@@ -7,15 +7,37 @@
   margin-top: 6%;
   border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  margin-left: 23%;
+  margin-left: 20%;
   height: auto;
   padding: 1%;
   padding-bottom: 5vh;
 }
 
-.loadingContainer{
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
   width: 70%;
-  margin-top: 6%;
+  margin: 1%;
+  margin-top: 20%;
+  border-radius: 20px;
+  margin-left: 23%;
+  height: auto;
+  padding: 1%;
+  padding-bottom: 5vh;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.loadingContainer{
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 10%;
+  height: 10%;
+  margin-top: 20%;
+  margin-left: 23%;
 }
 
 .header {
