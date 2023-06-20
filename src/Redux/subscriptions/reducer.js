@@ -42,6 +42,11 @@ const subscriptionsReducer = (state = INITIAL_STATE, action) => {
       };
     case types.GET_SUBSCRIPTION_BY_ID_SUCCESS:
     case types.CREATE_SUBSCRIPTION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: [...state.data, action.payload]
+      };
     case types.UPDATE_SUBSCRIPTION_SUCCESS:
     default:
       return state;
