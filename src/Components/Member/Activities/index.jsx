@@ -7,6 +7,12 @@ const Activities = () => {
   const dispatch = useDispatch();
   const activities = useSelector((state) => state.activities.data.data);
 
+  const getColorClass = (index) => {
+    const colorClasses = [styles.cardColor0, styles.cardColor1, styles.cardColor2];
+    const colorIndex = index % colorClasses.length;
+    return colorClasses[colorIndex];
+  };
+
   useEffect(() => {
     dispatch(getActivities());
   }, []);
@@ -22,11 +28,14 @@ const Activities = () => {
     </div>
   ) : (
     <div className={styles.body}>
-      <h1 className={styles.tittle}>Activities</h1>
+      <h1 className={styles.title}>Activities</h1>
       <div className={styles.cardsContainer}>
         {activities.map((activity, idx) => (
-          <div key={idx} className={`${styles.cards} ${styles.cardAnimation}`}>
-            <h2 className={styles.cardTittle}>{activity.name}</h2>
+          <div
+            key={idx}
+            className={`${styles.cards} ${styles.cardAnimation} ${getColorClass(idx)}`}
+          >
+            <h2 className={styles.cardTitle}>{activity.name}</h2>
             <p className={styles.cardDescription}>{activity.description}</p>
           </div>
         ))}
