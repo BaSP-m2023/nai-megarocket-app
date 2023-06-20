@@ -11,32 +11,28 @@ const Activities = () => {
     dispatch(getActivities());
   }, []);
 
-  if (!activities) {
-    return (
-      <div className={styles.bodyNotAvailable}>
-        <div>
-          <h2 className={styles.noActivitiesTitle}>No available activities</h2>
-          <p className={styles.noActivitiesParagraph}>
-            Sorry, at this moment we have no published activities.
-          </p>
-        </div>
+  return !activities ? (
+    <div className={styles.bodyNotAvailable}>
+      <div>
+        <h2 className={styles.noActivitiesTitle}>No available activities</h2>
+        <p className={styles.noActivitiesParagraph}>
+          Sorry, at this moment we have no published activities.
+        </p>
       </div>
-    );
-  } else {
-    return (
-      <div className={styles.body}>
-        <h1 className={styles.tittle}>Activities</h1>
-        <div className={styles.cardsContainer}>
-          {activities.map((activity, idx) => (
-            <div key={idx} className={styles.cards}>
-              <h2 className={styles.cardTittle}>{activity.name}</h2>
-              <p className={styles.cardDescription}>{activity.description}</p>
-            </div>
-          ))}
-        </div>
+    </div>
+  ) : (
+    <div className={styles.body}>
+      <h1 className={styles.tittle}>Activities</h1>
+      <div className={styles.cardsContainer}>
+        {activities.map((activity, idx) => (
+          <div key={idx} className={`${styles.cards} ${styles.cardAnimation}`}>
+            <h2 className={styles.cardTittle}>{activity.name}</h2>
+            <p className={styles.cardDescription}>{activity.description}</p>
+          </div>
+        ))}
       </div>
-    );
-  }
+    </div>
+  );
 };
 
 export default Activities;

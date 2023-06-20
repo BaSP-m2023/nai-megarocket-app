@@ -21,7 +21,7 @@
 .cards {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin: 0 1rem 1rem 0;
   width: 10rem;
@@ -36,7 +36,7 @@
 }
 
 .cardDescription {
-  height: 8rem;
+  height: fit-content;
 }
 
 .bodyNotAvailable {
@@ -54,4 +54,19 @@
 
 .noActivitiesParagraph {
   text-align: center;
+}
+
+.cardAnimation {
+  animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
