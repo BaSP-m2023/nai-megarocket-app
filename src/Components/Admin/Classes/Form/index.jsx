@@ -57,13 +57,13 @@ const Form = () => {
     try {
       const response = await dispatch(getClassById(id));
       const classData = response.data;
-      delete classData._id;
-      delete classData.createdAt;
-      delete classData.updatedAt;
-      delete classData.__v;
-      classData.day = Object.values(classData.day).join(',');
-      classData.trainer = classData.trainer._id;
-      classData.activity = classData.activity._id;
+      delete classData?._id;
+      delete classData?.createdAt;
+      delete classData?.updatedAt;
+      delete classData?.__v;
+      classData.day = Object.values(classData?.day).join(',');
+      classData.trainer = classData.trainer?._id;
+      classData.activity = classData.activity?._id;
       reset(classData);
     } catch (error) {
       showErrorModal(error);

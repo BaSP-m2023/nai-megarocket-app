@@ -209,7 +209,7 @@ const MemberForm = () => {
           <div className={styles.buttonContainer}>
             <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
             <div className={styles.buttonsLowContainer}>
-              <Button text={'Cancel'} type={'cancel'} clickAction={handleCancel} />
+              <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
               <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
             </div>
           </div>
