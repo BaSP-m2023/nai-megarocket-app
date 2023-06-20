@@ -27,15 +27,25 @@ const Activities = () => {
       </div>
     </div>
   ) : (
-    <div className={styles.body}>
-      <h1 className={styles.title}>Activities</h1>
+    <div className={styles.container}>
+      <div className={styles.headerContainer}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Activities</h1>
+          <div className={styles.line}></div>
+          <p className={styles.paragraph}>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          </p>
+        </div>
+      </div>
+
       <div className={styles.cardsContainer}>
         {activities.map((activity, idx) => (
           <div
             key={idx}
-            className={`${styles.cards} ${styles.cardAnimation} ${getColorClass(idx)}`}
+            className={`${styles.card} ${styles.cardsAnimation} ${getColorClass(idx)}`}
           >
             <h2 className={styles.cardTitle}>{activity.name}</h2>
+            <hr />
             <p className={styles.cardDescription}>{activity.description}</p>
           </div>
         ))}
