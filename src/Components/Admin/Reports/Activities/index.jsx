@@ -27,7 +27,6 @@ const Activities = () => {
       activityCount[activityName] = (activityCount[activityName] || 0) + 1;
     });
 
-    // Verificar si no se encontraron actividades
     if (Object.keys(activityCount).length === 0) {
       activityCount['No activity'] = 1;
     }
@@ -37,7 +36,6 @@ const Activities = () => {
     ? Array.from(new Set(subscriptions.map((item) => item.classes?.activity?.name)))
     : [];
 
-  console.log(uniqueActivities);
   return (
     <div className={newstyles.container}>
       {uniqueActivities.map((activityName, idx) => (
