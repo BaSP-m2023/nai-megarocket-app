@@ -36,11 +36,13 @@ const Modal = (data) => {
       }
     } else {
       try {
+        const newDate = new Date();
         const newSuscription = {
           classes: data.idClass,
           member: data.idMember,
-          date: new Date()
+          date: newDate.setHours(newDate.getHours() - 3)
         };
+        console.log(newDate);
         await dispatch(createSubscription(newSuscription));
         setShowAlert(true);
         setIsSuccess(true);
