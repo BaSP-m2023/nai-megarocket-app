@@ -10,7 +10,6 @@ const Activities = () => {
   useEffect(() => {
     dispatch(getActivities());
   }, []);
-  console.log('activities: ', activities);
 
   if (!activities) {
     return (
