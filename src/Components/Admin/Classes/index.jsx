@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { getClasses, deleteClass } from 'Redux/classes/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
+import Container from 'Components/Shared/Container';
 
 const Classes = () => {
   const history = useHistory();
@@ -52,7 +53,7 @@ const Classes = () => {
   };
 
   return (
-    <section className={styles.classesContainer}>
+    <Container>
       <div className={styles.classesSection}>
         <h2>Classes</h2>
         <Button text={'+ Add Class'} type={'add'} clickAction={handleAddClass} />
@@ -88,7 +89,7 @@ const Classes = () => {
       ) : (
         <h3>There are no Classes in the database</h3>
       )}
-    </section>
+    </Container>
   );
 };
 
