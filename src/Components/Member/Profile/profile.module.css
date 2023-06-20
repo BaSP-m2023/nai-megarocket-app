@@ -88,9 +88,11 @@
 }
 
 .toggleButton {
-  border-radius: 20rem;
-  background-color: #0f232e;
-  color: white;
-  align-self: flex-end;
-  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  height: 5.5rem;
+  font-size: 1vw;
+  background-color: inherit;
+  border-radius: none;
+  border: none;
 }

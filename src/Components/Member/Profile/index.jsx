@@ -8,14 +8,14 @@ import SharedModal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
 import memberValidation from 'Validations/members';
+import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 
-const MemberForm = ({ memberData }) => {
+const MemberForm = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [showUnsavedChangesModal, setShowUnsavedChangesModal] = useState(false);
   const dispatch = useDispatch();
   const membership = ['Black', 'Gold', 'Silver'];
   const {
@@ -33,7 +33,7 @@ const MemberForm = ({ memberData }) => {
     if (id) {
       fetchMemberById(id);
     }
-  }, [id, memberData]);
+  }, []);
 
   const fetchMemberById = async (id) => {
     try {
@@ -94,14 +94,7 @@ const MemberForm = ({ memberData }) => {
 
   const handleDisableEditMode = () => {
     setEditMode(false);
-    reset(memberData);
-  };
-
-  const handleCloseUnsavedChangesModal = (discardChanges) => {
-    setShowUnsavedChangesModal(false);
-    if (discardChanges) {
-      handleDisableEditMode();
-    }
+    reset();
   };
 
   return (
@@ -115,15 +108,6 @@ const MemberForm = ({ memberData }) => {
           typeStyle={isSuccess ? 'success' : 'error'}
           title={isSuccess ? 'Success' : 'Something went wrong'}
           body={alertMessage}
-        />
-        <SharedModal
-          show={showUnsavedChangesModal}
-          closeModal={() => handleCloseUnsavedChangesModal(false)}
-          onConfirm={() => handleCloseUnsavedChangesModal(true)}
-          typeStyle="default"
-          isDelete={true}
-          title="Unsaved Changes"
-          body="You have unsaved changes. Do you want to discard the changes?"
         />
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
@@ -183,7 +167,7 @@ const MemberForm = ({ memberData }) => {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? 'Hide' : 'Show'}
+                {showPassword ? <FaEyeSlash /> : <FaRegEye />}
               </button>
             </div>
 
