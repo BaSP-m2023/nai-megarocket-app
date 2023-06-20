@@ -35,7 +35,7 @@ const AdminProfile = () => {
     if (id) {
       fetchAdminById(id);
     }
-  }, [id]);
+  }, []);
 
   const fetchAdminById = async (id) => {
     try {
