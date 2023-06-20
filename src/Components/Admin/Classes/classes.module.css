@@ -127,3 +127,25 @@
   font-weight: normal;
   font-size: 0.9rem;
 }
+
+.header button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2vh;
+  width: 10vw;
+  font-weight: normal;
+  border-radius: 10px;
+  background-color: #fddba1;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}

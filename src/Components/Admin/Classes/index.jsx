@@ -109,17 +109,16 @@ const Classes = () => {
 
   return (
     <section className={styles.classesContainer}>
-      <div className={styles.classesSection}>
-        <h2>Classes</h2>
-        <Button text={'+ Add Class'} type={'add'} clickAction={handleAddClass} />
-      </div>
       {isLoading ? (
         <ClipLoader />
       ) : classes ? (
         <>
           <div className={styles.container}>
             <div className={styles.header}>
-              <h2 className={styles.title}>Scheduled Classes</h2>
+              <div className={styles.titleContainer}>
+                <h2 className={styles.title}>Scheduled Classes</h2>
+                <Button text={'+ Add Class'} type={'add'} clickAction={handleAddClass} />
+              </div>
               <div className={styles.select}>
                 <label htmlFor="activity">Select Activity: </label>
                 <select

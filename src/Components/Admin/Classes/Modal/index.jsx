@@ -35,10 +35,8 @@ const CalendarModal = (data) => {
         <h3 className={styles.h3Container}>{data.title}</h3>
         <p className={styles.pContainer}>{data.body}</p>
         <div className={styles.buttonContainer}>
-          <>
-            <Button type="confirm" text={'Edit'} clickAction={onCloseModal} />
-            <Button type="confirm" text={'Delete'} clickAction={onConfirm} />
-          </>
+          <Button type="confirm" text={'Edit'} clickAction={onCloseModal} />
+          <Button type="confirm" text={'Delete'} clickAction={onConfirm} />
         </div>
       </div>
     </div>
