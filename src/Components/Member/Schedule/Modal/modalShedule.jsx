@@ -39,7 +39,7 @@ const Modal = (data) => {
       const newSuscription = {
         classes: data.idClass,
         member: data.idMember,
-        date: currentDate.toISOString()
+        date: currentDate
       };
       try {
         await dispatch(createSubscription(newSuscription));
