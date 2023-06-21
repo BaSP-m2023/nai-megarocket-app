@@ -105,67 +105,42 @@ const AdminTrainerForm = () => {
         <div className={styles.headContainer}>
           <h2>{id ? 'Update Trainer' : 'Add Trainer'}</h2>
         </div>
-        <div className={styles.container}>
-          <div>
-            <Input
-              register={register}
-              labelName={'Name'}
-              inputType={'text'}
-              inputName={'firstName'}
-              error={errors.firstName?.message}
-            />
-            <Input
-              register={register}
-              labelName={'Last Name'}
-              inputType={'text'}
-              inputName={'lastName'}
-              error={errors.lastName?.message}
-            />
-            <Input
-              register={register}
-              labelName={'DNI'}
-              inputType={'number'}
-              inputName={'dni'}
-              error={errors.dni?.message}
-            />
-            <Input
-              register={register}
-              labelName={'Phone Number'}
-              inputType={'number'}
-              inputName={'phone'}
-              error={errors.phone?.message}
-            />
-          </div>
-          <div>
-            <Input
-              register={register}
-              labelName={'Email'}
-              inputType={'text'}
-              inputName={'email'}
-              error={errors.email?.message}
-            />
-            <Input
-              register={register}
-              labelName={'City'}
-              inputType={'text'}
-              inputName={'city'}
-              error={errors.city?.message}
-            />
-            <Input
-              register={register}
-              labelName={'Salary'}
-              inputType={'number'}
-              inputName={'salary'}
-              error={errors.salary?.message}
-            />
-            <Input
-              register={register}
-              labelName={'Password'}
-              inputType={'text'}
-              inputName={'password'}
-              error={errors.password?.message}
-            />
-          </div>
+        <div>
+          <Input
+            register={register}
+            labelName={'Email'}
+            inputType={'text'}
+            inputName={'email'}
+            error={errors.email?.message}
+          />
+          <Input
+            register={register}
+            labelName={'City'}
+            inputType={'text'}
+            inputName={'city'}
+            error={errors.city?.message}
+          />
+          <Input
+            register={register}
+            labelName={'Salary'}
+            inputType={'number'}
+            inputName={'salary'}
+            error={errors.salary?.message}
+          />
+          <Input
+            register={register}
+            labelName={'Password'}
+            inputType={'text'}
+            inputName={'password'}
+            error={errors.password?.message}
+          />
+          <Input
+            register={register}
+            labelName={'Active ?'}
+            inputType={'isActive'}
+            inputName={'isActive'}
+            error={errors.isActive}
+          />
         </div>
         <div>
           <div className={styles.buttons}>
@@ -176,15 +151,25 @@ const AdminTrainerForm = () => {
               <Button type={'cancel'} clickAction={handleReset} text={'Reset'} info={'reset'} />
             </div>
           </div>
+          <div>
+            <div className={styles.buttons}>
+              <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
+
+              <div className={styles.buttonsLow}>
+                <Button text="Back" type="cancel" clickAction={handleCancel} />
+                <Button type={'cancel'} clickAction={handleReset} text={'Reset'} info={'reset'} />
+              </div>
+            </div>
+          </div>
+          <SharedModal
+            show={showModal}
+            title={id ? 'Edit Trainer' : 'Add Trainer'}
+            body={modalMessage}
+            isDelete={false}
+            typeStyle={modalTypeStyle}
+            closeModal={handleCloseModal}
+          />
         </div>
-        <SharedModal
-          show={showModal}
-          title={id ? 'Edit Trainer' : 'Add Trainer'}
-          body={modalMessage}
-          isDelete={false}
-          typeStyle={modalTypeStyle}
-          closeModal={handleCloseModal}
-        />
       </SharedForm>
     </Container>
   );

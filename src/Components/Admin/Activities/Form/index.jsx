@@ -84,7 +84,7 @@ const Form = () => {
     }
   };
 
-  const onConfirm = () => {
+  /*   const onConfirm = () => {
     if (isSuccess) {
       history.push('/admin/activities');
       setIsSuccess(true);
@@ -95,44 +95,37 @@ const Form = () => {
 
   const handleCancel = () => {
     history.push('/admin/activities');
-  };
+  }; */
 
   return (
     <Container>
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.container}>
-          <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
-          <InputComponent
-            register={register}
-            inputName="name"
-            inputType="text"
-            labelName="Activity"
-            placeholder="Activity"
-            error={errors.name?.message}
-          />
-          <InputComponent
-            register={register}
-            inputName="description"
-            inputType="text"
-            labelName="Description"
-            placeholder="Description"
-            error={errors.description?.message}
-          />
-          <div className={styles.buttonContainer}>
-            <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
-          </div>
-          <div className={styles.buttons}>
-            <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
-            <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
-          </div>
-          <SharedModal
-            show={showModal}
-            typeStyle={typeStyle}
-            title={titleModal}
-            body={bodyModal}
-            isDelete={false}
-            closeModal={onConfirm}
-          />
+        <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
+        <InputComponent
+          register={register}
+          inputName="name"
+          inputType="text"
+          labelName="Activity"
+          placeholder="Activity"
+          error={errors.name?.message}
+        />
+        <InputComponent
+          register={register}
+          inputName="description"
+          inputType="text"
+          labelName="Description"
+          placeholder="Description"
+          error={errors.description?.message}
+        />
+        <InputComponent
+          register={register}
+          labelName={'Active ?'}
+          inputType={'isActive'}
+          inputName={'isActive'}
+          error={errors.isActive}
+        />
+        <div className={styles.buttonContainer}>
+          <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
         </div>
       </SharedForm>
     </Container>
