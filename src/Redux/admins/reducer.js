@@ -121,14 +121,6 @@ const adminsReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: action.payload
       };
-
-    // case POST_ADMIN_SUCCESS:
-    //   return {
-    //     ...state,
-    //     isAddingMember: false,
-    //     data: [...state.data.data, action.payload.member],
-    //     addMemberError: null
-    //   };
     default:
       return state;
   }
