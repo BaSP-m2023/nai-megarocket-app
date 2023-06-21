@@ -76,11 +76,6 @@ const SideBar = () => {
                       Admins
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/super-admins`}>
-                      Super Admins
-                    </NavLink>
-                  </li>
                 </>
               )}
 

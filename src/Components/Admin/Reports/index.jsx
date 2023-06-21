@@ -3,7 +3,7 @@ import Activities from './Activities';
 import ButtonGroup from './Buttons';
 import ReportsMemberships from './Memberships';
 import ReportsMembers from './Members';
-import styles from './reports.module.css';
+import Container from 'Components/Shared/Container';
 
 const Reports = () => {
   const [activeComponent, setActiveComponent] = useState('activities');
@@ -22,10 +22,10 @@ const Reports = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <Container>
       <ButtonGroup setActiveComponent={setActiveComponent} />
       {renderComponent()}
-    </div>
+    </Container>
   );
 };
 

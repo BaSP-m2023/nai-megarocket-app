@@ -2,12 +2,9 @@
   display: flex;
   flex-direction: column;
   align-self: center;
-  width: 70%;
   margin: 1%;
-  margin-top: 7%;
   border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  margin-left: 20%;
   height: auto;
   padding: 1%;
   padding-bottom: 5vh;
@@ -30,7 +27,7 @@
   font-weight: bold;
 }
 
-.loadingContainer{
+.loadingContainer {
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -64,7 +61,7 @@
 }
 
 .hourColumn {
-  background-color: #F7F9ED;
+  background-color: #f7f9ed;
   border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   text-align: center;
@@ -80,49 +77,49 @@
 .classesButton {
   width: 100%;
   border-radius: 5px;
-  background-color: #FDDBA1;
-  color:#0F232E;
+  background-color: #fddba1;
+  color: #0f232e;
   cursor: pointer;
   border: none;
   font-size: 0.9rem;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 .addedButton {
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
   width: 100%;
   border-radius: 5px;
-  background-color: #F9A414;
-  color:#0F232E;
+  background-color: #f9a414;
+  color: #0f232e;
   font-size: 0.9rem;
   border: none;
   cursor: pointer;
 }
 
 .classesButton:hover {
-  background-color: #F9A414;
+  background-color: #f9a414;
 }
 
 .title {
   text-align: center;
   font-size: 1.2rem;
-  margin:0;
+  margin: 0;
 }
 
-.select{
+.select {
   font-size: 1rem;
   height: auto;
-  font-weight:normal;
+  font-weight: normal;
   border-radius: 10px;
-  background-color: #FDDBA1;
+  background-color: #fddba1;
   text-align: center;
 }
 
 .selectLabel {
   font-size: 1rem;
-  font-weight:bold;
+  font-weight: bold;
 }
 
 .buttonText {
@@ -130,13 +127,13 @@
   font-weight: bold;
 }
 
-.headerTable th{
+.headerTable th {
   width: 10%;
   border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 1% 0 1% 0;
-  background-color:#0F232E;
-  color: #F7F9ED;
+  background-color: #0f232e;
+  color: #f7f9ed;
   font-weight: normal;
   font-size: 0.9rem;
 }

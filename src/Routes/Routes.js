@@ -2,10 +2,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from 'Components/Home';
 
-import SuperAdminSuperAdmins from 'Components/SuperAdmin/SuperAdmins';
 import SuperAdminAdmins from 'Components/SuperAdmin/Admins/index';
 import SuperAdminAdminsForm from 'Components/SuperAdmin/Admins/Form';
-import SuperAdminSuperAdminsForm from 'Components/SuperAdmin/SuperAdmins/Form';
 
 import MemberActivities from 'Components/Member/Activities';
 import MemberMembership from 'Components/Member/Memberships';
@@ -37,13 +35,6 @@ const Routes = () => {
           <Route exact path="/super-admin/admins" component={SuperAdminAdmins} />
           <Route exact path="/super-admin/admins/form" component={SuperAdminAdminsForm} />
           <Route path="/super-admin/admins/form/:id" component={SuperAdminAdminsForm} />
-          <Route exact path="/super-admin/super-admins" component={SuperAdminSuperAdmins} />
-          <Route
-            exact
-            path="/super-admin/super-admins/form"
-            component={SuperAdminSuperAdminsForm}
-          />
-          <Route path="/super-admin/super-admins/form/:id" component={SuperAdminSuperAdminsForm} />
         </Route>
 
         <Route path="/member">

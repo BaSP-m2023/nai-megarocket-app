@@ -5,6 +5,8 @@
   height: 10vh;
   background-color: #0f232e;
   width: 100vw;
+  position: sticky;
+  top: 0;
 }
 
 .brand {

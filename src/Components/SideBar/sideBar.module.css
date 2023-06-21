@@ -2,12 +2,16 @@
   display: flex;
   flex-direction: column;
   width: 15vw;
-  min-height: 100%;
+  position: sticky;
   background-color: #0f232e;
+  top: 10vh;
+  height: 100%;
 }
 .navbar {
   display: flex;
-  height: 100%;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
 }
 .rutes {
   display: flex;
