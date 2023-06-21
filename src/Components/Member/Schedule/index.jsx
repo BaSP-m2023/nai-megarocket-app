@@ -165,15 +165,17 @@ const Schedule = () => {
   return (
     <>
       {loading ? (
-        <div className={styles.loadingContainer}>
+        <Container>
           <ClipLoader />
-        </div>
+        </Container>
       ) : (
         <>
           {error ? (
-            <div className={styles.errorContainer}>
-              <p>An error occurred while loading the data.</p>
-            </div>
+            <Container>
+              <div className={styles.errorContainer}>
+                <p>An error occurred while loading the data.</p>
+              </div>
+            </Container>
           ) : (
             <Container>
               <div className={styles.container}>
