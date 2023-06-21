@@ -1,0 +1,142 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-self: center;
+  width: 70%;
+  margin-top: 10%;
+  margin-left: 20%;
+  margin-bottom: 2%;
+  border-radius: 5px;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+}
+
+.headerContainer {
+  width: 90%;
+  margin-top: 1.5rem;
+  margin-left: 3rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.2rem;
+  color: #f9a414;
+  animation: slideInFromTop 0.5s ease;
+}
+.line {
+  width: 100%;
+  height: 0.1rem;
+  margin-bottom: 2rem;
+  background-color: #f9a414;
+}
+
+.paragraph {
+  font-size: 1rem;
+  margin-bottom: 3rem;
+  animation: slideInFromTop 0.8s ease;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem 1rem;
+  color: #ffffff;
+  gap: 2rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 10rem;
+  margin: 0 1rem 1rem 0;
+  padding: 0 2rem 2rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+  color: white;
+}
+
+.card:hover {
+  box-shadow: 0 0 20px rgb(133, 133, 133);
+  cursor: pointer;
+}
+
+.cardColor0 {
+background-color: #f9a414;
+}
+
+.cardColor1 {
+  background-color: #0f232ef5;
+}
+
+.cardColor2 {
+  background-color: #9FA7AB;
+}
+
+.cardTitle {
+  letter-spacing: 0.2rem;
+}
+
+.card > hr {
+  width: 80%;
+  height: 0.1rem;
+  background-color: rgb(255, 255, 255);
+  margin: 1rem auto;
+}
+
+.cardDescription {
+  height: fit-content;
+}
+
+.bodyNotAvailable {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20%;
+  margin-top: 10rem;
+}
+
+.noActivitiesTitle {
+  text-align: center;
+}
+
+.noActivitiesParagraph {
+  text-align: center;
+}
+
+.cardsAnimation {
+  animation: fadeIn 0.35s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes moveCardUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-1rem);
+  }
+}
