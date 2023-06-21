@@ -33,11 +33,11 @@ const Activities = () => {
           <h1 className={styles.title}>Activities</h1>
           <div className={styles.line}></div>
           <p className={styles.paragraph}>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            These are all the activities available. If you want to try any of them subscribe to a
+            class!
           </p>
         </div>
       </div>
-
       <div className={styles.cardsContainer}>
         {activities.map((activity, idx) => (
           <div
