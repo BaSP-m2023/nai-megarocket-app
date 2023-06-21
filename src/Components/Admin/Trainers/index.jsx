@@ -78,8 +78,15 @@ const Trainers = () => {
           ) : trainers.length > 0 ? (
             <Table
               data={trainers}
-              properties={['firstName', 'lastName', 'phone', 'email', 'salary']}
-              columnTitles={['First Name', 'Last Name', 'Phone Number', 'Email', 'Salary']}
+              properties={['firstName', 'lastName', 'phone', 'email', 'salary', 'isActive']}
+              columnTitles={[
+                'First Name',
+                'Last Name',
+                'Phone Number',
+                'Email',
+                'Salary',
+                'Active'
+              ]}
               handleUpdateItem={editItem}
               handleDeleteItem={handleDelete}
             />

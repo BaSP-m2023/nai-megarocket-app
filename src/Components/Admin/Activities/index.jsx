@@ -75,8 +75,8 @@ const Activities = () => {
         <>
           <Table
             data={activities}
-            properties={['name', 'description']}
-            columnTitles={['Name', 'Description']}
+            properties={['name', 'description', 'isActive']}
+            columnTitles={['Name', 'Description', 'Active']}
             handleUpdateItem={handleEditItem}
             handleDeleteItem={handleDeleteClick}
           />
@@ -93,7 +93,7 @@ const Activities = () => {
           )}
         </>
       ) : (
-        <h3>There are no activities in the database</h3>
+        <h3>There are no activities</h3>
       )}
     </section>
   );
