@@ -9,6 +9,7 @@ import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import SharedModal from 'Components/Shared/Modal';
 import Input from 'Components/Shared/Input';
+import Container from 'Components/Shared/Container';
 
 const Form = () => {
   const history = useHistory();
@@ -103,95 +104,96 @@ const Form = () => {
   };
 
   return (
-    <div className={styles.formContainer}>
-      <h2 className={styles.formTitle}>{id ? 'Update Admin' : 'Add Admin'}</h2>
+    <Container>
+      <div className={styles.formContainer}>
+        <h2 className={styles.formTitle}>{id ? 'Update Admin' : 'Add Admin'}</h2>
+        <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.firstInputs}>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'Name'}
+                inputType={'text'}
+                inputName={'firstName'}
+                error={errors.firstName?.message}
+              />
+            </div>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'Last Name'}
+                inputType={'text'}
+                inputName={'lastName'}
+                error={errors.lastName?.message}
+              />
+            </div>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'DNI'}
+                inputType={'number'}
+                inputName={'dni'}
+                error={errors.dni?.message}
+              />
+            </div>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'Phone Number'}
+                inputType={'number'}
+                inputName={'phone'}
+                error={errors.phone?.message}
+              />
+            </div>
+          </div>
+          <div className={styles.secondInputs}>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'Email'}
+                inputType={'text'}
+                inputName={'email'}
+                error={errors.email?.message}
+              />
+            </div>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'City'}
+                inputType={'text'}
+                inputName={'city'}
+                error={errors.city?.message}
+              />
+            </div>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'Password'}
+                inputType={'text'}
+                inputName={'password'}
+                error={errors.password?.message}
+              />
+            </div>
+          </div>
+          <div className={styles.buttonsDiv}>
+            <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
+            <div className={styles.buttonsAdmin}>
+              <Button text="Back" type="cancel" clickAction={handleCancel} />
+              <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
+            </div>
+          </div>
 
-      <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.firstInputs}>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'Name'}
-              inputType={'text'}
-              inputName={'firstName'}
-              error={errors.firstName?.message}
-            />
-          </div>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'Last Name'}
-              inputType={'text'}
-              inputName={'lastName'}
-              error={errors.lastName?.message}
-            />
-          </div>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'DNI'}
-              inputType={'number'}
-              inputName={'dni'}
-              error={errors.dni?.message}
-            />
-          </div>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'Phone Number'}
-              inputType={'number'}
-              inputName={'phone'}
-              error={errors.phone?.message}
-            />
-          </div>
-        </div>
-        <div className={styles.secondInputs}>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'Email'}
-              inputType={'text'}
-              inputName={'email'}
-              error={errors.email?.message}
-            />
-          </div>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'City'}
-              inputType={'text'}
-              inputName={'city'}
-              error={errors.city?.message}
-            />
-          </div>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'Password'}
-              inputType={'text'}
-              inputName={'password'}
-              error={errors.password?.message}
-            />
-          </div>
-        </div>
-        <div className={styles.buttonsDiv}>
-          <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
-          <div className={styles.buttonsAdmin}>
-            <Button text="Back" type="cancel" clickAction={handleCancel} />
-            <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
-          </div>
-        </div>
-
-        <SharedModal
-          isDelete={false}
-          show={showAlert}
-          closeModal={handleCloseAlert}
-          typeStyle={isSuccess ? 'success' : 'error'}
-          title={isSuccess ? 'Success' : 'Something went wrong'}
-          body={alertMessage}
-        />
-      </form>
-    </div>
+          <SharedModal
+            isDelete={false}
+            show={showAlert}
+            closeModal={handleCloseAlert}
+            typeStyle={isSuccess ? 'success' : 'error'}
+            title={isSuccess ? 'Success' : 'Something went wrong'}
+            body={alertMessage}
+          />
+        </form>
+      </div>
+    </Container>
   );
 };
 

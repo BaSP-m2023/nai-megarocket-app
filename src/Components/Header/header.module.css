@@ -2,10 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10%;
+  height: 10vh;
   background-color: #0f232e;
-  width: 100%;
-  z-index: 2;
+  width: 100vw;
 }
 
 .brand {

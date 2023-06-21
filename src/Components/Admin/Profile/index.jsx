@@ -9,6 +9,7 @@ import Button from 'Components/Shared/Button';
 import SharedModal from 'Components/Shared/Modal';
 import Input from 'Components/Shared/Input';
 import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
+import Container from 'Components/Shared/Container';
 
 const AdminProfile = () => {
   const dispatch = useDispatch();
@@ -84,119 +85,121 @@ const AdminProfile = () => {
   };
 
   return (
-    <div className={styles.formContainer}>
-      <h2 className={styles.formTitleTwo}>admin data</h2>
+    <Container>
+      <div className={styles.formContainer}>
+        <h2 className={styles.formTitleTwo}>admin data</h2>
 
-      <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.firstInputs}>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'Name'}
-              inputType={'text'}
-              inputName={'firstName'}
-              error={errors.firstName?.message}
-              disabled={!editMode}
-            />
+        <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.firstInputs}>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'Name'}
+                inputType={'text'}
+                inputName={'firstName'}
+                error={errors.firstName?.message}
+                disabled={!editMode}
+              />
+            </div>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'Last Name'}
+                inputType={'text'}
+                inputName={'lastName'}
+                error={errors.lastName?.message}
+                disabled={!editMode}
+              />
+            </div>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'DNI'}
+                inputType={'number'}
+                inputName={'dni'}
+                error={errors.dni?.message}
+                disabled={!editMode}
+              />
+            </div>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'Phone Number'}
+                inputType={'number'}
+                inputName={'phone'}
+                error={errors.phone?.message}
+                disabled={!editMode}
+              />
+            </div>
           </div>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'Last Name'}
-              inputType={'text'}
-              inputName={'lastName'}
-              error={errors.lastName?.message}
-              disabled={!editMode}
-            />
+          <div className={styles.secondInputs}>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'Email'}
+                inputType={'text'}
+                inputName={'email'}
+                error={errors.email?.message}
+                disabled={!editMode}
+              />
+            </div>
+            <div className={styles.formInput}>
+              <Input
+                register={register}
+                labelName={'City'}
+                inputType={'text'}
+                inputName={'city'}
+                error={errors.city?.message}
+                disabled={!editMode}
+              />
+            </div>
+            <div className={styles.formInput} style={{ display: 'flex', gap: '10px' }}>
+              <Input
+                register={register}
+                labelName={'Password'}
+                inputType={showPassword ? 'text' : 'password'}
+                inputName={'password'}
+                error={errors.password?.message}
+                disabled={!editMode}
+              />
+              <button
+                className={styles.toggleButton}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaRegEye />}
+              </button>
+            </div>
           </div>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'DNI'}
-              inputType={'number'}
-              inputName={'dni'}
-              error={errors.dni?.message}
-              disabled={!editMode}
-            />
+          <div className={styles.buttonContainer}>
+            {!editMode && (
+              <Button
+                className={styles.editButton}
+                text={'Edit'}
+                type={'submit'}
+                clickAction={handleEnableEditMode}
+              />
+            )}
+            {editMode && (
+              <>
+                <div className={styles.buttonsLowContainer}>
+                  <Button text={'Cancel'} type={'cancel'} clickAction={handleDisableEditMode} />
+                  <Button text={'Confirm'} type={'submit'} info={'submit'} />
+                </div>
+              </>
+            )}
           </div>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'Phone Number'}
-              inputType={'number'}
-              inputName={'phone'}
-              error={errors.phone?.message}
-              disabled={!editMode}
-            />
-          </div>
-        </div>
-        <div className={styles.secondInputs}>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'Email'}
-              inputType={'text'}
-              inputName={'email'}
-              error={errors.email?.message}
-              disabled={!editMode}
-            />
-          </div>
-          <div className={styles.formInput}>
-            <Input
-              register={register}
-              labelName={'City'}
-              inputType={'text'}
-              inputName={'city'}
-              error={errors.city?.message}
-              disabled={!editMode}
-            />
-          </div>
-          <div className={styles.formInput} style={{ display: 'flex', gap: '10px' }}>
-            <Input
-              register={register}
-              labelName={'Password'}
-              inputType={showPassword ? 'text' : 'password'}
-              inputName={'password'}
-              error={errors.password?.message}
-              disabled={!editMode}
-            />
-            <button
-              className={styles.toggleButton}
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaRegEye />}
-            </button>
-          </div>
-        </div>
-        <div className={styles.buttonContainer}>
-          {!editMode && (
-            <Button
-              className={styles.editButton}
-              text={'Edit'}
-              type={'submit'}
-              clickAction={handleEnableEditMode}
-            />
-          )}
-          {editMode && (
-            <>
-              <div className={styles.buttonsLowContainer}>
-                <Button text={'Cancel'} type={'cancel'} clickAction={handleDisableEditMode} />
-                <Button text={'Confirm'} type={'submit'} info={'submit'} />
-              </div>
-            </>
-          )}
-        </div>
-        <SharedModal
-          isDelete={false}
-          show={showAlert}
-          closeModal={handleCloseAlert}
-          typeStyle={isSuccess ? 'success' : 'error'}
-          title={isSuccess ? 'Success' : 'Something went wrong'}
-          body={alertMessage}
-        />
-      </form>
-    </div>
+          <SharedModal
+            isDelete={false}
+            show={showAlert}
+            closeModal={handleCloseAlert}
+            typeStyle={isSuccess ? 'success' : 'error'}
+            title={isSuccess ? 'Success' : 'Something went wrong'}
+            body={alertMessage}
+          />
+        </form>
+      </div>
+    </Container>
   );
 };
 

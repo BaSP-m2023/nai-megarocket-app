@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { getMembers, deleteMember } from 'Redux/members/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
+import Container from 'Components/Shared/Container';
 
 const Members = () => {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const Members = () => {
     history.push(`/admin/members/form/${id}`);
   };
   return (
-    <section className={styles.membersContainer}>
+    <Container>
       <div className={styles.membersSection}>
         <h2>Members</h2>
         <Button text={'+ Add Member'} type={'add'} clickAction={handleAdd} />
@@ -87,7 +88,7 @@ const Members = () => {
       ) : (
         <p>No data available.</p>
       )}
-    </section>
+    </Container>
   );
 };
 

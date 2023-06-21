@@ -1,22 +1,23 @@
 .aside {
   display: flex;
   flex-direction: column;
-  width: 20%;
+  width: 15vw;
   min-height: 100%;
   background-color: #0f232e;
 }
 .navbar {
+  display: flex;
   height: 100%;
 }
 .rutes {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-around;
   align-self: center;
-  align-items: center;
+  gap: 8vh;
+  max-height: 100%;
+  list-style-type: none;
+  padding-left: 1rem;
+  flex-direction: column;
 }
-
 .rutes > li > a {
   position: relative;
   font-size: 1.2rem;
@@ -53,7 +54,7 @@
 }
 
 .button {
-  width: 12rem;
+  width: 90%;
   padding: 2rem;
   background-color: #f9a414;
   border: solid 1px;
