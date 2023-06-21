@@ -84,7 +84,7 @@ const Form = () => {
     }
   };
 
-  /*   const onConfirm = () => {
+  const onConfirm = () => {
     if (isSuccess) {
       history.push('/admin/activities');
       setIsSuccess(true);
@@ -95,7 +95,7 @@ const Form = () => {
 
   const handleCancel = () => {
     history.push('/admin/activities');
-  }; */
+  };
 
   return (
     <Container>
@@ -127,7 +127,19 @@ const Form = () => {
         <div className={styles.buttonContainer}>
           <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
         </div>
+        <div className={styles.buttons}>
+          <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
+          <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
+        </div>
       </SharedForm>
+      <SharedModal
+        show={showModal}
+        typeStyle={typeStyle}
+        title={titleModal}
+        body={bodyModal}
+        isDelete={false}
+        closeModal={onConfirm}
+      />
     </Container>
   );
 };
