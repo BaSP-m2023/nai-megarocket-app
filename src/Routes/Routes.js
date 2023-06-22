@@ -1,6 +1,7 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from 'Components/Home';
+import Login from 'Components/Login';
 
 import SuperAdminSuperAdmins from 'Components/SuperAdmin/SuperAdmins';
 import SuperAdminAdmins from 'Components/SuperAdmin/Admins/index';
@@ -33,6 +34,7 @@ const Routes = () => {
     <>
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Login} />
         <Route path="/super-admin">
           <Route exact path="/super-admin/admins" component={SuperAdminAdmins} />
           <Route exact path="/super-admin/admins/form" component={SuperAdminAdminsForm} />
