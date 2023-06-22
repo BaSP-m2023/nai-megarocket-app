@@ -22,7 +22,6 @@ const Schedule = () => {
   }));
   const loading = useSelector((state) => state.members.loading);
   const [memberData, setMemberData] = useState(null);
-  const [suscriptionsMember, setSuscriptionsMember] = useState('');
   const [activity, setActivity] = useState('');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -32,7 +31,7 @@ const Schedule = () => {
     day: '',
     trainer: '',
     slot: '',
-    added: false,
+    slotCount: '',
     idSuscription: '',
     idClass: '',
     idMember: ''
@@ -70,10 +69,8 @@ const Schedule = () => {
         setError(true);
       }
     };
-    if (!showModal) {
-      fetchData();
-    }
-  }, [showModal]);
+    fetchData();
+  }, []);
 
   const getMemberData = async () => {
     try {
@@ -87,69 +84,47 @@ const Schedule = () => {
   };
 
   useEffect(() => {
-    if (activities.length > 0 && !suscriptionsMember) {
+    if (activities.length > 0) {
       setActivity(activities[0].name);
     }
   }, [activities]);
 
-  useEffect(() => {
-    if (subscriptions.length > 0 && memberData) {
-      getMemberClasses(memberData);
-    }
-  }, [activity, memberData, subscriptions]);
-
-  const getMemberClasses = (memberData) => {
-    const memberSubscriptions = subscriptions.filter(
-      (sub) => sub.member && sub.member._id === memberData._id
-    );
-
-    if (memberSubscriptions.length > 0) {
-      const classIds = memberSubscriptions?.map((sub) => sub.classes && sub.classes._id);
-      setSuscriptionsMember(classIds);
-    } else {
-      console.error('Subscriptions not found');
-    }
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const handleActivityChange = (e) => {
-    setActivity(e.target.value);
-  };
-
   const getClassButton = (hour, day) => {
-    const classItem = classes.find(
+    const classItem = classes?.find(
       (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
     );
-    const classMemberFound = suscriptionsMember.includes(classItem?._id);
 
     if (classItem) {
-      const suscriptionFound = subscriptions.filter(
-        (sub) => sub.member?._id === memberData?._id && sub.classes?._id === classItem?._id
+      const suscriptionFound = subscriptions?.find(
+        (item) => item.classes?._id === classItem?._id && item.member?._id === memberData?._id
       );
+
+      const subscriptionsForClass = subscriptions?.filter(
+        (item) => item.classes?._id === classItem?._id
+      );
+
+      const slotCount = subscriptionsForClass.length;
 
       return (
         <div
-          className={classMemberFound ? styles.addedButton : styles.classesButton}
           onClick={() => {
             setShowModal(true);
             setInfoClass(() => ({
               hour: classItem.hour,
-              trainer: `${classItem.trainer.firstName} ${classItem.trainer.lastName}`,
+              trainer: `${classItem.trainer?.firstName} ${classItem.trainer?.lastName}`,
               slot: classItem.slots,
+              slotCount: slotCount,
               day: classItem.day,
-              added: classMemberFound ? true : false,
-              idSuscription: suscriptionFound[0]?._id,
+              idSuscription: suscriptionFound?._id,
               idClass: classItem?._id,
               idMember: memberData?._id
             }));
           }}
+          className={suscriptionFound ? styles.addedButton : styles.classesButton}
         >
           <div className={styles.buttonText}>{activity}</div>
-          {classItem.trainer.firstName}
-          {classMemberFound && (
+          {classItem.trainer?.firstName}
+          {suscriptionFound && (
             <div>
               <BsCheckCircleFill /> Subscribed
             </div>
@@ -159,6 +134,14 @@ const Schedule = () => {
     } else {
       return <div className={styles.emptyButton}></div>;
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleActivityChange = (e) => {
+    setActivity(e.target.value);
   };
 
   return (
@@ -179,22 +162,24 @@ const Schedule = () => {
                 <h2 className={styles.title}>
                   Scheduled Classes - Member: {memberData?.firstName}
                 </h2>
-                <div>
+                <div className={styles.selectContainer}>
                   <label className={styles.selectLabel} htmlFor="activity">
                     Select Activity:{' '}
                   </label>
-                  <select
-                    className={styles.select}
-                    id="activity"
-                    value={activity}
-                    onChange={handleActivityChange}
-                  >
-                    {activities?.map((activityItem, index) => (
-                      <option value={activityItem.name} key={index}>
-                        {activityItem.name}
-                      </option>
-                    ))}
-                  </select>
+                  <div>
+                    <select
+                      className={styles.select}
+                      id="activity"
+                      value={activity}
+                      onChange={handleActivityChange}
+                    >
+                      {activities?.map((activityItem, index) => (
+                        <option value={activityItem?.name} key={index}>
+                          {activityItem?.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
               <table>
@@ -232,9 +217,9 @@ const Schedule = () => {
         day={infoClass.day}
         hour={infoClass.hour}
         slot={infoClass.slot}
+        slotCount={infoClass.slotCount}
         trainer={infoClass.trainer}
         activity={activity}
-        added={infoClass.added}
         idSuscription={infoClass.idSuscription}
         idClass={infoClass.idClass}
         idMember={infoClass.idMember}

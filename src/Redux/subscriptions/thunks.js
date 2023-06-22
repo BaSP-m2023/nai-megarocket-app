@@ -83,7 +83,7 @@ export const createSubscription = (subscription) => async (dispatch) => {
     if (!response.ok) {
       throw new Error(data.message);
     }
-    dispatch(createSubscriptionSuccess({ subscription }));
+    dispatch(createSubscriptionSuccess(data.data));
     return data;
   } catch (error) {
     dispatch(createSubscriptionError(error));

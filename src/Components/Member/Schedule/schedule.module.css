@@ -111,9 +111,16 @@
   margin:0;
 }
 
+.selectContainer{
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+}
 .select{
   font-size: 1rem;
+  width: 150px;
   height: auto;
+  padding: 1%;
   font-weight:normal;
   border-radius: 10px;
   background-color: #FDDBA1;
@@ -121,8 +128,9 @@
 }
 
 .selectLabel {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight:bold;
+  padding-right: 2%;
 }
 
 .buttonText {
