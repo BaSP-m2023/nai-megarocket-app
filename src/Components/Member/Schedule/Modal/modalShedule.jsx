@@ -75,8 +75,10 @@ const Modal = (data) => {
           <span className={styles.space}></span>
           {data.trainer}
         </div>
-        {data.slot < data.slotCount ? (
-          <div className={styles.slotsFull}>Slots full</div>
+        {data.slot <= data.slotCount ? (
+          <div className={styles.slotsFull}>
+            Slots full {data.slotCount} / {data.slot}
+          </div>
         ) : (
           <div className={styles.center}>
             Slots: {data.slotCount} / {data.slot}
@@ -90,7 +92,7 @@ const Modal = (data) => {
           <div className={styles.center}>You are not in this class</div>
         )}
         <div className={styles.buttonContainer}>
-          {data.slot < data.slotCount ? (
+          {data.slot <= data.slotCount ? (
             <Button type="cancel" text={<>Back</>} clickAction={onCloseModal} />
           ) : (
             <Button
