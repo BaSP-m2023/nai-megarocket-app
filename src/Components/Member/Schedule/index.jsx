@@ -30,6 +30,7 @@ const Schedule = () => {
     Hour: '',
     day: '',
     trainer: '',
+    activity: '',
     slot: '',
     slotCount: '',
     idSuscription: '',
@@ -70,6 +71,7 @@ const Schedule = () => {
       }
     };
     fetchData();
+    setActivity('all');
   }, []);
 
   const getMemberData = async () => {
@@ -83,16 +85,15 @@ const Schedule = () => {
     }
   };
 
-  useEffect(() => {
-    if (activities.length > 0) {
-      setActivity(activities[0].name);
-    }
-  }, [activities]);
-
   const getClassButton = (hour, day) => {
-    const classItem = classes?.find(
-      (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
-    );
+    let classItem;
+    if (activity === 'all') {
+      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
+    } else {
+      classItem = classes?.find(
+        (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
+      );
+    }
 
     if (classItem) {
       const suscriptionFound = subscriptions?.find(
@@ -112,6 +113,7 @@ const Schedule = () => {
             setInfoClass(() => ({
               hour: classItem.hour,
               trainer: `${classItem.trainer?.firstName} ${classItem.trainer?.lastName}`,
+              activity: classItem.activity?.name,
               slot: classItem.slots,
               slotCount: slotCount,
               day: classItem.day,
@@ -122,13 +124,14 @@ const Schedule = () => {
           }}
           className={suscriptionFound ? styles.addedButton : styles.classesButton}
         >
-          <div className={styles.buttonText}>{activity}</div>
+          <div className={styles.buttonText}>{classItem.activity?.name}</div>
           {classItem.trainer?.firstName}
           {suscriptionFound && (
-            <div>
+            <div className={styles.slots}>
               <BsCheckCircleFill /> Subscribed
             </div>
           )}
+          <div className={styles.slotsFull}>{classItem.slots <= slotCount && <div>Full</div>}</div>
         </div>
       );
     } else {
@@ -164,7 +167,7 @@ const Schedule = () => {
                 </h2>
                 <div className={styles.selectContainer}>
                   <label className={styles.selectLabel} htmlFor="activity">
-                    Select Activity:{' '}
+                    Filter by activity:{' '}
                   </label>
                   <div>
                     <select
@@ -173,6 +176,7 @@ const Schedule = () => {
                       value={activity}
                       onChange={handleActivityChange}
                     >
+                      <option value="all">All</option>
                       {activities?.map((activityItem, index) => (
                         <option value={activityItem?.name} key={index}>
                           {activityItem?.name}
@@ -219,7 +223,7 @@ const Schedule = () => {
         slot={infoClass.slot}
         slotCount={infoClass.slotCount}
         trainer={infoClass.trainer}
-        activity={activity}
+        activity={infoClass.activity}
         idSuscription={infoClass.idSuscription}
         idClass={infoClass.idClass}
         idMember={infoClass.idMember}
