@@ -110,6 +110,7 @@ const Form = () => {
   const handleReset = () => {
     reset();
   };
+  const validClasses = classes.filter((item) => item.activity);
 
   return (
     <Container>
@@ -119,7 +120,7 @@ const Form = () => {
           inputName="classes"
           inputType="list"
           labelName="Classes"
-          list={classes}
+          list={validClasses}
           listProp={'activity.name'}
           register={register}
           error={errors.classes?.message}

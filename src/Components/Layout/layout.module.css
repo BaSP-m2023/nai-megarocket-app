@@ -3,3 +3,10 @@
   min-height: 90vh;
   width: 100vw;
 }
+
+.container > span {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  color: rgb(42, 20, 208);
+}
