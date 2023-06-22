@@ -4,11 +4,9 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 import Home from 'Components/Home';
 
-const SuperAdminSuperAdmins = lazy(() => import('Components/SuperAdmin/SuperAdmins'));
 const SuperAdminAdmins = lazy(() => import('Components/SuperAdmin/Admins/index'));
 
 const SuperAdminAdminsForm = lazy(() => import('Components/SuperAdmin/Admins/Form'));
-const SuperAdminSuperAdminsForm = lazy(() => import('Components/SuperAdmin/SuperAdmins/Form'));
 
 const MemberActivities = lazy(() => import('Components/Member/Activities'));
 const MemberMembership = lazy(() => import('Components/Member/Memberships'));
@@ -41,16 +39,6 @@ const Routes = () => {
             <Route exact path="/super-admin/admins" component={SuperAdminAdmins} />
             <Route exact path="/super-admin/admins/form" component={SuperAdminAdminsForm} />
             <Route path="/super-admin/admins/form/:id" component={SuperAdminAdminsForm} />
-            <Route exact path="/super-admin/super-admins" component={SuperAdminSuperAdmins} />
-            <Route
-              exact
-              path="/super-admin/super-admins/form"
-              component={SuperAdminSuperAdminsForm}
-            />
-            <Route
-              path="/super-admin/super-admins/form/:id"
-              component={SuperAdminSuperAdminsForm}
-            />
           </Route>
 
           <Route path="/member">
