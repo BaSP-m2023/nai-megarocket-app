@@ -13,6 +13,7 @@
 
 .modalContentDefault {
   display: flex;
+  width: 20%;
   flex-direction: column;
   padding: 30px;
   background-color: #0F232E;
@@ -63,20 +64,34 @@
 }
 
 .trainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 5%;
+  margin-top: 1%;
   font-size: 1.3rem;;
   text-align: center;
   border-bottom: 1px solid #F7F9ED;;
+}
+
+.trainerIcon {
+  margin-top: 1%;
 }
 
 .space {
   margin-right: 10px;
 }
 
+.centerTitle{
+  text-align: center;
+  margin-top: 1%;
+  font-size: 1.5rem;;
+}
+
 .center{
   text-align: center;
   margin-top: 5%;
-  font-size: 1rem;;
+  font-size: 1.2rem;;
 }
 
 .closeContainer {
@@ -95,5 +110,13 @@
   margin-top: 5%;
   font-size: 1rem;
   color: #28b81a;
+  font-weight: bold;
+}
+
+.slotsFull {
+  text-align: center;
+  margin-top: 5%;
+  font-size: 1.3rem;
+  color: #f52821;
   font-weight: bold;
 }

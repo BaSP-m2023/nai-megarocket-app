@@ -78,31 +78,42 @@
 }
 
 .classesButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  padding: 2%;
+  text-align: center;
   border-radius: 5px;
   background-color: #FDDBA1;
   color:#0F232E;
   cursor: pointer;
-  border: none;
   font-size: 0.9rem;
-  margin:0;
-  padding:0;
 }
 
 .addedButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   margin:0;
   padding:0;
-  width: 100%;
-  border-radius: 5px;
   background-color: #F9A414;
+  border-radius: 5px;
   color:#0F232E;
   font-size: 0.9rem;
-  border: none;
   cursor: pointer;
 }
 
+
 .classesButton:hover {
-  background-color: #F9A414;
+  background-color: #c7ac7d;
+}
+
+.addedButton:hover {
+  background-color: #ca8611;
 }
 
 .title {
@@ -111,9 +122,16 @@
   margin:0;
 }
 
+.selectContainer{
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+}
 .select{
   font-size: 1rem;
+  width: 150px;
   height: auto;
+  padding: 1%;
   font-weight:normal;
   border-radius: 10px;
   background-color: #FDDBA1;
@@ -121,8 +139,9 @@
 }
 
 .selectLabel {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight:bold;
+  padding-right: 2%;
 }
 
 .buttonText {
@@ -139,4 +158,41 @@
   color: #F7F9ED;
   font-weight: normal;
   font-size: 0.9rem;
+}
+
+.slotsFull {
+  display: flex;
+  width: 25%;
+  text-align: center;
+  justify-content: center;
+  color: #E0E4DB;
+  background-color:#f52821 ;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0;
+}
+
+.slots {
+  padding: 1%;
+  color: #0F232E;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.styleActivity1 {
+  background-color: #8D9795;
+}
+
+.styleActivity2 {
+  background-color: #9FA7AB;
+}
+
+.styleActivity3 {
+  background-color: #E0E4DB;
+}
+
+.styleActivity4 {
+  background-color: #F9A414;
 }

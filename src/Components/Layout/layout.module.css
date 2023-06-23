@@ -3,3 +3,10 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.container > span {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  color: rgb(42, 20, 208);
+}

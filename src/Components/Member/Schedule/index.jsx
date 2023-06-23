@@ -22,7 +22,6 @@ const Schedule = () => {
   }));
   const loading = useSelector((state) => state.members.loading);
   const [memberData, setMemberData] = useState(null);
-  const [suscriptionsMember, setSuscriptionsMember] = useState('');
   const [activity, setActivity] = useState('');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -31,8 +30,9 @@ const Schedule = () => {
     Hour: '',
     day: '',
     trainer: '',
+    activity: '',
     slot: '',
-    added: false,
+    slotCount: '',
     idSuscription: '',
     idClass: '',
     idMember: ''
@@ -70,10 +70,9 @@ const Schedule = () => {
         setError(true);
       }
     };
-    if (!showModal) {
-      fetchData();
-    }
-  }, [showModal]);
+    fetchData();
+    setActivity('all');
+  }, []);
 
   const getMemberData = async () => {
     try {
@@ -86,28 +85,57 @@ const Schedule = () => {
     }
   };
 
-  useEffect(() => {
-    if (activities.length > 0 && !suscriptionsMember) {
-      setActivity(activities[0].name);
-    }
-  }, [activities]);
-
-  useEffect(() => {
-    if (subscriptions.length > 0 && memberData) {
-      getMemberClasses(memberData);
-    }
-  }, [activity, memberData, subscriptions]);
-
-  const getMemberClasses = (memberData) => {
-    const memberSubscriptions = subscriptions.filter(
-      (sub) => sub.member && sub.member._id === memberData._id
-    );
-
-    if (memberSubscriptions.length > 0) {
-      const classIds = memberSubscriptions?.map((sub) => sub.classes && sub.classes._id);
-      setSuscriptionsMember(classIds);
+  const getClassButton = (hour, day) => {
+    let classItem;
+    if (activity === 'all') {
+      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
     } else {
-      console.error('Subscriptions not found');
+      classItem = classes?.find(
+        (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
+      );
+    }
+
+    if (classItem) {
+      const suscriptionFound = subscriptions?.find(
+        (item) => item.classes?._id === classItem?._id && item.member?._id === memberData?._id
+      );
+
+      const subscriptionsForClass = subscriptions?.filter(
+        (item) => item.classes?._id === classItem?._id
+      );
+
+      const slotCount = subscriptionsForClass.length;
+
+      return (
+        <div
+          onClick={() => {
+            setShowModal(true);
+            setInfoClass(() => ({
+              hour: classItem.hour,
+              trainer: `${classItem.trainer?.firstName} ${classItem.trainer?.lastName}`,
+              activity: classItem.activity?.name,
+              slot: classItem.slots,
+              slotCount: slotCount,
+              day: classItem.day,
+              idSuscription: suscriptionFound?._id,
+              idClass: classItem?._id,
+              idMember: memberData?._id
+            }));
+          }}
+          className={suscriptionFound ? styles.addedButton : styles.classesButton}
+        >
+          <div className={styles.buttonText}>{classItem.activity?.name}</div>
+          {classItem.trainer?.firstName}
+          {suscriptionFound && (
+            <div className={styles.slots}>
+              <BsCheckCircleFill /> Subscribed
+            </div>
+          )}
+          <div className={styles.slotsFull}>{classItem.slots <= slotCount && <div>Full</div>}</div>
+        </div>
+      );
+    } else {
+      return <div className={styles.emptyButton}></div>;
     }
   };
 
@@ -117,48 +145,6 @@ const Schedule = () => {
 
   const handleActivityChange = (e) => {
     setActivity(e.target.value);
-  };
-
-  const getClassButton = (hour, day) => {
-    const classItem = classes.find(
-      (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
-    );
-    const classMemberFound = suscriptionsMember.includes(classItem?._id);
-
-    if (classItem) {
-      const suscriptionFound = subscriptions.filter(
-        (sub) => sub.member?._id === memberData?._id && sub.classes?._id === classItem?._id
-      );
-
-      return (
-        <div
-          className={classMemberFound ? styles.addedButton : styles.classesButton}
-          onClick={() => {
-            setShowModal(true);
-            setInfoClass(() => ({
-              hour: classItem.hour,
-              trainer: `${classItem.trainer.firstName} ${classItem.trainer.lastName}`,
-              slot: classItem.slots,
-              day: classItem.day,
-              added: classMemberFound ? true : false,
-              idSuscription: suscriptionFound[0]?._id,
-              idClass: classItem?._id,
-              idMember: memberData?._id
-            }));
-          }}
-        >
-          <div className={styles.buttonText}>{activity}</div>
-          {classItem.trainer.firstName}
-          {classMemberFound && (
-            <div>
-              <BsCheckCircleFill /> Subscribed
-            </div>
-          )}
-        </div>
-      );
-    } else {
-      return <div className={styles.emptyButton}></div>;
-    }
   };
 
   return (
@@ -179,22 +165,25 @@ const Schedule = () => {
                 <h2 className={styles.title}>
                   Scheduled Classes - Member: {memberData?.firstName}
                 </h2>
-                <div>
+                <div className={styles.selectContainer}>
                   <label className={styles.selectLabel} htmlFor="activity">
-                    Select Activity:{' '}
+                    Filter by activity:{' '}
                   </label>
-                  <select
-                    className={styles.select}
-                    id="activity"
-                    value={activity}
-                    onChange={handleActivityChange}
-                  >
-                    {activities?.map((activityItem, index) => (
-                      <option value={activityItem.name} key={index}>
-                        {activityItem.name}
-                      </option>
-                    ))}
-                  </select>
+                  <div>
+                    <select
+                      className={styles.select}
+                      id="activity"
+                      value={activity}
+                      onChange={handleActivityChange}
+                    >
+                      <option value="all">All</option>
+                      {activities?.map((activityItem, index) => (
+                        <option value={activityItem?.name} key={index}>
+                          {activityItem?.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
               <table>
@@ -232,9 +221,9 @@ const Schedule = () => {
         day={infoClass.day}
         hour={infoClass.hour}
         slot={infoClass.slot}
+        slotCount={infoClass.slotCount}
         trainer={infoClass.trainer}
-        activity={activity}
-        added={infoClass.added}
+        activity={infoClass.activity}
         idSuscription={infoClass.idSuscription}
         idClass={infoClass.idClass}
         idMember={infoClass.idMember}
