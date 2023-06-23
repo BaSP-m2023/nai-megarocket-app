@@ -20,7 +20,7 @@ const Modal = (data) => {
     if (type === 'success') {
       data.toast.success(message, {
         duration: 2500,
-        position: 'bottom-left',
+        position: 'top-right',
         style: {
           background: '#fddba1'
         },
@@ -32,7 +32,7 @@ const Modal = (data) => {
     } else if (type === 'error') {
       data.toast.error(message, {
         duration: 2500,
-        position: 'bottom-left',
+        position: 'top-right',
         style: {
           background: 'rgba(227, 23, 10, 0.5)'
         },

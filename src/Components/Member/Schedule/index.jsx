@@ -167,7 +167,7 @@ const Schedule = () => {
             <Container>
               <Toaster
                 containerStyle={{
-                  margin: '0 0 0 15vw'
+                  margin: '10vh 0 0 0'
                 }}
               />
               <div className={styles.container}>
@@ -175,7 +175,7 @@ const Schedule = () => {
                   <h2 className={styles.title}>
                     Scheduled Classes - Member: {memberData?.firstName}
                   </h2>
-                  <div>
+                  <div className={styles.filterActivity}>
                     <label className={styles.selectLabel} htmlFor="activity">
                       Filter by activity:{' '}
                     </label>

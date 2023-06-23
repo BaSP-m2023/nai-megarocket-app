@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { putAdmin, postAdmin } from 'Redux/admins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,8 +16,6 @@ const Form = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const admins = useSelector((state) => state.admins.data);
-
-  const [showAlert, setShowAlert] = useState(false);
 
   const {
     register,
@@ -59,7 +57,7 @@ const Form = () => {
   const showErrorToast = (message) => {
     toast.error(message, {
       duration: 2500,
-      position: 'bottom-left',
+      position: 'top-right',
       style: {
         background: 'rgba(227, 23, 10, 0.5)'
       },
@@ -90,11 +88,7 @@ const Form = () => {
     }
   };
 
-  const handleCancel = () => {
-    if (showAlert) {
-      setShowAlert(false);
-    }
-    setShowAlert(false);
+  const handleBack = () => {
     history.push('/super-admin/admins');
   };
   const handleReset = () => {
@@ -105,7 +99,7 @@ const Form = () => {
     <Container>
       <Toaster
         containerStyle={{
-          margin: '0 0 0 15vw'
+          margin: '10vh 0 0 0'
         }}
       />
       <div className={styles.formContainer}>
@@ -181,7 +175,7 @@ const Form = () => {
           <div className={styles.buttonsDiv}>
             <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
             <div className={styles.buttonsAdmin}>
-              <Button text="Back" type="cancel" clickAction={handleCancel} />
+              <Button text="Back" type="cancel" clickAction={handleBack} />
               <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
             </div>
           </div>

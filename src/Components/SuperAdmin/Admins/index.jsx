@@ -34,7 +34,7 @@ const Admins = () => {
     if (type === 'success') {
       toast.success(message, {
         duration: 2500,
-        position: 'bottom-left',
+        position: 'top-right',
         style: {
           background: '#fddba1'
         },
@@ -46,7 +46,7 @@ const Admins = () => {
     } else if (type === 'error') {
       toast.error(message, {
         duration: 2500,
-        position: 'bottom-left',
+        position: 'top-right',
         style: {
           background: 'rgba(227, 23, 10, 0.5)'
         },
@@ -94,7 +94,7 @@ const Admins = () => {
     <Container>
       <Toaster
         containerStyle={{
-          margin: '0 0 0 15vw'
+          margin: '10vh 0 0 0'
         }}
       />
       <div className={styles.topAdminContainer}>
