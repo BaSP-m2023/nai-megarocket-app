@@ -2,27 +2,27 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### WEEK 11
+## WEEK 11
 
-## REACT
+### REACT
 
 On this week we started a new project using REACT since by using React, reusable components can be created, facilitating a modular structure for the webpage and improving efficiency in code development and maintenance. Additionally, React offers optimal performance by updating only the components affected by changes in state, enhancing the webpage's speed. Its extensive community and complementary resources also provide robust support and enable the expansion of webpage functionalities. In summary, implementing React in a webpage ensures a smooth user experience, cleaner code, and more efficient development.
 
-### WEEK 12
+## WEEK 12
 
-## REACT ROUTE
+### REACT ROUTE
 
 On this week we implemented REACT ROUTE since enable easy navigation between components and views. It allows defining routes and associating them with specific components, providing a seamless user experience with multiple pages or sections. With advanced features like nested routing, dynamic parameter management, and protected routes, React Router offers complete control over navigation and enhances the structure and usability of React applications.
 
-### WEEK 13
+## WEEK 13
 
-## REDUX
+### REDUX
 
 We have revamped the application's state management by implementing Redux. Previously, each component had its own state, which made the code harder to read and maintain. However, with Redux, we now have a centralized global state called the store, and state modifications are handled exclusively through reducers. This has led to more efficient and cleaner code by eliminating "prop drilling" and simplifying data flow between components. Redux has significantly improved code organization and overall code cleanliness.
 
-### WEEK 14
+## WEEK 14
 
-## REACT HOOK FORM
+### REACT HOOK FORM
 
 We implemented React Hook Form is a powerful form validation library for React that offers a concise and intuitive approach to form handling. By utilizing React's hooks, it provides a simple and declarative API for managing form state, validation rules, and error handling. With its efficient rendering and minimal re-renders, React Hook Form ensures optimal performance. Additionally, it supports various validation techniques such as schema-based validation and custom validation functions, making it highly flexible and adaptable to different project requirements.
 
