@@ -3,6 +3,7 @@ import React, { Suspense, lazy } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import Home from 'Components/Home';
+import Login from 'Components/Login';
 
 const SuperAdminAdmins = lazy(() => import('Components/SuperAdmin/Admins/index'));
 
@@ -35,6 +36,7 @@ const Routes = () => {
       <Suspense fallback={<ClipLoader />}>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
           <Route path="/super-admin">
             <Route exact path="/super-admin/admins" component={SuperAdminAdmins} />
             <Route exact path="/super-admin/admins/form" component={SuperAdminAdminsForm} />
