@@ -18,6 +18,7 @@
   background-color: #0f232e;
   color: #f7f9ed;
   border-radius: 9px;
+  margin-left: 15vw;
 }
 
 .modalContentError {
@@ -27,6 +28,7 @@
   background-color: #e93528;
   border-radius: 9px;
   max-width: 50%;
+  margin-left: 15vw;
 }
 
 .modalContentSuccess {
@@ -35,6 +37,7 @@
   padding: 30px;
   background-color: #fddba1;
   border-radius: 9px;
+  margin-left: 15vw;
 }
 
 .buttonContainer {
