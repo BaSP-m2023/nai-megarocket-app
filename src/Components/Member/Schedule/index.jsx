@@ -163,54 +163,56 @@ const Schedule = () => {
               </div>
             </Container>
           ) : (
-            <div className={styles.container}>
-              <div className={styles.header}>
-                <h2 className={styles.title}>
-                  Scheduled Classes - Member: {memberData?.firstName}
-                </h2>
-                <div>
-                  <label className={styles.selectLabel} htmlFor="activity">
-                    Select Activity:{' '}
-                  </label>
-                  <select
-                    className={styles.select}
-                    id="activity"
-                    value={activity}
-                    onChange={handleActivityChange}
-                  >
-                    {activities?.map((activityItem, index) => (
-                      <option value={activityItem.name} key={index}>
-                        {activityItem.name}
-                      </option>
-                    ))}
-                  </select>
+            <Container>
+              <div className={styles.container}>
+                <div className={styles.header}>
+                  <h2 className={styles.title}>
+                    Scheduled Classes - Member: {memberData?.firstName}
+                  </h2>
+                  <div>
+                    <label className={styles.selectLabel} htmlFor="activity">
+                      Select Activity:{' '}
+                    </label>
+                    <select
+                      className={styles.select}
+                      id="activity"
+                      value={activity}
+                      onChange={handleActivityChange}
+                    >
+                      {activities?.map((activityItem, index) => (
+                        <option value={activityItem.name} key={index}>
+                          {activityItem.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <table>
-                <thead>
-                  <tr className={styles.headerTable}>
-                    <th>Hours</th>
-                    {daysOfWeek?.map((day) => (
-                      <th key={day}>{day}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {hoursOfDay?.map((hour) => (
-                    <tr key={hour.value}>
-                      <td className={styles.hourColumn}>{hour.label} </td>
+                <table>
+                  <thead>
+                    <tr className={styles.headerTable}>
+                      <th>Hours</th>
                       {daysOfWeek?.map((day) => (
-                        <td className={styles.column} key={day}>
-                          <div className={styles.buttonContainer}>
-                            {getClassButton(hour.label, day)}
-                          </div>
-                        </td>
+                        <th key={day}>{day}</th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {hoursOfDay?.map((hour) => (
+                      <tr key={hour.value}>
+                        <td className={styles.hourColumn}>{hour.label} </td>
+                        {daysOfWeek?.map((day) => (
+                          <td className={styles.column} key={day}>
+                            <div className={styles.buttonContainer}>
+                              {getClassButton(hour.label, day)}
+                            </div>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Container>
           )}
         </>
       )}
