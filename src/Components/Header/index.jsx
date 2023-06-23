@@ -6,6 +6,12 @@ function Header() {
       <div className={styles.container}>
         <div className={styles.brand}>MEGAROCKET</div>
         <div>
+          <a href={'/login'} rel="noopener noreferrer">
+            <img
+              className={styles.logIn}
+              src={`${process.env.PUBLIC_URL}/assets/images/log-in.svg`}
+            />
+          </a>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
             <img
               className={styles.socialIcon}
