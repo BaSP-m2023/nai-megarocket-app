@@ -1,83 +1,91 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 import Home from 'Components/Home';
 
-import SuperAdminSuperAdmins from 'Components/SuperAdmin/SuperAdmins';
-import SuperAdminAdmins from 'Components/SuperAdmin/Admins/index';
-import SuperAdminAdminsForm from 'Components/SuperAdmin/Admins/Form';
-import SuperAdminSuperAdminsForm from 'Components/SuperAdmin/SuperAdmins/Form';
+const SuperAdminSuperAdmins = lazy(() => import('Components/SuperAdmin/SuperAdmins'));
+const SuperAdminAdmins = lazy(() => import('Components/SuperAdmin/Admins/index'));
 
-import MemberActivities from 'Components/Member/Activities';
-import MemberMembership from 'Components/Member/Memberships';
-import MemberProfile from 'Components/Member/Profile';
-import MemberSchedule from 'Components/Member/Schedule';
+const SuperAdminAdminsForm = lazy(() => import('Components/SuperAdmin/Admins/Form'));
+const SuperAdminSuperAdminsForm = lazy(() => import('Components/SuperAdmin/SuperAdmins/Form'));
 
-import MemberProfileForm from 'Components/Member/Profile/Form';
+const MemberActivities = lazy(() => import('Components/Member/Activities'));
+const MemberMembership = lazy(() => import('Components/Member/Memberships'));
+const MemberProfile = lazy(() => import('Components/Member/Profile'));
+const MemberSchedule = lazy(() => import('Components/Member/Schedule'));
 
-import AdminActivities from 'Components/Admin/Activities';
-import AdminProfile from 'Components/Admin/Profile/index';
-import AdminClasses from 'Components/Admin/Classes';
-import AdminMembers from 'Components/Admin/Members';
-import AdminReports from 'Components/Admin/Reports';
-import AdminSubscriptions from 'Components/Admin/Subscriptions';
-import AdminTrainers from 'Components/Admin/Trainers';
+const MemberProfileForm = lazy(() => import('Components/Member/Profile/Form'));
 
-import AdminActivitiesForm from 'Components/Admin/Activities/Form';
-import AdminClassesForm from 'Components/Admin/Classes/Form';
-import AdminMembersForm from 'Components/Admin/Members/Form';
-import AdminSubscriptionsForm from 'Components/Admin/Subscriptions/Form';
-import AdminTrainersForm from 'Components/Admin/Trainers/Form';
+const AdminActivities = lazy(() => import('Components/Admin/Activities'));
+const AdminProfile = lazy(() => import('Components/Admin/Profile/index'));
+const AdminClasses = lazy(() => import('Components/Admin/Classes'));
+const AdminMembers = lazy(() => import('Components/Admin/Members'));
+const AdminReports = lazy(() => import('Components/Admin/Reports'));
+const AdminSubscriptions = lazy(() => import('Components/Admin/Subscriptions'));
+const AdminTrainers = lazy(() => import('Components/Admin/Trainers'));
+
+const AdminActivitiesForm = lazy(() => import('Components/Admin/Activities/Form'));
+const AdminClassesForm = lazy(() => import('Components/Admin/Classes/Form'));
+const AdminMembersForm = lazy(() => import('Components/Admin/Members/Form'));
+const AdminSubscriptionsForm = lazy(() => import('Components/Admin/Subscriptions/Form'));
+const AdminTrainersForm = lazy(() => import('Components/Admin/Trainers/Form'));
 
 const Routes = () => {
   return (
     <>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/super-admin">
-          <Route exact path="/super-admin/admins" component={SuperAdminAdmins} />
-          <Route exact path="/super-admin/admins/form" component={SuperAdminAdminsForm} />
-          <Route path="/super-admin/admins/form/:id" component={SuperAdminAdminsForm} />
-          <Route exact path="/super-admin/super-admins" component={SuperAdminSuperAdmins} />
-          <Route
-            exact
-            path="/super-admin/super-admins/form"
-            component={SuperAdminSuperAdminsForm}
-          />
-          <Route path="/super-admin/super-admins/form/:id" component={SuperAdminSuperAdminsForm} />
-        </Route>
+      <Suspense fallback={<ClipLoader />}>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/super-admin">
+            <Route exact path="/super-admin/admins" component={SuperAdminAdmins} />
+            <Route exact path="/super-admin/admins/form" component={SuperAdminAdminsForm} />
+            <Route path="/super-admin/admins/form/:id" component={SuperAdminAdminsForm} />
+            <Route exact path="/super-admin/super-admins" component={SuperAdminSuperAdmins} />
+            <Route
+              exact
+              path="/super-admin/super-admins/form"
+              component={SuperAdminSuperAdminsForm}
+            />
+            <Route
+              path="/super-admin/super-admins/form/:id"
+              component={SuperAdminSuperAdminsForm}
+            />
+          </Route>
 
-        <Route path="/member">
-          <Route path="/member/activities" component={MemberActivities} />
-          <Route path="/member/memberships" component={MemberMembership} />
-          <Route exact path="/member/profile" component={MemberProfile} />
-          <Route path="/member/profile/form/:id" component={MemberProfileForm} />
-          <Route exact path="/member/schedule" component={MemberSchedule} />
-        </Route>
+          <Route path="/member">
+            <Route path="/member/activities" component={MemberActivities} />
+            <Route path="/member/memberships" component={MemberMembership} />
+            <Route exact path="/member/profile" component={MemberProfile} />
+            <Route path="/member/profile/form/:id" component={MemberProfileForm} />
+            <Route exact path="/member/schedule" component={MemberSchedule} />
+          </Route>
 
-        <Route path="/admin">
-          <Route exact path="/admin/activities" component={AdminActivities} />
-          <Route exact path="/admin/activities/form" component={AdminActivitiesForm} />
-          <Route path="/admin/activities/form/:id" component={AdminActivitiesForm} />
-          <Route exact path="/admin/profile" component={AdminProfile} />
-          <Route exact path="/admin/classes" component={AdminClasses} />
-          <Route exact path="/admin/classes/form" component={AdminClassesForm} />
-          <Route path="/admin/classes/form/:id" component={AdminClassesForm} />
-          <Route exact path="/admin/members" component={AdminMembers} />
-          <Route exact path="/admin/members/form" component={AdminMembersForm} />
-          <Route path="/admin/members/form/:id" component={AdminMembersForm} />
-          <Route exact path="/admin/reports" component={AdminReports} />
-          <Route exact path="/admin/subscriptions" component={AdminSubscriptions} />
-          <Route exact path="/admin/subscriptions/form" component={AdminSubscriptionsForm} />
-          <Route path="/admin/subscriptions/form/:id" component={AdminSubscriptionsForm} />
-          <Route exact path="/admin/trainers" component={AdminTrainers} />
-          <Route exact path="/admin/trainers/form" component={AdminTrainersForm} />
-          <Route path="/admin/trainers/form/:id" component={AdminTrainersForm} />
-        </Route>
+          <Route path="/admin">
+            <Route exact path="/admin/activities" component={AdminActivities} />
+            <Route exact path="/admin/activities/form" component={AdminActivitiesForm} />
+            <Route path="/admin/activities/form/:id" component={AdminActivitiesForm} />
+            <Route exact path="/admin/profile" component={AdminProfile} />
+            <Route exact path="/admin/classes" component={AdminClasses} />
+            <Route exact path="/admin/classes/form" component={AdminClassesForm} />
+            <Route path="/admin/classes/form/:id" component={AdminClassesForm} />
+            <Route exact path="/admin/members" component={AdminMembers} />
+            <Route exact path="/admin/members/form" component={AdminMembersForm} />
+            <Route path="/admin/members/form/:id" component={AdminMembersForm} />
+            <Route exact path="/admin/reports" component={AdminReports} />
+            <Route exact path="/admin/subscriptions" component={AdminSubscriptions} />
+            <Route exact path="/admin/subscriptions/form" component={AdminSubscriptionsForm} />
+            <Route path="/admin/subscriptions/form/:id" component={AdminSubscriptionsForm} />
+            <Route exact path="/admin/trainers" component={AdminTrainers} />
+            <Route exact path="/admin/trainers/form" component={AdminTrainersForm} />
+            <Route path="/admin/trainers/form/:id" component={AdminTrainersForm} />
+          </Route>
 
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </Switch>
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+        </Switch>
+      </Suspense>
     </>
   );
 };
