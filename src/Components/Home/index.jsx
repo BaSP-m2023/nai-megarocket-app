@@ -1,10 +1,10 @@
-import styles from './home.module.css';
+import Container from 'Components/Shared/Container';
 
 const Home = () => {
   return (
-    <section className={styles.container}>
-      <h2>Home</h2>
-    </section>
+    <Container>
+      <h2>Welcome to MEGAROCKET</h2>
+    </Container>
   );
 };
 

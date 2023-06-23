@@ -1,32 +1,27 @@
-.navbar {
+.aside {
   display: flex;
   flex-direction: column;
-  width: 20%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  justify-content: space-around;
-  align-items: flex-start;
-  min-height: 100px;
+  width: 15vw;
+  position: sticky;
   background-color: #0f232e;
-  letter-spacing: 0.15em;
-  z-index: 1;
+  top: 10vh;
+  height: 100%;
+}
+.navbar {
+  display: flex;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
 }
 .rutes {
   display: flex;
-  flex-direction: column;
-  gap: 8vh;
-  flex-wrap: nowrap;
-  list-style-type: none;
-  margin-top: 6rem;
-  height: 80%;
-  padding-left: 0px;
-  justify-content: center;
   align-self: center;
-  align-items: flex-start;
+  gap: 8vh;
+  max-height: 100%;
+  list-style-type: none;
+  padding-left: 1rem;
+  flex-direction: column;
 }
-
 .rutes > li > a {
   position: relative;
   font-size: 1.2rem;
@@ -63,10 +58,8 @@
 }
 
 .button {
-  width: 12rem;
+  width: 90%;
   padding: 2rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
   background-color: #f9a414;
   border: solid 1px;
   border-color: #f9a414;
@@ -78,13 +71,13 @@
   font-weight: bold;
 }
 
-.button:hover{
-  background-color: #0f232e;
+.button:hover {
+  background-color: #dfdfdf;
   border: solid 1px;
   border-color: #0f232e;
   color: #f9a414;
 }
-.button::before {  
+.button::before {
   transform: scaleX(0);
   transform-origin: bottom right;
 }
@@ -94,13 +87,17 @@
   transform-origin: bottom left;
 }
 
-.button::before {
-  content: " ";
+/* .button::before {
+  content: ' ';
   display: block;
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   inset: 0 0 0 0;
   background: #ac730f;
   z-index: -1;
-  transition: transform .3s ease;
-}
+  transition: transform 0.3s ease;
+} */

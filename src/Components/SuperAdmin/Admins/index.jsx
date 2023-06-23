@@ -7,6 +7,7 @@ import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button';
 import SharedModal from 'Components/Shared/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
+import Container from 'Components/Shared/Container';
 
 const Admins = () => {
   const history = useHistory();
@@ -61,7 +62,7 @@ const Admins = () => {
   };
 
   return (
-    <section className={styles.adminContainer}>
+    <Container>
       <div className={styles.topAdminContainer}>
         <h2>Admins</h2>
         <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
@@ -101,7 +102,7 @@ const Admins = () => {
           )}
         </>
       )}
-    </section>
+    </Container>
   );
 };
 export default Admins;

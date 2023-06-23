@@ -11,6 +11,8 @@ import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import SharedModal from 'Components/Shared/Modal';
+import Container from 'Components/Shared/Container';
+import SharedForm from 'Components/Shared/Form';
 
 const Form = () => {
   const {
@@ -116,8 +118,8 @@ const Form = () => {
   };
 
   return (
-    <>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <Container>
+      <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.container}>
           <h2>{id ? 'Update Class' : 'Create Class'}</h2>
           <Input
@@ -167,7 +169,7 @@ const Form = () => {
             <Button type={'cancel'} onClick={() => reset()} info={'reset'} text={'Reset'} />
           </div>
         </div>
-      </form>
+      </SharedForm>
 
       <SharedModal
         isDelete={false}
@@ -177,7 +179,7 @@ const Form = () => {
         title={isSuccess ? 'Success' : 'Something went wrong'}
         body={alertMessage}
       />
-    </>
+    </Container>
   );
 };
 

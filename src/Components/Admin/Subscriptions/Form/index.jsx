@@ -15,6 +15,8 @@ import InputComponent from 'Components/Shared/Input';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import subscriptionValidation from 'Validations/subscriptions';
+import Container from 'Components/Shared/Container';
+import SharedForm from 'Components/Shared/Form';
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
@@ -111,9 +113,9 @@ const Form = () => {
   const validClasses = classes.filter((item) => item.activity);
 
   return (
-    <div className={styles.subscriptionContainer}>
-      <h2>{id ? 'Update subscription' : 'Create subscription'}</h2>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <Container>
+      <SharedForm onSubmit={handleSubmit(onSubmit)}>
+        <h2>{id ? 'Update subscription' : 'Create subscription'}</h2>
         <InputComponent
           inputName="classes"
           inputType="list"
@@ -139,7 +141,7 @@ const Form = () => {
             <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
           </div>
         </fieldset>
-      </form>
+      </SharedForm>
       {showAlert && (
         <SharedModal
           show={showAlert}
@@ -149,7 +151,7 @@ const Form = () => {
           body={alertMessage}
         />
       )}
-    </div>
+    </Container>
   );
 };
 

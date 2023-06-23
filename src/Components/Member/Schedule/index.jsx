@@ -8,6 +8,7 @@ import { getActivities } from 'Redux/activities/thunks';
 import { getMembersById } from 'Redux/members/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
+import Container from 'Components/Shared/Container';
 
 const Schedule = () => {
   const dispatch = useDispatch();
@@ -150,67 +151,68 @@ const Schedule = () => {
   return (
     <>
       {loading ? (
-        <div className={styles.loadingContainer}>
+        <Container>
           <ClipLoader />
-        </div>
+        </Container>
       ) : (
         <>
           {error ? (
-            <div className={styles.errorContainer}>
-              <p>An error occurred while loading the data.</p>
-            </div>
+            <Container>
+              <div className={styles.errorContainer}>
+                <p>An error occurred while loading the data.</p>
+              </div>
+            </Container>
           ) : (
-            <div className={styles.container}>
-              <div className={styles.header}>
-                <h2 className={styles.title}>
-                  Scheduled Classes - Member: {memberData?.firstName}
-                </h2>
-                <div className={styles.selectContainer}>
-                  <label className={styles.selectLabel} htmlFor="activity">
-                    Filter by activity:{' '}
-                  </label>
+            <Container>
+              <div className={styles.container}>
+                <div className={styles.header}>
+                  <h2 className={styles.title}>
+                    Scheduled Classes - Member: {memberData?.firstName}
+                  </h2>
                   <div>
+                    <label className={styles.selectLabel} htmlFor="activity">
+                      Select Activity:{' '}
+                    </label>
                     <select
                       className={styles.select}
                       id="activity"
                       value={activity}
                       onChange={handleActivityChange}
                     >
-                      <option value="all">All</option>
                       {activities?.map((activityItem, index) => (
-                        <option value={activityItem?.name} key={index}>
-                          {activityItem?.name}
+                        <option value={activityItem.name} key={index}>
+                          {activityItem.name}
                         </option>
                       ))}
                     </select>
                   </div>
                 </div>
-              </div>
-              <table>
-                <thead>
-                  <tr className={styles.headerTable}>
-                    <th>Hours</th>
-                    {daysOfWeek?.map((day) => (
-                      <th key={day}>{day}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {hoursOfDay?.map((hour) => (
-                    <tr key={hour.value}>
-                      <td className={styles.hourColumn}>{hour.label} </td>
+                <table>
+                  <thead>
+                    <tr className={styles.headerTable}>
+                      <th>Hours</th>
                       {daysOfWeek?.map((day) => (
-                        <td className={styles.column} key={day}>
-                          <div className={styles.buttonContainer}>
-                            {getClassButton(hour.label, day)}
-                          </div>
-                        </td>
+                        <th key={day}>{day}</th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {hoursOfDay?.map((hour) => (
+                      <tr key={hour.value}>
+                        <td className={styles.hourColumn}>{hour.label} </td>
+                        {daysOfWeek?.map((day) => (
+                          <td className={styles.column} key={day}>
+                            <div className={styles.buttonContainer}>
+                              {getClassButton(hour.label, day)}
+                            </div>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Container>
           )}
         </>
       )}

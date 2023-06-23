@@ -1,14 +1,3 @@
-.subscriptionContainer {
-  flex: 1;
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 20%;
-  margin-top: 10%;
-  margin-bottom: 2%;
-}
-
 .buttonContainer {
   display: flex;
   justify-content: space-around;

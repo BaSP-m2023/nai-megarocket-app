@@ -20,7 +20,7 @@ const ReportsMemberships = () => {
   const memberCount = {};
 
   if (members) {
-    members.forEach((item) => {
+    members?.forEach((item) => {
       const memberMembership = item.membership;
       memberCount[memberMembership] = (memberCount[memberMembership] || 0) + 1;
     });

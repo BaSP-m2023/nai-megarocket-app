@@ -3,6 +3,7 @@ import Activities from './Activities';
 import ButtonGroup from './Buttons';
 import ReportsMemberships from './Memberships';
 import ReportsMembers from './Members';
+import Container from 'Components/Shared/Container';
 import styles from './reports.module.css';
 
 const Reports = () => {
@@ -22,10 +23,12 @@ const Reports = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <ButtonGroup setActiveComponent={setActiveComponent} />
-      {renderComponent()}
-    </div>
+    <Container>
+      <div className={styles.container}>
+        <ButtonGroup setActiveComponent={setActiveComponent} />
+        {renderComponent()}
+      </div>
+    </Container>
   );
 };
 

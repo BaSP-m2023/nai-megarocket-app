@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import activityValidation from 'Validations/activities';
 import { joiResolver } from '@hookform/resolvers/joi';
+import Container from 'Components/Shared/Container';
+import SharedForm from 'Components/Shared/Form';
 
 const Form = () => {
   const history = useHistory();
@@ -96,9 +98,9 @@ const Form = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
-      <form className={styles.formActivity} onSubmit={handleSubmit(onSubmit)}>
+    <Container>
+      <SharedForm onSubmit={handleSubmit(onSubmit)}>
+        <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
         <InputComponent
           register={register}
           inputName="name"
@@ -129,7 +131,7 @@ const Form = () => {
           <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
           <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
         </div>
-      </form>
+      </SharedForm>
       <SharedModal
         show={showModal}
         typeStyle={typeStyle}
@@ -138,7 +140,7 @@ const Form = () => {
         isDelete={false}
         closeModal={onConfirm}
       />
-    </div>
+    </Container>
   );
 };
 

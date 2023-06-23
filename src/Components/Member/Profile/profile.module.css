@@ -2,12 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 60%;
-  align-self: center;
-  border-radius: 5px;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
-  margin-top: 10%;
-  margin-left: 20%;
-  margin-bottom: 2%;
 }
 .formTitle {
   text-align: center;
@@ -78,8 +73,8 @@
 }
 
 .formTitleTwo {
-  color: #F9A414;
-  border-bottom: solid 2px #F9A414;
+  color: #f9a414;
+  border-bottom: solid 2px #f9a414;
   margin: 2rem 5rem 2rem 5rem;
   text-transform: uppercase;
   line-height: 3rem;

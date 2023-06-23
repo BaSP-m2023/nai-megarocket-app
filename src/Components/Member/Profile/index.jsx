@@ -9,6 +9,7 @@ import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
 import memberValidation from 'Validations/members';
 import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
+import Container from 'Components/Shared/Container';
 
 const MemberForm = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -98,7 +99,7 @@ const MemberForm = () => {
   };
 
   return (
-    <>
+    <Container>
       <div className={styles.formContainer}>
         <h2 className={styles.formTitleTwo}>user data</h2>
         <SharedModal
@@ -226,7 +227,7 @@ const MemberForm = () => {
           </div>
         </form>
       </div>
-    </>
+    </Container>
   );
 };
 

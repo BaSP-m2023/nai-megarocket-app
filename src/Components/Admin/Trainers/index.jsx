@@ -7,6 +7,7 @@ import Table from 'Components/Shared/Table/index';
 import Button from 'Components/Shared/Button/index';
 import SharedModal from 'Components/Shared/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
+import Container from 'Components/Shared/Container';
 
 const Trainers = () => {
   const history = useHistory();
@@ -64,7 +65,7 @@ const Trainers = () => {
   };
 
   return (
-    <section className={styles.trainerContainer}>
+    <Container>
       <div className={styles.headContainer}>
         <h2>Trainers</h2>
         <Button text="+ Add Trainer" clickAction={handleAddTrainer} type="add" />
@@ -107,7 +108,7 @@ const Trainers = () => {
           onConfirm={handleDeleteConfirmation}
         />
       )}
-    </section>
+    </Container>
   );
 };
 

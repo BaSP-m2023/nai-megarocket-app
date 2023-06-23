@@ -8,6 +8,7 @@ import { getActivities } from 'Redux/activities/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import CalendarModal from './Modal';
+import Container from 'Components/Shared/Container';
 
 const Classes = () => {
   const history = useHistory();
@@ -111,7 +112,7 @@ const Classes = () => {
   };
 
   return (
-    <section className={styles.classesContainer}>
+    <Container>
       {isLoading ? (
         <ClipLoader />
       ) : classes ? (
@@ -191,7 +192,7 @@ const Classes = () => {
       ) : (
         <h3>There are no Classes in the database</h3>
       )}
-    </section>
+    </Container>
   );
 };
 

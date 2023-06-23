@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styles from './memberships.module.css';
+import Container from 'Components/Shared/Container';
 
 const Memberships = () => {
   const [memberType, setMemberType] = useState();
 
   return (
-    <>
+    <Container>
       <div className={styles.container}>
         <div className={styles.headerContainer}>
           <div className={styles.header}>
@@ -92,7 +93,7 @@ const Memberships = () => {
           </ul>
         </div>
       </div>
-    </>
+    </Container>
   );
 };
 

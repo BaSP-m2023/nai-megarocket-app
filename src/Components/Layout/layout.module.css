@@ -1,12 +1,8 @@
-.container {
+.body {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  min-height: 90vh;
+  width: 100vw;
 }
-
-.container > span {
-  position: absolute;
-  top: 50vh;
-  left: 50vw;
-  color: rgb(42, 20, 208);
+.body > span {
+  margin: auto;
 }

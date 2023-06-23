@@ -9,6 +9,7 @@ import SharedModal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import memberValidation from 'Validations/members';
+import Container from 'Components/Shared/Container';
 
 const MemberForm = () => {
   const members = useSelector((state) => state.members.data.data);
@@ -112,7 +113,7 @@ const MemberForm = () => {
   };
 
   return (
-    <>
+    <Container>
       <div className={styles.formContainer}>
         <h2 className={styles.formTitle}>{id ? 'Update Member' : 'Add Member'}</h2>
         <SharedModal
@@ -215,7 +216,7 @@ const MemberForm = () => {
           </div>
         </form>
       </div>
-    </>
+    </Container>
   );
 };
 

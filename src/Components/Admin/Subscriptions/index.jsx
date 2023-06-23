@@ -7,6 +7,7 @@ import Button from 'Components/Shared/Button/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSubscriptions, deleteSubscription } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
+import Container from 'Components/Shared/Container';
 
 const Subscriptions = () => {
   const history = useHistory();
@@ -61,7 +62,7 @@ const Subscriptions = () => {
   };
 
   return (
-    <section className={styles.subscriptionContainer}>
+    <Container>
       <div className={styles.buttonContainer}>
         <h2>Subscriptions</h2>
         <Button text={'+ Add Subscription'} type={'add'} clickAction={handleAdd} />
@@ -92,7 +93,7 @@ const Subscriptions = () => {
       ) : (
         <h3>There are no subscriptions in the database</h3>
       )}
-    </section>
+    </Container>
   );
 };
 

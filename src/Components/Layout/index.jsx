@@ -5,11 +5,13 @@ import SideBar from 'Components/SideBar';
 
 const Layout = () => {
   return (
-    <div className={styles.container}>
+    <>
       <Header />
-      <SideBar />
-      <Routes />
-    </div>
+      <div className={styles.body}>
+        <SideBar />
+        <Routes />
+      </div>
+    </>
   );
 };
 
