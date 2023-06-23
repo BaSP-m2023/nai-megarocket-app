@@ -4,18 +4,15 @@ import { updateMember, getMembersById } from 'Redux/members/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './profile.module.css';
-import SharedModal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
 import memberValidation from 'Validations/members';
 import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const MemberForm = () => {
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
   const membership = ['Black', 'Gold', 'Silver'];
@@ -56,23 +53,43 @@ const MemberForm = () => {
     memberUpdateFunction(id, data);
   };
 
-  const memberUpdateFunction = async (id, member) => {
-    try {
-      await dispatch(updateMember(id, member));
-      setAlertMessage('Saved changes');
-      setIsSuccess(true);
-      setShowAlert(true);
-      handleDisableEditMode();
-      fetchMemberById(id);
-    } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      toast.success(message, {
+        duration: 2500,
+        position: 'bottom-left',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      toast.error(message, {
+        duration: 2500,
+        position: 'bottom-left',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
     }
   };
 
-  const handleCloseAlert = () => {
-    setShowAlert(false);
+  const memberUpdateFunction = async (id, member) => {
+    try {
+      await dispatch(updateMember(id, member));
+      showToast('Saved Changes', 'success');
+      handleDisableEditMode();
+      fetchMemberById(id);
+    } catch (error) {
+      showToast(error.message, 'error');
+    }
   };
 
   const formatDate = (dateString) => {
@@ -100,16 +117,13 @@ const MemberForm = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '0 0 0 15vw'
+        }}
+      />
       <div className={styles.formContainer}>
         <h2 className={styles.formTitleTwo}>user data</h2>
-        <SharedModal
-          isDelete={false}
-          show={showAlert}
-          closeModal={handleCloseAlert}
-          typeStyle={isSuccess ? 'success' : 'error'}
-          title={isSuccess ? 'Success' : 'Something went wrong'}
-          body={alertMessage}
-        />
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input

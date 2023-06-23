@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
 import styles from './modalShedule.module.css';
 import Button from 'Components/Shared/Button';
 import { BsCheck, BsFillPersonVcardFill, BsXLg } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
-import SharedModal from 'Components/Shared/Modal';
+
 import { deleteSubscription, createSubscription } from 'Redux/subscriptions/thunks';
 
 const Modal = (data) => {
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const dispatch = useDispatch();
 
   if (!data.show) {
@@ -18,21 +14,45 @@ const Modal = (data) => {
 
   const onCloseModal = () => {
     data.closeModal();
-    setShowAlert(false);
+  };
+
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      data.toast.success(message, {
+        duration: 2500,
+        position: 'bottom-left',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      data.toast.error(message, {
+        duration: 2500,
+        position: 'bottom-left',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    }
   };
 
   const handleSubscribe = async () => {
     if (data.idSuscription) {
       try {
         await dispatch(deleteSubscription(data.idSuscription));
-        setShowAlert(true);
-        setIsSuccess(true);
-        setAlertMessage('Unsubscription success');
+        showToast('Subscription was succesfully removed', 'success');
+        data.closeModal();
       } catch (error) {
-        console.error(error.message);
-        setShowAlert(true);
-        setIsSuccess(false);
-        setAlertMessage(error.message);
+        showToast(error.message, 'error');
+        data.closeModal();
       }
     } else {
       try {
@@ -43,14 +63,11 @@ const Modal = (data) => {
           date: newDate.setHours(newDate.getHours() - 3)
         };
         await dispatch(createSubscription(newSuscription));
-        setShowAlert(true);
-        setIsSuccess(true);
-        setAlertMessage('Subscription success');
+        showToast('Subscription was succesfully added', 'success');
+        data.closeModal();
       } catch (error) {
-        console.error(error.message);
-        setShowAlert(true);
-        setIsSuccess(false);
-        setAlertMessage(error.message);
+        showToast(error.message, 'error');
+        data.closeModal();
       }
     }
   };
@@ -103,14 +120,6 @@ const Modal = (data) => {
           )}
         </div>
       </div>
-      <SharedModal
-        isDelete={false}
-        show={showAlert}
-        closeModal={onCloseModal}
-        typeStyle={isSuccess ? 'success' : 'error'}
-        title={isSuccess ? 'Success' : 'Something went wrong'}
-        body={alertMessage}
-      />
     </div>
   );
 };

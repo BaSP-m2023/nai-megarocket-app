@@ -9,6 +9,7 @@ import { getMembersById } from 'Redux/members/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Schedule = () => {
   const dispatch = useDispatch();
@@ -164,6 +165,11 @@ const Schedule = () => {
             </Container>
           ) : (
             <Container>
+              <Toaster
+                containerStyle={{
+                  margin: '0 0 0 15vw'
+                }}
+              />
               <div className={styles.container}>
                 <div className={styles.header}>
                   <h2 className={styles.title}>
@@ -171,20 +177,23 @@ const Schedule = () => {
                   </h2>
                   <div>
                     <label className={styles.selectLabel} htmlFor="activity">
-                      Select Activity:{' '}
+                      Filter by activity:{' '}
                     </label>
-                    <select
-                      className={styles.select}
-                      id="activity"
-                      value={activity}
-                      onChange={handleActivityChange}
-                    >
-                      {activities?.map((activityItem, index) => (
-                        <option value={activityItem.name} key={index}>
-                          {activityItem.name}
-                        </option>
-                      ))}
-                    </select>
+                    <div>
+                      <select
+                        className={styles.select}
+                        id="activity"
+                        value={activity}
+                        onChange={handleActivityChange}
+                      >
+                        <option value="all">All</option>
+                        {activities?.map((activityItem, index) => (
+                          <option value={activityItem?.name} key={index}>
+                            {activityItem?.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
                 <table>
@@ -218,6 +227,7 @@ const Schedule = () => {
       )}
       <Modal
         show={showModal}
+        toast={toast}
         setShowModal={setShowModal}
         closeModal={handleCloseModal}
         day={infoClass.day}

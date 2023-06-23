@@ -7,9 +7,9 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import adminsValidation from 'Validations/admins';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
-import SharedModal from 'Components/Shared/Modal';
 import Input from 'Components/Shared/Input';
 import Container from 'Components/Shared/Container';
+import { toast, Toaster } from 'react-hot-toast';
 
 const Form = () => {
   const history = useHistory();
@@ -18,8 +18,6 @@ const Form = () => {
   const admins = useSelector((state) => state.admins.data);
 
   const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
 
   const {
     register,
@@ -58,37 +56,37 @@ const Form = () => {
     }
   };
 
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'bottom-left',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
+  };
+
   const postAdminFunction = async (admin) => {
     try {
       const data = await dispatch(postAdmin(admin));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
+      localStorage.setItem('toastMessage', data.message);
+      history.push('/super-admin/admins');
     } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
+      showErrorToast(error.message);
     }
   };
 
   const putAdminFunction = async (id, admin) => {
     try {
       const data = await dispatch(putAdmin(id, admin));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
-    } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
-    }
-  };
-
-  const handleCloseAlert = () => {
-    if (isSuccess) {
+      localStorage.setItem('toastMessage', data.message);
       history.push('/super-admin/admins');
-    } else {
-      setShowAlert(false);
+    } catch (error) {
+      showErrorToast(error.message);
     }
   };
 
@@ -105,6 +103,11 @@ const Form = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '0 0 0 15vw'
+        }}
+      />
       <div className={styles.formContainer}>
         <h2 className={styles.formTitle}>{id ? 'Update Admin' : 'Add Admin'}</h2>
         <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
@@ -182,15 +185,6 @@ const Form = () => {
               <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
             </div>
           </div>
-
-          <SharedModal
-            isDelete={false}
-            show={showAlert}
-            closeModal={handleCloseAlert}
-            typeStyle={isSuccess ? 'success' : 'error'}
-            title={isSuccess ? 'Success' : 'Something went wrong'}
-            body={alertMessage}
-          />
         </form>
       </div>
     </Container>
