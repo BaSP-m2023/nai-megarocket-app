@@ -22,7 +22,7 @@ const Modal = (data) => {
   };
 
   const handleSubscribe = async () => {
-    if (data.added) {
+    if (data.idSuscription) {
       try {
         await dispatch(deleteSubscription(data.idSuscription));
         setShowAlert(true);
@@ -63,18 +63,28 @@ const Modal = (data) => {
             <BsXLg />
           </div>
         </div>
-        <h3>
+        <div className={styles.centerTitle}>
           Class {data.day.length > 1 ? data.day.join(' - ') : data.day} {data.hour} Hs
-        </h3>
+        </div>
         <div className={styles.activity}>{data.activity}</div>
         <div className={styles.center}>Trainer:</div>
         <div className={styles.trainer}>
-          <BsFillPersonVcardFill />
+          <div className={styles.trainerIcon}>
+            <BsFillPersonVcardFill />
+          </div>
           <span className={styles.space}></span>
           {data.trainer}
         </div>
-        <div className={styles.center}>Slots: {data.slot}</div>
-        {data.added ? (
+        {data.slot <= data.slotCount ? (
+          <div className={styles.slotsFull}>
+            Slots full {data.slotCount} / {data.slot}
+          </div>
+        ) : (
+          <div className={styles.center}>
+            Slots: {data.slotCount} / {data.slot}
+          </div>
+        )}
+        {data.idSuscription ? (
           <div className={styles.added}>
             <BsCheck /> You are subscribed to this class
           </div>
@@ -82,11 +92,15 @@ const Modal = (data) => {
           <div className={styles.center}>You are not in this class</div>
         )}
         <div className={styles.buttonContainer}>
-          <Button
-            type="cancel"
-            text={data.added ? <>Unsubscribe</> : <>Subscribe</>}
-            clickAction={handleSubscribe}
-          />
+          {data.slot <= data.slotCount ? (
+            <Button type="cancel" text={<>Back</>} clickAction={onCloseModal} />
+          ) : (
+            <Button
+              type="cancel"
+              text={data.idSuscription ? <>Unsubscribe</> : <>Subscribe</>}
+              clickAction={handleSubscribe}
+            />
+          )}
         </div>
       </div>
       <SharedModal
