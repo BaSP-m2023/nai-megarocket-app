@@ -41,12 +41,16 @@ const subscriptionsReducer = (state = INITIAL_STATE, action) => {
         data: state.data.filter((subscription) => subscription._id !== action.payload)
       };
     case types.GET_SUBSCRIPTION_BY_ID_SUCCESS:
-    case types.CREATE_SUBSCRIPTION_SUCCESS:
+    case types.CREATE_SUBSCRIPTION_SUCCESS: {
+      const { classes, member, ...rest } = action.payload;
+      const populatedClasses = { _id: classes };
+      const populatedMember = { _id: member };
       return {
         ...state,
         loading: false,
-        data: [...state.data, action.payload]
+        data: [...state.data, { classes: populatedClasses, member: populatedMember, ...rest }]
       };
+    }
     case types.UPDATE_SUBSCRIPTION_SUCCESS:
     default:
       return state;
