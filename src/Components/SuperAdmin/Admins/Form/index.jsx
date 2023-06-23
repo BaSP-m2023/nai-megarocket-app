@@ -27,8 +27,17 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'all',
-    resolver: joiResolver(adminsValidation)
+    mode: 'onBlur',
+    resolver: joiResolver(adminsValidation),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      dni: '',
+      phone: '',
+      email: '',
+      city: '',
+      password: ''
+    }
   });
 
   useEffect(() => {
@@ -112,7 +121,7 @@ const Form = () => {
             <div className={styles.formInput}>
               <Input
                 register={register}
-                labelName={'Name'}
+                labelName={'First Name'}
                 inputType={'text'}
                 inputName={'firstName'}
                 error={errors.firstName?.message}
@@ -179,7 +188,7 @@ const Form = () => {
             <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
             <div className={styles.buttonsAdmin}>
               <Button text="Back" type="cancel" clickAction={handleCancel} />
-              <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
+              <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
             </div>
           </div>
 

@@ -21,7 +21,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'all',
+    mode: 'onBlur',
     resolver: joiResolver(classValidation),
     defaultValues: {
       day: '',
