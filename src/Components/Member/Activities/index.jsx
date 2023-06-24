@@ -36,10 +36,7 @@ const Activities = () => {
             </div>
             <div className={styles.cardsContainer}>
               {activities.map((activity, idx) => (
-                <div
-                  key={idx}
-                  className={`${styles.card} ${styles.cardsAnimation} ${getColorClass(idx)}`}
-                >
+                <div key={idx} className={`${styles.card} ${getColorClass(idx)}`}>
                   <h2 className={styles.cardTitle}>{activity.name}</h2>
                   <hr />
                   <p className={styles.cardDescription}>{activity.description}</p>
