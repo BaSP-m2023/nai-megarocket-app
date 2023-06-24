@@ -79,6 +79,9 @@ const Admins = () => {
                 columnTitles={['First Name', 'Last Name', 'Phone Number', 'Email']}
                 handleUpdateItem={handleUpdateAdmin}
                 handleDeleteItem={handleDeleteAdmin}
+                testId={'superadmin-admins-table'}
+                testCancelId={'superadmin-admins-icon-delete'}
+                testEditId={'superadmin-admins-icon-edit'}
               />
 
               <SharedModal

@@ -65,7 +65,12 @@ const Subscriptions = () => {
     <Container>
       <div className={styles.buttonContainer}>
         <h2>Subscriptions</h2>
-        <Button text={'+ Add Subscription'} type={'add'} clickAction={handleAdd} />
+        <Button
+          text={'+ Add Subscription'}
+          type={'add'}
+          clickAction={handleAdd}
+          testId={'admin-subscriptions-add-button'}
+        />
       </div>
       {loading && subscriptions.length > 0 ? (
         <ClipLoader />
@@ -77,6 +82,9 @@ const Subscriptions = () => {
             columnTitles={['First Name', 'Last Name', 'Class Name']}
             handleUpdateItem={handleEdit}
             handleDeleteItem={handleDeleteSubscription}
+            testId={'admin-subscriptions-table'}
+            testCancelId={'admin-subscriptions-icon-delete'}
+            testEditId={'admin-subscriptions-icon-edit'}
           />
           {showModal && (
             <SharedModal
@@ -87,6 +95,9 @@ const Subscriptions = () => {
               isDelete={isDelete}
               onConfirm={handleConfirmDelete}
               closeModal={handleCloseModal}
+              testId={'admin-subscriptions-modal'}
+              closeTestId={'admin-subscriptions-button-close-success-modal'}
+              confirmDeleteTestId={'admin-subscriptions-button-confirm-delete-modal'}
             />
           )}
         </>

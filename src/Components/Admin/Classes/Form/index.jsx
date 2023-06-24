@@ -128,6 +128,7 @@ const Form = () => {
             inputType={'text'}
             inputName={'day'}
             error={errors.day?.message}
+            testId={'admin-classes-input-day'}
           />
           <Input
             register={register}
@@ -135,6 +136,7 @@ const Form = () => {
             inputType={'text'}
             inputName={'hour'}
             error={errors.hour?.message}
+            testId={'admin-classes-input-hour'}
           />
           <Input
             register={register}
@@ -144,6 +146,7 @@ const Form = () => {
             list={trainers}
             listProp={'firstName'}
             error={errors.trainer?.message}
+            testId={'admin-classes-input-trainer'}
           />
           <Input
             register={register}
@@ -153,6 +156,7 @@ const Form = () => {
             error={errors.activity?.message}
             list={activities}
             listProp={'name'}
+            testId={'admin-classes-input-activity'}
           />
           <Input
             register={register}
@@ -160,13 +164,30 @@ const Form = () => {
             inputType={'number'}
             inputName={'slots'}
             error={errors.slots?.message}
+            testId={'admin-classes-input-slots'}
           />
         </div>
         <div className={styles.buttonsDiv}>
-          <Button type={'submit'} info={'submit'} text={id ? 'Update' : 'Add'} />
+          <Button
+            type={'submit'}
+            info={'submit'}
+            text={id ? 'Update' : 'Add'}
+            testId={'admin-classes-button-submit-form'}
+          />
           <div className={styles.confirmButton}>
-            <Button type="cancel" text="Back" clickAction={handleCancel} />
-            <Button type={'cancel'} onClick={() => reset()} info={'reset'} text={'Reset'} />
+            <Button
+              type="cancel"
+              text="Back"
+              clickAction={handleCancel}
+              testId={'admin-classes-button-back-form'}
+            />
+            <Button
+              type={'cancel'}
+              onClick={() => reset()}
+              info={'reset'}
+              text={'Reset'}
+              testId={'admin-classes-button-reset-form'}
+            />
           </div>
         </div>
       </SharedForm>
@@ -178,6 +199,8 @@ const Form = () => {
         typeStyle={isSuccess ? 'success' : 'error'}
         title={isSuccess ? 'Success' : 'Something went wrong'}
         body={alertMessage}
+        testId={'admin-classes-form-modal'}
+        closeTestId={'admin-classes-form-button-confirm-modal'}
       />
     </Container>
   );

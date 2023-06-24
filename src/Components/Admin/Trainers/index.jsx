@@ -68,7 +68,12 @@ const Trainers = () => {
     <Container>
       <div className={styles.headContainer}>
         <h2>Trainers</h2>
-        <Button text="+ Add Trainer" clickAction={handleAddTrainer} type="add" />
+        <Button
+          text="+ Add Trainer"
+          clickAction={handleAddTrainer}
+          type="add"
+          testId={'admin-trainer-add-button'}
+        />
       </div>
       {isLoading ? (
         <ClipLoader />
@@ -90,6 +95,9 @@ const Trainers = () => {
               ]}
               handleUpdateItem={editItem}
               handleDeleteItem={handleDelete}
+              testId={'admin-trainers-table'}
+              testCancelId={'admin-trainers-icon-delete'}
+              testEditId={'admin-trainers-icon-edit'}
             />
           ) : (
             <h3>No data to retrieve</h3>
@@ -106,6 +114,9 @@ const Trainers = () => {
           typeStyle={typeStyle}
           closeModal={handleDeleteCancel}
           onConfirm={handleDeleteConfirmation}
+          testId={'admin-trainers-modal'}
+          closeTestId={'admin-trainers-button-close-success-modal'}
+          confirmDeleteTestId={'admin-trainers-button-confirm-delete-modal'}
         />
       )}
     </Container>
