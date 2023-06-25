@@ -23,8 +23,17 @@ const Form = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'all',
-    resolver: joiResolver(adminsValidation)
+    mode: 'onBlur',
+    resolver: joiResolver(adminsValidation),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      dni: '',
+      phone: '',
+      email: '',
+      city: '',
+      password: ''
+    }
   });
 
   useEffect(() => {
@@ -109,7 +118,7 @@ const Form = () => {
             <div className={styles.formInput}>
               <Input
                 register={register}
-                labelName={'Name'}
+                labelName={'First Name'}
                 inputType={'text'}
                 inputName={'firstName'}
                 error={errors.firstName?.message}
