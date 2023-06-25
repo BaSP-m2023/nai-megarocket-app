@@ -22,7 +22,11 @@ const InputComponent = ({
         const properties = listProp?.split('.');
         const value = properties?.reduce((obj, prop) => obj[prop], item);
         return (
-          <option key={item._id ? item._id : item} value={item._id ? item._id : item} id={testId}>
+          <option
+            key={item._id ? item._id : item}
+            value={item._id ? item._id : item}
+            id={`${testId}-${value ? value : item}`}
+          >
             {value ? value : item}
           </option>
         );

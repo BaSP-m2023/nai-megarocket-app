@@ -137,7 +137,11 @@ const Classes = () => {
                 >
                   {console.log(activity)}
                   {activities?.map((activityItem, index) => (
-                    <option value={activityItem.name} key={index}>
+                    <option
+                      value={activityItem.name}
+                      key={index}
+                      id={`admin-classes-select-activity-${activityItem.name}`}
+                    >
                       {activityItem.name}
                     </option>
                   ))}

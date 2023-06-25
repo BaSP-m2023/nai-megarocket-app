@@ -180,7 +180,11 @@ const Schedule = () => {
                       onChange={handleActivityChange}
                     >
                       {activities?.map((activityItem, index) => (
-                        <option value={activityItem.name} key={index}>
+                        <option
+                          value={activityItem.name}
+                          key={index}
+                          id={`member-schedule-select-activity-${activityItem.name}`}
+                        >
                           {activityItem.name}
                         </option>
                       ))}
