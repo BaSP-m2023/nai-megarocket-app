@@ -7,10 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_ERROR,
   LOGOUT_PENDING,
-  LOGOUT_SUCCESS,
-  SIGN_UP_ERROR,
-  SIGN_UP_PENDING,
-  SIGN_UP_SUCCESS
+  LOGOUT_SUCCESS
 } from './constants';
 
 export const getAuthPending = () => {
@@ -67,26 +64,6 @@ export const logoutSuccess = () => {
 export const logoutError = (error) => {
   return {
     type: LOGOUT_ERROR,
-    payload: error
-  };
-};
-
-export const signUpPending = () => {
-  return {
-    type: SIGN_UP_PENDING
-  };
-};
-
-export const signUpSuccess = (data) => {
-  return {
-    type: SIGN_UP_SUCCESS,
-    payload: data
-  };
-};
-
-export const signUpError = (error) => {
-  return {
-    type: SIGN_UP_ERROR,
     payload: error
   };
 };

@@ -1,15 +1,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-self: center;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  padding-bottom: 5vh;
   width: 40%;
-  height: 30rem;
-  margin-top: 8rem;
-  margin-left: 20%;
-  margin-bottom: 8rem;
-  border-radius: 5px;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+  height: 70%;
 }
 
 .form {
