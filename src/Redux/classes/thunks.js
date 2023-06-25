@@ -1,10 +1,15 @@
 import * as actions from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getClasses = () => {
   return async (dispatch) => {
     try {
       dispatch(actions.getClassesPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
       dispatch(actions.getClassesSuccess(data));
       return data;
@@ -18,7 +23,10 @@ export const getClassById = (id) => {
   return async (dispatch) => {
     dispatch(actions.getClassByIdPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(actions.getClassByIdSuccess(id));
@@ -40,7 +48,8 @@ export const addClass = (gymClass) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(gymClass)
       });
@@ -65,7 +74,8 @@ export const editClass = (id, gymClass) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(gymClass)
       });
@@ -88,7 +98,8 @@ export const deleteClass = (id) => {
     dispatch(actions.deleteClassPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const data = await response.json();
       if (response.ok) {
