@@ -16,11 +16,16 @@ import {
   addTrainerError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getTrainers = () => {
   return async (dispatch) => {
     dispatch(getTrainersPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
       dispatch(getTrainersSuccess(data.data));
     } catch (error) {
@@ -34,7 +39,8 @@ export const getTrainersById = (id) => {
     dispatch(getTrainersByIdPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: { token: token }
       });
       const data = await response.json();
       dispatch(getTrainersByIdSuccess(data.data));
@@ -51,7 +57,8 @@ export const deleteTrainer = (trainerId) => {
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${trainerId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
 
       if (!response.ok) {
@@ -74,7 +81,8 @@ export const updateTrainer = (id, trainer) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(trainer)
       });
@@ -99,7 +107,8 @@ export const addTrainer = (trainer) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(trainer)
       });

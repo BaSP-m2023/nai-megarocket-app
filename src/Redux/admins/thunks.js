@@ -16,11 +16,16 @@ import {
   postAdminError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getAdmins = () => {
   return async (dispatch) => {
     dispatch(getAdminsPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
       dispatch(getAdminsSuccess(data.data));
     } catch (error) {
@@ -34,7 +39,8 @@ export const getAdminById = (id) => {
     dispatch(getAdminByIdPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: { token: token }
       });
       const data = await response.json();
       dispatch(getAdminByIdSuccess(data.data));
@@ -50,7 +56,8 @@ export const deleteAdmin = (adminId) => {
     dispatch(deleteAdminPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const data = await response.json();
       if (response.ok) {
@@ -73,7 +80,8 @@ export const putAdmin = (id, admin) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(admin)
       });
@@ -98,7 +106,8 @@ export const postAdmin = (admin) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(admin)
       });

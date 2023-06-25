@@ -16,11 +16,16 @@ import {
   updateSuperAdminsError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getSuperAdmins = () => {
   return async (dispatch) => {
     dispatch(getSuperAdminsPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
       dispatch(getSuperAdminsSuccess(data));
       return data;
@@ -35,7 +40,8 @@ export const getSuperAdminById = (id) => {
     dispatch(getSuperAdminsIdPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: { token: token }
       });
       const data = await response.json();
       dispatch(getSuperAdminsIdSuccess(data));
@@ -51,7 +57,8 @@ export const deleteSuperAdmin = (id) => {
     dispatch(deleteSuperAdminsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const data = await response.json();
       if (response.ok) {
@@ -73,7 +80,8 @@ export const updateSuperAdmin = (id, superAdmin) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(superAdmin)
       });
@@ -98,7 +106,8 @@ export const addSuperAdmin = (superAdmin) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(superAdmin)
       });
