@@ -101,7 +101,6 @@
   cursor: pointer;
 }
 
-
 .classesButton:hover {
   background-color: #c7ac7d;
 }
@@ -148,7 +147,6 @@
   white-space: pre-line;
   font-weight: bold;
 }
-
 
 .headerTable th {
   width: 10%;
