@@ -166,7 +166,7 @@ const Form = () => {
           <Button type={'submit'} info={'submit'} text={id ? 'Update' : 'Add'} />
           <div className={styles.confirmButton}>
             <Button type="cancel" text="Back" clickAction={handleCancel} />
-            <Button type={'cancel'} onClick={() => reset()} info={'reset'} text={'Reset'} />
+            <Button type={'cancel'} clickAction={() => reset()} info={'reset'} text={'Reset'} />
           </div>
         </div>
       </SharedForm>
