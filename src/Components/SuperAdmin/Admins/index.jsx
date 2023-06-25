@@ -8,6 +8,7 @@ import Button from 'Components/Shared/Button';
 import SharedModal from 'Components/Shared/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Admins = () => {
   const history = useHistory();
@@ -22,21 +23,49 @@ const Admins = () => {
 
   useEffect(() => {
     dispatch(getAdmins());
+    const toastMessage = localStorage.getItem('toastMessage');
+    if (toastMessage) {
+      showToast(toastMessage, 'success');
+      localStorage.removeItem('toastMessage');
+    }
   }, []);
+
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      toast.success(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      toast.error(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    }
+  };
 
   const confirmDelete = async () => {
     if (idAdmin) {
       try {
         const data = await dispatch(deleteAdmin(idAdmin));
-        setModalInformation({ title: 'Success:', body: data.message });
-        setIsSuccess('success');
-        setShowModal(true);
-        setIsDelete(false);
+        showToast(data.message, 'success');
+        setShowModal(false);
       } catch (error) {
-        setModalInformation({ title: 'Error:', body: error.message });
-        setIsDelete(false);
-        setIsSuccess('error');
-        setShowModal(true);
+        showToast(error.message, 'error');
       }
     }
   };
@@ -63,6 +92,11 @@ const Admins = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <div className={styles.topAdminContainer}>
         <h2>Admins</h2>
         <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />

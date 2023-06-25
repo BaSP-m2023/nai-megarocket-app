@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { putAdmin, postAdmin } from 'Redux/admins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,19 +7,15 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import adminsValidation from 'Validations/admins';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
-import SharedModal from 'Components/Shared/Modal';
 import Input from 'Components/Shared/Input';
 import Container from 'Components/Shared/Container';
+import { toast, Toaster } from 'react-hot-toast';
 
 const Form = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
   const admins = useSelector((state) => state.admins.data);
-
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
 
   const {
     register,
@@ -67,45 +63,41 @@ const Form = () => {
     }
   };
 
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
+  };
+
   const postAdminFunction = async (admin) => {
     try {
       const data = await dispatch(postAdmin(admin));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
+      localStorage.setItem('toastMessage', data.message);
+      history.push('/super-admin/admins');
     } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
+      showErrorToast(error.message);
     }
   };
 
   const putAdminFunction = async (id, admin) => {
     try {
       const data = await dispatch(putAdmin(id, admin));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
-    } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
-    }
-  };
-
-  const handleCloseAlert = () => {
-    if (isSuccess) {
+      localStorage.setItem('toastMessage', data.message);
       history.push('/super-admin/admins');
-    } else {
-      setShowAlert(false);
+    } catch (error) {
+      showErrorToast(error.message);
     }
   };
 
-  const handleCancel = () => {
-    if (showAlert) {
-      setShowAlert(false);
-    }
-    setShowAlert(false);
+  const handleBack = () => {
     history.push('/super-admin/admins');
   };
   const handleReset = () => {
@@ -114,6 +106,11 @@ const Form = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <div className={styles.formContainer}>
         <h2 className={styles.formTitle}>{id ? 'Update Admin' : 'Add Admin'}</h2>
         <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
@@ -187,19 +184,10 @@ const Form = () => {
           <div className={styles.buttonsDiv}>
             <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
             <div className={styles.buttonsAdmin}>
-              <Button text="Back" type="cancel" clickAction={handleCancel} />
-              <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
+              <Button text="Back" type="cancel" clickAction={handleBack} />
+              <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
             </div>
           </div>
-
-          <SharedModal
-            isDelete={false}
-            show={showAlert}
-            closeModal={handleCloseAlert}
-            typeStyle={isSuccess ? 'success' : 'error'}
-            title={isSuccess ? 'Success' : 'Something went wrong'}
-            body={alertMessage}
-          />
         </form>
       </div>
     </Container>
