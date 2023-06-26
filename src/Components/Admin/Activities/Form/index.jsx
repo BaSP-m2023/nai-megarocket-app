@@ -108,6 +108,7 @@ const Form = () => {
           labelName="Activity"
           placeholder="Activity"
           error={errors.name?.message}
+          testId={'admin-activity-input-name'}
         />
         <InputComponent
           register={register}
@@ -116,6 +117,7 @@ const Form = () => {
           labelName="Description"
           placeholder="Description"
           error={errors.description?.message}
+          testId={'admin-activity-input-description'}
         />
         <InputComponent
           register={register}
@@ -123,13 +125,30 @@ const Form = () => {
           inputType={'isActive'}
           inputName={'isActive'}
           error={errors.isActive}
+          testId={'admin-activity-input-checkbox'}
         />
         <div className={styles.buttonContainer}>
-          <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
+          <Button
+            text={id ? 'Update' : 'Add'}
+            type={'submit'}
+            info={'submit'}
+            testId={'admin-activity-button-submit-form'}
+          />
         </div>
         <div className={styles.buttons}>
-          <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
-          <Button type={'cancel'} clickAction={() => reset()} text={'Reset'} info={'reset'} />
+          <Button
+            text={'Back'}
+            type={'cancel'}
+            clickAction={handleCancel}
+            testId={'admin-activity-button-back-form'}
+          />
+          <Button
+            type={'cancel'}
+            clickAction={() => reset()}
+            text={'Reset'}
+            info={'reset'}
+            testId={'admin-activity-button-reset-form'}
+          />
         </div>
       </SharedForm>
       <SharedModal
@@ -139,6 +158,8 @@ const Form = () => {
         body={bodyModal}
         isDelete={false}
         closeModal={onConfirm}
+        testId={'admin-activities-form-modal'}
+        confirmDeleteTestId={'admin-activities-form-button-confirm-modal'}
       />
     </Container>
   );

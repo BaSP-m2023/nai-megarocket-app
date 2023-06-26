@@ -99,6 +99,7 @@ const AdminProfile = () => {
                 inputName={'firstName'}
                 error={errors.firstName?.message}
                 disabled={!editMode}
+                testId={'admin-profile-input-first-name'}
               />
             </div>
             <div className={styles.formInput}>
@@ -109,6 +110,7 @@ const AdminProfile = () => {
                 inputName={'lastName'}
                 error={errors.lastName?.message}
                 disabled={!editMode}
+                testId={'admin-profile-input-last-name'}
               />
             </div>
             <div className={styles.formInput}>
@@ -119,6 +121,7 @@ const AdminProfile = () => {
                 inputName={'dni'}
                 error={errors.dni?.message}
                 disabled={!editMode}
+                testId={'admin-profile-input-dni'}
               />
             </div>
             <div className={styles.formInput}>
@@ -129,6 +132,7 @@ const AdminProfile = () => {
                 inputName={'phone'}
                 error={errors.phone?.message}
                 disabled={!editMode}
+                testId={'admin-profile-input-phone'}
               />
             </div>
           </div>
@@ -141,6 +145,7 @@ const AdminProfile = () => {
                 inputName={'email'}
                 error={errors.email?.message}
                 disabled={!editMode}
+                testId={'admin-profile-input-email'}
               />
             </div>
             <div className={styles.formInput}>
@@ -151,6 +156,7 @@ const AdminProfile = () => {
                 inputName={'city'}
                 error={errors.city?.message}
                 disabled={!editMode}
+                testId={'admin-profile-input-city'}
               />
             </div>
             <div className={styles.formInput} style={{ display: 'flex', gap: '10px' }}>
@@ -161,6 +167,7 @@ const AdminProfile = () => {
                 inputName={'password'}
                 error={errors.password?.message}
                 disabled={!editMode}
+                testId={'admin-profile-input-password'}
               />
               <button
                 className={styles.toggleButton}
@@ -183,8 +190,18 @@ const AdminProfile = () => {
             {editMode && (
               <>
                 <div className={styles.buttonsLowContainer}>
-                  <Button text={'Cancel'} type={'cancel'} clickAction={handleDisableEditMode} />
-                  <Button text={'Confirm'} type={'submit'} info={'submit'} />
+                  <Button
+                    text={'Cancel'}
+                    type={'cancel'}
+                    clickAction={handleDisableEditMode}
+                    testId={'admin-profile-cancel-button'}
+                  />
+                  <Button
+                    text={'Confirm'}
+                    type={'submit'}
+                    info={'submit'}
+                    testId={'admin-profile-submit-button'}
+                  />
                 </div>
               </>
             )}
@@ -196,6 +213,8 @@ const AdminProfile = () => {
             typeStyle={isSuccess ? 'success' : 'error'}
             title={isSuccess ? 'Success' : 'Something went wrong'}
             body={alertMessage}
+            testId={'admin-profile-modal'}
+            closeTestId={'admin-profile-button-close-success-modal'}
           />
         </form>
       </div>

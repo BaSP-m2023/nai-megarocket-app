@@ -30,18 +30,33 @@ const SharedModal = (data) => {
   }
 
   return (
-    <div className={styles.modalContainer}>
+    <div className={styles.modalContainer} id={data.testId}>
       <div className={containerStyle}>
         <h3 className={styles.h3Container}>{data.title}</h3>
         <p className={styles.pContainer}>{data.body}</p>
         <div className={styles.buttonContainer}>
           {data.isDelete ? (
             <>
-              <Button type="cancel" text={'Cancel'} clickAction={onCloseModal} />
-              <Button type="confirm" text={'Confirm'} clickAction={onConfirm} />
+              <Button
+                type="cancel"
+                text={'Cancel'}
+                clickAction={onCloseModal}
+                testId={data.closeTestId}
+              />
+              <Button
+                type="confirm"
+                text={'Confirm'}
+                clickAction={onConfirm}
+                testId={data.confirmDeleteTestId}
+              />
             </>
           ) : (
-            <Button type="confirm" text={'Confirm'} clickAction={onCloseModal} />
+            <Button
+              type="confirm"
+              text={'Confirm'}
+              clickAction={onCloseModal}
+              testId={data.closeTestId}
+            />
           )}
         </div>
       </div>

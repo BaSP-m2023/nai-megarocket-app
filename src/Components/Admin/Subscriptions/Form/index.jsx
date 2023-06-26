@@ -124,6 +124,7 @@ const Form = () => {
           listProp={'activity.name'}
           register={register}
           error={errors.classes?.message}
+          testId={'admin-subscriptions-input-classes'}
         />
         <InputComponent
           inputName="member"
@@ -133,12 +134,29 @@ const Form = () => {
           listProp={'firstName'}
           register={register}
           error={errors.member?.message}
+          testId={'admin-subscriptions-input-members'}
         />
         <fieldset className={styles.flexButtons}>
-          <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
+          <Button
+            text={id ? 'Update' : 'Add'}
+            type={'submit'}
+            info={'submit'}
+            testId={'admin-subscriptions-button-submit-form'}
+          />
           <div className={styles.cleanButtons}>
-            <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
-            <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
+            <Button
+              text={'Back'}
+              type={'cancel'}
+              clickAction={handleCancel}
+              testId={'admin-subscriptions-button-back-form'}
+            />
+            <Button
+              type={'cancel'}
+              onClick={handleReset}
+              info={'reset'}
+              text={'Reset'}
+              testId={'admin-subscriptions-button-reset-form'}
+            />
           </div>
         </fieldset>
       </SharedForm>
@@ -149,6 +167,8 @@ const Form = () => {
           title={isSuccess ? 'Success' : 'Something is wrong'}
           typeStyle={isSuccess ? 'success' : 'error'}
           body={alertMessage}
+          testId={'admin-subscriptions-form-modal'}
+          closeTestId={'admin-subscriptions-form-button-confirm-modal'}
         />
       )}
     </Container>
