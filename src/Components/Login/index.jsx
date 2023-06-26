@@ -9,10 +9,12 @@ import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 import Container from 'Components/Shared/Container';
 import { login } from 'Redux/auth/thunks';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -22,8 +24,16 @@ const Login = () => {
     resolver: joiResolver(loginValidation)
   });
 
-  const handleLogin = (data) => {
-    dispatch(login(data));
+  const handleLogin = async (data) => {
+    try {
+      const response = await dispatch(login(data));
+      if (response) {
+        alert('User logged!');
+        history.push('/');
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
