@@ -68,7 +68,12 @@ const Activities = () => {
     <Container>
       <div className={styles.topContainer}>
         <h2>Activities</h2>
-        <Button text={'+ Add Activity'} type={'add'} clickAction={handleAddItem} />
+        <Button
+          text={'+ Add Activity'}
+          type={'add'}
+          clickAction={handleAddItem}
+          testId={'admin-button-add-activity'}
+        />
       </div>
       {loading ? (
         <ClipLoader />
@@ -80,6 +85,9 @@ const Activities = () => {
             columnTitles={['Name', 'Description', 'Active']}
             handleUpdateItem={handleEditItem}
             handleDeleteItem={handleDeleteClick}
+            testId={'admin-activities-table'}
+            testCancelId={'admin-activities-icon-delete'}
+            testEditId={'admin-activities-icon-edit'}
           />
           {showModal && (
             <SharedModal
@@ -90,6 +98,9 @@ const Activities = () => {
               isDelete={isDelete}
               onConfirm={handleConfirmDelete}
               closeModal={handleCloseModal}
+              testId={'admin-activities-modal'}
+              confirmDeleteTestId={'admin-activities-button-confirm-modal'}
+              closeTestId={'admin-activities-button-close-modal'}
             />
           )}
         </>

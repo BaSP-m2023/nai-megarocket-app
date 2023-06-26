@@ -113,6 +113,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
+              testId={'admin-trainers-input-first-name'}
             />
             <Input
               register={register}
@@ -120,6 +121,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'lastName'}
               error={errors.lastName?.message}
+              testId={'admin-trainers-input-last-name'}
             />
             <Input
               register={register}
@@ -127,6 +129,7 @@ const AdminTrainerForm = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
+              testId={'admin-trainers-input-dni'}
             />
             <Input
               register={register}
@@ -134,6 +137,7 @@ const AdminTrainerForm = () => {
               inputType={'number'}
               inputName={'phone'}
               error={errors.phone?.message}
+              testId={'admin-trainers-input-phone'}
             />
           </div>
           <div>
@@ -143,6 +147,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'email'}
               error={errors.email?.message}
+              testId={'admin-trainers-input-email'}
             />
             <Input
               register={register}
@@ -150,6 +155,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'city'}
               error={errors.city?.message}
+              testId={'admin-trainers-input-city'}
             />
             <Input
               register={register}
@@ -157,6 +163,7 @@ const AdminTrainerForm = () => {
               inputType={'number'}
               inputName={'salary'}
               error={errors.salary?.message}
+              testId={'admin-trainers-input-salary'}
             />
             <Input
               register={register}
@@ -164,6 +171,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'password'}
               error={errors.password?.message}
+              testId={'admin-trainers-input-password'}
             />
             <Input
               register={register}
@@ -171,16 +179,33 @@ const AdminTrainerForm = () => {
               inputType={'isActive'}
               inputName={'isActive'}
               error={errors.isActive}
+              testId={'admin-trainers-input-checkbox'}
             />
           </div>
         </div>
         <div>
           <div className={styles.buttons}>
-            <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
+            <Button
+              text={id ? 'Update' : 'Add'}
+              type="submit"
+              info={'submit'}
+              testId={'admin-trainers-button-submit-form'}
+            />
 
             <div className={styles.buttonsLow}>
-              <Button text="Back" type="cancel" clickAction={handleCancel} />
-              <Button type={'cancel'} clickAction={handleReset} text={'Reset'} info={'reset'} />
+              <Button
+                text="Back"
+                type="cancel"
+                clickAction={handleCancel}
+                testId={'admin-trainers-button-back-form'}
+              />
+              <Button
+                type={'cancel'}
+                clickAction={handleReset}
+                text={'Reset'}
+                info={'reset'}
+                testId={'admin-trainers-button-reset-form'}
+              />
             </div>
           </div>
         </div>
@@ -191,6 +216,8 @@ const AdminTrainerForm = () => {
           isDelete={false}
           typeStyle={modalTypeStyle}
           closeModal={handleCloseModal}
+          testId={'admin-trainers-form-modal'}
+          closeTestId={'admin-trainers-form-button-confirm-modal'}
         />
       </SharedForm>
     </Container>

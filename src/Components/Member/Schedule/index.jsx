@@ -179,21 +179,22 @@ const Schedule = () => {
                     <label className={styles.selectLabel} htmlFor="activity">
                       Filter by activity:{' '}
                     </label>
-                    <div>
-                      <select
-                        className={styles.select}
-                        id="activity"
-                        value={activity}
-                        onChange={handleActivityChange}
-                      >
-                        <option value="all">All</option>
-                        {activities?.map((activityItem, index) => (
-                          <option value={activityItem?.name} key={index}>
-                            {activityItem?.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <select
+                      className={styles.select}
+                      id="activity"
+                      value={activity}
+                      onChange={handleActivityChange}
+                    >
+                      {activities?.map((activityItem, index) => (
+                        <option
+                          value={activityItem.name}
+                          key={index}
+                          id={`member-schedule-select-activity-${activityItem.name}`}
+                        >
+                          {activityItem.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <table>

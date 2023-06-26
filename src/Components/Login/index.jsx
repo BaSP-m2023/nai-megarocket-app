@@ -27,15 +27,19 @@ const Login = () => {
   const handleLogin = async (data) => {
     try {
       const response = await dispatch(login(data));
-      if (response) {
+      if (response.ok) {
         alert('User logged!');
         history.push('/');
+      } else {
+        throw new Error('User not found');
       }
     } catch (error) {
-      alert(error.message);
+      alert(error);
     }
   };
-
+  const handleRegister = () => {
+    history.push('/auth/register');
+  };
   return (
     <Container>
       <div className={styles.container}>
@@ -72,10 +76,10 @@ const Login = () => {
             </button>
           </div>
           <Button type="submit" text={'Log In'} />
+          <Button type="submit" text={'Create an Account'} clickAction={handleRegister} />
         </form>
       </div>
     </Container>
   );
 };
-
 export default Login;

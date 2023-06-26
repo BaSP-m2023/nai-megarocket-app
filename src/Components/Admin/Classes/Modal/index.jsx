@@ -34,16 +34,26 @@ const CalendarModal = (data) => {
   }
 
   return (
-    <div className={styles.modalContainer}>
+    <div className={styles.modalContainer} id={data.testId}>
       <div className={containerStyle}>
         <div className={styles.closeContainer}>
-          <Button type={'delete'} clickAction={onClose} />
+          <Button type={'delete'} clickAction={onClose} testId={data.closeTestId} />
         </div>
         <h3 className={styles.h3Container}>{data.title}</h3>
         <p className={styles.pContainer}>{data.body}</p>
         <div className={styles.buttonContainer}>
-          <Button type="confirm" text={'Edit'} clickAction={onCloseModal} />
-          <Button type="confirm" text={'Delete'} clickAction={onConfirm} />
+          <Button
+            type="confirm"
+            text={'Edit'}
+            clickAction={onCloseModal}
+            testId={data.editTestId}
+          />
+          <Button
+            type="confirm"
+            text={'Delete'}
+            clickAction={onConfirm}
+            testId={data.confirmDeleteTestId}
+          />
         </div>
       </div>
     </div>
