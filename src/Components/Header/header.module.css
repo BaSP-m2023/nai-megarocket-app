@@ -37,3 +37,7 @@
   font-weight: bold;
   color: #f9a414;
 }
+
+.brand > button {
+  display: flex;
+}
