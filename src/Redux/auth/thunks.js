@@ -34,7 +34,7 @@ export const getAuth = (token) => {
   return async (dispatch) => {
     dispatch(getAuthPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, {
+      const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
         headers: { token }
       });
       const res = await response.json();

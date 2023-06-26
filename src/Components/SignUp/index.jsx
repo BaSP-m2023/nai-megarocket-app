@@ -48,13 +48,13 @@ const SignUp = () => {
   };
   const handleCloseAlert = () => {
     if (isSuccess) {
-      history.push('/login');
+      history.push('/auth/login');
     } else {
       setShowAlert(false);
     }
   };
   const handleCancel = () => {
-    history.push('/login');
+    history.push('/auth/login');
   };
   const handleReset = () => {
     reset();

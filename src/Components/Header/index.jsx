@@ -5,7 +5,7 @@ function Header() {
     <header className={styles.container}>
       <div className={styles.brand}>MEGAROCKET</div>
       <div>
-        <a href={'/login'} rel="noopener noreferrer">
+        <a href={'/auth/login'} rel="noopener noreferrer">
           <img
             className={styles.logIn}
             src={`${process.env.PUBLIC_URL}/assets/images/log-in.svg`}

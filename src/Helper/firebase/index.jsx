@@ -12,7 +12,7 @@ const firebaseConfig = {
 
 export const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-export const tokenlistener = () => {
+export const tokenListener = () => {
   firebase.auth().onIdTokenChanged(async (user) => {
     if (user) {
       const token = await user.getIdToken();
