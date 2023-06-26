@@ -11,16 +11,20 @@ import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import memberValidation from 'Validations/signup';
 import Container from 'Components/Shared/Container';
+
 const SignUp = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const history = useHistory();
-  // const members = useSelector((state) => state.members.data.data);
   const dispatch = useDispatch();
-
   useEffect(() => {
+    const asyncFunction = async () => {
+      const members = await dispatch(getMembers());
+      console.log(members);
+    };
     dispatch(getMembers());
+    asyncFunction();
   }, []);
 
   const {
