@@ -6,10 +6,10 @@ import InputComponent from 'Components/Shared/Input';
 import loginValidation from 'Validations/login';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
-
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -19,16 +19,16 @@ const Login = () => {
     mode: 'all',
     resolver: joiResolver(loginValidation)
   });
-
   const handleLogin = (data) => {
     console.log('username', data.username);
     console.log('password', data.password);
   };
-
   const handleSetValue = (inputName, value) => {
     setValue(inputName, value);
   };
-
+  const handleRegister = () => {
+    history.push('/register');
+  };
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
@@ -65,9 +65,9 @@ const Login = () => {
           </button>
         </div>
         <Button type="submit" text={'Log In'} />
+        <Button type="submit" text={'Create an Account'} clickAction={handleRegister} />
       </form>
     </div>
   );
 };
-
 export default Login;
