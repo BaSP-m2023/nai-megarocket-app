@@ -1,11 +1,11 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 import React, { Suspense, lazy, useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Home from 'Components/Home';
 import Login from 'Components/Login';
 import { tokenListener } from 'Helper/firebase';
-// import { getAuth } from 'Redux/auth/thunks';
+import { getAuth } from 'Redux/auth/thunks';
 
 const SuperAdminAdmins = lazy(() => import('Components/SuperAdmin/Admins/index'));
 
@@ -33,26 +33,26 @@ const AdminSubscriptionsForm = lazy(() => import('Components/Admin/Subscriptions
 const AdminTrainersForm = lazy(() => import('Components/Admin/Trainers/Form'));
 
 const Routes = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
 
   useEffect(() => {
     tokenListener();
   }, []);
 
-  // useEffect(() => {
-  //   if (token) {
-  //     dispatch(getAuth());
-  //   }
-  // }, [token]);
+  useEffect(() => {
+    if (token) {
+      dispatch(getAuth(token));
+    }
+  }, [token]);
 
   return (
     <>
       <Suspense fallback={<ClipLoader />}>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/auth/login" component={Login} />
           <Route path="/super-admin">
             <Route exact path="/super-admin/admins" component={SuperAdminAdmins} />
             <Route exact path="/super-admin/admins/form" component={SuperAdminAdminsForm} />

@@ -30,6 +30,7 @@ const Login = () => {
     <Container>
       <div className={styles.container}>
         <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
+          <h2>Login</h2>
           <div className={styles.emailContainer}>
             <InputComponent
               inputName="email"
