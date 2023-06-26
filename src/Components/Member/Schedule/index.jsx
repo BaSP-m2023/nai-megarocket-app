@@ -9,6 +9,7 @@ import { getMembersById } from 'Redux/members/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Schedule = () => {
   const dispatch = useDispatch();
@@ -164,14 +165,19 @@ const Schedule = () => {
             </Container>
           ) : (
             <Container>
+              <Toaster
+                containerStyle={{
+                  margin: '10vh 0 0 0'
+                }}
+              />
               <div className={styles.container}>
                 <div className={styles.header}>
                   <h2 className={styles.title}>
                     Scheduled Classes - Member: {memberData?.firstName}
                   </h2>
-                  <div>
+                  <div className={styles.filterActivity}>
                     <label className={styles.selectLabel} htmlFor="activity">
-                      Select Activity:{' '}
+                      Filter by activity:{' '}
                     </label>
                     <select
                       className={styles.select}
@@ -222,6 +228,7 @@ const Schedule = () => {
       )}
       <Modal
         show={showModal}
+        toast={toast}
         setShowModal={setShowModal}
         closeModal={handleCloseModal}
         day={infoClass.day}

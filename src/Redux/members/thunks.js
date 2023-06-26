@@ -16,11 +16,16 @@ import {
   addMemberError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getMembers = () => {
   return async (dispatch) => {
     dispatch(getMembersPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
       dispatch(getMembersSuccess(data));
       return data;
@@ -34,7 +39,10 @@ export const getMembersById = (id) => {
   return async (dispatch) => {
     dispatch(getMemberByIdPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const data = await response.json();
       dispatch(getMemberByIdSuccess(data));
       return data;
@@ -50,7 +58,8 @@ export const deleteMember = (id) => {
     dispatch(deleteMemberPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const data = await response.json();
       if (response.ok) {
@@ -73,7 +82,8 @@ export const updateMember = (id, member) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(member)
       });
@@ -98,7 +108,8 @@ export const addMember = (member) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token: token
         },
         body: JSON.stringify(member)
       });
