@@ -1,9 +1,11 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
-
+// import { useDispatch } from 'react-redux';
 import Home from 'Components/Home';
 import Login from 'Components/Login';
+import { tokenListener } from 'Helper/firebase';
+// import { getAuth } from 'Redux/auth/thunks';
 
 const SuperAdminAdmins = lazy(() => import('Components/SuperAdmin/Admins/index'));
 
@@ -31,6 +33,20 @@ const AdminSubscriptionsForm = lazy(() => import('Components/Admin/Subscriptions
 const AdminTrainersForm = lazy(() => import('Components/Admin/Trainers/Form'));
 
 const Routes = () => {
+  // const dispatch = useDispatch();
+
+  // const token = sessionStorage.getItem('token');
+
+  useEffect(() => {
+    tokenListener();
+  }, []);
+
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch(getAuth());
+  //   }
+  // }, [token]);
+
   return (
     <>
       <Suspense fallback={<ClipLoader />}>

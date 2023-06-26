@@ -16,7 +16,6 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors }
   } = useForm({
     mode: 'all',
@@ -25,10 +24,6 @@ const Login = () => {
 
   const handleLogin = (data) => {
     dispatch(login(data));
-  };
-
-  const handleSetValue = (inputName, value) => {
-    setValue(inputName, value);
   };
 
   return (
@@ -42,7 +37,6 @@ const Login = () => {
               labelName="Email"
               placeholder={'Email'}
               register={register}
-              setValue={handleSetValue}
               error={errors.email?.message}
             />
           </div>
@@ -55,7 +49,6 @@ const Login = () => {
                 labelName="Password"
                 placeholder={'Password'}
                 register={register}
-                setValue={handleSetValue}
                 error={errors.password?.message}
               />
             </div>
