@@ -19,12 +19,7 @@ const SignUp = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    const asyncFunction = async () => {
-      const members = await dispatch(getMembers());
-      console.log(members);
-    };
     dispatch(getMembers());
-    asyncFunction();
   }, []);
 
   const {
