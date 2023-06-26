@@ -10,6 +10,7 @@ import Container from 'Components/Shared/Container';
 import { login } from 'Redux/auth/thunks';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { LOGIN_SUCCESS } from 'Redux/auth/constants';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,8 +28,9 @@ const Login = () => {
   const handleLogin = async (data) => {
     try {
       const response = await dispatch(login(data));
-      if (response.ok) {
-        alert('User logged!');
+      console.log(response);
+      if (response.type === LOGIN_SUCCESS) {
+        alert(`Welcome ${response.payload.role}`);
         history.push('/');
       } else {
         throw new Error('User not found');

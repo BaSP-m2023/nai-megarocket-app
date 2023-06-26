@@ -38,11 +38,7 @@ export const getAuth = (token) => {
         headers: { token }
       });
       const res = await response.json();
-      if (res.ok) {
-        return dispatch(getAuthSuccess(res.data));
-      } else {
-        throw new Error(res.message);
-      }
+      return dispatch(getAuthSuccess(res.data));
     } catch (error) {
       return dispatch(getAuthError(error.toString()));
     }
