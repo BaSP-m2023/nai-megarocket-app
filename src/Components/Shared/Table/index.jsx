@@ -1,7 +1,16 @@
 import React from 'react';
 import Button from '../Button';
 import styles from './table.module.css';
-const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteItem }) => {
+const Table = ({
+  data,
+  properties,
+  columnTitles,
+  handleUpdateItem,
+  handleDeleteItem,
+  testId,
+  testCancelId,
+  testEditId
+}) => {
   if (!Array.isArray(data)) {
     return <div>No data available</div>;
   }
@@ -13,7 +22,7 @@ const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteI
   };
 
   return (
-    <table className={styles.tableShared}>
+    <table id={testId} className={styles.tableShared}>
       <thead className={styles.tableHead}>
         <tr className={styles.tableTrHead}>
           {columnTitles.map((title) => (
@@ -41,8 +50,16 @@ const Table = ({ data, properties, columnTitles, handleUpdateItem, handleDeleteI
                 );
               })}
               <td className={`${styles.tableThtd} ${styles.tableLastColumn}`}>
-                <Button type="edit" clickAction={() => handleUpdateItem(item._id)} />
-                <Button type="delete" clickAction={() => handleDeleteItem(item._id)} />
+                <Button
+                  testId={testEditId}
+                  type="edit"
+                  clickAction={() => handleUpdateItem(item._id)}
+                />
+                <Button
+                  testId={testCancelId}
+                  type="delete"
+                  clickAction={() => handleDeleteItem(item._id)}
+                />
               </td>
             </tr>
           );

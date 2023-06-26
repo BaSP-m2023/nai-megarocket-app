@@ -62,7 +62,12 @@ const Members = () => {
     <Container>
       <div className={styles.membersSection}>
         <h2>Members</h2>
-        <Button text={'+ Add Member'} type={'add'} clickAction={handleAdd} />
+        <Button
+          text={'+ Add Member'}
+          type={'add'}
+          clickAction={handleAdd}
+          testId={'admin-members-add-button'}
+        />
       </div>
       {loading ? (
         <ClipLoader />
@@ -74,6 +79,9 @@ const Members = () => {
             handleUpdateItem={handleEdit}
             columnTitles={['Name', 'Surname', 'Email', 'Membership', 'Active']}
             properties={['firstName', 'lastName', 'email', 'membership', 'isActive']}
+            testId={'admin-member-table'}
+            testCancelId={'admin-member-icon-delete'}
+            testEditId={'admin-member-icon-edit'}
           />
           <SharedModal
             isDelete={isDelete}
@@ -83,6 +91,8 @@ const Members = () => {
             title={title}
             body={alertMessage}
             onConfirm={handleConfirmDelete}
+            testId={'admin-member-modal'}
+            closeTestId={'admin-member-button-close-success-modal'}
           />
         </>
       ) : (

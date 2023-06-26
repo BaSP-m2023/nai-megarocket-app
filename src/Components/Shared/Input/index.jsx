@@ -9,18 +9,24 @@ const InputComponent = ({
   placeholder,
   register,
   error,
-  disabled
+  disabled,
+  testId,
+  errorTestId
 }) => {
   const renderList = () => (
     <>
-      <option value="" className={error ? error : null}>
+      <option value="" className={error ? error : null} id={testId}>
         Select an option
       </option>
       {list?.map((item) => {
         const properties = listProp?.split('.');
         const value = properties?.reduce((obj, prop) => obj[prop], item);
         return (
-          <option key={item._id ? item._id : item} value={item._id ? item._id : item}>
+          <option
+            key={item._id ? item._id : item}
+            value={item._id ? item._id : item}
+            id={`${testId}-${value ? value : item}`}
+          >
             {value ? value : item}
           </option>
         );
@@ -36,14 +42,19 @@ const InputComponent = ({
         className={error ? styles.formSelectError : styles.formSelect}
         value={value}
         disabled={disabled}
+        id={testId}
       >
         {renderList()}
       </select>
-      {error && <p className={styles.errorMsg}>{error}</p>}
+      {error && (
+        <p className={styles.errorMsg} id={errorTestId}>
+          {error}
+        </p>
+      )}
     </div>
   );
   const renderInput = (type) => (
-    <div className={styles.inputDiv}>
+    <div className={styles.inputDiv} id={testId}>
       <label>{labelName}</label>
       <input
         {...register(inputName)}
@@ -53,15 +64,30 @@ const InputComponent = ({
         value={value}
         placeholder={placeholder}
         disabled={disabled}
+        id={testId}
       />
-      {error && <p className={styles.errorMsg}>{error}</p>}
+      {error && (
+        <p className={styles.errorMsg} id={errorTestId}>
+          {error}
+        </p>
+      )}
     </div>
   );
   const renderIsActive = () => (
-    <div>
+    <div id={testId}>
       <label>{labelName}</label>
-      <input {...register(inputName)} name={inputName} type="checkbox" disabled={disabled} />{' '}
-      {error && <p className={styles.errorMsg}>{error}</p>}
+      <input
+        {...register(inputName)}
+        name={inputName}
+        type="checkbox"
+        disabled={disabled}
+        id={testId}
+      />{' '}
+      {error && (
+        <p className={styles.errorMsg} id={errorTestId}>
+          {error}
+        </p>
+      )}
     </div>
   );
   const renderInputType = (inputType) => {

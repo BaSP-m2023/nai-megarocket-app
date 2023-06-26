@@ -123,6 +123,8 @@ const MemberForm = () => {
           typeStyle={isSuccess ? 'success' : 'error'}
           title={isSuccess ? 'Success' : 'Something went wrong'}
           body={alertMessage}
+          testId={'admin-memebrs-form-modal'}
+          closeTestId={'admin-memebrs-form-button-confirm-modal'}
         />
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
@@ -132,6 +134,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
+              testId={'admin-members-input-first-name'}
             />
             <Input
               register={register}
@@ -139,6 +142,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'lastName'}
               error={errors.lastName?.message}
+              testId={'admin-members-input-last-name'}
             />
             <Input
               register={register}
@@ -146,6 +150,7 @@ const MemberForm = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
+              testId={'admin-members-input-dni'}
             />
             <Input
               register={register}
@@ -153,6 +158,7 @@ const MemberForm = () => {
               inputType={'number'}
               inputName={'phone'}
               error={errors.phone?.message}
+              testId={'admin-members-input-phone'}
             />
             <Input
               register={register}
@@ -160,6 +166,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'email'}
               error={errors.email?.message}
+              testId={'admin-members-input-email'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
@@ -169,6 +176,7 @@ const MemberForm = () => {
               inputType={'password'}
               inputName={'password'}
               error={errors.password?.message}
+              testId={'admin-members-input-password'}
             />
             <Input
               register={register}
@@ -176,6 +184,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'city'}
               error={errors.city?.message}
+              testId={'admin-members-input-city'}
             />
             <Input
               register={register}
@@ -183,6 +192,7 @@ const MemberForm = () => {
               inputType={'date'}
               inputName={'birthDay'}
               error={errors.birthDay?.message}
+              testId={'admin-members-input-date'}
             />
             <Input
               register={register}
@@ -190,6 +200,7 @@ const MemberForm = () => {
               inputType={'number'}
               inputName={'postalCode'}
               error={errors.postalCode?.message}
+              testId={'admin-members-input-zip'}
             />
             <Input
               register={register}
@@ -198,6 +209,7 @@ const MemberForm = () => {
               list={membership}
               inputName={'membership'}
               error={errors.membership?.message}
+              testId={'admin-members-input-memebrship'}
             />
             <Input
               register={register}
@@ -205,13 +217,30 @@ const MemberForm = () => {
               inputType={'isActive'}
               inputName={'isActive'}
               error={errors.isActive}
+              testId={'admin-members-input-checkbox'}
             />
           </div>
           <div className={styles.buttonContainer}>
-            <Button text={id ? 'Update' : 'Add'} type={'submit'} info={'submit'} />
+            <Button
+              text={id ? 'Update' : 'Add'}
+              type={'submit'}
+              info={'submit'}
+              testId={'admin-members-button-submit-form'}
+            />
             <div className={styles.buttonsLowContainer}>
-              <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
-              <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
+              <Button
+                text={'Back'}
+                type={'cancel'}
+                clickAction={handleCancel}
+                testId={'admin-members-button-back-form'}
+              />
+              <Button
+                type={'cancel'}
+                onClick={handleReset}
+                info={'reset'}
+                text={'Reset'}
+                testId={'admin-members-button-reset-form'}
+              />
             </div>
           </div>
         </form>
