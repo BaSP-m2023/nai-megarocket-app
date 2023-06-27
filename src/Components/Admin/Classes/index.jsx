@@ -58,11 +58,11 @@ const Classes = () => {
   };
 
   const handleAddClass = () => {
-    history.push('/admin/classes/form/');
+    history.push('/admins/classes/form/');
   };
 
   const handleUpdateClass = () => {
-    history.push(`/admin/classes/form/${classToDelete}`);
+    history.push(`/admins/classes/form/${classToDelete}`);
   };
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

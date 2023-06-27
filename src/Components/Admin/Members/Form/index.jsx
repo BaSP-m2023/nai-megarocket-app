@@ -84,14 +84,14 @@ const MemberForm = () => {
 
   const handleCloseAlert = () => {
     if (isSuccess) {
-      history.push('/admin/members');
+      history.push('/admins/members');
     } else {
       setShowAlert(false);
     }
   };
 
   const handleCancel = () => {
-    history.push('/admin/members');
+    history.push('/admins/members');
   };
 
   const handleReset = () => {

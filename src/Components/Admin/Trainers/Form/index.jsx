@@ -87,12 +87,12 @@ const AdminTrainerForm = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     if (shouldRedirect) {
-      history.push('/admin/trainers');
+      history.push('/admins/trainers');
     }
   };
 
   const handleCancel = () => {
-    history.push('/admin/trainers');
+    history.push('/admins/trainers');
   };
 
   const handleReset = () => {

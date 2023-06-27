@@ -57,11 +57,11 @@ const Trainers = () => {
   };
 
   const handleAddTrainer = () => {
-    history.push('/admin/trainers/form');
+    history.push('/admins/trainers/form');
   };
 
   const editItem = (id) => {
-    history.push(`/admin/trainers/form/${id}`);
+    history.push(`/admins/trainers/form/${id}`);
   };
 
   return (

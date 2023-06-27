@@ -25,11 +25,11 @@ const Subscriptions = () => {
   }, []);
 
   const handleAdd = () => {
-    history.push('/admin/subscriptions/form');
+    history.push('/admins/subscriptions/form');
   };
 
   const handleEdit = (_id) => {
-    history.push(`/admin/subscriptions/form/${_id}`);
+    history.push(`/admins/subscriptions/form/${_id}`);
   };
 
   const handleDeleteSubscription = (id) => {
