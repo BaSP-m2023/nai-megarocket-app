@@ -31,7 +31,19 @@ const Login = () => {
       console.log(response);
       if (response.type === LOGIN_SUCCESS) {
         alert(`Welcome ${response.payload.role}`);
-        history.push('/');
+        switch (response.payload.role) {
+          case 'SUPER_ADMIN':
+            history.push('/super-admins');
+            break;
+          case 'ADMIN':
+            history.push('/admins');
+            break;
+          case 'MEMBER':
+            history.push('/members');
+            break;
+          default:
+            history.push('/');
+        }
       } else {
         throw new Error('User not found');
       }
@@ -55,6 +67,8 @@ const Login = () => {
               placeholder={'Email'}
               register={register}
               error={errors.email?.message}
+              testId={'login-input-email'}
+              errorTestId={'login-input-email-error'}
             />
           </div>
           <div className={styles.passwordContainer}>
@@ -67,9 +81,12 @@ const Login = () => {
                 placeholder={'Password'}
                 register={register}
                 error={errors.password?.message}
+                testId={'login-input-password'}
+                errorTestId={'login-input-password-error'}
               />
             </div>
             <button
+              id="eye-button"
               className={styles.eyeButton}
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -77,11 +94,17 @@ const Login = () => {
               {showPassword ? <FaEyeSlash /> : <FaRegEye />}
             </button>
           </div>
-          <Button type="submit" text={'Log In'} />
-          <Button type="submit" text={'Create an Account'} clickAction={handleRegister} />
+          <Button testId={'login-button-submit'} type="submit" text={'Log In'} />
+          <Button
+            testId={'login-button-register'}
+            type="submit"
+            text={'Create an Account'}
+            clickAction={handleRegister}
+          />
         </form>
       </div>
     </Container>
   );
 };
+
 export default Login;

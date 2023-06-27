@@ -7,16 +7,16 @@ const SideBar = () => {
   return (
     <aside className={styles.aside}>
       <nav className={styles.navbar}>
-        <ul className={styles.rutes}>
+        <ul className={styles.routes}>
           {!role && (
             <>
-              <button className={styles.button} onClick={() => setRole('super-admin')}>
+              <button className={styles.button} onClick={() => setRole('super-admins')}>
                 Super Admin
               </button>
-              <button className={styles.button} onClick={() => setRole('admin')}>
+              <button className={styles.button} onClick={() => setRole('admins')}>
                 Admin
               </button>
-              <button className={styles.button} onClick={() => setRole('member')}>
+              <button className={styles.button} onClick={() => setRole('members')}>
                 Member
               </button>
             </>
@@ -29,7 +29,7 @@ const SideBar = () => {
                   Home
                 </NavLink>
               </li>
-              {role === 'admin' && (
+              {role === 'admins' && (
                 <>
                   <li>
                     <NavLink activeClassName={styles.active} to={`/${role}/profile`}>
@@ -69,7 +69,7 @@ const SideBar = () => {
                 </>
               )}
 
-              {role === 'super-admin' && (
+              {role === 'super-admins' && (
                 <>
                   <li>
                     <NavLink activeClassName={styles.active} to={`/${role}/admins`}>
@@ -79,7 +79,7 @@ const SideBar = () => {
                 </>
               )}
 
-              {role === 'member' && (
+              {role === 'members' && (
                 <>
                   <li>
                     <NavLink activeClassName={styles.active} to={`/${role}/profile`}>

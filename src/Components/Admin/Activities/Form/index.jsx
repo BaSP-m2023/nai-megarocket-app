@@ -86,7 +86,7 @@ const Form = () => {
 
   const onConfirm = () => {
     if (isSuccess) {
-      history.push('/admin/activities');
+      history.push('/admins/activities');
       setIsSuccess(true);
     } else {
       setShowModal(false);
@@ -94,7 +94,7 @@ const Form = () => {
   };
 
   const handleCancel = () => {
-    history.push('/admin/activities');
+    history.push('/admins/activities');
   };
 
   return (

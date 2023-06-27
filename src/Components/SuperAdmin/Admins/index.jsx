@@ -83,11 +83,11 @@ const Admins = () => {
   };
 
   const handleAddAdmin = () => {
-    history.push('/super-admin/admins/form');
+    history.push('/super-admins/admins/form');
   };
 
   const handleUpdateAdmin = (id) => {
-    history.push(`/super-admin/admins/form/${id}`);
+    history.push(`/super-admins/admins/form/${id}`);
   };
 
   return (

@@ -81,7 +81,7 @@ const Form = () => {
     try {
       const data = await dispatch(postAdmin(admin));
       localStorage.setItem('toastMessage', data.message);
-      history.push('/super-admin/admins');
+      history.push('/super-admins/admins');
     } catch (error) {
       showErrorToast(error.message);
     }
@@ -91,14 +91,14 @@ const Form = () => {
     try {
       const data = await dispatch(putAdmin(id, admin));
       localStorage.setItem('toastMessage', data.message);
-      history.push('/super-admin/admins');
+      history.push('/super-admins/admins');
     } catch (error) {
       showErrorToast(error.message);
     }
   };
 
   const handleBack = () => {
-    history.push('/super-admin/admins');
+    history.push('/super-admins/admins');
   };
   const handleReset = () => {
     reset();
