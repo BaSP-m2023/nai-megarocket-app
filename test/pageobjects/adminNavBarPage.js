@@ -4,11 +4,17 @@ class AdminNavBarPage {
     return browser.url(url);
   }
 
-  get chooseAdminButton() {
-    const buttons = $$('button.sideBar_button__nJ3d+');
-    const adminButton = buttons[1];
-    return adminButton;
+  get adminButton() {
+    return $$('.button.sideBar_button__nJ3d+')[1]; //selector provisorio, faltan implementar IDs
+  }
+
+  get activityOptionButton() {
+    return $$('li:first-child a:nth-child(3)')[0]; //selector provisorio, faltan implementar IDs
+  }
+
+  get classOptionButton() {
+    return $$('li:first-child a:nth-child(4)')[0]; //selector provisorio, faltan implementar IDs
   }
 }
 
-export default new AdminNavBarPage();
+module.exports = new AdminNavBarPage();

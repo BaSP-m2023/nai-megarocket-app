@@ -15,24 +15,10 @@ describe('LoginPage', () => {
     await LoginPage.login('admin@gmail.com', 'Firebase1!');
   });
 
-  it('should click on Admin button on the sidebar and display the options', async () => {
-    await AdminNavBarPage.open('https://nai-megarocket-app.vercel.app/admins');
-    await AdminNavBarPage.adminButton.waitForDisplayed();
-    await AdminNavBarPage.adminButton.waitForEnabled();
-    await AdminNavBarPage.adminButton.click();
-  });
-
   it('should click on Activities option', async () => {
     await AdminNavBarPage.open('https://nai-megarocket-app.vercel.app/admins');
-    await AdminNavBarPage.activityOptionButton.waitForDisplayed();
-    await AdminNavBarPage.activityOptionButton.waitForEnabled();
-    await AdminNavBarPage.activityOptionButton.click();
-  });
-
-  it('should click on Activities option', async () => {
-    await AdminNavBarPage.open('https://nai-megarocket-app.vercel.app/admins');
-    await AdminNavBarPage.activityOptionButton.waitForDisplayed();
-    await AdminNavBarPage.activityOptionButton.waitForEnabled();
-    await AdminNavBarPage.activityOptionButton.click();
+    await AdminNavBarPage.classOptionButton.waitForDisplayed();
+    await AdminNavBarPage.classOptionButton.waitForEnabled();
+    await AdminNavBarPage.classOptionButton.click();
   });
 });
