@@ -1,103 +1,104 @@
-import React, { useState } from 'react';
+// import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './sideBar.module.css';
 import { NavLink } from 'react-router-dom';
 
-const SideBar = () => {
-  const [role, setRole] = useState();
+const SideBar = ({ initialRole }) => {
+  console.log('this is my initial role', initialRole);
+  // const activeRole = sessionStorage.getItem('role');
+
+  // const [refreshSideBar, setRefreshSideBar] = useState('');
+
+  // useEffect(() => {
+  //   setRefreshSideBar(activeRole);
+  // }, []);
+
   return (
     <aside className={styles.aside}>
       <nav className={styles.navbar}>
-        <ul className={styles.rutes}>
-          {!role && (
+        <ul className={styles.routes}>
+          {!initialRole && (
             <>
-              <button className={styles.button} onClick={() => setRole('super-admin')}>
-                Super Admin
-              </button>
-              <button className={styles.button} onClick={() => setRole('admin')}>
-                Admin
-              </button>
-              <button className={styles.button} onClick={() => setRole('member')}>
-                Member
-              </button>
+              <button className={styles.button}>Log In</button>
+              <button className={styles.button}>Sign Up</button>
             </>
           )}
-
-          {role && (
+          {initialRole && (
             <>
               <li>
-                <NavLink activeClassName={styles.active} exact to="/" onClick={() => setRole()}>
+                <NavLink activeClassName={styles.active} exact to="/">
                   Home
                 </NavLink>
               </li>
-              {role === 'admin' && (
+              {initialRole === 'ADMIN' && (
                 <>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/profile`}>
+                    <NavLink activeClassName={styles.active} to={`/admin/profile`}>
                       Profile
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/activities`}>
+                    <NavLink activeClassName={styles.active} to={`/admin/activities`}>
                       Activities
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/classes`}>
+                    <NavLink activeClassName={styles.active} to={`/admin/classes`}>
                       Classes
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/members`}>
+                    <NavLink activeClassName={styles.active} to={`/admin/members`}>
                       Members
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/subscriptions`}>
+                    <NavLink activeClassName={styles.active} to={`/admin/subscriptions`}>
                       Subscriptions
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/trainers`}>
+                    <NavLink activeClassName={styles.active} to={`/admin/trainers`}>
                       Trainers
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/reports`}>
+                    <NavLink activeClassName={styles.active} to={`/admin/reports`}>
                       Reports
                     </NavLink>
                   </li>
                 </>
               )}
 
-              {role === 'super-admin' && (
+              {initialRole === 'SUPER_ADMIN' && (
                 <>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/admins`}>
+                    <NavLink activeClassName={styles.active} to={`/super-admins/admins`}>
                       Admins
                     </NavLink>
                   </li>
                 </>
               )}
 
-              {role === 'member' && (
+              {initialRole === 'MEMBER' && (
                 <>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/profile`}>
+                    <NavLink activeClassName={styles.active} to={`/members/profile`}>
                       Profile
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/schedule`}>
+                    <NavLink activeClassName={styles.active} to={`/members/schedule`}>
                       Schedule
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/activities`}>
+                    <NavLink activeClassName={styles.active} to={`/members/activities`}>
                       Activities
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink activeClassName={styles.active} to={`/${role}/memberships`}>
+                    <NavLink activeClassName={styles.active} to={`/members/memberships`}>
                       Memberships
                     </NavLink>
                   </li>

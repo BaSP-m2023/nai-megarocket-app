@@ -8,9 +8,9 @@ const SuperAdminAdminsForm = lazy(() => import('Components/SuperAdmin/Admins/For
 const SuperAdminRoutes = () => {
   return (
     <Suspense fallback={<ClipLoader />}>
-      <Route exact path="/super-admin/admins" component={SuperAdminAdmins} />
-      <Route exact path="/super-admin/admins/form" component={SuperAdminAdminsForm} />
-      <Route path="/super-admin/admins/form/:id" component={SuperAdminAdminsForm} />
+      <Route exact path="/super-admins/admins" component={SuperAdminAdmins} />
+      <Route exact path="/super-admins/admins/form" component={SuperAdminAdminsForm} />
+      <Route path="/super-admins/admins/form/:id" component={SuperAdminAdminsForm} />
     </Suspense>
   );
 };

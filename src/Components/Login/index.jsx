@@ -31,7 +31,19 @@ const Login = () => {
       console.log(response);
       if (response.type === LOGIN_SUCCESS) {
         alert(`Welcome ${response.payload.role}`);
-        history.push('/');
+        switch (response.payload.role) {
+          case 'SUPER_ADMIN':
+            history.push('/super-admins');
+            break;
+          case 'ADMIN':
+            history.push('/admins');
+            break;
+          case 'MEMBER':
+            history.push('/members');
+            break;
+          default:
+            history.push('/');
+        }
       } else {
         throw new Error('User not found');
       }

@@ -12,11 +12,11 @@ const MemberProfileForm = lazy(() => import('Components/Member/Profile/Form'));
 const MemberRoutes = () => {
   return (
     <Suspense fallback={<ClipLoader />}>
-      <Route path="/member/activities" component={MemberActivities} />
-      <Route path="/member/memberships" component={MemberMembership} />
-      <Route exact path="/member/profile" component={MemberProfile} />
-      <Route path="/member/profile/form/:id" component={MemberProfileForm} />
-      <Route exact path="/member/schedule" component={MemberSchedule} />
+      <Route path="/members/activities" component={MemberActivities} />
+      <Route path="/members/memberships" component={MemberMembership} />
+      <Route exact path="/members/profile" component={MemberProfile} />
+      <Route path="/members/profile/form/:id" component={MemberProfileForm} />
+      <Route exact path="/members/schedule" component={MemberSchedule} />
     </Suspense>
   );
 };

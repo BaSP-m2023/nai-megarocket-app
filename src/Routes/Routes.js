@@ -26,10 +26,10 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/login" component={Login} />
-      <Route path="/super-admin" component={SuperAdminRoutes} />
-      <Route path="/admin" component={AdminRoutes} />
-      <Route path="/member" component={MemberRoutes} />
+      <Route exact path="/auth/login" component={Login} />
+      <Route path="/super-admins" component={SuperAdminRoutes} />
+      <Route path="/admins" component={AdminRoutes} />
+      <Route path="/members" component={MemberRoutes} />
       <Route exact path="/">
         <Redirect to="/home" />
       </Route>
