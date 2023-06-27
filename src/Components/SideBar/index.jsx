@@ -6,6 +6,7 @@ import { logout } from 'Redux/auth/thunks';
 
 const SideBar = () => {
   const [role, setRole] = useState();
+
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
@@ -113,6 +114,7 @@ const SideBar = () => {
               )}
             </>
           )}
+
           <li>
             <NavLink activeClassName={styles.active} to={`/auth/login`} onClick={handleLogOut}>
               Log Out
