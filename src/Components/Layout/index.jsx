@@ -1,18 +1,20 @@
-import Header from 'Components/Header/index';
-import styles from './layout.module.css';
-import Routes from 'Routes/Routes';
-import SideBar from 'Components/SideBar';
+import MemberView from 'Components/Views/memberView';
+import AdminView from 'Components/Views/adminView';
+import SuperAdminView from 'Components/Views/superAdminView';
 
 const Layout = () => {
-  return (
-    <>
-      <Header />
-      <div className={styles.body}>
-        <SideBar />
-        <Routes />
-      </div>
-    </>
-  );
+  const role = sessionStorage.getItem('role');
+
+  switch (role) {
+    case 'SUPER_ADMIN':
+      return <SuperAdminView />;
+    case 'ADMIN':
+      return <AdminView />;
+    case 'MEMBER':
+      return <MemberView />;
+    default:
+      return <MemberView />;
+  }
 };
 
 export default Layout;

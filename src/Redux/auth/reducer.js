@@ -7,10 +7,12 @@ import {
   LOGOUT_ERROR,
   GET_AUTH_PENDING,
   GET_AUTH_SUCCESS,
-  GET_AUTH_ERROR
+  GET_AUTH_ERROR,
+  SET_USER_ROLE
 } from './constants';
 
 const initialState = {
+  role: null,
   user: null,
   isLoading: false,
   error: null,
@@ -66,6 +68,11 @@ const authReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload,
         isAuthPending: false
+      };
+    case SET_USER_ROLE:
+      return {
+        ...state,
+        role: action.payload
       };
     default:
       return state;

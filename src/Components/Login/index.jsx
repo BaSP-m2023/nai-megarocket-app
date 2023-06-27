@@ -11,6 +11,7 @@ import { login } from 'Redux/auth/thunks';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { LOGIN_SUCCESS } from 'Redux/auth/constants';
+import { setUserRole } from 'Redux/auth/actions';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,30 +31,34 @@ const Login = () => {
       const response = await dispatch(login(data));
       console.log(response);
       if (response.type === LOGIN_SUCCESS) {
-        alert(`Welcome ${response.payload.role}`);
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
             history.push('/super-admins');
+            dispatch(setUserRole(response.payload.role));
             break;
           case 'ADMIN':
             history.push('/admins');
+            dispatch(setUserRole(response.payload.role));
             break;
           case 'MEMBER':
             history.push('/members');
+            dispatch(setUserRole(response.payload.role));
             break;
           default:
-            history.push('/');
+            history.push('/auth/login');
         }
       } else {
         throw new Error('User not found');
       }
     } catch (error) {
-      alert(error);
+      console.error(error);
     }
   };
+
   const handleRegister = () => {
     history.push('/auth/register');
   };
+
   return (
     <Container>
       <div className={styles.container}>

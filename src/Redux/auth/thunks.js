@@ -50,6 +50,7 @@ export const logout = () => {
     dispatch(logoutPending());
     try {
       await firebaseApp.auth().signOut();
+      sessionStorage.clear();
       return dispatch(logoutSuccess());
     } catch (error) {
       return dispatch(logoutError(error.toString()));
