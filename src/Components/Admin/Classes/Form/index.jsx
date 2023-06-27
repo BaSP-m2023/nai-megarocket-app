@@ -106,12 +106,12 @@ const Form = () => {
   };
 
   const handleCancel = () => {
-    history.push('/admin/classes');
+    history.push('/admins/classes');
   };
 
   const handleCloseAlert = () => {
     if (isSuccess) {
-      history.push('/admin/classes');
+      history.push('/admins/classes');
     } else {
       setShowAlert(false);
     }

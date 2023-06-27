@@ -52,11 +52,11 @@ const Members = () => {
   };
 
   const handleAdd = () => {
-    history.push('/admin/members/form/');
+    history.push('/admins/members/form/');
   };
 
   const handleEdit = (id) => {
-    history.push(`/admin/members/form/${id}`);
+    history.push(`/admins/members/form/${id}`);
   };
   return (
     <Container>

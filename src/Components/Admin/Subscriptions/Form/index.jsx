@@ -50,7 +50,7 @@ const Form = () => {
   }, [id]);
 
   const handleCancel = () => {
-    history.push('/admin/subscriptions');
+    history.push('/admins/subscriptions');
   };
 
   const showSuccesModal = (data) => {
@@ -101,7 +101,7 @@ const Form = () => {
   };
   const handleCloseAlert = () => {
     if (isSuccess) {
-      history.push('/admin/subscriptions');
+      history.push('/admins/subscriptions');
     } else {
       setShowAlert(false);
     }
