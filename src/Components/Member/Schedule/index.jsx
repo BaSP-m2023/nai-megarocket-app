@@ -185,6 +185,7 @@ const Schedule = () => {
                       value={activity}
                       onChange={handleActivityChange}
                     >
+                      <option value="all">All</option>
                       {activities?.map((activityItem, index) => (
                         <option
                           value={activityItem.name}

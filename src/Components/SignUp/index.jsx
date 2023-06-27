@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addMember } from 'Redux/members/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { getMembers } from 'Redux/members/thunks';
 import styles from './signup.module.css';
 import SharedModal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
@@ -18,9 +17,6 @@ const SignUp = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getMembers());
-  }, []);
 
   const {
     register,
