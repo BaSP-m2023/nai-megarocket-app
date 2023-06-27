@@ -1,4 +1,4 @@
-class AdminNavBar {
+class NavBarPage {
   get adminSection() {
     return $('#root > div > aside > nav > ul > button:nth-child(2)');
   }
@@ -24,4 +24,4 @@ class AdminNavBar {
   }
 }
 
-export default new AdminNavBar();
+module.exports = new NavBarPage();

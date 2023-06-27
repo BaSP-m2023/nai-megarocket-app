@@ -1,6 +1,10 @@
-class Login {
+class LoginPage {
   get logIcon() {
     return $('#login-bar-link');
+  }
+
+  get loginForm() {
+    return $('#root > div > div > div > form');
   }
 
   get emailInput() {
@@ -27,14 +31,14 @@ class Login {
     await this.logIcon.click();
   }
 
-  async clickOnSubmitButton() {
-    await this.submitButton.click();
-  }
-
   async login(email, password) {
     await this.inputUsername.setValue(email);
     await this.inputPassword.setValue(password);
   }
+
+  async clickOnSubmitButton() {
+    await this.submitButton.click();
+  }
 }
 
-export default new Login();
+module.exports = new LoginPage();
