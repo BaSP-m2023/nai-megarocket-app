@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 class LoginPage {
   open(url) {
     return browser.url(url);
@@ -32,11 +31,15 @@ class LoginPage {
     return $('#login-input-password-error');
   }
 
-  async login(username, password) {
-    await this.inputUserName.setValue(username);
+  async singIn() {
+    await this.linkLogin.click();
+  }
+
+  async login(email, password) {
+    await this.inputEmail.setValue(email);
     await this.inputPassword.setValue(password);
     await this.buttonLogin.click();
   }
 }
 
-export default new LoginPage();
+module.exports = new LoginPage();
