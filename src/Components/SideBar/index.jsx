@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import styles from './sideBar.module.css';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from 'Redux/auth/thunks';
 
 const SideBar = () => {
   const [role, setRole] = useState();
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    dispatch(logout());
+  };
+
   return (
     <aside className={styles.aside}>
       <nav className={styles.navbar}>
@@ -105,6 +113,11 @@ const SideBar = () => {
               )}
             </>
           )}
+          <li>
+            <NavLink activeClassName={styles.active} to={`/auth/login`} onClick={handleLogOut}>
+              Log Out
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </aside>
