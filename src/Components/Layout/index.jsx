@@ -4,12 +4,11 @@ import Routes from 'Routes/Routes';
 import SideBar from 'Components/SideBar';
 
 const Layout = () => {
-  const activeRole = sessionStorage.getItem('role');
   return (
     <>
       <Header />
       <div className={styles.body}>
-        <SideBar initialRole={activeRole} />
+        <SideBar />
         <Routes />
       </div>
     </>
