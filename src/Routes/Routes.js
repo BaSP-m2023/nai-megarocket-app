@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from 'Components/Home';
 import Login from 'Components/Login';
+import SignUp from 'Components/SignUp';
 import SuperAdminRoutes from './superAdmin';
 import AdminRoutes from './admin';
 import MemberRoutes from './member';
@@ -29,6 +30,7 @@ const Routes = () => {
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/auth/login" component={Login} />
+      <Route exact path="/auth/register" component={SignUp} />
       <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminRoutes} />
       <PrivateRoute path="/admins" role="ADMIN" component={AdminRoutes} />
       <PrivateRoute path="/members" role="MEMBER" component={MemberRoutes} />

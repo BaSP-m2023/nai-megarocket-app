@@ -81,7 +81,6 @@ const membersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        data: [...state.data.data, action.payload.member],
         error: null
       };
     case types.ADD_MEMBER_ERROR:
