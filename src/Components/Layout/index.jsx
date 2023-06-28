@@ -2,10 +2,24 @@ import MemberView from 'Components/Views/memberView';
 import AdminView from 'Components/Views/adminView';
 import SuperAdminView from 'Components/Views/superAdminView';
 import LoginView from 'Components/Views/loginView';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserRole } from 'Redux/auth/actions';
 
 const Layout = () => {
   const role = useSelector((state) => state.auth?.role);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedRole = localStorage.getItem('role');
+    if (storedRole) {
+      dispatch(setUserRole(storedRole));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('role', role);
+  }, [role]);
 
   switch (role) {
     case 'SUPER_ADMIN':

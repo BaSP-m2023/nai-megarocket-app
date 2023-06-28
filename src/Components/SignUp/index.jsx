@@ -60,7 +60,7 @@ const SignUp = () => {
     reset();
   };
   return (
-    <Container>
+    <Container isLogin={true}>
       <div className={styles.formContainer}>
         <h2 className={styles.formTitle}>{'Sign Up'}</h2>
         <SharedModal

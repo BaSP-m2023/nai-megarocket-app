@@ -31,7 +31,6 @@ const Login = () => {
       const response = await dispatch(login(data));
       console.log(response);
       if (response.type === LOGIN_SUCCESS) {
-        alert(`Welcome ${response.payload.role}`);
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
             history.push('/super-admins');
