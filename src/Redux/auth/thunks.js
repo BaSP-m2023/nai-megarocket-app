@@ -34,11 +34,15 @@ export const getAuth = (token) => {
   return async (dispatch) => {
     dispatch(getAuthPending());
     try {
-      const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-        headers: { token }
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
-      const res = await response.json();
-      return dispatch(getAuthSuccess(res.data));
+      const data = await response.json();
+      console.log(data);
+      return dispatch(getAuthSuccess(data.data));
     } catch (error) {
       return dispatch(getAuthError(error.toString()));
     }
@@ -51,6 +55,7 @@ export const logout = () => {
     try {
       await firebaseApp.auth().signOut();
       sessionStorage.clear();
+      localStorage.clear();
       return dispatch(logoutSuccess());
     } catch (error) {
       return dispatch(logoutError(error.toString()));

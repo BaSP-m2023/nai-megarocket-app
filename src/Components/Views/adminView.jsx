@@ -5,7 +5,7 @@ import Sidebar from 'Components/Shared/Sidebar';
 
 const AdminView = () => {
   const routes = [
-    { name: 'Home', link: '/' },
+    { name: 'Home', link: '/admins/home' },
     { name: 'Profile', link: '/admins/profile' },
     { name: 'Activities', link: '/admins/activities' },
     { name: 'Classes', link: '/admins/classes' },

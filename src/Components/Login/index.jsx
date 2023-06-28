@@ -29,19 +29,18 @@ const Login = () => {
   const handleLogin = async (data) => {
     try {
       const response = await dispatch(login(data));
-      console.log(response);
       if (response.type === LOGIN_SUCCESS) {
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
-            history.push('/super-admins');
+            history.push('/super-admins/home');
             dispatch(setUserRole(response.payload.role));
             break;
           case 'ADMIN':
-            history.push('/admins');
+            history.push('/admins/home');
             dispatch(setUserRole(response.payload.role));
             break;
           case 'MEMBER':
-            history.push('/members');
+            history.push('/members/home');
             dispatch(setUserRole(response.payload.role));
             break;
           default:

@@ -5,7 +5,7 @@ import Sidebar from 'Components/Shared/Sidebar';
 
 const MemberView = () => {
   const routes = [
-    { name: 'Home', link: '/' },
+    { name: 'Home', link: '/members/home' },
     { name: 'Profile', link: '/members/profile' },
     { name: 'Schedule', link: '/members/schedule' },
     { name: 'Activities', link: '/members/activities' },
