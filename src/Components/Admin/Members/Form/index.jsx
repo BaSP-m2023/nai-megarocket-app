@@ -236,7 +236,7 @@ const MemberForm = () => {
               />
               <Button
                 type={'cancel'}
-                onClick={handleReset}
+                clickAction={handleReset}
                 info={'reset'}
                 text={'Reset'}
                 testId={'admin-members-button-reset-form'}

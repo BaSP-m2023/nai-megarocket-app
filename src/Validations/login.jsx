@@ -2,15 +2,13 @@ import Joi from 'joi';
 
 const loginValidation = Joi.object({
   email: Joi.string()
-    .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.com$/)
-    .label('Email')
+    .trim()
+    .regex(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
     .messages({
-      'string.pattern.base': 'The email is invalid',
-      'any.required': 'Email is required.',
-      'string.empty': 'Email is required.'
+      'string.empty': 'Email is required',
+      'string.pattern.base': 'Email is invalid'
     }),
   password: Joi.string()
-    .regex(/.+/)
     .min(8)
     .max(16)
     .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#%^&*<>_?\-¿¡])/)

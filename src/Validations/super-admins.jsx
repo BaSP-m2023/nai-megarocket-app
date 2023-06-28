@@ -2,23 +2,24 @@ import Joi from 'joi';
 
 const superAdminsValidation = Joi.object({
   firstName: Joi.string()
-    .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
     .trim()
+    .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
     .min(3)
     .max(25)
-    .required()
     .messages({
-      'string.pattern.base': 'Name must have only letters',
-      'any.required': 'Name is required',
-      'string.empty': 'Name is required'
+      'any.required': 'First Name is required',
+      'string.pattern.base': 'First Name is invalid, only letters and a space are allowed',
+      'string.empty': 'First Name is required',
+      'string.base': 'First Name must be a string',
+      'string.min': 'First Name too short',
+      'string.max': 'First Name is invalid'
     }),
   email: Joi.string()
-    .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.com$/)
-    .label('Email')
+    .trim()
+    .regex(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
     .messages({
-      'string.pattern.base': "Invalid email address format, must finish in '.com'",
-      'any.required': 'Email is required.',
-      'string.empty': 'Email is required.'
+      'string.empty': 'Email is required',
+      'string.pattern.base': 'Email is invalid'
     }),
   password: Joi.string()
     .min(8)

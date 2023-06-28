@@ -3,31 +3,49 @@ import Joi from 'joi';
 const memberValidation = Joi.object({
   firstName: Joi.string()
     .trim()
+    .min(3)
     .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
+    .max(25)
     .messages({
-      'string.pattern.base': 'Name must have only letters',
-      'any.required': 'Name is required',
-      'string.empty': 'Name is required'
+      'any.required': 'First Name is required',
+      'string.pattern.base': 'First Name is invalid, only letters and a space are allowed',
+      'string.empty': 'First Name is not allowed to be empty',
+      'string.base': 'First Name must be a string',
+      'string.min': 'First Name too short',
+      'string.max': 'First Name is invalid'
     }),
   lastName: Joi.string()
     .trim()
+    .min(3)
     .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
+    .max(25)
     .messages({
-      'string.pattern.base': 'Last name must have only letters',
-      'any.required': 'Last name is required',
-      'string.empty': 'Last name is required.'
+      'any.required': 'Last Name is required',
+      'string.pattern.base': 'Last Name is invalid, only letters and a space are allowed',
+      'string.empty': 'Last Name is not allowed to be empty',
+      'string.base': 'Last Name must be a string',
+      'string.min': 'Last Name too short',
+      'string.max': 'Last Name is invalid'
     }),
-  dni: Joi.number().integer().greater(99999).less(1000000000).messages({
-    'number.base': 'the DNI must be a number',
-    'number.greater': 'DNI must have at least 7 numbers',
-    'number.less': 'DNI cannot have more than 9 numbers',
-    'any.empty': 'DNI cannot be empty'
-  }),
-  phone: Joi.number().integer().messages({
-    'number.base': 'Phone must be a number',
-    'number.min': 'Phone must have exact 10 numbers',
-    'any.empty': 'Phone cannot be empty'
-  }),
+  dni: Joi.string()
+    .trim()
+    .min(7)
+    .max(8)
+    .regex(/^(?!.*[eE])\d+$/)
+
+    .messages({
+      'string.empty': 'DNI is required',
+      'string.base': 'DNI must be a number',
+      'string.min': 'DNI too short',
+      'string.max': 'DNI is invalid'
+    }),
+  phone: Joi.string()
+    .regex(/^\d{10}$/)
+    .messages({
+      'string.empty': 'Phone Number is required',
+      'string.pattern.base': 'Phone Number must be a 10-digit number',
+      'string.base': 'Phone Number must be a string'
+    }),
   email: Joi.string()
     .trim()
     .regex(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
