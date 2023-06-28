@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 class LoginPage {
   open(url) {
     return browser.url(url);

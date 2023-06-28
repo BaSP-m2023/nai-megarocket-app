@@ -24,8 +24,8 @@ describe('LoginPage', () => {
 
   it('should click on activities option', async () => {
     await AdminNavBarPage.open('https://nai-megarocket-app.vercel.app/admins');
-    await AdminNavBarPage.activityButton.waitForDisplayed();
-    await AdminNavBarPage.activityButton.waitForEnabled();
-    await AdminNavBarPage.activityButton.click();
+    await AdminNavBarPage.classButton.waitForDisplayed();
+    await AdminNavBarPage.classButton.waitForEnabled();
+    await AdminNavBarPage.classButton.click();
   });
 });
