@@ -43,5 +43,8 @@ class ProfilePage {
   async editBtnClick() {
     await this.editBtn.click();
   }
+  open() {
+    return browser.url('https://nai-megarocket-app.vercel.app/');
+  }
 }
-export default ProfilePage();
+module.exports = new ProfilePage();

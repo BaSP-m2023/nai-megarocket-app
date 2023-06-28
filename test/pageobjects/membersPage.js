@@ -93,5 +93,8 @@ class membersPage {
   async deleteMemberBtnClick() {
     await this.deleteMemberBtn.click();
   }
+  open() {
+    return browser.url('https://nai-megarocket-app.vercel.app/');
+  }
 }
-export default membersPage();
+module.exports = new membersPage();

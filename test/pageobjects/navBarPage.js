@@ -1,4 +1,4 @@
-class NavBar {
+class NavBarPage {
   get navBarDisplayed() {
     return $('#root > div > aside > nav');
   }
@@ -22,4 +22,4 @@ class NavBar {
     await this.profileAdminBtn.click();
   }
 }
-export default NavBar();
+module.exports = new NavBarPage();
