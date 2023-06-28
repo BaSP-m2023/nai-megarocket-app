@@ -31,6 +31,7 @@ const Login = () => {
       const response = await dispatch(login(data));
       console.log(response);
       if (response.type === LOGIN_SUCCESS) {
+        alert(`Welcome ${response.payload.role}`);
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
             history.push('/super-admins');
@@ -51,16 +52,15 @@ const Login = () => {
         throw new Error('User not found');
       }
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
   const handleRegister = () => {
     history.push('/auth/register');
   };
-
   return (
-    <Container>
+    <Container isLogin={true}>
       <div className={styles.container}>
         <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
           <h2>Login</h2>

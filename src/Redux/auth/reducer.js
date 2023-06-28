@@ -1,8 +1,8 @@
 import {
-  LOGIN_REQUEST,
+  LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
-  LOGOUT_REQUEST,
+  LOGOUT_PENDING,
   LOGOUT_SUCCESS,
   LOGOUT_ERROR,
   GET_AUTH_PENDING,
@@ -21,8 +21,8 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_REQUEST:
-    case LOGOUT_REQUEST:
+    case LOGIN_PENDING:
+    case LOGOUT_PENDING:
       return {
         ...state,
         isLoading: true,
