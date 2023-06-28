@@ -1,6 +1,7 @@
 const LoginPage = require('../pageobjects/loginPage');
 const NavBarPage = require('../pageobjects/navBarPage');
 const SubscriptionPage = require('../pageobjects/subscriptionPage');
+const LogoutPage = require('../pageobjects/logoutPage');
 
 describe('Subscription CRUD', () => {
   beforeAll('Open browser', () => {
@@ -37,9 +38,14 @@ describe('Subscription CRUD', () => {
 
   it('Update a subscription', async () => {
     await SubscriptionPage.clickOnEditSubscriptionIcon();
+    await SubscriptionPage.clickOnResetButton();
+    await SubscriptionPage.clickOnBackButton();
+    await expect(SubscriptionPage.subscriptionsTable).toHaveText('Crossfit');
+    await SubscriptionPage.clickOnEditSubscriptionIcon();
     await SubscriptionPage.changeTrainer(SubscriptionPage.fernandoTrainerOption);
     await SubscriptionPage.clickOnSubmitButton();
     await expect(SubscriptionPage.succesModal).toBeDisplayed();
+    await SubscriptionPage.clickOnConfirmDeleteButton();
   });
 
   it('Delete a subscription', async () => {
@@ -53,6 +59,13 @@ describe('Subscription CRUD', () => {
     await SubscriptionPage.clickOnConfirmButton();
     await SubscriptionPage.clickOnCloseButton();
   });
-});
 
-module.exports = new AdminSubscriptions();
+  it('Logout', async () => {
+    await LogoutPage.logout();
+    await expect(LogoutPage.warningModal).toBeDisplayed();
+    await expect(LogoutPage.warningModal).toHaveTextContaining(
+      'Are you sure you want to log out? :('
+    );
+    await LogoutPage.clickOnLogoutButton();
+  });
+});

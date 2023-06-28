@@ -1,7 +1,7 @@
 const LoginPage = require('../pageobjects/loginPage');
 const NavBarPage = require('../pageobjects/navBarPage');
-const SubscriptionPage = require('../pageobjects/subscriptionPage');
-const { completeForm } = require('../pageobjects/trainerPage');
+const TrainerPage = require('../pageobjects/trainerPage');
+const LogoutPage = require('../pageobjects/logoutPage');
 
 describe('Trainers CRUD', () => {
   beforeAll('Open browser', () => {
@@ -66,6 +66,13 @@ describe('Trainers CRUD', () => {
     await expect(TrainerPage.deleteModal).toHaveTextContaining('Trainer deleted successfully');
     await TrainerPage.clickOnCloseButton();
   });
-});
 
-module.exports = new AdminTrainers();
+  it('Logout', async () => {
+    await LogoutPage.logout();
+    await expect(LogoutPage.warningModal).toBeDisplayed();
+    await expect(LogoutPage.warningModal).toHaveTextContaining(
+      'Are you sure you want to log out? :('
+    );
+    await LogoutPage.clickOnLogoutButton();
+  });
+});

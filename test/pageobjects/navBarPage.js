@@ -11,6 +11,10 @@ class NavBarPage {
     return $('#root > div > aside > nav > ul > li:nth-child(7) > a');
   }
 
+  get logoutButton() {
+    return $('#root > div > aside > nav > ul > li:nth-child(9) > a');
+  }
+
   async goToAdminSection() {
     await this.adminSection.click();
   }

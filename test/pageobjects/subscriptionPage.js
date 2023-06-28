@@ -12,7 +12,7 @@ class SubscriptionPage {
   }
 
   get selectTrainersInput() {
-    return $('#admin-subscriptions-input-trainers');
+    return $('#admin-subscriptions-input-members');
   }
 
   get backButtonSubscriptionForm() {
@@ -59,6 +59,14 @@ class SubscriptionPage {
     return $('#admin-subscriptions-button-confirm-delete-modal');
   }
 
+  get confirmDeleteButton() {
+    return $ ("#admin-subscriptions-form-button-confirm-modal");
+  }
+
+  get subscriptionTable () {
+    return $ ("#root > div > div");
+  }
+
   async clickOnSubscriptionAddButton() {
     await this.subcriptionAddButton.click();
   }
@@ -67,8 +75,21 @@ class SubscriptionPage {
     await this.selectClassesInput.setValue(class);
     await this.selectTrainersInput.setValue(trainer);
   }
+
   async clickOnSubmitButton() {
     await this.submitButton.click();
+  }
+
+  async clickOnResetButton() {
+    await this.resetButtonSubscriptionForm.click();
+  }
+
+  async clickOnConfirmDeleteButton() {
+    await this.confirmDeleteButton.click();
+  }
+
+  async clickOnBackButton() {
+    await this.clickOnBackButton.click();
   }
 
   async clickOnConfirmButton() {
