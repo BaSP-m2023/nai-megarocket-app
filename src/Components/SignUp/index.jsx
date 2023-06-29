@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { addMember } from 'Redux/members/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-
 import styles from './signup.module.css';
 import SharedModal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';

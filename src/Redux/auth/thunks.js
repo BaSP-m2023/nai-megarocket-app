@@ -41,7 +41,6 @@ export const getAuth = (token) => {
         }
       });
       const data = await response.json();
-      console.log(data);
       return dispatch(getAuthSuccess(data.data));
     } catch (error) {
       return dispatch(getAuthError(error.toString()));
