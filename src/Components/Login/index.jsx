@@ -57,6 +57,7 @@ const Login = () => {
   const handleRegister = () => {
     history.push('/auth/register');
   };
+
   return (
     <Container isLogin={true}>
       <div className={styles.container}>

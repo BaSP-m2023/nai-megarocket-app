@@ -24,18 +24,13 @@ function Header() {
     dispatch(setUserRole(''));
     setShowModal(false);
     history.push('/auth/login');
+    window.location.reload();
   };
   return (
     <>
       <header className={styles.container}>
         <div className={styles.brand}>MEGAROCKET</div>
         <div>
-          <a id="login-bar-link" href={'/auth/login'} rel="noopener noreferrer">
-            <img
-              className={styles.logIn}
-              src={`${process.env.PUBLIC_URL}/assets/images/log-in.svg`}
-            />
-          </a>
           <a id="logout-bar-link" onClick={showModalLogout} rel="noopener noreferrer">
             <img
               className={styles.logOut}
