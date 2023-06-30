@@ -69,8 +69,8 @@ const memberValidation = Joi.object({
     'number.empty': 'Postal code cannot be empty'
   }),
   isActive: Joi.boolean(),
-  membership: Joi.string().valid('Black', 'Gold', 'Silver').messages({
-    'string.valid': 'Please enter a valid membership: Black, Gold or Silver',
+  membership: Joi.string().valid('Only Classes', 'Classic', 'Black').messages({
+    'string.valid': 'Please enter a valid membership: Only Classes, Classic or Black',
     'any.required': 'Membership is required.',
     'string.empty': 'Membership cannot be empty'
   })

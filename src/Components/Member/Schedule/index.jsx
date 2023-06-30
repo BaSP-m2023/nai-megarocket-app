@@ -16,18 +16,20 @@ const Schedule = () => {
   const {
     classes = [],
     activities = [],
-    subscriptions = []
+    subscriptions = [],
+    user = []
   } = useSelector((state) => ({
-    classes: state.classes.data.data,
-    activities: state.activities.data.data,
-    subscriptions: state.subscriptions.data
+    classes: state.classes?.data?.data,
+    activities: state.activities?.data?.data,
+    subscriptions: state.subscriptions?.data,
+    user: state.auth?.user
   }));
   const loading = useSelector((state) => state.members.loading);
   const [memberData, setMemberData] = useState(null);
   const [activity, setActivity] = useState('');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+  const id = user?._id;
   const [infoClass, setInfoClass] = useState({
     Hour: '',
     day: '',
@@ -78,8 +80,7 @@ const Schedule = () => {
 
   const getMemberData = async () => {
     try {
-      const idMember = '649bd55669684ea6279bbcc6';
-      const response = await dispatch(getMembersById(idMember));
+      const response = await dispatch(getMembersById(id));
       setMemberData(response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -127,7 +128,7 @@ const Schedule = () => {
           className={suscriptionFound ? styles.addedButton : styles.classesButton}
         >
           <div className={styles.buttonText}>{classItem.activity?.name}</div>
-          {classItem.trainer?.firstName}
+          {!suscriptionFound ? classItem.trainer?.firstName : null}
           {suscriptionFound && (
             <div className={styles.slots}>
               <BsCheckCircleFill /> Subscribed
@@ -172,9 +173,7 @@ const Schedule = () => {
               />
               <div className={styles.container}>
                 <div className={styles.header}>
-                  <h2 className={styles.title}>
-                    Scheduled Classes - Member: {memberData?.firstName}
-                  </h2>
+                  <h2 className={styles.title}>Scheduled Classes</h2>
                   <div className={styles.filterActivity}>
                     <label className={styles.selectLabel} htmlFor="activity">
                       Filter by activity:{' '}

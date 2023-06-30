@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateMember, getMembersById } from 'Redux/members/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -7,12 +7,11 @@ import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
 import memberValidation from 'Validations/members';
-import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
+
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
 
 const MemberForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
   const membership = ['Black', 'Gold', 'Silver'];
@@ -25,7 +24,8 @@ const MemberForm = () => {
     mode: 'onBlur',
     resolver: joiResolver(memberValidation)
   });
-  const id = '649bd55669684ea6279bbcc6';
+  const user = useSelector((state) => state.auth?.user);
+  const id = user?._id;
 
   useEffect(() => {
     if (id) {
@@ -39,10 +39,11 @@ const MemberForm = () => {
       const member = response.data;
       const formattedMember = {
         ...member,
-        birthDay: formatDate(member.birthDay)
+        birthDay: formatDate(member?.birthDay)
       };
-      delete formattedMember._id;
-      delete formattedMember.__v;
+      delete formattedMember?._id;
+      delete formattedMember?.__v;
+      delete formattedMember?.firebaseUid;
       reset(formattedMember);
     } catch (error) {
       console.error('Member not found');
@@ -123,7 +124,7 @@ const MemberForm = () => {
         }}
       />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitleTwo}>user data</h2>
+        <h2 className={styles.formTitleTwo}>My Profile</h2>
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
@@ -168,25 +169,6 @@ const MemberForm = () => {
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <Input
-                register={register}
-                labelName={'Password'}
-                inputType={showPassword ? 'text' : 'password'}
-                inputName={'password'}
-                error={errors.password?.message}
-                disabled={!editMode}
-              />
-              <div className={styles.buttonHideContainer}>
-                <button
-                  className={styles.toggleButton}
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <FaEyeSlash /> : <FaRegEye />}
-                </button>
-              </div>
-            </div>
             <Input
               register={register}
               labelName={'City'}
@@ -213,7 +195,7 @@ const MemberForm = () => {
             />
             <Input
               register={register}
-              labelName={'Memberships'}
+              labelName={'Membership'}
               inputType={'text'}
               list={membership}
               inputName={'membership'}
