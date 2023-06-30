@@ -14,10 +14,12 @@ const AdminClassesForm = lazy(() => import('Components/Admin/Classes/Form'));
 const AdminMembersForm = lazy(() => import('Components/Admin/Members/Form'));
 const AdminSubscriptionsForm = lazy(() => import('Components/Admin/Subscriptions/Form'));
 const AdminTrainersForm = lazy(() => import('Components/Admin/Trainers/Form'));
+const Home = lazy(() => import('Components/Home'));
 
 const AdminRoutes = () => {
   return (
     <Suspense fallback={<ClipLoader />}>
+      <Route exact path="/admins/home" component={Home} />
       <Route exact path="/admins/activities" component={AdminActivities} />
       <Route exact path="/admins/activities/form" component={AdminActivitiesForm} />
       <Route path="/admins/activities/form/:id" component={AdminActivitiesForm} />

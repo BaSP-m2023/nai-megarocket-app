@@ -1,18 +1,38 @@
-import Header from 'Components/Header/index';
-import styles from './layout.module.css';
-import Routes from 'Routes/Routes';
-import SideBar from 'Components/SideBar';
+import MemberView from 'Components/Views/memberView';
+import AdminView from 'Components/Views/adminView';
+import SuperAdminView from 'Components/Views/superAdminView';
+import LoginView from 'Components/Views/loginView';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserRole } from 'Redux/auth/actions';
 
 const Layout = () => {
-  return (
-    <>
-      <Header />
-      <div className={styles.body}>
-        <SideBar />
-        <Routes />
-      </div>
-    </>
-  );
+  const role = useSelector((state) => state.auth?.role);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedRole = localStorage.getItem('role');
+    if (storedRole) {
+      dispatch(setUserRole(storedRole));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('role', role);
+  }, [role]);
+
+  switch (role) {
+    case 'SUPER_ADMIN':
+      return <SuperAdminView />;
+    case 'ADMIN':
+      return <AdminView />;
+    case 'MEMBER':
+      return <MemberView />;
+    case '':
+      return <LoginView />;
+    default:
+      return <LoginView />;
+  }
 };
 
 export default Layout;

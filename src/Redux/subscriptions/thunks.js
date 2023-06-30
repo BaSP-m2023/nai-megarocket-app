@@ -23,7 +23,10 @@ export const getSubscriptions = () => async (dispatch) => {
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
       method: 'GET',
-      headers: { token: token }
+      headers: {
+        'Content-Type': 'application/json',
+        token: token
+      }
     });
     if (!response.ok) {
       throw new Error('Failed to fetch subscriptions');
@@ -43,7 +46,10 @@ export const deleteSubscription = (subscriptionId) => async (dispatch) => {
       `${process.env.REACT_APP_API_URL}/api/subscriptions/${subscriptionId}`,
       {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       }
     );
     if (!response.ok) {
@@ -65,7 +71,10 @@ export const getSubscriptionById = (subscriptionId) => async (dispatch) => {
       `${process.env.REACT_APP_API_URL}/api/subscriptions/${subscriptionId}`,
       {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       }
     );
     if (!response.ok) {
@@ -86,7 +95,7 @@ export const createSubscription = (subscription) => async (dispatch) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        token: token
+        token
       },
       body: JSON.stringify(subscription)
     });
@@ -111,7 +120,7 @@ export const updateSubscription = (subscription, subscriptionId) => async (dispa
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token
         },
         body: JSON.stringify(subscription)
       }

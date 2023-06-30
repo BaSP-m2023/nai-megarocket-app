@@ -11,6 +11,7 @@ import { login } from 'Redux/auth/thunks';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { LOGIN_SUCCESS } from 'Redux/auth/constants';
+import { setUserRole } from 'Redux/auth/actions';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,20 +29,22 @@ const Login = () => {
   const handleLogin = async (data) => {
     try {
       const response = await dispatch(login(data));
-      console.log(response);
       if (response.type === LOGIN_SUCCESS) {
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
-            history.push('/super-admins');
+            history.push('/super-admins/home');
+            dispatch(setUserRole(response.payload.role));
             break;
           case 'ADMIN':
-            history.push('/admins');
+            history.push('/admins/home');
+            dispatch(setUserRole(response.payload.role));
             break;
           case 'MEMBER':
-            history.push('/members');
+            history.push('/members/home');
+            dispatch(setUserRole(response.payload.role));
             break;
           default:
-            history.push('/');
+            history.push('/auth/login');
         }
       } else {
         throw new Error('User not found');
@@ -50,11 +53,13 @@ const Login = () => {
       alert(error);
     }
   };
+
   const handleRegister = () => {
     history.push('/auth/register');
   };
+
   return (
-    <Container>
+    <Container isLogin={true}>
       <div className={styles.container}>
         <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
           <h2>Login</h2>

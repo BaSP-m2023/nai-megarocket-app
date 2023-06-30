@@ -24,7 +24,10 @@ export const getAdmins = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getAdminsSuccess(data.data));
@@ -40,7 +43,10 @@ export const getAdminById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getAdminByIdSuccess(data.data));
@@ -57,7 +63,10 @@ export const deleteAdmin = (adminId) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       if (response.ok) {

@@ -8,7 +8,10 @@ export const getClasses = () => {
       dispatch(actions.getClassesPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(actions.getClassesSuccess(data));
@@ -25,7 +28,10 @@ export const getClassById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -99,7 +105,10 @@ export const deleteClass = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       if (response.ok) {

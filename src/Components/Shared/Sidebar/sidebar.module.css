@@ -1,0 +1,92 @@
+  .aside {
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+    position: sticky;
+    background-color: #0f232e;
+    top: 10vh;
+    height: 100%;
+  }
+
+  .navbar {
+    display: flex;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .routes {
+    display: flex;
+    align-self: center;
+    gap: 8vh;
+    max-height: 100%;
+    list-style-type: none;
+    padding-left: 1rem;
+    flex-direction: column;
+  }
+
+  .routes > li > a {
+    position: relative;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: capitalize;
+    white-space: nowrap;
+    color: #f9a414;
+  }
+  
+  .routes > li > a.active {
+    border-bottom: 2px solid #f9a414;
+  }
+  
+  .routes > li > a {
+    position: relative;
+  }
+  
+  .routes > li > a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #f9a414;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .routes > li > a:hover::after {
+    transform: scaleX(1);
+  }
+  
+  .button {
+    width: 90%;
+    padding: 2rem;
+    background-color: #f9a414;
+    border: solid 1px;
+    border-color: #f9a414;
+    color: #0f232e;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .button:hover {
+    background-color: #dfdfdf;
+    border: solid 1px;
+    border-color: #0f232e;
+    color: #f9a414;
+  }
+  
+  .button::before {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+  }
+  
+  .button:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
