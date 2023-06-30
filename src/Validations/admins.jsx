@@ -27,26 +27,20 @@ const adminsValidation = Joi.object({
       'string.min': 'Last Name too short',
       'string.max': 'Last Name is invalid'
     }),
-  dni: Joi.string()
-    .trim()
-    .min(7)
-    .max(8)
-    .regex(/^(?!.*[eE])\d+$/)
-
-    .messages({
-      'string.empty': 'DNI is not allowed to be empty',
-      'string.base': 'DNI must be a number',
-      'string.min': 'DNI too short',
-      'string.max': 'DNI is invalid'
-    }),
-  phone: Joi.string()
-    .regex(/^(?!.*[eE])\d+$/)
-    .messages({
-      'string.empty': 'Phone Number is not allowed to be empty',
-      'string.base': 'Phone Number must be a number',
-      'string.min': 'Phone Number is invalid',
-      'string.max': 'Phone Number is invalid'
-    }),
+  dni: Joi.number().integer().min(1000000).max(99999999).messages({
+    'number.empty': 'DNI is not allowed to be empty',
+    'number.base': 'DNI must be a numeric value',
+    'number.integer': 'DNI must be an integer',
+    'number.min': 'DNI must have at least 7 digits',
+    'number.max': 'DNI cannot have more than 8 digits'
+  }),
+  phone: Joi.number().integer().min(1000000000).max(9999999999).messages({
+    'number.empty': 'Phone number is not allowed to be empty',
+    'number.base': 'Phone number must be a numeric value',
+    'number.integer': 'Phone number must be an integer',
+    'number.min': 'Phone number must have exactly 10 digits',
+    'number.max': 'Phone number must have exactly 10 digits'
+  }),
   email: Joi.string()
     .trim()
     .regex(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
@@ -56,7 +50,6 @@ const adminsValidation = Joi.object({
     }),
   city: Joi.string()
     .trim()
-    .alphanum()
     .min(5)
     .max(25)
     .regex(/^[a-zA-Z0-9\s]+$/)
