@@ -24,7 +24,10 @@ export const getActivities = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getActivitiesSuccess(data));
@@ -41,7 +44,10 @@ export const getActivitiesById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getActivitiesByIdSuccess(data));
@@ -58,7 +64,10 @@ export const deleteActivities = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       if (response.ok) {

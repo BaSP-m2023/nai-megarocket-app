@@ -78,7 +78,7 @@ const Schedule = () => {
 
   const getMemberData = async () => {
     try {
-      const idMember = '648cf236ace9aaef8ae7656c';
+      const idMember = '649bd55669684ea6279bbcc6';
       const response = await dispatch(getMembersById(idMember));
       setMemberData(response.data);
     } catch (error) {
@@ -185,6 +185,7 @@ const Schedule = () => {
                       value={activity}
                       onChange={handleActivityChange}
                     >
+                      <option value="all">All</option>
                       {activities?.map((activityItem, index) => (
                         <option
                           value={activityItem.name}

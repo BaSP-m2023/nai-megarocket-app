@@ -24,7 +24,10 @@ export const getMembers = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getMembersSuccess(data));
@@ -41,7 +44,10 @@ export const getMembersById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getMemberByIdSuccess(data));
@@ -59,7 +65,10 @@ export const deleteMember = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       if (response.ok) {

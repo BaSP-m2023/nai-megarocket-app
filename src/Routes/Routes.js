@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Home from 'Components/Home';
-import Login from 'Components/Login';
+import AuthRoutes from './auth';
 import SuperAdminRoutes from './superAdmin';
 import AdminRoutes from './admin';
 import MemberRoutes from './member';
@@ -23,17 +22,16 @@ const Routes = () => {
     if (token) {
       dispatch(getAuth(token));
     }
-  }, [token]);
+  }, []);
 
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/auth/login" component={Login} />
+      <Route path="/auth" component={AuthRoutes} />
       <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminRoutes} />
       <PrivateRoute path="/admins" role="ADMIN" component={AdminRoutes} />
       <PrivateRoute path="/members" role="MEMBER" component={MemberRoutes} />
       <Route exact path="/">
-        <Redirect to="/home" />
+        <Redirect to="/auth/login" />
       </Route>
     </Switch>
   );

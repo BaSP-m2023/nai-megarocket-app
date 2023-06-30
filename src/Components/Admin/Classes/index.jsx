@@ -104,7 +104,7 @@ const Classes = () => {
     return classItem ? (
       <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
         <div className={styles.buttonText}>{activity}</div>
-        {classItem.trainer.firstName}
+        {classItem?.trainer?.firstName}
       </div>
     ) : (
       <div className={styles.emptyButton}></div>
@@ -135,7 +135,6 @@ const Classes = () => {
                   value={activity ? activity : activities[0]}
                   onChange={handleActivityChange}
                 >
-                  {console.log(activity)}
                   {activities?.map((activityItem, index) => (
                     <option
                       value={activityItem.name}

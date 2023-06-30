@@ -24,7 +24,10 @@ export const getSuperAdmins = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getSuperAdminsSuccess(data));
@@ -41,7 +44,10 @@ export const getSuperAdminById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getSuperAdminsIdSuccess(data));
@@ -58,7 +64,10 @@ export const deleteSuperAdmin = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       if (response.ok) {

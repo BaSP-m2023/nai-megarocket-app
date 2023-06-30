@@ -24,7 +24,10 @@ export const getTrainers = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getTrainersSuccess(data.data));
@@ -40,7 +43,10 @@ export const getTrainersById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
       const data = await response.json();
       dispatch(getTrainersByIdSuccess(data.data));
@@ -58,7 +64,10 @@ export const deleteTrainer = (trainerId) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${trainerId}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
       });
 
       if (!response.ok) {

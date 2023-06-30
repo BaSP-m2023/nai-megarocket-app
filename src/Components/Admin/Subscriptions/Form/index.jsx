@@ -96,7 +96,6 @@ const Form = () => {
     }
   };
   const onSubmit = (data) => {
-    console.log(data);
     id ? editSubscription(data) : addSubscription(data);
   };
   const handleCloseAlert = () => {
