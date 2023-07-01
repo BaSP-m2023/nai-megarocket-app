@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { updateTrainer, addTrainer } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,18 +7,14 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import trainerValidation from 'Validations/trainers';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button/index';
-import SharedModal from 'Components/Shared/Modal/index';
 import Input from 'Components/Shared/Input';
 import SharedForm from 'Components/Shared/Form';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const AdminTrainerForm = () => {
   const history = useHistory();
   const { id } = useParams();
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-  const [modalTypeStyle, setModalTypeStyle] = useState('success');
-  const [shouldRedirect, setShouldRedirect] = useState(false);
   const dispatch = useDispatch();
   const trainers = useSelector((state) => state.trainers.data);
   const {
@@ -46,33 +42,37 @@ const AdminTrainerForm = () => {
     }
   };
 
-  const showSuccesModal = (data) => {
-    setModalMessage(data.message);
-    setModalTypeStyle('success');
-    setShowModal(true);
-    setShouldRedirect(true);
-  };
-  const showErrorModal = (error) => {
-    setModalMessage(error.message);
-    setModalTypeStyle('error');
-    setShowModal(true);
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
   };
 
   const createTrainer = async (data) => {
     try {
       const response = await dispatch(addTrainer(data));
-      showSuccesModal(response);
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/trainers');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
 
   const updateTrainerFunction = async (id, data) => {
     try {
-      const response = await dispatch(updateTrainer(id, data));
-      showSuccesModal(response);
+      const response = await dispatch(updateTrainer(data, id));
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/trainers');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
 
@@ -81,13 +81,6 @@ const AdminTrainerForm = () => {
       updateTrainerFunction(id, data);
     } else {
       createTrainer(data);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    if (shouldRedirect) {
-      history.push('/admins/trainers');
     }
   };
 
@@ -101,6 +94,11 @@ const AdminTrainerForm = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.headContainer}>
           <h2>{id ? 'Update Trainer' : 'Add Trainer'}</h2>
@@ -209,16 +207,6 @@ const AdminTrainerForm = () => {
             </div>
           </div>
         </div>
-        <SharedModal
-          show={showModal}
-          title={id ? 'Edit Trainer' : 'Add Trainer'}
-          body={modalMessage}
-          isDelete={false}
-          typeStyle={modalTypeStyle}
-          closeModal={handleCloseModal}
-          testId={'admin-trainers-form-modal'}
-          closeTestId={'admin-trainers-form-button-confirm-modal'}
-        />
       </SharedForm>
     </Container>
   );
