@@ -9,6 +9,7 @@ import Input from 'Components/Shared/Input/index';
 import memberValidation from 'Validations/members';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { updateUser } from 'Redux/auth/actions';
 
 const MemberForm = () => {
   const [editMode, setEditMode] = useState(false);
@@ -23,7 +24,6 @@ const MemberForm = () => {
     mode: 'onBlur',
     resolver: joiResolver(memberValidation)
   });
-
   const user = useSelector((state) => state.auth?.user);
   const id = user?._id;
 
@@ -80,6 +80,7 @@ const MemberForm = () => {
   const updateLoggedMember = async (id, member) => {
     try {
       const data = await dispatch(updateMember(id, member));
+      dispatch(updateUser(data.data));
       const formatedData = {
         ...data.data,
         birthDay: formatDate(data?.data?.birthDay)

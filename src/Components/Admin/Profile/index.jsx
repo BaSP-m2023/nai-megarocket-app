@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { putAdmin, getAdminById } from 'Redux/admins/thunks';
+import { putAdmin } from 'Redux/admins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -9,6 +9,7 @@ import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { updateUser } from 'Redux/auth/actions';
 
 const AdminProfile = () => {
   const dispatch = useDispatch();
@@ -28,23 +29,20 @@ const AdminProfile = () => {
 
   useEffect(() => {
     if (id) {
-      fetchAdminById(id);
+      loadAdminData();
     }
   }, []);
 
-  const fetchAdminById = async (id) => {
-    try {
-      const response = await dispatch(getAdminById(id));
-      const adminToUpdate = response.data;
-      delete adminToUpdate._id;
-      delete adminToUpdate.__v;
-      delete adminToUpdate.createdAt;
-      delete adminToUpdate.updatedAt;
-      delete adminToUpdate.firebaseUid;
-      reset(adminToUpdate);
-    } catch (error) {
-      console.error('Admin not found');
-    }
+  const loadAdminData = () => {
+    const adminToUpdate = {
+      ...admin
+    };
+    delete adminToUpdate._id;
+    delete adminToUpdate.__v;
+    delete adminToUpdate.createdAt;
+    delete adminToUpdate.updatedAt;
+    delete adminToUpdate.firebaseUid;
+    reset(adminToUpdate);
   };
 
   const showToast = (message, type) => {
@@ -82,7 +80,8 @@ const AdminProfile = () => {
 
   const putAdminFunction = async (id, admin) => {
     try {
-      await dispatch(putAdmin(id, admin));
+      const response = await dispatch(putAdmin(id, admin));
+      dispatch(updateUser(response.data));
       showToast('Saved Changes', 'success');
       handleDisableEditMode();
     } catch (error) {

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { getClasses } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
-import { getMembersById } from 'Redux/members/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
@@ -29,7 +28,6 @@ const Schedule = () => {
   const [activity, setActivity] = useState('');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const id = user?._id;
   const [infoClass, setInfoClass] = useState({
     Hour: '',
     day: '',
@@ -78,14 +76,8 @@ const Schedule = () => {
     setActivity('all');
   }, []);
 
-  const getMemberData = async () => {
-    try {
-      const response = await dispatch(getMembersById(id));
-      setMemberData(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-      setError(true);
-    }
+  const getMemberData = () => {
+    setMemberData(user);
   };
 
   const getClassButton = (hour, day) => {
