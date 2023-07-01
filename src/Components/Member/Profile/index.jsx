@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateMember, getMembersById } from 'Redux/members/thunks';
+import { updateMember } from 'Redux/members/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
 import memberValidation from 'Validations/members';
-
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
 
 const MemberForm = () => {
   const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
-  const membership = ['Black', 'Gold', 'Silver'];
+  const membership = ['Only Classes', 'Classic', 'Black'];
   const {
     register,
     reset,
@@ -24,72 +23,43 @@ const MemberForm = () => {
     mode: 'onBlur',
     resolver: joiResolver(memberValidation)
   });
+
   const user = useSelector((state) => state.auth?.user);
   const id = user?._id;
 
+  const loadMemberData = () => {
+    const formattedMember = {
+      ...user,
+      birthDay: formatDate(user?.birthDay)
+    };
+    delete formattedMember?._id;
+    delete formattedMember?.__v;
+    delete formattedMember?.firebaseUid;
+    reset(formattedMember);
+  };
+
   useEffect(() => {
     if (id) {
-      fetchMemberById(id);
+      loadMemberData();
     }
   }, []);
 
-  const fetchMemberById = async (id) => {
-    try {
-      const response = await dispatch(getMembersById(id));
-      const member = response.data;
-      const formattedMember = {
-        ...member,
-        birthDay: formatDate(member?.birthDay)
-      };
-      delete formattedMember?._id;
-      delete formattedMember?.__v;
-      delete formattedMember?.firebaseUid;
-      reset(formattedMember);
-    } catch (error) {
-      console.error('Member not found');
-    }
-  };
-
-  const onSubmit = (data) => {
-    memberUpdateFunction(id, data);
-  };
-
   const showToast = (message, type) => {
+    const toastConfig = {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: type === 'success' ? '#fddba1' : 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    };
     if (type === 'success') {
-      toast.success(message, {
-        duration: 2500,
-        position: 'top-right',
-        style: {
-          background: '#fddba1'
-        },
-        iconTheme: {
-          primary: '#0f232e',
-          secondary: '#fff'
-        }
-      });
+      toast.success(message, toastConfig);
     } else if (type === 'error') {
-      toast.error(message, {
-        duration: 2500,
-        position: 'top-right',
-        style: {
-          background: 'rgba(227, 23, 10, 0.5)'
-        },
-        iconTheme: {
-          primary: '#0f232e',
-          secondary: '#fff'
-        }
-      });
-    }
-  };
-
-  const memberUpdateFunction = async (id, member) => {
-    try {
-      await dispatch(updateMember(id, member));
-      showToast('Saved Changes', 'success');
-      handleDisableEditMode();
-      fetchMemberById(id);
-    } catch (error) {
-      showToast(error.message, 'error');
+      toast.error(message, toastConfig);
     }
   };
 
@@ -107,6 +77,24 @@ const MemberForm = () => {
     return `${formattedYear}-${formattedMonth}-${formattedDay}`;
   };
 
+  const updateLoggedMember = async (id, member) => {
+    try {
+      const data = await dispatch(updateMember(id, member));
+      const formatedData = {
+        ...data.data,
+        birthDay: formatDate(data?.data?.birthDay)
+      };
+      delete formatedData?._id;
+      delete formatedData?.__v;
+      delete formatedData?.firebaseUid;
+      reset(formatedData);
+      showToast('Saved Changes', 'success');
+      handleDisableEditMode();
+    } catch (error) {
+      showToast(error.message, 'error');
+    }
+  };
+
   const handleEnableEditMode = () => {
     setEditMode(true);
   };
@@ -114,6 +102,10 @@ const MemberForm = () => {
   const handleDisableEditMode = () => {
     setEditMode(false);
     reset();
+  };
+
+  const onSubmit = (data) => {
+    updateLoggedMember(id, data);
   };
 
   return (
