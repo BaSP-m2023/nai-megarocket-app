@@ -3,7 +3,7 @@ import Joi from 'joi';
 const superAdminsValidation = Joi.object({
   firstName: Joi.string()
     .trim()
-    .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
+    .regex(/^[A-Za-z]+\s?[A-Za-z]*$/)
     .min(3)
     .max(25)
     .messages({

@@ -14,11 +14,18 @@ const activityValidation = Joi.object({
       'string.min': 'Activity too short',
       'string.max': 'Activity is invalid'
     }),
-  description: Joi.string().trim().min(5).max(250).required().messages({
-    'any.required': 'Description is required.',
-    'string.empty': 'Description is required.',
-    'string.min': 'Description must have at least 5 characters.'
-  }),
+  description: Joi.string()
+    .trim()
+    .min(5)
+    .max(250)
+    .regex(/^(?=.*[0-9])(?=.*[a-zA-Z])/)
+    .required()
+    .messages({
+      'any.required': 'Description is required.',
+      'string.empty': 'Description is required.',
+      'string.min': 'Description must have at least 5 characters.',
+      'string.pattern.base': 'Description must contain both letters and numbers.'
+    }),
   isActive: Joi.boolean()
 });
 
