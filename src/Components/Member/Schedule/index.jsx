@@ -120,7 +120,9 @@ const Schedule = () => {
           className={suscriptionFound ? styles.addedButton : styles.classesButton}
         >
           <div className={styles.buttonText}>{classItem.activity?.name}</div>
-          {!suscriptionFound ? classItem.trainer?.firstName : null}
+          {!suscriptionFound
+            ? `${classItem.trainer?.firstName}  ${classItem.trainer?.lastName}`
+            : null}
           {suscriptionFound && (
             <div className={styles.slots}>
               <BsCheckCircleFill /> Subscribed

@@ -28,10 +28,8 @@ const AdminProfile = () => {
   });
 
   useEffect(() => {
-    if (id) {
-      loadAdminData();
-    }
-  }, []);
+    loadAdminData();
+  }, [id]);
 
   const loadAdminData = () => {
     const adminToUpdate = {

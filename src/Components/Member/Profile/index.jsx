@@ -42,7 +42,7 @@ const MemberForm = () => {
     if (id) {
       loadMemberData();
     }
-  }, []);
+  }, [id]);
 
   const showToast = (message, type) => {
     const toastConfig = {
