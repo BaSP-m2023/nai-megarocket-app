@@ -7,12 +7,12 @@ const adminsValidation = Joi.object({
     .min(3)
     .max(25)
     .messages({
-      'any.required': 'First Name is required',
-      'string.pattern.base': 'First Name is invalid, only letters and a space are allowed',
-      'string.empty': 'First Name is required',
-      'string.base': 'First Name must be a string',
-      'string.min': 'First Name too short',
-      'string.max': 'First Name is invalid'
+      'any.required': 'Name is required',
+      'string.pattern.base': 'Name is invalid, only letters and a space are allowed',
+      'string.empty': 'Name is required',
+      'string.base': 'Name must be a string',
+      'string.min': 'Name too short',
+      'string.max': 'Name is invalid'
     }),
   lastName: Joi.string()
     .trim()
