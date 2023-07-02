@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { putAdmin, getAdminById } from 'Redux/admins/thunks';
-import { useDispatch } from 'react-redux';
+import { putAdmin } from 'Redux/admins/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import adminsValidation from 'Validations/admins';
 import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
-import SharedModal from 'Components/Shared/Modal';
 import Input from 'Components/Shared/Input';
-import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
+import { updateUser } from 'Redux/auth/actions';
 
 const AdminProfile = () => {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
-
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
-  const id = '648dbbd7413c4e8c07551b9e';
+  const admin = useSelector((state) => state.auth?.user);
+  const id = admin?._id;
 
   const {
     register,
@@ -28,27 +23,51 @@ const AdminProfile = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'all',
+    mode: 'onBlur',
     resolver: joiResolver(adminsValidation)
   });
 
   useEffect(() => {
-    if (id) {
-      fetchAdminById(id);
-    }
-  }, []);
+    loadAdminData();
+  }, [id]);
 
-  const fetchAdminById = async (id) => {
-    try {
-      const response = await dispatch(getAdminById(id));
-      const admin = response.data;
-      delete admin._id;
-      delete admin.__v;
-      delete admin.createdAt;
-      delete admin.updatedAt;
-      reset(admin);
-    } catch (error) {
-      console.error('Member not found');
+  const loadAdminData = () => {
+    const adminToUpdate = {
+      ...admin
+    };
+    delete adminToUpdate._id;
+    delete adminToUpdate.__v;
+    delete adminToUpdate.createdAt;
+    delete adminToUpdate.updatedAt;
+    delete adminToUpdate.firebaseUid;
+    reset(adminToUpdate);
+  };
+
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      toast.success(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      toast.error(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
     }
   };
 
@@ -59,20 +78,13 @@ const AdminProfile = () => {
 
   const putAdminFunction = async (id, admin) => {
     try {
-      await dispatch(putAdmin(id, admin));
-      setAlertMessage('Saved changes');
-      setIsSuccess(true);
-      setShowAlert(true);
+      const response = await dispatch(putAdmin(id, admin));
+      dispatch(updateUser(response.data));
+      showToast('Saved Changes', 'success');
       handleDisableEditMode();
     } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
+      showToast(error.message, 'error');
     }
-  };
-
-  const handleCloseAlert = () => {
-    setShowAlert(false);
   };
 
   const handleEnableEditMode = () => {
@@ -86,6 +98,11 @@ const AdminProfile = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <div className={styles.formContainer}>
         <h2 className={styles.formTitleTwo}>admin data</h2>
 
@@ -117,22 +134,11 @@ const AdminProfile = () => {
               <Input
                 register={register}
                 labelName={'DNI'}
-                inputType={'number'}
+                inputType={'text'}
                 inputName={'dni'}
                 error={errors.dni?.message}
                 disabled={!editMode}
                 testId={'admin-profile-input-dni'}
-              />
-            </div>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'Phone Number'}
-                inputType={'number'}
-                inputName={'phone'}
-                error={errors.phone?.message}
-                disabled={!editMode}
-                testId={'admin-profile-input-phone'}
               />
             </div>
           </div>
@@ -159,23 +165,16 @@ const AdminProfile = () => {
                 testId={'admin-profile-input-city'}
               />
             </div>
-            <div className={styles.formInput} style={{ display: 'flex', gap: '10px' }}>
+            <div className={styles.formInput}>
               <Input
                 register={register}
-                labelName={'Password'}
-                inputType={showPassword ? 'text' : 'password'}
-                inputName={'password'}
-                error={errors.password?.message}
+                labelName={'Phone Number'}
+                inputType={'text'}
+                inputName={'phone'}
+                error={errors.phone?.message}
                 disabled={!editMode}
-                testId={'admin-profile-input-password'}
+                testId={'admin-profile-input-phone'}
               />
-              <button
-                className={styles.toggleButton}
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaRegEye />}
-              </button>
             </div>
           </div>
           <div className={styles.buttonContainer}>
@@ -206,16 +205,6 @@ const AdminProfile = () => {
               </>
             )}
           </div>
-          <SharedModal
-            isDelete={false}
-            show={showAlert}
-            closeModal={handleCloseAlert}
-            typeStyle={isSuccess ? 'success' : 'error'}
-            title={isSuccess ? 'Success' : 'Something went wrong'}
-            body={alertMessage}
-            testId={'admin-profile-modal'}
-            closeTestId={'admin-profile-button-close-success-modal'}
-          />
         </form>
       </div>
     </Container>

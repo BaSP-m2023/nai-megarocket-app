@@ -19,7 +19,7 @@ const MemberForm = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const membership = ['Black', 'Gold', 'Silver'];
+  const membership = ['Only Classes', 'Classic', 'Black'];
   const {
     register,
     reset,
