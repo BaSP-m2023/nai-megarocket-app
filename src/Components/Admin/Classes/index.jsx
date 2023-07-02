@@ -9,15 +9,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import CalendarModal from './Modal';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Classes = () => {
   const history = useHistory();
-
   const isLoading = useSelector((state) => state.classes.loading);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const [classToDelete, setClassToDelete] = useState(null);
   const { classes = [], activities = [] } = useSelector((state) => ({
     classes: state.classes.data.data,
@@ -30,7 +27,40 @@ const Classes = () => {
   useEffect(() => {
     dispatch(getClasses());
     dispatch(getActivities());
+    const toastMessage = localStorage.getItem('toastMessage');
+    if (toastMessage) {
+      showToast(toastMessage, 'success');
+      localStorage.removeItem('toastMessage');
+    }
   }, []);
+
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      toast.success(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      toast.error(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     if (activities.length > 0) {
@@ -47,13 +77,9 @@ const Classes = () => {
     setShowDeleteWarning(false);
     try {
       const data = await dispatch(deleteClass(classToDelete));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
+      showToast(data.message, 'success');
     } catch (error) {
-      setAlertMessage(error);
-      setShowAlert(true);
-      setIsSuccess(false);
+      showToast(error.message, 'error');
     }
   };
 
@@ -113,6 +139,11 @@ const Classes = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       {isLoading ? (
         <ClipLoader />
       ) : classes ? (
@@ -182,16 +213,6 @@ const Classes = () => {
             testId={'admin-classes-modal'}
             confirmDeleteTestId={'admin-classes-button-confirm-modal'}
             closeTestId={'admin-classes-button-close-warning-modal'}
-          />
-          <SharedModal
-            isDelete={false}
-            show={showAlert}
-            typeStyle={isSuccess ? 'success' : 'error'}
-            closeModal={() => setShowAlert(false)}
-            title={isSuccess ? 'Success' : 'Error'}
-            body={alertMessage}
-            testId={'admin-classes-modal'}
-            closeTestId={'admin-classes-button-close-success-modal'}
           />
           <CalendarModal
             show={calendarAlert}

@@ -79,6 +79,7 @@ const AdminTrainerForm = () => {
   const onSubmit = (data) => {
     if (id) {
       updateTrainerFunction(id, data);
+      delete data.password;
     } else {
       createTrainer(data);
     }
@@ -163,14 +164,16 @@ const AdminTrainerForm = () => {
               error={errors.salary?.message}
               testId={'admin-trainers-input-salary'}
             />
-            <Input
-              register={register}
-              labelName={'Password'}
-              inputType={'text'}
-              inputName={'password'}
-              error={errors.password?.message}
-              testId={'admin-trainers-input-password'}
-            />
+            {!id && (
+              <Input
+                register={register}
+                labelName={'Password'}
+                inputType={'text'}
+                inputName={'password'}
+                error={errors.password?.message}
+                testId={'admin-trainers-input-password'}
+              />
+            )}
             <Input
               register={register}
               labelName={'Active ?'}
