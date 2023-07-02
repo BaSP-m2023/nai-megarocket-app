@@ -3,37 +3,49 @@ import Joi from 'joi';
 const memberValidation = Joi.object({
   firstName: Joi.string()
     .trim()
-    .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
+    .regex(/^[A-Za-z]+\s?[A-Za-z]*$/)
+    .min(3)
+    .max(25)
     .messages({
-      'string.pattern.base': 'Name must have only letters',
       'any.required': 'Name is required',
-      'string.empty': 'Name is required'
+      'string.pattern.base': 'Name is invalid, only letters and a space are allowed',
+      'string.empty': 'Name is required',
+      'string.base': 'Name must be a string',
+      'string.min': 'Name too short',
+      'string.max': 'Name is invalid'
     }),
   lastName: Joi.string()
     .trim()
-    .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
+    .regex(/^[A-Za-z]+\s?[A-Za-z]*$/)
+    .min(3)
+    .max(25)
     .messages({
-      'string.pattern.base': 'Last name must have only letters',
-      'any.required': 'Last name is required',
-      'string.empty': 'Last name is required.'
+      'any.required': 'Last Name is required',
+      'string.pattern.base': 'Last Name is invalid, only letters and a space are allowed',
+      'string.empty': 'Last Name is required',
+      'string.base': 'Last Name must be a string',
+      'string.min': 'Last Name too short',
+      'string.max': 'Last Name is invalid'
     }),
-  dni: Joi.number().integer().greater(99999).less(1000000000).messages({
-    'number.base': 'the DNI must be a number',
-    'number.greater': 'DNI must have at least 7 numbers',
-    'number.less': 'DNI cannot have more than 9 numbers',
-    'any.empty': 'DNI cannot be empty'
+  dni: Joi.number().integer().min(1000000).max(99999999).messages({
+    'number.base': 'DNI is required',
+    'number.empty': 'DNI is required',
+    'number.min': 'DNI too short',
+    'number.max': 'DNI must be a 7-8 digit number'
   }),
-  phone: Joi.number().integer().messages({
-    'number.base': 'Phone must be a number',
-    'number.min': 'Phone must have exact 10 numbers',
-    'any.empty': 'Phone cannot be empty'
+  phone: Joi.number().integer().min(1000000000).max(9999999999).messages({
+    'number.base': 'Phone is required',
+    'number.empty': 'Phone is required',
+    'number.min': 'Phone Number must be a 10-digit number',
+    'number.max': 'Phone Number must be a 10-digit number',
+    'any.required': 'Phone Number is required'
   }),
   email: Joi.string()
     .trim()
     .regex(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
     .messages({
       'string.pattern.base': 'The email is invalid',
-      'string.empty': 'Email cannot be empty'
+      'string.empty': 'Email is required'
     }),
   password: Joi.string()
     .min(8)
@@ -41,15 +53,14 @@ const memberValidation = Joi.object({
     .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#%^&*<>_?\-¿¡])/)
     .label('Password')
     .messages({
-      'string.pattern.base':
-        'Password must have at least 1 special character ( <, >, @, #, ^, %, *, _, -, ?, ¿, ¡, ! ) 1 uppercase letter, 1 lowercase letter and 1 number',
+      'string.pattern.base': 'Invalid password: Example1!',
       'any.required': 'Password is required.',
       'string.empty': 'Password is required.'
     }),
   city: Joi.string()
     .trim()
     .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
-    .min(5)
+    .min(3)
     .max(25)
     .messages({
       'string.min': 'City must have between 5 and 25 characters',
@@ -60,19 +71,20 @@ const memberValidation = Joi.object({
     .max(new Date(new Date().setFullYear(new Date().getFullYear() - 16)).toISOString())
     .messages({
       'date.max': 'You must have at least 16 years',
-      'any.required': 'Date cannot be empty'
+      'any.required': 'Date is required',
+      'date.empty': 'Date is required',
+      'date.base': 'Date is required'
     }),
   postalCode: Joi.number().integer().min(1000).max(99999).messages({
     'number.max': 'Postal code cannot have more than 5 numbers',
     'number.min': 'Postal code cannot have less than 4 numbers',
     'any.required': 'Postal code is required',
-    'number.empty': 'Postal code cannot be empty'
+    'number.empty': 'Postal code is required',
+    'number.base': 'Postal code is required'
   }),
   isActive: Joi.boolean(),
-  membership: Joi.string().valid('Black', 'Gold', 'Silver').messages({
-    'string.valid': 'Please enter a valid membership: Black, Gold or Silver',
-    'any.required': 'Membership is required.',
-    'string.empty': 'Membership cannot be empty'
+  membership: Joi.string().valid('Only Classes', 'Classic', 'Black').messages({
+    'any.only': 'Enter a valid membership: Only Classes, Classic or Black'
   })
 });
 

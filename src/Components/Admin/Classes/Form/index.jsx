@@ -183,7 +183,7 @@ const Form = () => {
             />
             <Button
               type={'cancel'}
-              onClick={() => reset()}
+              clickAction={() => reset()}
               info={'reset'}
               text={'Reset'}
               testId={'admin-classes-button-reset-form'}

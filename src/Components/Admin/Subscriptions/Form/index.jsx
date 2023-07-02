@@ -151,7 +151,7 @@ const Form = () => {
             />
             <Button
               type={'cancel'}
-              onClick={handleReset}
+              clickAction={handleReset}
               info={'reset'}
               text={'Reset'}
               testId={'admin-subscriptions-button-reset-form'}

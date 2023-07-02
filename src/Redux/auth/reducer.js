@@ -8,7 +8,8 @@ import {
   GET_AUTH_PENDING,
   GET_AUTH_SUCCESS,
   GET_AUTH_ERROR,
-  SET_USER_ROLE
+  SET_USER_ROLE,
+  UPDATE_USER
 } from './constants';
 
 const initialState = {
@@ -73,6 +74,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         role: action.payload
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: action.payload
       };
     default:
       return state;

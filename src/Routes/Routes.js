@@ -12,7 +12,7 @@ import PrivateRoute from './privateRoute';
 
 const Routes = () => {
   const dispatch = useDispatch();
-
+  const role = sessionStorage.getItem('role');
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {
@@ -25,6 +25,19 @@ const Routes = () => {
     }
   }, []);
 
+  const isLogged = () => {
+    switch (role) {
+      case 'ADMIN':
+        return <Redirect to="/admins/home" />;
+      case 'SUPER_ADMIN':
+        return <Redirect to="/super-admins/home" />;
+      case 'MEMBER':
+        return <Redirect to="/members/home" />;
+      default:
+        return <Redirect to="/auth/login" />;
+    }
+  };
+
   return (
     <Switch>
       <Route path="/auth" component={AuthRoutes} />
@@ -33,7 +46,7 @@ const Routes = () => {
       <PrivateRoute path="/trainers" role="TRAINER" component={TrainerRoutes} />
       <PrivateRoute path="/members" role="MEMBER" component={MemberRoutes} />
       <Route exact path="/">
-        <Redirect to="/auth/login" />
+        {isLogged()}
       </Route>
     </Switch>
   );
