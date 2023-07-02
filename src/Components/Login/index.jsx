@@ -39,6 +39,10 @@ const Login = () => {
             history.push('/admins/home');
             dispatch(setUserRole(response.payload.role));
             break;
+          case 'TRAINER':
+            history.push('/trainers/home');
+            dispatch(setUserRole(response.payload.role));
+            break;
           case 'MEMBER':
             history.push('/members/home');
             dispatch(setUserRole(response.payload.role));

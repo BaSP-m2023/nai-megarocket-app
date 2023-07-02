@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import AuthRoutes from './auth';
 import SuperAdminRoutes from './superAdmin';
 import AdminRoutes from './admin';
+import TrainerRoutes from './trainer';
 import MemberRoutes from './member';
 import { useDispatch } from 'react-redux';
 import { tokenListener } from 'Helper/firebase';
@@ -29,6 +30,7 @@ const Routes = () => {
       <Route path="/auth" component={AuthRoutes} />
       <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminRoutes} />
       <PrivateRoute path="/admins" role="ADMIN" component={AdminRoutes} />
+      <PrivateRoute path="/trainers" role="TRAINER" component={TrainerRoutes} />
       <PrivateRoute path="/members" role="MEMBER" component={MemberRoutes} />
       <Route exact path="/">
         <Redirect to="/auth/login" />

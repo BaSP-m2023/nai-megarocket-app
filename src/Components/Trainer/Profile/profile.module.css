@@ -1,0 +1,99 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14);
+}
+.formTitle {
+  text-align: center;
+  color: #0f232e;
+  margin-top: 4%;
+  margin-bottom: 2%;
+}
+.formMembers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3vw;
+}
+
+.formColumn {
+  flex: 1;
+}
+
+.formLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.formRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-items: flex-start;
+}
+
+.formInputsDiv {
+  display: flex;
+}
+
+.membershipActive {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.formSelect {
+  width: 60%;
+  border-radius: 5px;
+  font-size: 1rem;
+  height: 2rem;
+  border: solid 1px;
+  border-color: #0f232e;
+  margin-bottom: 2%;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5%;
+  width: 100%;
+}
+
+.buttonContainer button {
+  width: 10vw;
+}
+
+.buttonsLowContainer {
+  width: 30%;
+  display: flex;
+  gap: 3vw;
+}
+
+.formTitleTwo {
+  color: #f9a414;
+  border-bottom: solid 2px #f9a414;
+  margin: 2rem 5rem 2rem 5rem;
+  text-transform: uppercase;
+  line-height: 3rem;
+  font-weight: 100;
+  letter-spacing: 2px;
+}
+
+.toggleButton {
+  display: flex;
+  align-items: center;
+  font-size: 1vw;
+  background-color: inherit;
+  border: none;
+  height: fit-content;
+}
+
+.buttonHideContainer {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
+}

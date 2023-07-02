@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { getClasses } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
-import { getMembersById } from 'Redux/members/thunks';
-import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
@@ -22,11 +20,13 @@ const Schedule = () => {
     activities: state.activities.data.data,
     subscriptions: state.subscriptions.data
   }));
+  const trainer = useSelector((state) => state.auth?.user);
   const loading = useSelector((state) => state.members.loading);
-  const [memberData, setMemberData] = useState(null);
   const [activity, setActivity] = useState('');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const id = trainer?._id;
+  console.log(id);
 
   const [infoClass, setInfoClass] = useState({
     Hour: '',
@@ -60,13 +60,12 @@ const Schedule = () => {
     { label: '22:00', value: 22 }
   ];
 
+  console.log(trainer);
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch(getClasses());
         dispatch(getActivities());
-        dispatch(getSubscriptions());
-        getMemberData();
       } catch (error) {
         console.error('Error:', error);
         setError(true);
@@ -75,17 +74,6 @@ const Schedule = () => {
     fetchData();
     setActivity('all');
   }, []);
-
-  const getMemberData = async () => {
-    try {
-      const idMember = '649bd55669684ea6279bbcc6';
-      const response = await dispatch(getMembersById(idMember));
-      setMemberData(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-      setError(true);
-    }
-  };
 
   const getClassButton = (hour, day) => {
     let classItem;
@@ -99,7 +87,7 @@ const Schedule = () => {
 
     if (classItem) {
       const suscriptionFound = subscriptions?.find(
-        (item) => item.classes?._id === classItem?._id && item.member?._id === memberData?._id
+        (item) => item.classes?._id === classItem?._id && item.trainer?._id === trainer?._id
       );
 
       const subscriptionsForClass = subscriptions?.filter(
@@ -120,28 +108,17 @@ const Schedule = () => {
               slotCount: slotCount,
               day: classItem.day,
               idSuscription: suscriptionFound?._id,
-              idClass: classItem?._id,
-              idMember: memberData?._id
+              idClass: classItem?._id
             }));
           }}
           className={suscriptionFound ? styles.addedButton : styles.classesButton}
         >
-          {suscriptionFound ? (
-            <>
-              <div className={styles.buttonText}>
-                <BsCheckCircleFill /> {classItem.activity?.name}
-              </div>
-              <div>
-                {classItem.trainer?.firstName} {classItem.trainer?.lastName}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className={styles.buttonText}>{classItem.activity?.name}</div>
-              <div>
-                {classItem.trainer?.firstName} {classItem.trainer?.lastName}
-              </div>
-            </>
+          <div className={styles.buttonText}>{classItem.activity?.name}</div>
+          {classItem.trainer?.firstName}
+          {suscriptionFound && (
+            <div className={styles.slots}>
+              <BsCheckCircleFill /> Subscribed
+            </div>
           )}
           <div className={styles.slotsFull}>{classItem.slots <= slotCount && <div>Full</div>}</div>
         </div>
@@ -183,7 +160,7 @@ const Schedule = () => {
               <div className={styles.container}>
                 <div className={styles.header}>
                   <h2 className={styles.title}>
-                    Scheduled Classes - Member: {memberData?.firstName}
+                    Scheduled Classes - Trainer: {trainer?.firstName}
                   </h2>
                   <div className={styles.filterActivity}>
                     <label className={styles.selectLabel} htmlFor="activity">
