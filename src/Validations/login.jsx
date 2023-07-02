@@ -14,7 +14,7 @@ const loginValidation = Joi.object({
     .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#%^&*<>_?\-¿¡])/)
     .label('Password')
     .messages({
-      'string.pattern.base': 'Password must have at least 1 special character',
+      'string.pattern.base': 'Invalid password: Example1!',
       'any.required': 'Password is required.',
       'string.empty': 'Password is required.'
     })

@@ -27,8 +27,7 @@ const superAdminsValidation = Joi.object({
     .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#%^&*<>_?\-¿¡])/)
     .label('Password')
     .messages({
-      'string.pattern.base':
-        'Password must have at least 1 special character ( <, >, @, #, ^, %, *, _, -, ?, ¿, ¡, ! ) 1 uppercase letter, 1 lowercase letter and 1 number',
+      'string.pattern.base': 'Invalid password: Example1!',
       'any.required': 'Password is required.',
       'string.empty': 'Password is required.'
     })
