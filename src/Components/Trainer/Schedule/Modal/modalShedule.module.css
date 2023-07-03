@@ -92,6 +92,7 @@
 }
 
 .center{
+  padding-top: 5%;
   text-align: center;
   margin-top: 5%;
   font-size: 1.2rem;;
@@ -108,12 +109,55 @@
   cursor: pointer;
 }
 
-.added {
+.listMembers {
   text-align: center;
-  margin-top: 5%;
   font-size: 1rem;
-  color: #28b81a;
-  font-weight: bold;
+  color: #F9A414;
+  font-size: 1.2rem;
+}
+
+.member {
+  padding-top: 5%;
+}
+
+.membershipBlack {
+  padding: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin: 2%;
+  background-color: #000000;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  border: 1px solid #5b5c59;
+}
+
+.membershipClassic {
+  padding: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin: 2%;
+  background-color: #7e8588;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+.membershipOnly{
+  padding: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin: 2%;
+  background-color: #ac720d;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+.listTitle {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-top: 5%;
 }
 
 .slotsFull {

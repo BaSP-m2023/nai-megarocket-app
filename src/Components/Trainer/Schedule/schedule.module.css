@@ -93,7 +93,7 @@
   align-items: center;
   width: 100%;
   margin:0;
-  padding:0;
+  padding: 2%;
   background-color: #F9A414;
   border-radius: 5px;
   color:#0F232E;
@@ -156,27 +156,6 @@
   background-color: #0f232e;
   color: #f7f9ed;
   font-weight: normal;
-  font-size: 0.9rem;
-}
-
-.slotsFull {
-  display: flex;
-  width: 25%;
-  text-align: center;
-  justify-content: center;
-  color: #E0E4DB;
-  background-color:#f52821 ;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 0.8rem;
-  margin: 0;
-  padding: 0;
-}
-
-.slots {
-  padding: 1%;
-  color: #0F232E;
-  font-weight: bold;
   font-size: 0.9rem;
 }
 

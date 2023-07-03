@@ -1,13 +1,7 @@
 import styles from './modalShedule.module.css';
-import Button from 'Components/Shared/Button';
-import { BsCheck, BsFillPersonVcardFill, BsXLg } from 'react-icons/bs';
-import { useDispatch } from 'react-redux';
-
-import { deleteSubscription, createSubscription } from 'Redux/subscriptions/thunks';
+import { BsFillPersonVcardFill, BsXLg } from 'react-icons/bs';
 
 const Modal = (data) => {
-  const dispatch = useDispatch();
-
   if (!data.show) {
     return null;
   }
@@ -16,59 +10,14 @@ const Modal = (data) => {
     data.closeModal();
   };
 
-  const showToast = (message, type) => {
-    if (type === 'success') {
-      data.toast.success(message, {
-        duration: 2500,
-        position: 'top-right',
-        style: {
-          background: '#fddba1'
-        },
-        iconTheme: {
-          primary: '#0f232e',
-          secondary: '#fff'
-        }
-      });
-    } else if (type === 'error') {
-      data.toast.error(message, {
-        duration: 2500,
-        position: 'top-right',
-        style: {
-          background: 'rgba(227, 23, 10, 0.5)'
-        },
-        iconTheme: {
-          primary: '#0f232e',
-          secondary: '#fff'
-        }
-      });
-    }
-  };
-
-  const handleSubscribe = async () => {
-    if (data.idSuscription) {
-      try {
-        await dispatch(deleteSubscription(data.idSuscription));
-        showToast('Subscription was succesfully removed', 'success');
-        data.closeModal();
-      } catch (error) {
-        showToast(error.message, 'error');
-        data.closeModal();
-      }
-    } else {
-      try {
-        const newDate = new Date();
-        const newSuscription = {
-          classes: data.idClass,
-          member: data.idMember,
-          date: newDate.setHours(newDate.getHours() - 3)
-        };
-        await dispatch(createSubscription(newSuscription));
-        showToast('Subscription was succesfully added', 'success');
-        data.closeModal();
-      } catch (error) {
-        showToast(error.message, 'error');
-        data.closeModal();
-      }
+  const getMembershipStyle = (membership) => {
+    switch (membership) {
+      case 'Black':
+        return styles.membershipBlack;
+      case 'Classic':
+        return styles.membershipClassic;
+      default:
+        return styles.membershipOnly;
     }
   };
 
@@ -92,6 +41,20 @@ const Modal = (data) => {
           <span className={styles.space}></span>
           {data.trainer}
         </div>
+        <div className={styles.listTitle}>Participants: </div>
+        <div className={styles.listMembers}>
+          {data.membersClass.map((subscription) => (
+            <div key={subscription.member._id}>
+              <div className={styles.member}>
+                {subscription.member.firstName} {subscription.member.lastName}
+                <span> </span>
+                <span className={getMembershipStyle(subscription.member.membership)}>
+                  {subscription.member.membership}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
         {data.slot <= data.slotCount ? (
           <div className={styles.slotsFull}>
             Slots full {data.slotCount} / {data.slot}
@@ -101,24 +64,6 @@ const Modal = (data) => {
             Slots: {data.slotCount} / {data.slot}
           </div>
         )}
-        {data.idSuscription ? (
-          <div className={styles.added}>
-            <BsCheck /> You are subscribed to this class
-          </div>
-        ) : (
-          <div className={styles.center}>You are not in this class</div>
-        )}
-        <div className={styles.buttonContainer}>
-          {data.slot <= data.slotCount ? (
-            <Button type="cancel" text={<>Back</>} clickAction={onCloseModal} />
-          ) : (
-            <Button
-              type="cancel"
-              text={data.idSuscription ? <>Unsubscribe</> : <>Subscribe</>}
-              clickAction={handleSubscribe}
-            />
-          )}
-        </div>
       </div>
     </div>
   );

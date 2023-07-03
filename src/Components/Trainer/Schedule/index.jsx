@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import styles from './schedule.module.css';
 import Modal from './Modal/modalShedule';
 import { useDispatch, useSelector } from 'react-redux';
-import { BsCheckCircleFill } from 'react-icons/bs';
 import { getClasses } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
+import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
@@ -21,12 +21,10 @@ const Schedule = () => {
     subscriptions: state.subscriptions.data
   }));
   const trainer = useSelector((state) => state.auth?.user);
-  const loading = useSelector((state) => state.members.loading);
+  const loading = useSelector((state) => state.classes?.loading);
   const [activity, setActivity] = useState('');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const id = trainer?._id;
-  console.log(id);
 
   const [infoClass, setInfoClass] = useState({
     Hour: '',
@@ -37,7 +35,8 @@ const Schedule = () => {
     slotCount: '',
     idSuscription: '',
     idClass: '',
-    idMember: ''
+    idMember: '',
+    membersClass: {}
   });
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -60,12 +59,12 @@ const Schedule = () => {
     { label: '22:00', value: 22 }
   ];
 
-  console.log(trainer);
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch(getClasses());
         dispatch(getActivities());
+        dispatch(getSubscriptions());
       } catch (error) {
         console.error('Error:', error);
         setError(true);
@@ -86,15 +85,25 @@ const Schedule = () => {
     }
 
     if (classItem) {
-      const suscriptionFound = subscriptions?.find(
-        (item) => item.classes?._id === classItem?._id && item.trainer?._id === trainer?._id
+      const trainerFound = classes?.find(
+        (item) => item._id === classItem?._id && item.trainer?._id === trainer?._id
       );
 
       const subscriptionsForClass = subscriptions?.filter(
         (item) => item.classes?._id === classItem?._id
       );
 
+      const membersClass = subscriptions?.filter((item) => item.classes?._id === classItem?._id);
+
       const slotCount = subscriptionsForClass.length;
+
+      let trainerName = classItem.trainer?.firstName;
+
+      if (trainerName === undefined) {
+        trainerName = 'Unassigned trainer';
+      } else {
+        trainerName = `${classItem.trainer?.firstName} ${classItem.trainer?.lastName}`;
+      }
 
       return (
         <div
@@ -102,25 +111,19 @@ const Schedule = () => {
             setShowModal(true);
             setInfoClass(() => ({
               hour: classItem.hour,
-              trainer: `${classItem.trainer?.firstName} ${classItem.trainer?.lastName}`,
+              trainer: trainerName,
               activity: classItem.activity?.name,
               slot: classItem.slots,
               slotCount: slotCount,
               day: classItem.day,
-              idSuscription: suscriptionFound?._id,
-              idClass: classItem?._id
+              idClass: classItem?._id,
+              membersClass: membersClass
             }));
           }}
-          className={suscriptionFound ? styles.addedButton : styles.classesButton}
+          className={trainerFound ? styles.addedButton : styles.classesButton}
         >
           <div className={styles.buttonText}>{classItem.activity?.name}</div>
-          {classItem.trainer?.firstName}
-          {suscriptionFound && (
-            <div className={styles.slots}>
-              <BsCheckCircleFill /> Subscribed
-            </div>
-          )}
-          <div className={styles.slotsFull}>{classItem.slots <= slotCount && <div>Full</div>}</div>
+          {trainerName}
         </div>
       );
     } else {
@@ -225,9 +228,8 @@ const Schedule = () => {
         slotCount={infoClass.slotCount}
         trainer={infoClass.trainer}
         activity={infoClass.activity}
-        idSuscription={infoClass.idSuscription}
         idClass={infoClass.idClass}
-        idMember={infoClass.idMember}
+        membersClass={infoClass.membersClass}
       />
     </>
   );

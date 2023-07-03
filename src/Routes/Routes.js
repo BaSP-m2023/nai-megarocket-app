@@ -31,6 +31,8 @@ const Routes = () => {
         return <Redirect to="/admins/home" />;
       case 'SUPER_ADMIN':
         return <Redirect to="/super-admins/home" />;
+      case 'TRAINER':
+        return <Redirect to="/trainers/home" />;
       case 'MEMBER':
         return <Redirect to="/members/home" />;
       default:

@@ -6,7 +6,6 @@ import trainerValidation from 'Validations/trainers';
 import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
-import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
 import { updateUser } from 'Redux/auth/actions';
@@ -14,11 +13,9 @@ import { updateTrainer } from 'Redux/trainers/thunks';
 
 const TrainerForm = () => {
   const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const trainer = useSelector((state) => state.auth?.user);
   const id = trainer?._id;
-  const membership = ['Black', 'Gold', 'Silver'];
 
   const {
     register,
@@ -33,7 +30,6 @@ const TrainerForm = () => {
   useEffect(() => {
     loadAdminData();
   }, [id]);
-  console.log(trainer);
 
   const loadAdminData = () => {
     const trainerToUpdate = {
@@ -109,11 +105,11 @@ const TrainerForm = () => {
       />
       <div className={styles.formContainer}>
         <h2 className={styles.formTitleTwo}>trainer data</h2>
-        <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.formTrainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
               register={register}
-              labelName={'First Name'}
+              labelName={'Name'}
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
@@ -143,35 +139,8 @@ const TrainerForm = () => {
               error={errors.phone?.message}
               disabled={!editMode}
             />
-            <Input
-              register={register}
-              labelName={'Email'}
-              inputType={'text'}
-              inputName={'email'}
-              error={errors.email?.message}
-              disabled={!editMode}
-            />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <Input
-                register={register}
-                labelName={'Password'}
-                inputType={showPassword ? 'text' : 'password'}
-                inputName={'password'}
-                error={errors.password?.message}
-                disabled={!editMode}
-              />
-              <div className={styles.buttonHideContainer}>
-                <button
-                  className={styles.toggleButton}
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <FaEyeSlash /> : <FaRegEye />}
-                </button>
-              </div>
-            </div>
             <Input
               register={register}
               labelName={'City'}
@@ -182,28 +151,19 @@ const TrainerForm = () => {
             />
             <Input
               register={register}
-              labelName={'Date of birth'}
-              inputType={'date'}
-              inputName={'birthDay'}
-              error={errors.birthDay?.message}
-              disabled={!editMode}
-            />
-            <Input
-              register={register}
-              labelName={'Postal Code'}
+              labelName={'Salary'}
               inputType={'number'}
-              inputName={'postalCode'}
-              error={errors.postalCode?.message}
+              inputName={'salary'}
+              error={errors.salary?.message}
               disabled={!editMode}
             />
             <Input
               register={register}
-              labelName={'Memberships'}
+              labelName={'Email'}
               inputType={'text'}
-              list={membership}
-              inputName={'membership'}
-              error={errors.membership?.message}
-              disabled={true}
+              inputName={'email'}
+              error={errors.email?.message}
+              disabled={!editMode}
             />
           </div>
           <div className={styles.buttonContainer}>
