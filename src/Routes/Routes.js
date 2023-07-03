@@ -20,22 +20,9 @@ const Routes = () => {
     if (token) {
       dispatch(getAuth(token));
     }
-  }, [role, token]);
+  }, [role]);
 
   const userRoute = () => {
-    switch (role) {
-      case 'ADMIN':
-        return <Redirect to="/admins/home" />;
-      case 'SUPER_ADMIN':
-        return <Redirect to="/super-admins/home" />;
-      case 'MEMBER':
-        return <Redirect to="/members/home" />;
-      default:
-        return <Redirect to="/auth/login" />;
-    }
-  };
-
-  const isLogged = () => {
     switch (role) {
       case 'ADMIN':
         return <Redirect to="/admins/home" />;
@@ -57,9 +44,6 @@ const Routes = () => {
       <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminRoutes} />
       <PrivateRoute path="/admins" role="ADMIN" component={AdminRoutes} />
       <PrivateRoute path="/members" role="MEMBER" component={MemberRoutes} />
-      <Route exact path="/">
-        {isLogged()}
-      </Route>
     </Switch>
   );
 };
