@@ -16,7 +16,7 @@ const MemberForm = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const membership = ['Black', 'Gold', 'Silver'];
+  const membership = ['Only Classes', 'Classic', 'Black'];
   const {
     register,
     reset,
@@ -232,7 +232,7 @@ const MemberForm = () => {
               />
               <Button
                 type={'cancel'}
-                onClick={handleReset}
+                clickAction={handleReset}
                 info={'reset'}
                 text={'Reset'}
                 testId={'admin-members-button-reset-form'}

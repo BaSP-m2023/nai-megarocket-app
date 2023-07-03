@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './memberships.module.css';
 import Container from 'Components/Shared/Container';
+import { useSelector } from 'react-redux';
 
 const Memberships = () => {
-  const [memberType, setMemberType] = useState();
+  const member = useSelector((state) => state.auth?.user);
+  const membership = member?.membership;
 
+  useEffect(() => {
+    console.log(member);
+  }, []);
   return (
     <Container>
       <div className={styles.container}>
@@ -31,12 +36,12 @@ const Memberships = () => {
             </div>
           </div>
           <div className={`${styles.card2} ${styles.card}`}>
-            {!memberType && (
+            {!membership && (
               <>
                 <div className={styles.upgradeStar}>Upgrade</div>
               </>
             )}
-            {memberType === 'only-clases' && (
+            {membership === 'Only Classes' && (
               <>
                 <div className={styles.upgradeStar}>Upgrade</div>
               </>
@@ -53,7 +58,7 @@ const Memberships = () => {
             </div>
           </div>
           <div className={`${styles.card3} ${styles.card}`}>
-            {memberType === 'classic' && (
+            {membership === 'Classic' && (
               <>
                 <div className={styles.upgradeStar}>Upgrade</div>
               </>
@@ -70,27 +75,6 @@ const Memberships = () => {
               </ul>
             </div>
           </div>
-        </div>
-      </div>
-      <div className={styles.containerMemberList}>
-        <div className={styles.memberListDiv}>
-          <p className={styles.textSelect}>
-            <b>Choose type of member to change promo in cards:</b>{' '}
-          </p>
-          <ul>
-            <button className={styles.button} onClick={() => setMemberType('only-clases')}>
-              Only Clases
-            </button>
-            <button className={styles.button} onClick={() => setMemberType('classic')}>
-              Classic
-            </button>
-            <button className={styles.button} onClick={() => setMemberType('black')}>
-              Black
-            </button>
-            <button className={styles.button} onClick={() => setMemberType(false)}>
-              No active membership
-            </button>
-          </ul>
         </div>
       </div>
     </Container>
