@@ -4,7 +4,7 @@ import { updateTrainer, addTrainer } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import trainerValidation from 'Validations/trainers';
+import { trainerCreateValidation, trainerUpdateValidation } from 'Validations/trainers';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button/index';
 import Input from 'Components/Shared/Input';
@@ -24,7 +24,7 @@ const AdminTrainerForm = () => {
     formState: { errors }
   } = useForm({
     mode: 'all',
-    resolver: joiResolver(trainerValidation)
+    resolver: joiResolver(id ? trainerUpdateValidation : trainerCreateValidation)
   });
 
   useEffect(() => {
@@ -38,6 +38,7 @@ const AdminTrainerForm = () => {
     if (trainer) {
       delete trainer._id;
       delete trainer.__v;
+      delete trainer.firebaseUid;
       reset(trainer);
     }
   };
@@ -68,7 +69,7 @@ const AdminTrainerForm = () => {
 
   const updateTrainerFunction = async (id, data) => {
     try {
-      const response = await dispatch(updateTrainer(data, id));
+      const response = await dispatch(updateTrainer(id, data));
       localStorage.setItem('toastMessage', response.message);
       history.push('/admins/trainers');
     } catch (error) {

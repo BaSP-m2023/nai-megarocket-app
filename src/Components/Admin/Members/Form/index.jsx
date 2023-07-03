@@ -39,6 +39,7 @@ const MemberForm = () => {
       member.birthDay = formatDate(member.birthDay);
       delete member._id;
       delete member.__v;
+      delete member.firebaseUid;
       reset(member);
     } else {
       console.error('Member not found');
