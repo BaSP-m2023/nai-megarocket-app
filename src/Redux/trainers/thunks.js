@@ -16,8 +16,6 @@ import {
   addTrainerError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getTrainers = () => {
   return async (dispatch) => {
     dispatch(getTrainersPending());
@@ -26,7 +24,7 @@ export const getTrainers = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -45,7 +43,7 @@ export const getTrainersById = (id) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -66,7 +64,7 @@ export const deleteTrainer = (trainerId) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
 
@@ -91,7 +89,7 @@ export const updateTrainer = (id, trainer) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(trainer)
       });
@@ -117,7 +115,7 @@ export const addTrainer = (trainer) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(trainer)
       });

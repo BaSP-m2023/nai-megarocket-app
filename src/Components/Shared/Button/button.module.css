@@ -6,7 +6,7 @@
   background-color: rgba(253, 219, 161);
   border: solid 1px;
   border-color: rgba(253, 219, 161);
-  color: rgba(55, 56, 103);
+  color: rgba(15, 35, 46);
   text-align: center;
   font-size: 1rem;
   border-radius: 0.5rem;
@@ -18,24 +18,9 @@
   width: 8rem;
   padding: 0.7rem;
   margin-top: 1rem;
-  background-color: rgba(253, 219, 161);
+  background-color: rgba(15, 35, 46);
   border: solid 1px;
-  border-color: rgba(253, 219, 161);
-  color: rgba(55, 56, 103);
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.cancelButton {
-  width: 6rem;
-  padding: 0.7rem;
-  margin-top: 1rem;
-  background-color: white;
-  border: solid 1px;
-  border-color: rgba(55, 56, 103);
-  color: rgba(55, 56, 103);
+  color: white;
   font-size: 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -48,8 +33,21 @@
   margin-top: 1rem;
   background-color: rgba(15, 35, 46);
   border: solid 1px;
-  border-color: rgba(55, 56, 103);
   color: white;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cancelButton {
+  width: 6rem;
+  padding: 0.7rem;
+  margin-top: 1rem;
+  background-color: white;
+  border: solid 1px;
+  border-color: rgba(15, 35, 46);
+  color: rgba(15, 35, 46);
   font-size: 1rem;
   border-radius: 0.5rem;
   cursor: pointer;

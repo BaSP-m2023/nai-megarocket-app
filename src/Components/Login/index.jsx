@@ -11,7 +11,6 @@ import { login } from 'Redux/auth/thunks';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { LOGIN_SUCCESS } from 'Redux/auth/constants';
-import { setUserRole } from 'Redux/auth/actions';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,11 +32,9 @@ const Login = () => {
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
             history.push('/super-admins/home');
-            dispatch(setUserRole(response.payload.role));
             break;
           case 'ADMIN':
             history.push('/admins/home');
-            dispatch(setUserRole(response.payload.role));
             break;
           case 'TRAINER':
             history.push('/trainers/home');
@@ -45,7 +42,6 @@ const Login = () => {
             break;
           case 'MEMBER':
             history.push('/members/home');
-            dispatch(setUserRole(response.payload.role));
             break;
           default:
             history.push('/auth/login');
