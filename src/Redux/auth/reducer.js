@@ -13,7 +13,7 @@ import {
 } from './constants';
 
 const initialState = {
-  role: null,
+  userClaims: null,
   user: null,
   isLoading: false,
   error: null,
@@ -32,7 +32,7 @@ const authReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        userClaims: action.payload,
         isLoading: false,
         error: null
       };
@@ -46,7 +46,9 @@ const authReducer = (state = initialState, action) => {
     case LOGOUT_SUCCESS:
       return {
         ...state,
+        userClaims: null,
         user: null,
+        role: null,
         isLoading: false,
         error: null
       };
@@ -58,7 +60,9 @@ const authReducer = (state = initialState, action) => {
     case GET_AUTH_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        user: {
+          ...action.payload
+        },
         isLoading: false,
         error: null,
         isAuthPending: false

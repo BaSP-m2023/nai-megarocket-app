@@ -16,8 +16,6 @@ import {
   addMemberError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getMembers = () => {
   return async (dispatch) => {
     dispatch(getMembersPending());
@@ -26,7 +24,7 @@ export const getMembers = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -46,7 +44,7 @@ export const getMembersById = (id) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -67,7 +65,7 @@ export const deleteMember = (id) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -92,7 +90,7 @@ export const updateMember = (id, member) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(member)
       });
@@ -118,7 +116,7 @@ export const addMember = (member) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(member)
       });

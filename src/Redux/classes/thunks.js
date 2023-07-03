@@ -1,7 +1,5 @@
 import * as actions from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getClasses = () => {
   return async (dispatch) => {
     try {
@@ -10,7 +8,7 @@ export const getClasses = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -30,7 +28,7 @@ export const getClassById = (id) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -55,7 +53,7 @@ export const addClass = (gymClass) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(gymClass)
       });
@@ -81,7 +79,7 @@ export const editClass = (id, gymClass) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(gymClass)
       });
@@ -107,7 +105,7 @@ export const deleteClass = (id) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();

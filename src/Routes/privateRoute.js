@@ -1,26 +1,28 @@
+import Container from 'Components/Shared/Container';
+
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 
-const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
-  const role = sessionStorage.getItem('role');
-  const token = sessionStorage.getItem('token');
-  const error = useSelector((state) => state.auth?.error);
+const PrivateRoute = ({ component: RouteComponent, role, ...rest }) => {
+  const auth = useSelector((state) => state.auth);
+  const isAuthPending = auth?.isAuthPending;
+  const roleSession = sessionStorage.getItem('role');
 
-  return (
-    <Route
-      {...rest}
-      render={(routeProps) => {
-        if (token && role === rest.role) {
-          return <RouteComponent {...routeProps} />;
-        }
-        if ((!role || role !== rest.role || !token) && !error) {
-          return <Redirect to={'/auth/not-allowed'} />;
-        }
-        return <Redirect to={'/auth/login'} />;
-      }}
-    />
-  );
+  if (isAuthPending) {
+    return (
+      <Container>
+        <ClipLoader />
+      </Container>
+    );
+  }
+
+  if (!isAuthPending && roleSession === role) {
+    return <RouteComponent {...rest} />;
+  }
+
+  return <Redirect to="/auth/not-allowed" />;
 };
 
 export default PrivateRoute;

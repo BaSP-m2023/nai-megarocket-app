@@ -16,8 +16,6 @@ import {
   updateSuperAdminsError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getSuperAdmins = () => {
   return async (dispatch) => {
     dispatch(getSuperAdminsPending());
@@ -26,7 +24,7 @@ export const getSuperAdmins = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -46,7 +44,7 @@ export const getSuperAdminById = (id) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -66,7 +64,7 @@ export const deleteSuperAdmin = (id) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -90,7 +88,7 @@ export const updateSuperAdmin = (id, superAdmin) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(superAdmin)
       });
@@ -116,7 +114,7 @@ export const addSuperAdmin = (superAdmin) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(superAdmin)
       });

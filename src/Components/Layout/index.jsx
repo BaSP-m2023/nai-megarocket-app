@@ -2,24 +2,19 @@ import MemberView from 'Components/Views/memberView';
 import AdminView from 'Components/Views/adminView';
 import SuperAdminView from 'Components/Views/superAdminView';
 import LoginView from 'Components/Views/loginView';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setUserRole } from 'Redux/auth/actions';
+import { useSelector } from 'react-redux';
+import Container from 'Components/Shared/Container';
+import { ClipLoader } from 'react-spinners';
 
 const Layout = () => {
-  const role = useSelector((state) => state.auth?.role);
-  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const role = sessionStorage.getItem('role');
 
-  useEffect(() => {
-    const storedRole = localStorage.getItem('role');
-    if (storedRole) {
-      dispatch(setUserRole(storedRole));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('role', role);
-  }, [role]);
+  if (auth?.isAuthPending) {
+    <Container>
+      <ClipLoader />
+    </Container>;
+  }
 
   switch (role) {
     case 'SUPER_ADMIN':
@@ -28,8 +23,6 @@ const Layout = () => {
       return <AdminView />;
     case 'MEMBER':
       return <MemberView />;
-    case '':
-      return <LoginView />;
     default:
       return <LoginView />;
   }

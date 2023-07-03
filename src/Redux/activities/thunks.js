@@ -16,8 +16,6 @@ import {
   postActivitiesError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getActivities = () => {
   return async (dispatch) => {
     dispatch(getActivitiesPending());
@@ -26,7 +24,7 @@ export const getActivities = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -46,7 +44,7 @@ export const getActivitiesById = (id) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -66,7 +64,7 @@ export const deleteActivities = (id) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -91,7 +89,7 @@ export const putActivities = (activity, id) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(activity)
       });
@@ -117,7 +115,7 @@ export const postActivities = (activity) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(activity)
       });
