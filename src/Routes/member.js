@@ -7,7 +7,6 @@ const MemberMembership = lazy(() => import('Components/Member/Memberships'));
 const MemberProfile = lazy(() => import('Components/Member/Profile'));
 const MemberSchedule = lazy(() => import('Components/Member/Schedule'));
 const Home = lazy(() => import('Components/Home'));
-const MemberProfileForm = lazy(() => import('Components/Member/Profile/Form'));
 
 const MemberRoutes = () => {
   return (
@@ -16,7 +15,6 @@ const MemberRoutes = () => {
       <Route path="/members/activities" component={MemberActivities} />
       <Route path="/members/memberships" component={MemberMembership} />
       <Route exact path="/members/profile" component={MemberProfile} />
-      <Route path="/members/profile/form/:id" component={MemberProfileForm} />
       <Route exact path="/members/schedule" component={MemberSchedule} />
     </Suspense>
   );

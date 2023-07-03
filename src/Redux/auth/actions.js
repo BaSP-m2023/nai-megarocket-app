@@ -8,7 +8,8 @@ import {
   LOGOUT_ERROR,
   LOGOUT_PENDING,
   LOGOUT_SUCCESS,
-  SET_USER_ROLE
+  SET_USER_ROLE,
+  UPDATE_USER
 } from './constants';
 
 export const getAuthPending = () => {
@@ -73,5 +74,12 @@ export const setUserRole = (role) => {
   return {
     type: SET_USER_ROLE,
     payload: role
+  };
+};
+
+export const updateUser = (data) => {
+  return {
+    type: UPDATE_USER,
+    payload: data
   };
 };
