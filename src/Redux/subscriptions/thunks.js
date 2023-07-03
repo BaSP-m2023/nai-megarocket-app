@@ -16,8 +16,6 @@ import {
   updateSubscriptionError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getSubscriptions = () => async (dispatch) => {
   dispatch(getSubscriptionsPending());
   try {
@@ -25,7 +23,7 @@ export const getSubscriptions = () => async (dispatch) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        token: token
+        token: sessionStorage.getItem('token')
       }
     });
     if (!response.ok) {
@@ -48,7 +46,7 @@ export const deleteSubscription = (subscriptionId) => async (dispatch) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       }
     );
@@ -73,7 +71,7 @@ export const getSubscriptionById = (subscriptionId) => async (dispatch) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       }
     );
@@ -95,7 +93,7 @@ export const createSubscription = (subscription) => async (dispatch) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        token
+        token: sessionStorage.getItem('token')
       },
       body: JSON.stringify(subscription)
     });
@@ -120,7 +118,7 @@ export const updateSubscription = (subscription, subscriptionId) => async (dispa
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(subscription)
       }

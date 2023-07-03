@@ -16,8 +16,6 @@ import {
   postAdminError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getAdmins = () => {
   return async (dispatch) => {
     dispatch(getAdminsPending());
@@ -26,7 +24,7 @@ export const getAdmins = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -45,7 +43,7 @@ export const getAdminById = (id) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -65,7 +63,7 @@ export const deleteAdmin = (adminId) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -90,7 +88,7 @@ export const putAdmin = (id, admin) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(admin)
       });
@@ -116,7 +114,7 @@ export const postAdmin = (admin) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(admin)
       });

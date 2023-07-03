@@ -1,6 +1,5 @@
 import styles from './header.module.css';
 import { logout } from 'Redux/auth/thunks';
-import { setUserRole } from 'Redux/auth/actions';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -21,10 +20,10 @@ function Header() {
 
   const handleLogOut = () => {
     dispatch(logout());
-    dispatch(setUserRole(''));
+    sessionStorage.removeItem('role');
+    sessionStorage.removeItem('token');
     setShowModal(false);
     history.push('/auth/login');
-    window.location.reload();
   };
   return (
     <>
