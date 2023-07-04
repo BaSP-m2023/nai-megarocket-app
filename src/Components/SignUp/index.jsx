@@ -27,9 +27,11 @@ const SignUp = () => {
     mode: 'all',
     resolver: joiResolver(memberValidation)
   });
+
   const onSubmit = (data) => {
     memberAddFunction(data);
   };
+
   const memberAddFunction = async (member) => {
     try {
       const data = await dispatch(signUp(member));
@@ -42,6 +44,7 @@ const SignUp = () => {
       setShowAlert(true);
     }
   };
+
   const handleCloseAlert = () => {
     if (isSuccess) {
       history.push('/auth/login');
@@ -49,12 +52,15 @@ const SignUp = () => {
       setShowAlert(false);
     }
   };
+
   const handleCancel = () => {
     history.push('/auth/login');
   };
+
   const handleReset = () => {
     reset();
   };
+
   return (
     <Container isLogin={true}>
       <div className={styles.formContainer}>
@@ -147,4 +153,5 @@ const SignUp = () => {
     </Container>
   );
 };
+
 export default SignUp;
