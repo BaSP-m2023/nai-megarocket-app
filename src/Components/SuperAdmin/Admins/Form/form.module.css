@@ -30,7 +30,7 @@
   margin-right: 10px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .secondInputs {
@@ -38,11 +38,11 @@
   margin-left: 10px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
 }
 
-.buttonsDiv > button {
-  width: 20vw;
+.buttonsDiv > Button {
+  width: 10vw;
 }
 
 .buttonsAdmin {
@@ -51,27 +51,21 @@
   justify-content: center;
 }
 
-.buttonsAdmin > button {
-  width: 6rem;
-  padding: 0.7rem;
-  margin-top: 1rem;
-  background-color: white;
-  border: solid 1px;
-  border-color: rgba(15, 35, 46);
-  color: rgba(15, 35, 46);
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: bold;
+.buttonsAdmin > Button {
+  width: 9.5vw;
 }
 
 .buttonsDiv {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
-.changePasswordButton {
-  border-radius: 5px;
-  background-color: #0f232e;
+.buttonsDiv > Button{
+width: 10rem;
+}
+
+.buttonsChangePassword > Button {
+width: 12rem;
 }

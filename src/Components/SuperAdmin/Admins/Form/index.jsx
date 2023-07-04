@@ -142,15 +142,6 @@ const Form = () => {
                 error={errors.dni?.message}
               />
             </div>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'Phone Number'}
-                inputType={'number'}
-                inputName={'phone'}
-                error={errors.phone?.message}
-              />
-            </div>
           </div>
           <div className={styles.secondInputs}>
             <div className={styles.formInput}>
@@ -161,6 +152,15 @@ const Form = () => {
                 inputName={'email'}
                 error={errors.email?.message}
               />
+              <div className={styles.formInput}>
+                <Input
+                  register={register}
+                  labelName={'Phone Number'}
+                  inputType={'number'}
+                  inputName={'phone'}
+                  error={errors.phone?.message}
+                />
+              </div>
             </div>
             <div className={styles.formInput}>
               <Input
@@ -182,17 +182,22 @@ const Form = () => {
                 />
               </div>
             )}
+            {id && (
+              <div className={styles.buttonsChangePassword}>
+                <Button
+                  type={'cancel'}
+                  info="button"
+                  text="Change Password"
+                  clickAction={openModal}
+                />
+              </div>
+            )}
           </div>
           <div className={styles.buttonsDiv}>
             <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
             <div className={styles.buttonsAdmin}>
               <Button text="Back" type="cancel" clickAction={handleBack} />
               <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
-              {id && (
-                <button type="button" className="changePasswordButton" onClick={openModal}>
-                  Change Password
-                </button>
-              )}
             </div>
           </div>
         </form>
