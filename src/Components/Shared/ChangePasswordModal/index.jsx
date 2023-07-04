@@ -20,7 +20,9 @@ const ChangePasswordModal = ({ show, closeModal }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    watch,
+    setError
   } = useForm({
     mode: 'onBlur',
     resolver: joiResolver(ValidationsPassword),
@@ -30,6 +32,9 @@ const ChangePasswordModal = ({ show, closeModal }) => {
     }
   });
 
+  const password = watch('password');
+  const repeatPassword = watch('repeatPassword');
+
   useEffect(() => {
     if (id) {
       getAdminById(id);
@@ -37,6 +42,14 @@ const ChangePasswordModal = ({ show, closeModal }) => {
   }, []);
 
   const handleFormSubmit = async (formData) => {
+    if (password !== repeatPassword) {
+      setError('repeatPassword', {
+        type: 'manual',
+        message: 'Passwords do not match'
+      });
+      return;
+    }
+
     try {
       await dispatch(putAdmin(id, { password: formData.password }));
       closeModal();
