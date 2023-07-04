@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { editClass, addClass, getClassById } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
@@ -10,8 +10,8 @@ import classValidation from 'Validations/classes';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
-import SharedModal from 'Components/Shared/Modal';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Form = () => {
   const {
@@ -37,9 +37,7 @@ const Form = () => {
     trainers: state.trainers.data,
     activities: state.activities.data.data
   }));
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const hoursOfDay = [
     '08:00',
     '09:00',
@@ -57,19 +55,6 @@ const Form = () => {
     '21:00',
     '22:00'
   ];
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-  const showSuccesModal = (data) => {
-    setAlertMessage(data.message);
-    setIsSuccess(true);
-    setShowAlert(true);
-  };
-  const showErrorModal = (error) => {
-    setAlertMessage(error.message);
-    setIsSuccess(false);
-    setShowAlert(true);
-  };
-
   const getClassData = async () => {
     try {
       const response = await dispatch(getClassById(id));
@@ -83,26 +68,42 @@ const Form = () => {
       classData.activity = classData.activity?._id;
       reset(classData);
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
 
   const updateClass = async (data) => {
     try {
       const response = await dispatch(editClass(id, data));
-      showSuccesModal(response);
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/classes');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
 
   const createClass = async (data) => {
     try {
       const response = await dispatch(addClass(data));
-      showSuccesModal(response);
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/classes');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
   };
 
   useEffect(() => {
@@ -126,16 +127,13 @@ const Form = () => {
     history.push('/admins/classes');
   };
 
-  const handleCloseAlert = () => {
-    if (isSuccess) {
-      history.push('/admins/classes');
-    } else {
-      setShowAlert(false);
-    }
-  };
-
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.container}>
           <h2>{id ? 'Update Class' : 'Create Class'}</h2>
@@ -218,17 +216,6 @@ const Form = () => {
           </div>
         </div>
       </form>
-
-      <SharedModal
-        isDelete={false}
-        show={showAlert}
-        closeModal={() => handleCloseAlert()}
-        typeStyle={isSuccess ? 'success' : 'error'}
-        title={isSuccess ? 'Success' : 'Something went wrong'}
-        body={alertMessage}
-        testId={'admin-classes-form-modal'}
-        closeTestId={'admin-classes-form-button-confirm-modal'}
-      />
     </Container>
   );
 };
