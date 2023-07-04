@@ -98,10 +98,11 @@ const Classes = () => {
   };
 
   const getClassButton = (hour, day) => {
-    const classItem = classes.find(
+    let classItem;
+    classItem = classes.find(
       (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
     );
-    return classItem ? (
+    return classItem?.trainer && classItem?.activity ? (
       <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
         <div className={styles.buttonText}>{activity}</div>
         {classItem?.trainer?.firstName}

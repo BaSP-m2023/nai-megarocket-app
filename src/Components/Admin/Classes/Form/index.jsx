@@ -41,6 +41,23 @@ const Form = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const hoursOfDay = [
+    '8:00',
+    '9:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00',
+    '22:00'
+  ];
 
   const showSuccesModal = (data) => {
     setAlertMessage(data.message);
@@ -133,8 +150,10 @@ const Form = () => {
           <Input
             register={register}
             labelName={'Hour'}
-            inputType={'text'}
+            inputType={'list'}
             inputName={'hour'}
+            list={hoursOfDay}
+            listProp={'hours'}
             error={errors.hour?.message}
             testId={'admin-classes-input-hour'}
           />
