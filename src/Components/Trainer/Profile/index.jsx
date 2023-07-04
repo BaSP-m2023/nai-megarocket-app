@@ -114,6 +114,7 @@ const TrainerForm = () => {
               inputName={'firstName'}
               error={errors.firstName?.message}
               disabled={!editMode}
+              testId={'trainers-input-first-name'}
             />
             <Input
               register={register}
@@ -122,6 +123,7 @@ const TrainerForm = () => {
               inputName={'lastName'}
               error={errors.lastName?.message}
               disabled={!editMode}
+              testId={'trainers-input-last-name'}
             />
             <Input
               register={register}
@@ -130,6 +132,7 @@ const TrainerForm = () => {
               inputName={'dni'}
               error={errors.dni?.message}
               disabled={!editMode}
+              testId={'trainers-input-dni'}
             />
             <Input
               register={register}
@@ -138,6 +141,7 @@ const TrainerForm = () => {
               inputName={'phone'}
               error={errors.phone?.message}
               disabled={!editMode}
+              testId={'trainers-input-phone'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
@@ -148,6 +152,7 @@ const TrainerForm = () => {
               inputName={'city'}
               error={errors.city?.message}
               disabled={!editMode}
+              testId={'trainers-input-city'}
             />
             <Input
               register={register}
@@ -156,6 +161,7 @@ const TrainerForm = () => {
               inputName={'salary'}
               error={errors.salary?.message}
               disabled={!editMode}
+              testId={'trainers-input-salary'}
             />
             <Input
               register={register}
@@ -164,6 +170,7 @@ const TrainerForm = () => {
               inputName={'email'}
               error={errors.email?.message}
               disabled={!editMode}
+              testId={'trainers-input-email'}
             />
           </div>
           <div className={styles.buttonContainer}>
@@ -178,8 +185,18 @@ const TrainerForm = () => {
             {editMode && (
               <>
                 <div className={styles.buttonsLowContainer}>
-                  <Button text={'Cancel'} type={'cancel'} clickAction={handleDisableEditMode} />
-                  <Button text={'Confirm'} type={'submit'} info={'submit'} />
+                  <Button
+                    text={'Cancel'}
+                    type={'cancel'}
+                    clickAction={handleDisableEditMode}
+                    testId={'trainers-button-cancel-form'}
+                  />
+                  <Button
+                    text={'Confirm'}
+                    type={'submit'}
+                    info={'submit'}
+                    testId={'trainers-button-submit-form'}
+                  />
                 </div>
               </>
             )}
