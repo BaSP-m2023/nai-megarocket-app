@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import InputComponent from 'Components/Shared/Input';
 import Button from 'Components/Shared/Button';
-import SharedModal from 'Components/Shared/Modal';
 import styles from './form.module.css';
 import { putActivities, postActivities, getActivitiesById } from 'Redux/activities/thunks';
 import { useDispatch } from 'react-redux';
@@ -11,16 +10,12 @@ import activityValidation from 'Validations/activities';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Form = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [typeStyle, setTypeStyle] = useState('');
-  const [titleModal, setTitleModal] = useState('');
-  const [bodyModal, setBodyModal] = useState('');
 
   const {
     register,
@@ -54,43 +49,34 @@ const Form = () => {
     if (id) {
       try {
         const response = await dispatch(putActivities(data, id));
-        setIsSuccess(true);
-        setShowModal(true);
-        setTypeStyle('success');
-        setTitleModal('Success');
-        setBodyModal(response.message);
+        localStorage.setItem('toastMessage', response.message);
+        history.push('/admins/activities');
       } catch (error) {
-        setIsSuccess(false);
-        setShowModal(true);
-        setTypeStyle('error');
-        setTitleModal('Error');
-        setBodyModal(error.message);
+        showErrorToast(error.message);
       }
     } else {
       try {
         const response = await dispatch(postActivities(data));
-        setIsSuccess(true);
-        setShowModal(true);
-        setTypeStyle('success');
-        setTitleModal('Success');
-        setBodyModal(response.message);
+        localStorage.setItem('toastMessage', response.message);
+        history.push('/admins/activities');
       } catch (error) {
-        setIsSuccess(false);
-        setShowModal(true);
-        setTypeStyle('error');
-        setTitleModal('error');
-        setBodyModal(error.message);
+        showErrorToast(error.message);
       }
     }
   };
 
-  const onConfirm = () => {
-    if (isSuccess) {
-      history.push('/admins/activities');
-      setIsSuccess(true);
-    } else {
-      setShowModal(false);
-    }
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
   };
 
   const handleCancel = () => {
@@ -99,6 +85,11 @@ const Form = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
         <InputComponent
@@ -151,16 +142,6 @@ const Form = () => {
           />
         </div>
       </SharedForm>
-      <SharedModal
-        show={showModal}
-        typeStyle={typeStyle}
-        title={titleModal}
-        body={bodyModal}
-        isDelete={false}
-        closeModal={onConfirm}
-        testId={'admin-activities-form-modal'}
-        confirmDeleteTestId={'admin-activities-form-button-confirm-modal'}
-      />
     </Container>
   );
 };
