@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { putAdmin, postAdmin } from 'Redux/admins/thunks';
+import { putAdmin } from 'Redux/admins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -10,6 +10,8 @@ import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import Container from 'Components/Shared/Container';
 import { toast, Toaster } from 'react-hot-toast';
+
+import ChangePasswordModal from 'Components/Shared/ChangePasswordModal';
 
 const Form = () => {
   const history = useHistory();
@@ -42,6 +44,16 @@ const Form = () => {
     }
   }, []);
 
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   const getAdminById = (id) => {
     const admin = admins.find((admin) => admin._id === id);
     if (admin) {
@@ -49,6 +61,7 @@ const Form = () => {
       delete admin.__v;
       delete admin.createdAt;
       delete admin.updatedAt;
+      delete admin.firebaseUid;
       reset(admin);
     } else {
       console.error('Admin not found');
@@ -56,11 +69,7 @@ const Form = () => {
   };
 
   const onSubmit = async (data) => {
-    if (id) {
-      putAdminFunction(id, data);
-    } else {
-      postAdminFunction(data);
-    }
+    putAdminFunction(id, data);
   };
 
   const showErrorToast = (message) => {
@@ -77,16 +86,6 @@ const Form = () => {
     });
   };
 
-  const postAdminFunction = async (admin) => {
-    try {
-      const data = await dispatch(postAdmin(admin));
-      localStorage.setItem('toastMessage', data.message);
-      history.push('/super-admins/admins');
-    } catch (error) {
-      showErrorToast(error.message);
-    }
-  };
-
   const putAdminFunction = async (id, admin) => {
     try {
       const data = await dispatch(putAdmin(id, admin));
@@ -100,6 +99,7 @@ const Form = () => {
   const handleBack = () => {
     history.push('/super-admins/admins');
   };
+
   const handleReset = () => {
     reset();
   };
@@ -171,25 +171,33 @@ const Form = () => {
                 error={errors.city?.message}
               />
             </div>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'Password'}
-                inputType={'text'}
-                inputName={'password'}
-                error={errors.password?.message}
-              />
-            </div>
+            {!id && ( // Mostrar el campo de contraseña solo si no hay ID (en el caso de agregar)
+              <div className={styles.formInput}>
+                <Input
+                  register={register}
+                  labelName={'Password'}
+                  inputType={'password'}
+                  inputName={'password'}
+                  error={errors.password?.message}
+                />
+              </div>
+            )}
           </div>
           <div className={styles.buttonsDiv}>
             <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
             <div className={styles.buttonsAdmin}>
               <Button text="Back" type="cancel" clickAction={handleBack} />
               <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
+              {id && (
+                <button type="button" className="changePasswordButton" onClick={openModal}>
+                  Change Password
+                </button>
+              )}
             </div>
           </div>
         </form>
       </div>
+      <ChangePasswordModal show={isModalOpen} closeModal={closeModal} />
     </Container>
   );
 };
