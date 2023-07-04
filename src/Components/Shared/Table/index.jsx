@@ -48,21 +48,20 @@ const Table = ({
   };
 
   const filteredData = data
-    .filter((item) =>
-      properties.some((property) =>
-        property
+    .filter((item) => {
+      const searchTermLower = searchTerm?.toLowerCase();
+      return properties?.some((property) => {
+        const propertyValue = property
           .split('.')
-          .reduce((acc, curr) => (acc ? acc[curr] : null), item)
-          .toString()
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      )
-    )
-    .sort((a, b) => b.isActive - a.isActive);
+          .reduce((acc, curr) => (acc ? acc[curr] : null), item);
+        return propertyValue?.toString().toLowerCase().includes(searchTermLower);
+      });
+    })
+    .sort((a, b) => b?.isActive - a?.isActive);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedData = filteredData.slice(startIndex, endIndex);
+  const paginatedData = filteredData?.slice(startIndex, endIndex);
 
   return (
     <div className={styles.containerT}>
@@ -88,7 +87,7 @@ const Table = ({
                 className={`${styles.tableTr} ${!item.isActive && styles.inactiveRow}`}
                 key={item._id}
               >
-                {properties.map((property) => {
+                {properties?.map((property) => {
                   const value = property
                     .split('.')
                     .reduce((acc, curr) => (acc ? acc[curr] : null), item);
