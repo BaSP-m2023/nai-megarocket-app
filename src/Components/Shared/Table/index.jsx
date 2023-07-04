@@ -66,7 +66,13 @@ const Table = ({
   return (
     <div className={styles.containerT}>
       <div className={styles.search}>
-        <input type="text" placeholder="Search" value={searchTerm} onChange={handleSearchChange} />
+        <input
+          type="text"
+          placeholder="Search"
+          id="table-input-search"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
       </div>
 
       <table id={testId} className={styles.tableShared}>
@@ -119,6 +125,7 @@ const Table = ({
 
       <div className={styles.pagination}>
         <button
+          id="table-button-previous"
           className={styles.pagButton}
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
@@ -126,6 +133,7 @@ const Table = ({
           <IoChevronBackCircleOutline size={30} />
         </button>
         <button
+          id="table-button-next"
           className={styles.pagButton}
           onClick={handleNextPage}
           disabled={currentPage === Math.ceil(filteredData.length / itemsPerPage)}
