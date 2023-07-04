@@ -23,7 +23,7 @@ const Classes = () => {
     classes: state.classes.data.data,
     activities: state.activities.data.data
   }));
-  const [activity, setActivity] = useState('');
+  const [activity, setActivity] = useState('all');
   const [calendarAlert, setCalendarAlert] = useState(false);
   const dispatch = useDispatch();
 
@@ -31,12 +31,6 @@ const Classes = () => {
     dispatch(getClasses());
     dispatch(getActivities());
   }, []);
-
-  useEffect(() => {
-    if (activities.length > 0) {
-      setActivity(activities[0].name);
-    }
-  }, [activities]);
 
   const handleDeleteClass = () => {
     setCalendarAlert(false);
@@ -99,12 +93,17 @@ const Classes = () => {
 
   const getClassButton = (hour, day) => {
     let classItem;
-    classItem = classes.find(
-      (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
-    );
+    if (activity === 'all') {
+      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
+    } else {
+      classItem = classes?.find(
+        (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
+      );
+    }
+
     return classItem?.trainer && classItem?.activity ? (
       <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
-        <div className={styles.buttonText}>{activity}</div>
+        <div className={styles.buttonText}>{classItem?.activity?.name}</div>
         {classItem?.trainer?.firstName}
       </div>
     ) : (
@@ -136,6 +135,7 @@ const Classes = () => {
                   value={activity ? activity : activities[0]}
                   onChange={handleActivityChange}
                 >
+                  <option value="all">All</option>
                   {activities?.map((activityItem, index) => (
                     <option
                       value={activityItem.name}
