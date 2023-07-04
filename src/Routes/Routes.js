@@ -43,7 +43,7 @@ const Routes = () => {
       <Route path="/auth" component={AuthRoutes} />
       <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminRoutes} />
       <PrivateRoute path="/admins" role="ADMIN" component={AdminRoutes} />
-      <PrivateRoute path="/members" role="MEMBER" component={MemberRoutes} />
+      <PrivateRoute path="/members" role="MEMBER" isActive={true} component={MemberRoutes} />
     </Switch>
   );
 };

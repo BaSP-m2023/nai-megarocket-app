@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './login.module.css';
 import Button from 'Components/Shared/Button';
@@ -11,6 +11,7 @@ import { login } from 'Redux/auth/thunks';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { LOGIN_SUCCESS } from 'Redux/auth/constants';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,6 +25,42 @@ const Login = () => {
     mode: 'all',
     resolver: joiResolver(loginValidation)
   });
+
+  useEffect(() => {
+    const toastMessage = localStorage.getItem('toastMessage');
+    if (toastMessage) {
+      showToast(toastMessage, 'success');
+      localStorage.removeItem('toastMessage');
+    }
+  }, []);
+
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      toast.success(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      toast.error(message, {
+        duration: 4000,
+        position: 'top-right',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    }
+  };
 
   const handleLogin = async (data) => {
     try {
@@ -43,10 +80,12 @@ const Login = () => {
             history.push('/auth/login');
         }
       } else {
-        throw new Error('User not found');
+        const errorMessage = response.payload.slice(25);
+        const errorMessageBeforeDot = errorMessage.split('.')[0];
+        showToast(errorMessageBeforeDot, 'error');
       }
     } catch (error) {
-      alert(error);
+      showToast(error.message, 'error');
     }
   };
 
@@ -56,6 +95,11 @@ const Login = () => {
 
   return (
     <Container isLogin={true}>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <div className={styles.container}>
         <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
           <h2>Login</h2>
@@ -86,7 +130,7 @@ const Login = () => {
               />
             </div>
             <button
-              id="eye-button"
+              id="login-eye-button"
               className={styles.eyeButton}
               type="button"
               onClick={() => setShowPassword(!showPassword)}
