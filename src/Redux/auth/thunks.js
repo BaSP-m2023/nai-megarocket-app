@@ -7,7 +7,10 @@ import {
   loginError,
   logoutPending,
   logoutSuccess,
-  logoutError
+  logoutError,
+  signUpPending,
+  signUpSuccess,
+  signUpError
 } from './actions';
 
 import { firebaseApp } from 'Helper/firebase';
@@ -59,3 +62,77 @@ export const logout = () => {
     }
   };
 };
+
+export const signUp = (newMember) => {
+  return async (dispatch) => {
+    dispatch(signUpPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        },
+        body: JSON.stringify(newMember)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(signUpSuccess());
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(signUpError(error));
+      throw error;
+    }
+  };
+};
+
+// export const register = (userData) => {
+//   return async (dispatch) => {
+//     dispatch(registerPending());
+//     try {
+//       const {
+//         firstName,
+//         lastName,
+//         dni,
+//         phone,
+//         email,
+//         password,
+//         city,
+//         birthDay,
+//         postalCode,
+//         isActive
+//       } = userData;
+
+//       const membership = userData.membership || 'OnlyClasses';
+
+//       const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+//       const user = userCredential.user;
+//       await user.getIdToken();
+//       await clientAuth.createUserWithEmailAndPassword(getAdminAuth(), user.uid, { role: 'member' });
+
+//       const userDataFirestore = {
+//         firebaseUid: user.uid,
+//         firstName,
+//         lastName,
+//         dni,
+//         phone,
+//         email,
+//         password,
+//         city,
+//         birthDay,
+//         postalCode,
+//         isActive,
+//         membership
+//       };
+
+//       await firestore.collection('users').doc(user.uid).set(userDataFirestore);
+
+//       return dispatch(registerSuccess());
+//     } catch (error) {
+//       return dispatch(registerError(error.toString()));
+//     }
+//   };
+// };

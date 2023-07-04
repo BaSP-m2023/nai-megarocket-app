@@ -9,7 +9,10 @@ import {
   GET_AUTH_SUCCESS,
   GET_AUTH_ERROR,
   SET_USER_ROLE,
-  UPDATE_USER
+  UPDATE_USER,
+  SIGN_UP_PENDING,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_ERROR
 } from './constants';
 
 const initialState = {
@@ -83,6 +86,24 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload
+      };
+    case SIGN_UP_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: null
+      };
+    case SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: null
+      };
+    case SIGN_UP_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
       };
     default:
       return state;

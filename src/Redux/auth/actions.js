@@ -9,7 +9,10 @@ import {
   LOGOUT_PENDING,
   LOGOUT_SUCCESS,
   SET_USER_ROLE,
-  UPDATE_USER
+  UPDATE_USER,
+  SIGN_UP_PENDING,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_ERROR
 } from './constants';
 
 export const getAuthPending = () => {
@@ -81,5 +84,24 @@ export const updateUser = (data) => {
   return {
     type: UPDATE_USER,
     payload: data
+  };
+};
+
+export const signUpPending = () => {
+  return {
+    type: SIGN_UP_PENDING
+  };
+};
+
+export const signUpSuccess = () => {
+  return {
+    type: SIGN_UP_SUCCESS
+  };
+};
+
+export const signUpError = (error) => {
+  return {
+    type: SIGN_UP_ERROR,
+    payload: error
   };
 };

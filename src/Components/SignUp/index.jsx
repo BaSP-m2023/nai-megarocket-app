@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addMember } from 'Redux/members/thunks';
+import { signUp } from 'Redux/auth/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './signup.module.css';
@@ -32,7 +32,7 @@ const SignUp = () => {
   };
   const memberAddFunction = async (member) => {
     try {
-      const data = await dispatch(addMember(member));
+      const data = await dispatch(signUp(member));
       setAlertMessage(data.message);
       setIsSuccess(true);
       setShowAlert(true);
