@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom/cjs/react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';
-import styles from '../ChangePasswordModal/';
+import styles from './modal.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
-import { updateSuperAdmin } from 'Redux/superadmins/thunks';
+import ValidationsPassword from '../../../Validations/validations-password';
+import { putAdmin, getAdminById } from 'Redux/admins/thunks';
 
 const ChangePasswordModal = ({ show, closeModal }) => {
+  if (!show) {
+    return null;
+  }
+
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   const {
     register,
@@ -16,52 +23,61 @@ const ChangePasswordModal = ({ show, closeModal }) => {
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
-    resolver: joiResolver,
+    resolver: joiResolver(ValidationsPassword),
     defaultValues: {
       password: '',
       repeatPassword: ''
     }
   });
 
-  const handleFormSubmit = (data) => {
-    dispatch(updateSuperAdmin(data.password));
-    closeModal();
+  useEffect(() => {
+    if (id) {
+      getAdminById(id);
+    }
+  }, []);
+
+  const handleFormSubmit = async (formData) => {
+    try {
+      await dispatch(putAdmin(id, { password: formData.password }));
+      closeModal();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  if (!show) {
-    return null;
-  }
-
   return (
-    <div className={`${styles.modalContainer} modal-container`}>
-      <div className={`${styles.modalContentDefault} modal-content`}>
-        <h3 className={`${styles.h3Container} h3-container`}>Change Password</h3>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <div className={`${styles.inputContainer} input-container`}>
-            <Input
-              register={register}
-              labelName={'Password'}
-              inputType={'password'}
-              inputName={'password'}
-              error={errors.password?.message}
-            />
-          </div>
-          <div className={`${styles.inputContainer} input-container`}>
-            <Input
-              register={register}
-              labelName={'Repeat Password'}
-              inputType={'password'}
-              inputName={'repeatPassword'}
-              error={errors.repeatPassword?.message}
-            />
-          </div>
-          <div className={`${styles.buttonContainer} button-container`}>
-            <Button type="cancel" text={'Cancel'} clickAction={closeModal} />
-            <Button type="submit" text={'Confirm'} />
-          </div>
-        </form>
+    <>
+      <div className={styles.modalOverlay}>
+        <div className={styles.modalContainer}>
+          <h3>Change Password</h3>
+          <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <div className={styles.inputContainer}>
+              <Input
+                register={register}
+                labelName={'Password'}
+                inputType={'password'}
+                inputName={'password'}
+                error={errors.password?.message}
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <Input
+                register={register}
+                labelName={'Repeat Password'}
+                inputType={'password'}
+                inputName={'repeatPassword'}
+                error={errors.repeatPassword?.message}
+              />
+            </div>
+            <div className={styles.buttonContainer}>
+              <Button type="cancel" text={'Cancel'} clickAction={closeModal} />
+              <Button type="submit" text={'Confirm'} />
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
+
 export default ChangePasswordModal;

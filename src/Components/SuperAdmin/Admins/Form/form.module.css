@@ -52,11 +52,26 @@
 }
 
 .buttonsAdmin > button {
-  width: 9.5vw;
+  width: 6rem;
+  padding: 0.7rem;
+  margin-top: 1rem;
+  background-color: white;
+  border: solid 1px;
+  border-color: rgba(15, 35, 46);
+  color: rgba(15, 35, 46);
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .buttonsDiv {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.changePasswordButton {
+  border-radius: 5px;
+  background-color: #0f232e;
 }

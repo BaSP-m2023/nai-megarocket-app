@@ -1,0 +1,36 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.modalContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: white;
+  border-radius: 9px;
+}
+
+.modalContainer h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+.modalContainer .input-container {
+  margin-bottom: 10px;
+}
+
+.modalContainer .button-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}

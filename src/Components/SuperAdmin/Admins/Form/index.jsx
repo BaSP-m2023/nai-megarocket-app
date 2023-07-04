@@ -171,7 +171,7 @@ const Form = () => {
                 error={errors.city?.message}
               />
             </div>
-            {!id && ( // Mostrar el campo de contraseña solo si no hay ID (en el caso de agregar)
+            {!id && (
               <div className={styles.formInput}>
                 <Input
                   register={register}
@@ -196,8 +196,8 @@ const Form = () => {
             </div>
           </div>
         </form>
+        <ChangePasswordModal show={isModalOpen} closeModal={closeModal} />
       </div>
-      <ChangePasswordModal show={isModalOpen} closeModal={closeModal} />
     </Container>
   );
 };
