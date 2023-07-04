@@ -18,13 +18,12 @@ const activityValidation = Joi.object({
     .trim()
     .min(5)
     .max(250)
-    .regex(/^(?=.*[0-9])(?=.*[a-zA-Z])/)
+    .regex(/^[A-Za-z0-9\s]*$/)
     .required()
     .messages({
       'any.required': 'Description is required.',
       'string.empty': 'Description is required.',
-      'string.min': 'Description must have at least 5 characters.',
-      'string.pattern.base': 'Description must contain both letters and numbers.'
+      'string.min': 'Description must have at least 5 characters.'
     }),
   isActive: Joi.boolean()
 });
