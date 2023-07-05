@@ -92,11 +92,14 @@ const Schedule = () => {
 
     if (classItem) {
       const suscriptionFound = subscriptions?.find(
-        (item) => item.classes?._id === classItem?._id && item.member?._id === memberData?._id
+        (item) =>
+          item.classes?._id === classItem?._id &&
+          item.member?._id === memberData?._id &&
+          item.isActive === true
       );
 
       const subscriptionsForClass = subscriptions?.filter(
-        (item) => item.classes?._id === classItem?._id
+        (item) => item.classes?._id === classItem?._id && item.isActive === true
       );
 
       const slotCount = subscriptionsForClass.length;
