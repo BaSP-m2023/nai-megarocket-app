@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styles from './form.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import Button from 'Components/Shared/Button';
-import SharedModal from 'Components/Shared/Modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses } from 'Redux/classes/thunks';
 import { getMembers } from 'Redux/members/thunks';
@@ -17,6 +16,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import subscriptionValidation from 'Validations/subscriptions';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Form = () => {
   const { id } = useParams();
@@ -38,9 +38,6 @@ const Form = () => {
       date: new Date()
     }
   });
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
 
   useEffect(() => {
     if (id) {
@@ -54,17 +51,6 @@ const Form = () => {
     history.push('/admins/subscriptions');
   };
 
-  const showSuccesModal = (data) => {
-    setAlertMessage(data.message);
-    setIsSuccess(true);
-    setShowAlert(true);
-  };
-
-  const showErrorModal = (error) => {
-    setAlertMessage(error.message);
-    setIsSuccess(false);
-    setShowAlert(true);
-  };
   const getSubscriptionData = async () => {
     try {
       const response = await dispatch(getSubscriptionById(id));
@@ -81,40 +67,58 @@ const Form = () => {
       console.log(error);
     }
   };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
+  };
+
   const addSubscription = async (data) => {
     try {
       const response = await dispatch(createSubscription(data));
-      showSuccesModal(response);
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/subscriptions');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
+
   const editSubscription = async (data) => {
     try {
       const response = await dispatch(updateSubscription(data, id));
-      showSuccesModal(response);
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/subscriptions');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
+
   const onSubmit = (data) => {
     id ? editSubscription(data) : addSubscription(data);
-  };
-  const handleCloseAlert = () => {
-    if (isSuccess) {
-      history.push('/admins/subscriptions');
-    } else {
-      setShowAlert(false);
-    }
   };
 
   const handleReset = () => {
     reset();
   };
+
   const validClasses = classes.filter((item) => item.activity);
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <h2>{id ? 'Update subscription' : 'Create subscription'}</h2>
         <InputComponent
@@ -171,17 +175,6 @@ const Form = () => {
           </div>
         </fieldset>
       </SharedForm>
-      {showAlert && (
-        <SharedModal
-          show={showAlert}
-          closeModal={handleCloseAlert}
-          title={isSuccess ? 'Success' : 'Something is wrong'}
-          typeStyle={isSuccess ? 'success' : 'error'}
-          body={alertMessage}
-          testId={'admin-subscriptions-form-modal'}
-          closeTestId={'admin-subscriptions-form-button-confirm-modal'}
-        />
-      )}
     </Container>
   );
 };

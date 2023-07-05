@@ -36,6 +36,9 @@ const Login = () => {
           case 'ADMIN':
             history.push('/admins/home');
             break;
+          case 'TRAINER':
+            history.push('/trainers/home');
+            break;
           case 'MEMBER':
             history.push('/members/home');
             break;
