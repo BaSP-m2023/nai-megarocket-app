@@ -10,6 +10,7 @@ const AuthRoutes = () => {
     <Suspense fallback={<ClipLoader />}>
       <Route exact path="/auth/login" component={Login} />
       <Route exact path="/auth/register" component={SignUp} />
+      <Route exact path="/auth/not-allowed" component={''} />
     </Suspense>
   );
 };
