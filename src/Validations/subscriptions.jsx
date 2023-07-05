@@ -13,6 +13,7 @@ const subscriptionValidation = Joi.object({
       invalid: 'The member id must be a valid ObjectId',
       'string.empty': 'Member is required'
     }),
-  date: Joi.date()
+  date: Joi.date(),
+  isActive: Joi.boolean()
 });
 export default subscriptionValidation;

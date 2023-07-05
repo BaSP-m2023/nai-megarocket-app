@@ -42,6 +42,7 @@ const AdminTrainerForm = () => {
     if (trainer) {
       delete trainer._id;
       delete trainer.__v;
+      delete trainer.firebaseUid;
       reset(trainer);
     }
   };

@@ -17,6 +17,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import subscriptionValidation from 'Validations/subscriptions';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
+
 const Form = () => {
   const { id } = useParams();
   const history = useHistory();
@@ -74,6 +75,7 @@ const Form = () => {
       delete subscriptionData.__v;
       subscriptionData.classes = subscriptionData.classes._id;
       subscriptionData.member = subscriptionData.member._id;
+      console.log(subscriptionData);
       reset(subscriptionData);
     } catch (error) {
       console.log(error);
@@ -135,6 +137,16 @@ const Form = () => {
           error={errors.member?.message}
           testId={'admin-subscriptions-input-members'}
         />
+        {id ? (
+          <InputComponent
+            labelName={'Active ?'}
+            inputType={'isActive'}
+            inputName={'isActive'}
+            register={register}
+            error={errors.isActive}
+            testId={'admin-subscriptions-input-checkbox'}
+          />
+        ) : null}
         <fieldset className={styles.flexButtons}>
           <Button
             text={id ? 'Update' : 'Add'}

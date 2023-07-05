@@ -49,6 +49,7 @@ const Form = () => {
       delete admin.__v;
       delete admin.createdAt;
       delete admin.updatedAt;
+      delete admin.firebaseUid;
       reset(admin);
     } else {
       console.error('Admin not found');

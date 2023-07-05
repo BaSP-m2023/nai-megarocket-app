@@ -78,8 +78,13 @@ const Subscriptions = () => {
         <>
           <Table
             data={subscriptions}
-            properties={['member.firstName', 'member.lastName', 'classes.activity.name']}
-            columnTitles={['First Name', 'Last Name', 'Class Name']}
+            properties={[
+              'member.firstName',
+              'member.lastName',
+              'classes.activity.name',
+              'isActive'
+            ]}
+            columnTitles={['First Name', 'Last Name', 'Class Name', 'Active']}
             handleUpdateItem={handleEdit}
             handleDeleteItem={handleDeleteSubscription}
             testId={'admin-subscriptions-table'}
