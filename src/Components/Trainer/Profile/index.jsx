@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import trainerValidation from 'Validations/trainers';
+import { trainerUpdateValidation } from 'Validations/trainers';
 import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
@@ -24,7 +24,7 @@ const TrainerForm = () => {
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
-    resolver: joiResolver(trainerValidation)
+    resolver: joiResolver(trainerUpdateValidation)
   });
 
   useEffect(() => {
