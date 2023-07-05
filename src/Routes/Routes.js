@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import AuthRoutes from './auth';
 import SuperAdminRoutes from './superAdmin';
 import AdminRoutes from './admin';
+import TrainerRoutes from './trainer';
 import MemberRoutes from './member';
 
 import PrivateRoute from './privateRoute';
@@ -28,6 +29,8 @@ const Routes = () => {
         return <Redirect to="/admins/home" />;
       case 'SUPER_ADMIN':
         return <Redirect to="/super-admins/home" />;
+      case 'TRAINER':
+        return <Redirect to="/trainers/home" />;
       case 'MEMBER':
         return <Redirect to="/members/home" />;
       default:
@@ -43,6 +46,7 @@ const Routes = () => {
       <Route path="/auth" component={AuthRoutes} />
       <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminRoutes} />
       <PrivateRoute path="/admins" role="ADMIN" component={AdminRoutes} />
+      <PrivateRoute path="/trainers" role="TRAINER" component={TrainerRoutes} />
       <PrivateRoute path="/members" role="MEMBER" component={MemberRoutes} />
     </Switch>
   );
