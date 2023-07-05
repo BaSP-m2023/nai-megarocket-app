@@ -23,6 +23,7 @@ function Header() {
     sessionStorage.removeItem('role');
     sessionStorage.removeItem('token');
     setShowModal(false);
+    localStorage.setItem('toastMessage', 'See you soon!');
     history.push('/auth/login');
   };
   return (
