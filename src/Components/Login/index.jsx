@@ -76,6 +76,10 @@ const Login = () => {
             history.push('/admins/home');
             localStorage.setItem('toastMessage', 'Welcome to MegaRocketGYM');
             break;
+          case 'TRAINER':
+            history.push('/trainers/home');
+            localStorage.setItem('toastMessage', 'Welcome to MegaRocketGYM');
+            break;
           case 'MEMBER':
             history.push('/members/home');
             localStorage.setItem('toastMessage', 'Welcome to MegaRocketGYM');
