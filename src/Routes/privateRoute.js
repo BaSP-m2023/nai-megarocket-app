@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 
-const PrivateRoute = ({ component: RouteComponent, role, ...rest }) => {
+const PrivateRoute = ({ component: RouteComponent, role, isActive, ...rest }) => {
   const auth = useSelector((state) => state.auth);
   const isAuthPending = auth?.isAuthPending;
   const roleSession = sessionStorage.getItem('role');
@@ -18,10 +18,9 @@ const PrivateRoute = ({ component: RouteComponent, role, ...rest }) => {
     );
   }
 
-  if (!isAuthPending && roleSession === role) {
+  if (!isAuthPending && roleSession === role && auth?.user?.isActive === isActive) {
     return <RouteComponent {...rest} />;
   }
-
   return <Redirect to="/auth/not-allowed" />;
 };
 
