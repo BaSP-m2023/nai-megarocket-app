@@ -87,25 +87,28 @@ const Members = () => {
     history.push(`/admins/members/form/${id}`);
   };
   return (
-    <Container>
+    <>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
         }}
       />
-      <div className={styles.membersSection}>
-        <h2>Members</h2>
-        <Button
-          text={'+ Add Member'}
-          type={'add'}
-          clickAction={handleAdd}
-          testId={'admin-members-add-button'}
-        />
-      </div>
+
       {loading ? (
-        <ClipLoader />
+        <Container center={true}>
+          <ClipLoader />
+        </Container>
       ) : members ? (
-        <>
+        <Container>
+          <div className={styles.membersSection}>
+            <h2>Members</h2>
+            <Button
+              text={'+ Add Member'}
+              type={'add'}
+              clickAction={handleAdd}
+              testId={'admin-members-add-button'}
+            />
+          </div>
           <Table
             data={members}
             handleDeleteItem={handleDelete}
@@ -126,11 +129,11 @@ const Members = () => {
             testId={'admin-member-modal'}
             closeTestId={'admin-member-button-close-success-modal'}
           />
-        </>
+        </Container>
       ) : (
         <p>No data available.</p>
       )}
-    </Container>
+    </>
   );
 };
 

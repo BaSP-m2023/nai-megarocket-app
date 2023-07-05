@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: RouteComponent, role, ...rest }) => {
 
   if (isAuthPending) {
     return (
-      <Container>
+      <Container center={true}>
         <ClipLoader />
       </Container>
     );

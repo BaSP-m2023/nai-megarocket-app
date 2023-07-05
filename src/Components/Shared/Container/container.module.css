@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 85vw;
   align-items: center;
-  justify-content: center;
+  margin-top: 7vh;
 }
 
 .login {
@@ -11,5 +11,13 @@
   flex-direction: column;
   width: 100vw;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  width: 85vw;
+  align-items: center;
+  justify-content: space-around;
 }

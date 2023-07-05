@@ -12,15 +12,15 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Trainers = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [selectedTrainerId, setSelectedTrainerId] = useState(null);
   const [isConfirmationModal, setIsConfirmationModal] = useState(true);
   const [typeStyle, setTypeStyle] = useState('default');
-
-  const dispatch = useDispatch();
-  const trainers = useSelector((state) => state.trainers.data);
-  const isLoading = useSelector((state) => state.trainers.loading);
+  const trainersState = useSelector((state) => state.trainers);
+  const trainers = trainersState.data;
+  const isLoading = trainersState.loading;
 
   useEffect(() => {
     dispatch(getTrainers());
@@ -95,25 +95,28 @@ const Trainers = () => {
   };
 
   return (
-    <Container>
+    <>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
         }}
       />
-      <div className={styles.headContainer}>
-        <h2>Trainers</h2>
-        <Button
-          text="+ Add Trainer"
-          clickAction={handleAddTrainer}
-          type="add"
-          testId={'admin-trainer-add-button'}
-        />
-      </div>
+
       {isLoading ? (
-        <ClipLoader />
+        <Container center={true}>
+          <ClipLoader />
+        </Container>
       ) : (
-        <>
+        <Container>
+          <div className={styles.headContainer}>
+            <h2>Trainers</h2>
+            <Button
+              text="+ Add Trainer"
+              clickAction={handleAddTrainer}
+              type="add"
+              testId={'admin-trainer-add-button'}
+            />
+          </div>
           {!trainers ? (
             <h3>No trainers to show</h3>
           ) : trainers.length > 0 ? (
@@ -137,7 +140,7 @@ const Trainers = () => {
           ) : (
             <h3>No data to retrieve</h3>
           )}
-        </>
+        </Container>
       )}
       {showModal && (
         <SharedModal
@@ -153,7 +156,7 @@ const Trainers = () => {
           confirmDeleteTestId={'admin-trainers-button-confirm-delete-modal'}
         />
       )}
-    </Container>
+    </>
   );
 };
 

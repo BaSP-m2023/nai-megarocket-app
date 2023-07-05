@@ -3,6 +3,7 @@ import ProgressBar from './ProgressBar';
 import styles from './activities.module.css';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import { useSelector, useDispatch } from 'react-redux';
+import Container from 'Components/Shared/Container';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 const Activities = () => {
@@ -15,7 +16,11 @@ const Activities = () => {
   }, []);
 
   if (loading) {
-    return <ClipLoader />;
+    return (
+      <Container center={true}>
+        <ClipLoader />
+      </Container>
+    );
   }
 
   const activityCount = {};

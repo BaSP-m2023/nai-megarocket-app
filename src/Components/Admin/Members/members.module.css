@@ -1,6 +1,6 @@
 .membersSection {
   display: flex;
-  width: 100%;
-  justify-content: space-around;
+  width: 80%;
+  justify-content: space-between;
   align-items: center;
 }
