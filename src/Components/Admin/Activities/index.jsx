@@ -8,6 +8,7 @@ import { getActivities, deleteActivities } from 'Redux/activities/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Activities = () => {
   const history = useHistory();
@@ -24,7 +25,40 @@ const Activities = () => {
 
   useEffect(() => {
     dispatch(getActivities());
+    const toastMessage = localStorage.getItem('toastMessage');
+    if (toastMessage) {
+      showToast(toastMessage, 'success');
+      localStorage.removeItem('toastMessage');
+    }
   }, []);
+
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      toast.success(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      toast.error(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    }
+  };
 
   const handleAddItem = () => {
     history.push('activities/form');
@@ -42,17 +76,11 @@ const Activities = () => {
   const handleConfirmDelete = async () => {
     try {
       const data = await dispatch(deleteActivities(activityId));
-      setShowModal(true);
-      setTitleModal('Success');
-      setBodyModal(data.message);
-      setTypeStyle('success');
-      setIsDelete(false);
+      showToast(data.message, 'success');
+      setShowModal(false);
     } catch (error) {
-      setShowModal(true);
-      setBodyModal(error.message);
-      setTitleModal('error');
-      setTypeStyle('error');
-      setIsDelete(false);
+      showToast(error.message, 'error');
+      setShowModal(false);
     }
   };
 
@@ -66,6 +94,11 @@ const Activities = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <div className={styles.topContainer}>
         <h2>Activities</h2>
         <Button
