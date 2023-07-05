@@ -1,22 +1,32 @@
-import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signUp } from 'Redux/auth/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './signup.module.css';
-import SharedModal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import memberValidation from 'Validations/signup';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SignUp = () => {
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
+  };
 
   const {
     register,
@@ -35,21 +45,10 @@ const SignUp = () => {
   const memberAddFunction = async (member) => {
     try {
       const data = await dispatch(signUp(member));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
-    } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
-    }
-  };
-
-  const handleCloseAlert = () => {
-    if (isSuccess) {
+      localStorage.setItem('toastMessage', data.message);
       history.push('/auth/login');
-    } else {
-      setShowAlert(false);
+    } catch (error) {
+      showErrorToast(error.message);
     }
   };
 
@@ -63,16 +62,9 @@ const SignUp = () => {
 
   return (
     <Container isLogin={true}>
+      <Toaster />
       <div className={styles.formContainer}>
         <h2 className={styles.formTitle}>{'Sign Up'}</h2>
-        <SharedModal
-          isDelete={false}
-          show={showAlert}
-          closeModal={handleCloseAlert}
-          typeStyle={isSuccess ? 'success' : 'error'}
-          title={isSuccess ? 'Success' : 'Something went wrong'}
-          body={alertMessage}
-        />
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
