@@ -38,10 +38,11 @@ const Login = () => {
     if (type === 'success') {
       toast.success(message, {
         duration: 2500,
-        position: 'top-right',
+        position: 'bottom-center',
         style: {
           background: '#fddba1'
         },
+        icon: '💪',
         iconTheme: {
           primary: '#0f232e',
           secondary: '#fff'
@@ -69,12 +70,15 @@ const Login = () => {
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
             history.push('/super-admins/home');
+            localStorage.setItem('toastMessage', 'Welcome to MegaRocketGYM');
             break;
           case 'ADMIN':
             history.push('/admins/home');
+            localStorage.setItem('toastMessage', 'Welcome to MegaRocketGYM');
             break;
           case 'MEMBER':
             history.push('/members/home');
+            localStorage.setItem('toastMessage', 'Welcome to MegaRocketGYM');
             break;
           default:
             history.push('/auth/login');
@@ -95,11 +99,7 @@ const Login = () => {
 
   return (
     <Container isLogin={true}>
-      <Toaster
-        containerStyle={{
-          margin: '10vh 0 0 0'
-        }}
-      />
+      <Toaster />
       <div className={styles.container}>
         <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
           <h2>Login</h2>
