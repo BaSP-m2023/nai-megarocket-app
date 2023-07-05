@@ -142,7 +142,7 @@ const Schedule = () => {
   return (
     <>
       {loading ? (
-        <Container>
+        <Container center={true}>
           <ClipLoader />
         </Container>
       ) : (
