@@ -9,7 +9,6 @@ const PrivateRoute = ({ component: RouteComponent, role, ...rest }) => {
   const auth = useSelector((state) => state.auth);
   const isAuthPending = auth?.isAuthPending;
   const roleSession = sessionStorage.getItem('role');
-
   if (isAuthPending) {
     return (
       <Container>
@@ -17,11 +16,9 @@ const PrivateRoute = ({ component: RouteComponent, role, ...rest }) => {
       </Container>
     );
   }
-
   if (!isAuthPending && roleSession === role) {
     return <RouteComponent {...rest} />;
   }
-
   return <Redirect to="/auth/not-allowed" />;
 };
 
