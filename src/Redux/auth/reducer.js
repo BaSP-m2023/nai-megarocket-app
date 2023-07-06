@@ -17,7 +17,7 @@ const initialState = {
   user: null,
   isLoading: false,
   error: null,
-  isAuthPending: true
+  isAuthPending: false
 };
 
 const authReducer = (state = initialState, action) => {

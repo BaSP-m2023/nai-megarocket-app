@@ -63,7 +63,7 @@ const Form = () => {
       subscriptionData.member = subscriptionData.member._id;
       reset(subscriptionData);
     } catch (error) {
-      console.log(error);
+      showErrorToast('Oops, something went wrong.');
     }
   };
 

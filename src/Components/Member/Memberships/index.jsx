@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import styles from './memberships.module.css';
 import Container from 'Components/Shared/Container';
 import { useSelector } from 'react-redux';
@@ -7,9 +6,6 @@ const Memberships = () => {
   const member = useSelector((state) => state.auth?.user);
   const membership = member?.membership;
 
-  useEffect(() => {
-    console.log(member);
-  }, []);
   return (
     <Container>
       <div className={styles.container}>
