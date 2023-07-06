@@ -61,6 +61,7 @@ const Schedule = () => {
   ];
 
   useEffect(() => {
+    toast.remove();
     const fetchData = async () => {
       try {
         dispatch(getClasses());

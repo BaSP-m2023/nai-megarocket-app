@@ -22,6 +22,7 @@ const Admins = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    toast.remove();
     dispatch(getAdmins());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
@@ -91,20 +92,23 @@ const Admins = () => {
   };
 
   return (
-    <Container>
+    <>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
         }}
       />
-      <div className={styles.topAdminContainer}>
-        <h2>Admins</h2>
-        <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
-      </div>
+
       {isLoading ? (
-        <ClipLoader />
+        <Container center={true}>
+          <ClipLoader />
+        </Container>
       ) : (
-        <>
+        <Container>
+          <div className={styles.topAdminContainer}>
+            <h2>Admins</h2>
+            <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
+          </div>
           {Array.isArray(admins) && admins.length > 0 ? (
             <>
               <Table
@@ -137,9 +141,9 @@ const Admins = () => {
               )}
             </>
           )}
-        </>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 export default Admins;

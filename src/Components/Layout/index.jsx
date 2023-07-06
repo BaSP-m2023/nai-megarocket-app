@@ -10,8 +10,7 @@ import { ClipLoader } from 'react-spinners';
 const Layout = () => {
   const auth = useSelector((state) => state.auth);
   const role = sessionStorage.getItem('role');
-
-  if (auth?.isAuthPending) {
+  if (auth?.isAuthPending || auth?.isLoading) {
     <Container>
       <ClipLoader />
     </Container>;

@@ -27,6 +27,7 @@ const Login = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
       showToast(toastMessage, 'success');
@@ -88,9 +89,7 @@ const Login = () => {
             history.push('/auth/login');
         }
       } else {
-        const errorMessage = response.payload.slice(25);
-        const errorMessageBeforeDot = errorMessage.split('.')[0];
-        showToast(errorMessageBeforeDot, 'error');
+        showToast('Wrong email or password!', 'error');
       }
     } catch (error) {
       showToast(error.message, 'error');

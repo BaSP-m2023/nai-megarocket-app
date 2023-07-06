@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: RouteComponent, role, isActive, ...rest }) =>
   const roleSession = sessionStorage.getItem('role');
   if (isAuthPending) {
     return (
-      <Container>
+      <Container center={true}>
         <ClipLoader />
       </Container>
     );

@@ -1,11 +1,18 @@
 import Container from 'Components/Shared/Container';
 import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+  const user = useSelector((state) => state.auth.user);
+
   useEffect(() => {
-    const toastMessage = localStorage.getItem('toastMessage');
+    toast.remove();
+    let toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
+      toastMessage = `Welcome back, ${user?.firstName}${
+        user?.lastName ? ' ' + user?.lastName : ''
+      }!`;
       showToast(toastMessage, 'success');
       localStorage.removeItem('toastMessage');
     }
@@ -37,14 +44,16 @@ const Home = () => {
   };
 
   return (
-    <Container>
+    <>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
         }}
       />
-      <h2>Welcome to MEGAROCKET</h2>
-    </Container>
+      <Container center={true}>
+        <h2>Welcome to MEGAROCKET</h2>
+      </Container>
+    </>
   );
 };
 

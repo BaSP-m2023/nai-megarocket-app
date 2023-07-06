@@ -5,11 +5,7 @@ import Button from 'Components/Shared/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getClasses } from 'Redux/classes/thunks';
 import { getMembers } from 'Redux/members/thunks';
-import {
-  createSubscription,
-  updateSubscription,
-  getSubscriptionById
-} from 'Redux/subscriptions/thunks';
+import { createSubscription, updateSubscription } from 'Redux/subscriptions/thunks';
 import InputComponent from 'Components/Shared/Input';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -24,6 +20,7 @@ const Form = () => {
   const dispatch = useDispatch();
   const classes = useSelector((state) => state.classes.data.data || []);
   const members = useSelector((state) => state.members.data.data || []);
+  const subscriptions = useSelector((state) => state.subscriptions.data);
   const {
     register,
     reset,
@@ -40,11 +37,12 @@ const Form = () => {
   });
 
   useEffect(() => {
+    toast.remove();
+    dispatch(getClasses());
+    dispatch(getMembers());
     if (id) {
       getSubscriptionData();
     }
-    dispatch(getClasses());
-    dispatch(getMembers());
   }, [id]);
 
   const handleCancel = () => {
@@ -53,15 +51,16 @@ const Form = () => {
 
   const getSubscriptionData = async () => {
     try {
-      const response = await dispatch(getSubscriptionById(id));
-      const subscriptionData = response.data;
-      delete subscriptionData._id;
-      delete subscriptionData.createdAt;
-      delete subscriptionData.updatedAt;
-      delete subscriptionData.__v;
-      subscriptionData.classes = subscriptionData.classes._id;
-      subscriptionData.member = subscriptionData.member._id;
-      reset(subscriptionData);
+      const subToUpdate = subscriptions.find((sub) => sub._id === id);
+
+      delete subToUpdate._id;
+      delete subToUpdate.createdAt;
+      delete subToUpdate.updatedAt;
+      delete subToUpdate.__v;
+      subToUpdate.classes = subToUpdate.classes._id;
+      subToUpdate.member = subToUpdate.member._id;
+      console.log(subToUpdate);
+      reset(subToUpdate);
     } catch (error) {
       showErrorToast('Oops, something went wrong.');
     }
@@ -140,6 +139,16 @@ const Form = () => {
           error={errors.member?.message}
           testId={'admin-subscriptions-input-members'}
         />
+        {id ? (
+          <InputComponent
+            labelName={'Active ?'}
+            inputType={'isActive'}
+            inputName={'isActive'}
+            register={register}
+            error={errors.isActive}
+            testId={'admin-subscriptions-input-checkbox'}
+          />
+        ) : null}
         <fieldset className={styles.flexButtons}>
           <Button
             text={id ? 'Update' : 'Add'}

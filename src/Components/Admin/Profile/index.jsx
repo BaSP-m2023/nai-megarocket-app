@@ -28,6 +28,7 @@ const AdminProfile = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     loadAdminData();
   }, [id]);
 
@@ -97,7 +98,7 @@ const AdminProfile = () => {
   };
 
   return (
-    <Container>
+    <Container center={true}>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'

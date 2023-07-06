@@ -28,6 +28,7 @@ const MemberForm = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     if (id) {
       memberById(id);
     }
