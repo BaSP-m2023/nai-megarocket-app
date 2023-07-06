@@ -51,7 +51,24 @@ const subscriptionsReducer = (state = INITIAL_STATE, action) => {
         data: [...state.data, { classes: populatedClasses, member: populatedMember, ...rest }]
       };
     }
-    case types.UPDATE_SUBSCRIPTION_SUCCESS:
+    case types.UPDATE_SUBSCRIPTION_SUCCESS: {
+      const updatedData = state.data.map((item) => {
+        if (item._id === action.payload._id) {
+          return {
+            ...item,
+            isActive: action.payload.isActive
+          };
+        }
+        return item;
+      });
+
+      return {
+        ...state,
+        loading: false,
+        data: updatedData
+      };
+    }
+
     default:
       return state;
   }
