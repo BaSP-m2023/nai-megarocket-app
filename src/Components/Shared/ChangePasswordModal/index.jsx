@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
@@ -8,6 +8,8 @@ import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import ValidationsPassword from '../../../Validations/validations-password';
 import { putAdmin, getAdminById } from 'Redux/admins/thunks';
+import { toast } from 'react-hot-toast';
+import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 
 const ChangePasswordModal = ({ show, closeModal }) => {
   if (!show) {
@@ -15,6 +17,7 @@ const ChangePasswordModal = ({ show, closeModal }) => {
   }
 
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
   const { id } = useParams();
 
   const {
@@ -35,6 +38,25 @@ const ChangePasswordModal = ({ show, closeModal }) => {
   const password = watch('password');
   const repeatPassword = watch('repeatPassword');
 
+  const showToast = (message, type) => {
+    const toastConfig = {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: type === 'success' ? '#fddba1' : 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    };
+    if (type === 'success') {
+      toast.success(message, toastConfig);
+    } else if (type === 'error') {
+      toast.error(message, toastConfig);
+    }
+  };
+
   useEffect(() => {
     if (id) {
       getAdminById(id);
@@ -52,9 +74,10 @@ const ChangePasswordModal = ({ show, closeModal }) => {
 
     try {
       await dispatch(putAdmin(id, { password: formData.password }));
+      showToast('Password was succesfully updated', 'success');
       closeModal();
     } catch (error) {
-      console.error(error);
+      showToast(error.message, 'error');
     }
   };
 
@@ -64,11 +87,21 @@ const ChangePasswordModal = ({ show, closeModal }) => {
         <div className={styles.modalContainer}>
           <h3>Change Password</h3>
           <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <div className={styles.buttonContainer}>
+              <button
+                id="eye-button"
+                className={styles.eyeButton}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaRegEye />}
+              </button>
+            </div>
             <div className={styles.inputContainer}>
               <Input
                 register={register}
                 labelName={'Password'}
-                inputType={'password'}
+                inputType={showPassword ? 'text' : 'password'}
                 inputName={'password'}
                 error={errors.password?.message}
               />
@@ -77,14 +110,23 @@ const ChangePasswordModal = ({ show, closeModal }) => {
               <Input
                 register={register}
                 labelName={'Repeat Password'}
-                inputType={'password'}
+                inputType={showPassword ? 'text' : 'password'}
                 inputName={'repeatPassword'}
                 error={errors.repeatPassword?.message}
               />
             </div>
             <div className={styles.buttonContainer}>
-              <Button type="cancel" text={'Cancel'} clickAction={closeModal} />
-              <Button type="submit" text={'Confirm'} />
+              <Button
+                type="cancel"
+                text={'Cancel'}
+                testId={'button-back-super-admin-admin-password-modal'}
+                clickAction={closeModal}
+              />
+              <Button
+                type="submit"
+                testId={'button-super-admin-admins-confirm-change-password'}
+                text={'Confirm'}
+              />
             </div>
           </form>
         </div>

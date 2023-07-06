@@ -14,6 +14,7 @@
 .modalContainer {
   display: flex;
   flex-direction: column;
+  margin-left: 15vw;
   padding: 30px;
   background-color: white;
   border-radius: 9px;
@@ -37,5 +38,17 @@
 .buttonContainer {
   width: 14rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+}
+
+.eyeButton {
+  background-color: inherit;
+  border: none;
+  color: rgba(15, 35, 46);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+
 }
