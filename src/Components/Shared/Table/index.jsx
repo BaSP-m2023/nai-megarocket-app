@@ -14,7 +14,7 @@ const Table = ({
   testId,
   testCancelId,
   testEditId,
-  showButtons
+  showButtons = true
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
