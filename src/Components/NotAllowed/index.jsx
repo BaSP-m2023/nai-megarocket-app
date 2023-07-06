@@ -32,7 +32,7 @@ const NotAllowed = () => {
       ) : (
         <>
           <h2>
-            You are not logged in. You will be redirected to the Login form in {countdown}{' '}
+            You are not signed in. You will be redirected to the Login form in {countdown}{' '}
             seconds...
           </h2>
         </>
