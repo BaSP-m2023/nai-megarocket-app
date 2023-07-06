@@ -13,13 +13,13 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Classes = () => {
   const history = useHistory();
-  const isLoadingClasses = useSelector((state) => state.classes.loading);
-  const isLoadingActivities = useSelector((state) => state.activities.loading);
+  const isLoadingClasses = useSelector((state) => state.classes?.loading);
+  const isLoadingActivities = useSelector((state) => state.activities?.loading);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
   const { classes = [], activities = [] } = useSelector((state) => ({
-    classes: state.classes.data.data,
-    activities: state.activities.data.data
+    classes: state.classes?.data.data,
+    activities: state.activities?.data.data
   }));
   const [activity, setActivity] = useState('');
   const [calendarAlert, setCalendarAlert] = useState(false);
@@ -141,17 +141,17 @@ const Classes = () => {
 
   return (
     <>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       {isLoading ? (
         <Container center={true}>
           <ClipLoader />
         </Container>
       ) : classes ? (
         <Container>
-          <Toaster
-            containerStyle={{
-              margin: '10vh 0 0 0'
-            }}
-          />
           <div className={styles.container}>
             <div className={styles.header}>
               <div className={styles.titleContainer}>
@@ -232,7 +232,9 @@ const Classes = () => {
           />
         </Container>
       ) : (
-        <h3>There are no Classes in the database</h3>
+        <Container center={true}>
+          <h3>There are no Classes in the database</h3>
+        </Container>
       )}
     </>
   );

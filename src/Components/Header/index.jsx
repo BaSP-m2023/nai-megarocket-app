@@ -13,9 +13,26 @@ function Header() {
   const history = useHistory();
 
   const showModalLogout = () => {
-    setTitleModal('Warning:');
-    setBodyModal('Are you sure you want to log out?');
+    setTitleModal('Warning');
+    setBodyModal('You want to log out?');
     setShowModal(true);
+  };
+
+  const role = sessionStorage.getItem('role');
+
+  const routePath = () => {
+    switch (role) {
+      case 'ADMIN':
+        return '/admins';
+      case 'SUPER_ADMIN':
+        return '/super-admins';
+      case 'TRAINER':
+        return '/trainers';
+      case 'MEMBER':
+        return '/members';
+      default:
+        return '';
+    }
   };
 
   const handleLogOut = () => {
@@ -29,7 +46,9 @@ function Header() {
   return (
     <>
       <header className={styles.container}>
-        <div className={styles.brand}>MEGAROCKET</div>
+        <div onClick={() => history.push(`${routePath()}/home`)} className={styles.brand}>
+          MEGAROCKET
+        </div>
         <div>
           <a id="logout-bar-link" onClick={showModalLogout} rel="noopener noreferrer">
             <img
