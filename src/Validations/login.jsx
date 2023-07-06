@@ -8,16 +8,11 @@ const loginValidation = Joi.object({
       'string.empty': 'Email is required',
       'string.pattern.base': 'Email is invalid'
     }),
-  password: Joi.string()
-    .min(8)
-    .max(16)
-    .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#%^&*<>_?\-¿¡])/)
-    .label('Password')
-    .messages({
-      'string.pattern.base': 'Invalid password: Example1!',
-      'any.required': 'Password is required.',
-      'string.empty': 'Password is required.'
-    })
+  password: Joi.string().label('Password').messages({
+    'string.pattern.base': 'Invalid password: Example1!',
+    'any.required': 'Password is required.',
+    'string.empty': 'Password is required.'
+  })
 });
 
 export default loginValidation;

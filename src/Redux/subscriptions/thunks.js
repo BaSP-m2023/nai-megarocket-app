@@ -125,7 +125,7 @@ export const updateSubscription = (subscription, subscriptionId) => async (dispa
     );
     const data = await response.json();
     if (response.ok) {
-      dispatch(updateSubscriptionSuccess(subscription, subscriptionId));
+      dispatch(updateSubscriptionSuccess(data.data));
       return data;
     } else {
       throw new Error(data.message);

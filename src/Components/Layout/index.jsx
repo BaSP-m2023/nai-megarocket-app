@@ -1,5 +1,6 @@
 import MemberView from 'Components/Views/memberView';
 import AdminView from 'Components/Views/adminView';
+import TrainerView from 'Components/Views/trainerView';
 import SuperAdminView from 'Components/Views/superAdminView';
 import LoginView from 'Components/Views/loginView';
 import { useSelector } from 'react-redux';
@@ -21,6 +22,8 @@ const Layout = () => {
       return <SuperAdminView />;
     case 'ADMIN':
       return <AdminView />;
+    case 'TRAINER':
+      return <TrainerView />;
     case 'MEMBER':
       return <MemberView />;
     default:

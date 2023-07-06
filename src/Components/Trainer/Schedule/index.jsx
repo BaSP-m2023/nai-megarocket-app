@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './schedule.module.css';
 import Modal from './Modal/modalShedule';
 import { useDispatch, useSelector } from 'react-redux';
-import { BsCheckCircleFill } from 'react-icons/bs';
 import { getClasses } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
@@ -15,19 +14,18 @@ const Schedule = () => {
   const {
     classes = [],
     activities = [],
-    subscriptions = [],
-    user = []
+    subscriptions = []
   } = useSelector((state) => ({
-    classes: state.classes?.data?.data,
-    activities: state.activities?.data?.data,
-    subscriptions: state.subscriptions?.data,
-    user: state.auth?.user
+    classes: state.classes.data.data,
+    activities: state.activities.data.data,
+    subscriptions: state.subscriptions.data
   }));
-  const loading = useSelector((state) => state.members.loading);
-  const [memberData, setMemberData] = useState(null);
+  const trainer = useSelector((state) => state.auth?.user);
+  const loading = useSelector((state) => state.classes?.loading);
   const [activity, setActivity] = useState('');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
   const [infoClass, setInfoClass] = useState({
     Hour: '',
     day: '',
@@ -37,7 +35,8 @@ const Schedule = () => {
     slotCount: '',
     idSuscription: '',
     idClass: '',
-    idMember: ''
+    idMember: '',
+    membersClass: {}
   });
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -66,7 +65,6 @@ const Schedule = () => {
         dispatch(getClasses());
         dispatch(getActivities());
         dispatch(getSubscriptions());
-        getMemberData();
       } catch (error) {
         console.error('Error:', error);
         setError(true);
@@ -75,10 +73,6 @@ const Schedule = () => {
     fetchData();
     setActivity('all');
   }, []);
-
-  const getMemberData = () => {
-    setMemberData(user);
-  };
 
   const getClassButton = (hour, day) => {
     let classItem;
@@ -91,18 +85,25 @@ const Schedule = () => {
     }
 
     if (classItem) {
-      const suscriptionFound = subscriptions?.find(
-        (item) =>
-          item.classes?._id === classItem?._id &&
-          item.member?._id === memberData?._id &&
-          item.isActive === true
+      const trainerFound = classes?.find(
+        (item) => item._id === classItem?._id && item.trainer?._id === trainer?._id
       );
 
       const subscriptionsForClass = subscriptions?.filter(
-        (item) => item.classes?._id === classItem?._id && item.isActive === true
+        (item) => item.classes?._id === classItem?._id
       );
 
+      const membersClass = subscriptions?.filter((item) => item.classes?._id === classItem?._id);
+
       const slotCount = subscriptionsForClass.length;
+
+      let trainerName = classItem.trainer?.firstName;
+
+      if (trainerName === undefined) {
+        trainerName = 'Unassigned trainer';
+      } else {
+        trainerName = `${classItem.trainer?.firstName} ${classItem.trainer?.lastName}`;
+      }
 
       return (
         <div
@@ -110,28 +111,19 @@ const Schedule = () => {
             setShowModal(true);
             setInfoClass(() => ({
               hour: classItem.hour,
-              trainer: `${classItem.trainer?.firstName} ${classItem.trainer?.lastName}`,
+              trainer: trainerName,
               activity: classItem.activity?.name,
               slot: classItem.slots,
               slotCount: slotCount,
               day: classItem.day,
-              idSuscription: suscriptionFound?._id,
               idClass: classItem?._id,
-              idMember: memberData?._id
+              membersClass: membersClass
             }));
           }}
-          className={suscriptionFound ? styles.addedButton : styles.classesButton}
+          className={trainerFound ? styles.addedButton : styles.classesButton}
         >
           <div className={styles.buttonText}>{classItem.activity?.name}</div>
-          {!suscriptionFound
-            ? `${classItem.trainer?.firstName}  ${classItem.trainer?.lastName}`
-            : null}
-          {suscriptionFound && (
-            <div className={styles.slots}>
-              <BsCheckCircleFill /> Subscribed
-            </div>
-          )}
-          <div className={styles.slotsFull}>{classItem.slots <= slotCount && <div>Full</div>}</div>
+          {trainerName}
         </div>
       );
     } else {
@@ -170,7 +162,9 @@ const Schedule = () => {
               />
               <div className={styles.container}>
                 <div className={styles.header}>
-                  <h2 className={styles.title}>Scheduled Classes</h2>
+                  <h2 className={styles.title}>
+                    Scheduled Classes - Trainer: {trainer?.firstName}
+                  </h2>
                   <div className={styles.filterActivity}>
                     <label className={styles.selectLabel} htmlFor="activity">
                       Filter by activity:{' '}
@@ -234,9 +228,8 @@ const Schedule = () => {
         slotCount={infoClass.slotCount}
         trainer={infoClass.trainer}
         activity={infoClass.activity}
-        idSuscription={infoClass.idSuscription}
         idClass={infoClass.idClass}
-        idMember={infoClass.idMember}
+        membersClass={infoClass.membersClass}
       />
     </>
   );
