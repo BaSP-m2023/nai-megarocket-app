@@ -5,6 +5,7 @@ import SuperAdminRoutes from './superAdmin';
 import AdminRoutes from './admin';
 import TrainerRoutes from './trainer';
 import MemberRoutes from './member';
+import Landing from 'Components/LandingPage';
 
 import PrivateRoute from './privateRoute';
 import { useDispatch } from 'react-redux';
@@ -34,7 +35,7 @@ const Routes = () => {
       case 'MEMBER':
         return <Redirect to="/members/home" />;
       default:
-        return <Redirect to="/auth/login" />;
+        return <Redirect to="/landing" />;
     }
   };
 
@@ -44,6 +45,7 @@ const Routes = () => {
         {userRoute()}
       </Route>
       <Route path="/auth" component={AuthRoutes} />
+      <Route exact path="/landing" component={Landing} />
       <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminRoutes} />
       <PrivateRoute path="/admins" role="ADMIN" component={AdminRoutes} />
       <PrivateRoute path="/members" role="MEMBER" isActive={true} component={MemberRoutes} />

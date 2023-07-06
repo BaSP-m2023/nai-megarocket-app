@@ -1,6 +1,6 @@
-import Header from 'Components/Header/index';
 import styles from 'Components/Layout/layout.module.css';
 import Routes from 'Routes/Routes';
+import Header from 'Components/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 
 const AdminView = () => {

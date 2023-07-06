@@ -1,6 +1,7 @@
 import Container from 'Components/Shared/Container';
 import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import styles from './home.module.css';
 
 const Home = () => {
   useEffect(() => {
@@ -37,14 +38,12 @@ const Home = () => {
   };
 
   return (
-    <Container>
-      <Toaster
-        containerStyle={{
-          margin: '10vh 0 0 0'
-        }}
-      />
-      <h2>Welcome to MEGAROCKET</h2>
-    </Container>
+    <div className={styles.container}>
+      <Container>
+        <Toaster />
+        <h2>Welcome to MEGAROCKET</h2>
+      </Container>
+    </div>
   );
 };
 

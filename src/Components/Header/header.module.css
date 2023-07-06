@@ -8,13 +8,15 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  margin-right: 10rem;
 }
 
 .brand {
   font-weight: bold;
   font-size: 1.5rem;
   color: #f9a414;
-  margin-left: 2.5%;
+  margin-left: 1.5vw;
+  text-transform: uppercase;
 }
 
 .logOut {
@@ -23,6 +25,10 @@
   margin-left: 5px;
   margin-right: 1rem;
   cursor: pointer;
+}
+
+.icons {
+  margin-right: 2rem;
 }
 
 .socialIcon {

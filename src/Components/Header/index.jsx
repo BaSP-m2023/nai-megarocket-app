@@ -26,11 +26,19 @@ function Header() {
     localStorage.setItem('toastMessage', 'See you soon!');
     history.push('/auth/login');
   };
+
+  const goLanding = () => {
+    history.push('/landing');
+  };
+
   return (
     <>
       <header className={styles.container}>
-        <div className={styles.brand}>MEGAROCKET</div>
-        <div>
+        <a onClick={goLanding} style={{ textDecoration: 'none', cursor: 'pointer' }}>
+          <h1 className={styles.brand}>megarocket</h1>
+        </a>
+
+        <div className={styles.icons}>
           <a id="logout-bar-link" onClick={showModalLogout} rel="noopener noreferrer">
             <img
               className={styles.logOut}

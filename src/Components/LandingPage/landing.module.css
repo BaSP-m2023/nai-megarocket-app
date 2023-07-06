@@ -1,0 +1,40 @@
+.container {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+.videoContainer {
+  grid-area: 1/1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.video {
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  grid-area: 1/1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.content h2 {
+  font-weight: bold;
+  font-size: 6rem;
+  color: #f9a414;
+  text-transform: uppercase;
+}
+
+.content p {
+  width: 50%;
+  text-align: center;
+  font-size: 1.3rem;
+}
