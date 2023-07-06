@@ -45,10 +45,11 @@
   background-color: inherit;
   border: none;
   color: rgba(15, 35, 46);
+  font-size: 1.2rem;
 }
 
 .buttonContainer {
   display: flex;
   justify-content: flex-end;
-
+  width: 100%;
 }
