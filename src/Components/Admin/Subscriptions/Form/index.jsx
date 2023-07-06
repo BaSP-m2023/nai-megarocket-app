@@ -52,14 +52,10 @@ const Form = () => {
   const getSubscriptionData = async () => {
     try {
       const subToUpdate = subscriptions.find((sub) => sub._id === id);
-
       delete subToUpdate._id;
-      delete subToUpdate.createdAt;
-      delete subToUpdate.updatedAt;
       delete subToUpdate.__v;
       subToUpdate.classes = subToUpdate.classes._id;
       subToUpdate.member = subToUpdate.member._id;
-      console.log(subToUpdate);
       reset(subToUpdate);
     } catch (error) {
       showErrorToast('Oops, something went wrong.');

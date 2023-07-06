@@ -13,7 +13,8 @@ const Table = ({
   handleDeleteItem,
   testId,
   testCancelId,
-  testEditId
+  testEditId,
+  showButtons
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,6 +27,15 @@ const Table = ({
       </Container>
     );
   }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+  };
 
   const isBoolean = (value) => {
     if (typeof value === 'boolean') {
@@ -63,6 +73,8 @@ const Table = ({
   const endIndex = startIndex + itemsPerPage;
   const paginatedData = filteredData?.slice(startIndex, endIndex);
 
+  const currentItems = paginatedData?.length; // calcular el número de elementos actuales
+
   return (
     <div className={styles.containerT}>
       <div className={styles.search}>
@@ -83,7 +95,9 @@ const Table = ({
                 {title}
               </th>
             ))}
-            <th></th>
+            <th>
+              {currentItems}/{itemsPerPage}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -98,7 +112,10 @@ const Table = ({
                     .split('.')
                     .reduce((acc, curr) => (acc ? acc[curr] : null), item);
                   const isArray = Array.isArray(value);
-                  const displayValue = isArray ? value.join(', ') : value;
+                  let displayValue = isArray ? value.join(', ') : value;
+                  if (property === 'date') {
+                    displayValue = formatDate(displayValue); // formatear la fecha
+                  }
                   return (
                     <td className={styles.tableThtd} key={property}>
                       {isBoolean(displayValue) ? isBoolean(displayValue) : displayValue}
@@ -106,16 +123,20 @@ const Table = ({
                   );
                 })}
                 <td className={`${styles.tableThtd} ${styles.tableLastColumn}`}>
-                  <Button
-                    testId={testEditId}
-                    type="edit"
-                    clickAction={() => handleUpdateItem(item._id)}
-                  />
-                  <Button
-                    testId={testCancelId}
-                    type="delete"
-                    clickAction={() => handleDeleteItem(item._id)}
-                  />
+                  {showButtons && (
+                    <>
+                      <Button
+                        testId={testEditId}
+                        type="edit"
+                        clickAction={() => handleUpdateItem(item._id)}
+                      />
+                      <Button
+                        testId={testCancelId}
+                        type="delete"
+                        clickAction={() => handleDeleteItem(item._id)}
+                      />
+                    </>
+                  )}
                 </td>
               </tr>
             );
