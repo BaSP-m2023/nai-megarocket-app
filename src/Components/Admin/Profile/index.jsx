@@ -28,6 +28,7 @@ const AdminProfile = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     loadAdminData();
   }, [id]);
 

@@ -22,6 +22,7 @@ const Members = () => {
   const [title, setTitle] = useState('');
 
   useEffect(() => {
+    toast.remove();
     dispatch(getMembers());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {

@@ -4,6 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Home = () => {
   useEffect(() => {
+    toast.remove();
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
       showToast(toastMessage, 'success');

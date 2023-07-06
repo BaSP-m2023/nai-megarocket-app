@@ -27,6 +27,7 @@ const Login = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
       showToast(toastMessage, 'success');

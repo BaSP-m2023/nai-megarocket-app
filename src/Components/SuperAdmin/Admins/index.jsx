@@ -22,6 +22,7 @@ const Admins = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    toast.remove();
     dispatch(getAdmins());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {

@@ -37,6 +37,7 @@ const Form = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     if (id) {
       getAdminById(id);
     }

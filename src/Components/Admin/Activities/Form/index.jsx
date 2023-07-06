@@ -40,6 +40,7 @@ const Form = () => {
   };
 
   useEffect(() => {
+    toast.remove();
     if (id) {
       getActivityData();
     }

@@ -95,6 +95,7 @@ const Form = () => {
   };
 
   useEffect(() => {
+    toast.remove();
     dispatch(getTrainers());
     dispatch(getActivities());
     if (id) {

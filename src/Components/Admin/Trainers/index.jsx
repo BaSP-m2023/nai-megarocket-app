@@ -23,6 +23,7 @@ const Trainers = () => {
   const isLoading = trainersState.loading;
 
   useEffect(() => {
+    toast.remove();
     dispatch(getTrainers());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {

@@ -22,6 +22,7 @@ const Subscriptions = () => {
   const [subscriptionId, setSubscriptionId] = useState('');
 
   useEffect(() => {
+    toast.remove();
     dispatch(getSubscriptions());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {

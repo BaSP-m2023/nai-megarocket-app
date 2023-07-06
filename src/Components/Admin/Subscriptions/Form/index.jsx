@@ -37,11 +37,12 @@ const Form = () => {
   });
 
   useEffect(() => {
+    toast.remove();
+    dispatch(getClasses());
+    dispatch(getMembers());
     if (id) {
       getSubscriptionData();
     }
-    dispatch(getClasses());
-    dispatch(getMembers());
   }, [id]);
 
   const handleCancel = () => {

@@ -28,6 +28,7 @@ const AdminTrainerForm = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     if (id) {
       getTrainerById(id);
     }

@@ -26,6 +26,7 @@ const Classes = () => {
   const dispatch = useDispatch();
   const isLoading = isLoadingActivities && isLoadingClasses;
   useEffect(() => {
+    toast.remove();
     dispatch(getClasses());
     dispatch(getActivities());
     const toastMessage = localStorage.getItem('toastMessage');
@@ -140,17 +141,17 @@ const Classes = () => {
 
   return (
     <>
-      <Toaster
-        containerStyle={{
-          margin: '10vh 0 0 0'
-        }}
-      />
       {isLoading ? (
         <Container center={true}>
           <ClipLoader />
         </Container>
       ) : classes ? (
         <Container>
+          <Toaster
+            containerStyle={{
+              margin: '10vh 0 0 0'
+            }}
+          />
           <div className={styles.container}>
             <div className={styles.header}>
               <div className={styles.titleContainer}>

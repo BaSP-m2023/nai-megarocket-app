@@ -24,6 +24,7 @@ const Activities = () => {
   const activities = useSelector((state) => state.activities.data.data);
 
   useEffect(() => {
+    toast.remove();
     dispatch(getActivities());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
