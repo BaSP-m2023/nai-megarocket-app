@@ -9,6 +9,7 @@ import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import Container from 'Components/Shared/Container';
+import { FiArrowLeft } from 'react-icons/fi';
 import { toast, Toaster } from 'react-hot-toast';
 
 import ChangePasswordModal from 'Components/Shared/ChangePasswordModal';
@@ -17,7 +18,7 @@ const Form = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const admins = useSelector((state) => state.admins.data);
+  const admins = useSelector((state) => state.admins?.data);
 
   const {
     register,
@@ -39,6 +40,7 @@ const Form = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     if (id) {
       getAdminById(id);
     }
@@ -100,10 +102,6 @@ const Form = () => {
     history.push('/super-admins/admins');
   };
 
-  const handleReset = () => {
-    reset();
-  };
-
   return (
     <Container>
       <Toaster
@@ -112,7 +110,14 @@ const Form = () => {
         }}
       />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitle}>{id ? 'Update Admin' : 'Add Admin'}</h2>
+        <div className={styles.head}>
+          {' '}
+          <div id="super-admin-form-go-back" className={styles.arrow} onClick={handleBack}>
+            <FiArrowLeft size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Admin' : 'Add Admin'}</h2>
+        </div>
+
         <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.firstInputs}>
             <div className={styles.formInput}>
@@ -142,6 +147,17 @@ const Form = () => {
                 error={errors.dni?.message}
               />
             </div>
+            {!id && (
+              <div className={styles.formInput}>
+                <Input
+                  register={register}
+                  labelName={'Password'}
+                  inputType={'password'}
+                  inputName={'password'}
+                  error={errors.password?.message}
+                />
+              </div>
+            )}
           </div>
           <div className={styles.secondInputs}>
             <div className={styles.formInput}>
@@ -171,34 +187,23 @@ const Form = () => {
                 error={errors.city?.message}
               />
             </div>
-            {!id && (
-              <div className={styles.formInput}>
-                <Input
-                  register={register}
-                  labelName={'Password'}
-                  inputType={'password'}
-                  inputName={'password'}
-                  error={errors.password?.message}
-                />
-              </div>
-            )}
-            {id && (
-              <div className={styles.buttonsChangePassword}>
-                <Button
-                  type={'cancel'}
-                  info="button"
-                  text="Change Password"
-                  clickAction={openModal}
-                />
-              </div>
-            )}
           </div>
           <div className={styles.buttonsDiv}>
-            <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
-            <div className={styles.buttonsAdmin}>
-              <Button text="Back" type="cancel" clickAction={handleBack} />
-              <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
-            </div>
+            <Button
+              text={id ? 'Update' : 'Add'}
+              testId={'super-admin-button-add-admin'}
+              type="submit"
+              info={'submit'}
+            />
+            {id && (
+              <Button
+                type={'cancel'}
+                info="button"
+                testId={'super-admins-admin-change-password-open-modal'}
+                text="Change Password"
+                clickAction={openModal}
+              />
+            )}
           </div>
         </form>
         <ChangePasswordModal show={isModalOpen} closeModal={closeModal} />
