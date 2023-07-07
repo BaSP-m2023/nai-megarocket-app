@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getSubscriptions, deleteSubscription } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
-import { FaHistory, FaEyeSlash } from 'react-icons/fa';
+import { FaHistory } from 'react-icons/fa';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Subscriptions = () => {
@@ -123,13 +123,15 @@ const Subscriptions = () => {
               />
             )}
           </div>
-          <button
-            onClick={handleToggleInactive}
-            className={`${styles.toggleButton} ${showInactive ? styles.active : ''}`}
-            id="admin-subscriptions-toggle-inactive-button"
-          >
-            {showInactive ? <FaEyeSlash /> : <FaHistory />}
-          </button>
+          <div className={styles.iconContainer}>
+            <button
+              onClick={handleToggleInactive}
+              className={`${styles.toggleButton} ${showInactive ? styles.active : ''}`}
+              id="admin-subscriptions-toggle-inactive-button"
+            >
+              {showInactive ? <FaHistory /> : <FaHistory />}
+            </button>
+          </div>
           <Table
             data={
               showInactive
