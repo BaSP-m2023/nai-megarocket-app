@@ -42,7 +42,6 @@ export const getAuth = (token) => {
       });
       const data = await response.json();
 
-      // Si el token ha expirado, intenta renovarlo y obtener la información de autenticación nuevamente
       if (response.status === 401 && data.error === 'Token expired') {
         console.log('pasó 1 hora');
         const refreshedToken = await firebaseApp.auth().currentUser.getIdToken();
