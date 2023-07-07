@@ -2,6 +2,8 @@ import Header from 'Components/Header/index';
 import styles from 'Components/Layout/layout.module.css';
 import Routes from 'Routes/Routes';
 import Sidebar from 'Components/Shared/Sidebar';
+import { FloatingWhatsApp } from 'react-floating-whatsapp';
+import Logo from 'assets/logo512.png';
 
 const TrainerView = () => {
   const routes = [
@@ -9,6 +11,8 @@ const TrainerView = () => {
     { name: 'Profile', link: '/trainers/profile' },
     { name: 'Classes', link: '/trainers/schedule' }
   ];
+  const chatMessage = 'Hola, qué tal? 🤝\nCómo podemos ayudarte?';
+
   return (
     <>
       <Header />
@@ -16,6 +20,16 @@ const TrainerView = () => {
         <Sidebar routes={routes} />
         <Routes />
       </div>
+      <FloatingWhatsApp
+        phoneNumber="+59899548345"
+        accountName="Mega Rocket Gym"
+        avatar={Logo}
+        statusMessage="Atención al cliente"
+        placeholder="Escribe un mensaje"
+        chatMessage={chatMessage}
+        allowClickAway="true"
+        darkMode="true"
+      />
     </>
   );
 };
