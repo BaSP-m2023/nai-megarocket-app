@@ -24,7 +24,6 @@
     "redux-thunk": "^2.4.2",
     "web-vitals": "^2.1.4"
   },
-  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -33,7 +32,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "prepare": "husky install",
     "wdio": "wdio run ./wdio.conf.js",
-    "allure-report":"allure generate --clean allure-results && allure open"
+    "allure-report": "allure generate --clean allure-results && allure open"
   },
   "eslintConfig": {
     "extends": [
