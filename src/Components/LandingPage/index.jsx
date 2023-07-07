@@ -1,50 +1,38 @@
 import React from 'react';
 import styles from './landing.module.css';
+import stylesForm from './form.module.css';
+import stylesTrainers from './trainers.module.css';
 import Footer from 'Components/Footer';
 
 const Landing = () => {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.videoContainer}>
-          {/* <video className={styles.video} autoPlay muted loop>
-            <source src="/assets/video/promo.mp4" type="video/mp4" />
-          </video> */}
+        <div className={styles.imageContainer}>
           <img src="/assets/images/landing/img-gym-001.jpg" alt="gym image" />
-        </div>
-        <div className={styles.mask}></div>
-        <div className={styles.content}>
-          <h2>megarocket</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </p>
+          <div className={styles.overlay}>
+            <div className={styles.content}>
+              <h2>megarocket</h2>
+              <p>it&apos;s gym. it&apos;s life</p>
+            </div>
+          </div>
         </div>
         <div></div>
-        <div>
-          <h2>publi</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </p>
+        <div className={styles.joined}>
+          <h2>join our gym</h2>
         </div>
-        <div>
-          <h2>schedule</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </p>
+        <div className={stylesTrainers.trainerContainer}>
+          <img className={stylesTrainers.trainer1}></img>
+          <img className={stylesTrainers.trainer2}></img>
+          <img className={stylesTrainers.trainer3}></img>
+          <img className={stylesTrainers.trainer4}></img>
+          <img className={stylesTrainers.trainer5}></img>
         </div>
-        <div>
-          <h2>memberships</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </p>
+        <div className={styles.joined}>
+          <p>be fit - be happy - be megarocket</p>
+        </div>
+        <div className={stylesForm.formContainer}>
+          <h2>join now</h2>
         </div>
       </div>
       <Footer />

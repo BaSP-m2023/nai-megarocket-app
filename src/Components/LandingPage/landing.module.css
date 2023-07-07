@@ -1,40 +1,79 @@
-.container {
-  display: grid;
-  place-items: center;
-  width: 100%;
-}
-
-.videoContainer {
-  grid-area: 1/1;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.video {
-  width: 100vw;
-  height: 100%;
-  object-fit: cover;
-}
-
 .content {
   grid-area: 1/1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   color: #fff;
 }
 
 .content h2 {
   font-weight: bold;
   font-size: 6rem;
-  color: #f9a414;
+  color: white;
   text-transform: uppercase;
+  width: 100%;
 }
 
 .content p {
-  width: 50%;
   text-align: center;
   font-size: 1.3rem;
+  letter-spacing: 0.1rem;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 50%;
+  background-color: black;
+}
+
+.imageContainer img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  filter:
+  brightness(70%)
+  saturate(100%)
+  blur(2px)
+  sepia(10%)
+  contrast(100%);
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.joined {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 0;
+  height: 20vh;
+}
+
+.joined h2 {
+  text-transform: uppercase;
+  font-size: 3rem;
+  letter-spacing: 0.8rem;
+  font-weight: 800;
+}
+
+.joined p {
+  width: 55vw;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  letter-spacing: 0.8rem;
 }

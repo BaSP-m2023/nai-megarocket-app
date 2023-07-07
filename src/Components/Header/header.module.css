@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   height: 10vh;
-  background-color: #0f232e;
+  background-color: black;
   width: 100vw;
   position: sticky;
   top: 0;
@@ -14,7 +14,7 @@
 .brand {
   font-weight: bold;
   font-size: 1.5rem;
-  color: #f9a414;
+  color: white;
   margin-left: 1.5vw;
   text-transform: uppercase;
 }

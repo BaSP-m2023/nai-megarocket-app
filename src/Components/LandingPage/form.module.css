@@ -1,0 +1,65 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('/public/assets/images/landing/12.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  height: 120vh;
+}
+
+.formContainer > div {
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.938);
+  flex: 0 0 calc(33.33%);
+  max-width: calc(33.33% - 10vw);
+  min-height: 60vh;
+  text-align: center;
+}
+
+.formContainer h2 {
+  color: white;
+  font-size: 17rem;
+  text-transform: uppercase;
+  text-shadow: -6px 6px 20px rgba(0, 0, 0, 1);
+}
+
+.formContainer h4:nth-child(2) {
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.formContainer ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.formContainer li {
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.formContainer a {
+  color: #fff;
+  text-decoration: none;
+  background-color: #ff6f00;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.formContainer a:hover {
+  background-color: #ff812e;
+}
+
+.form {
+  color: white;
+}
