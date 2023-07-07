@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import CalendarModal from './Modal';
 import Container from 'Components/Shared/Container';
+import { getTrainers } from 'Redux/trainers/thunks';
 
 const Classes = () => {
   const history = useHistory();
@@ -19,24 +20,25 @@ const Classes = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [classToDelete, setClassToDelete] = useState(null);
-  const { classes = [], activities = [] } = useSelector((state) => ({
+  const {
+    classes = [],
+    activities = [],
+    trainers = []
+  } = useSelector((state) => ({
     classes: state.classes.data.data,
-    activities: state.activities.data.data
+    activities: state.activities.data.data,
+    trainers: state.trainers.data
   }));
-  const [activity, setActivity] = useState('');
+  const [activity, setActivity] = useState('all');
+  const [trainer, setTrainer] = useState('all');
   const [calendarAlert, setCalendarAlert] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getClasses());
     dispatch(getActivities());
+    dispatch(getTrainers());
   }, []);
-
-  useEffect(() => {
-    if (activities.length > 0) {
-      setActivity(activities[0].name);
-    }
-  }, [activities]);
 
   const handleDeleteClass = () => {
     setCalendarAlert(false);
@@ -89,6 +91,10 @@ const Classes = () => {
     setActivity(e.target.value);
   };
 
+  const handleTrainerChange = (e) => {
+    setTrainer(e.target.value);
+  };
+
   const handleCloseModalCalendar = () => {
     setCalendarAlert(false);
   };
@@ -98,17 +104,77 @@ const Classes = () => {
   };
 
   const getClassButton = (hour, day) => {
-    const classItem = classes.find(
-      (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
-    );
-    return classItem ? (
-      <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
-        <div className={styles.buttonText}>{activity}</div>
-        {classItem?.trainer?.firstName}
-      </div>
-    ) : (
-      <div className={styles.emptyButton}></div>
-    );
+    let classItem;
+
+    if (activity === 'all' && trainer === 'all') {
+      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
+    } else if (trainer !== 'all' && activity === 'all') {
+      if (trainer === 'notAssign') {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            (!item.trainer || !item.trainer?.isActive)
+        );
+      } else {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            item.trainer?.firstName + item.trainer?.lastName === trainer
+        );
+      }
+    } else if (activity !== 'all' && trainer === 'all') {
+      classItem = classes?.find(
+        (item) =>
+          item.day.includes(day) &&
+          item.hour === hour &&
+          item.activity?.name === activity &&
+          (!item.trainer || item.trainer?.isActive)
+      );
+    } else {
+      if (trainer === 'notAssign') {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            item.activity?.name === activity &&
+            (!item.trainer || !item.trainer?.isActive)
+        );
+      } else {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            item.activity?.name === activity &&
+            item.trainer?.firstName + item.trainer?.lastName === trainer
+        );
+      }
+    }
+
+    if (classItem) {
+      if (classItem.trainer && classItem.trainer?.isActive) {
+        return (
+          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
+            <div className={styles.buttonText}>
+              {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
+            </div>
+            {classItem?.trainer?.firstName}
+          </div>
+        );
+      } else {
+        return (
+          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
+            <div className={styles.buttonText}>
+              {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
+            </div>
+            Not assigned trainer
+          </div>
+        );
+      }
+    } else {
+      return <div className={styles.emptyButton}></div>;
+    }
   };
 
   return (
@@ -130,11 +196,8 @@ const Classes = () => {
               </div>
               <div className={styles.select}>
                 <label htmlFor="activity">Select Activity: </label>
-                <select
-                  id="activity"
-                  value={activity ? activity : activities[0]}
-                  onChange={handleActivityChange}
-                >
+                <select id="activity" value={activity} onChange={handleActivityChange}>
+                  <option value="all">All</option>
                   {activities?.map((activityItem, index) => (
                     <option
                       value={activityItem.name}
@@ -144,6 +207,37 @@ const Classes = () => {
                       {activityItem.name}
                     </option>
                   ))}
+                </select>
+              </div>
+              <div className={styles.select}>
+                <label htmlFor="trainer">Select Trainer: </label>
+                <select id="trainer" value={trainer} onChange={handleTrainerChange}>
+                  <option value="all">All</option>
+                  <option value="notAssign">Not Assign</option>
+                  {trainers?.map((trainerItem, index) => {
+                    if (trainerItem.isActive) {
+                      return (
+                        <option
+                          value={trainerItem.firstName + trainerItem.lastName}
+                          key={index}
+                          id={`admin-classes-select-trainer-${trainerItem.firstName}`}
+                        >
+                          {trainerItem.firstName + ' ' + trainerItem.lastName}
+                        </option>
+                      );
+                    } else {
+                      return (
+                        <option
+                          style={{ backgroundColor: '#878E88' }}
+                          value={trainerItem.firstName + trainerItem.lastName}
+                          key={index}
+                          id={`admin-classes-select-trainer-${trainerItem.firstName}`}
+                        >
+                          {trainerItem.firstName + ' ' + trainerItem.lastName}
+                        </option>
+                      );
+                    }
+                  })}
                 </select>
               </div>
             </div>

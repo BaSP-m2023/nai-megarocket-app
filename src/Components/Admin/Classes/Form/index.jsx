@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { editClass, addClass, getClassById } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
 import { getTrainers } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import classValidation from 'Validations/classes';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
-import SharedModal from 'Components/Shared/Modal';
 import Container from 'Components/Shared/Container';
-import SharedForm from 'Components/Shared/Form';
+import toast, { Toaster } from 'react-hot-toast';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { FormControl, InputLabel } from '@mui/material';
 
 const Form = () => {
   const {
     register,
     reset,
     handleSubmit,
+    control,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
@@ -38,20 +41,24 @@ const Form = () => {
     trainers: state.trainers.data,
     activities: state.activities.data.data
   }));
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-
-  const showSuccesModal = (data) => {
-    setAlertMessage(data.message);
-    setIsSuccess(true);
-    setShowAlert(true);
-  };
-  const showErrorModal = (error) => {
-    setAlertMessage(error.message);
-    setIsSuccess(false);
-    setShowAlert(true);
-  };
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const hoursOfDay = [
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00',
+    '22:00'
+  ];
 
   const getClassData = async () => {
     try {
@@ -61,31 +68,46 @@ const Form = () => {
       delete classData?.createdAt;
       delete classData?.updatedAt;
       delete classData?.__v;
-      classData.day = Object.values(classData?.day).join(',');
       classData.trainer = classData.trainer?._id;
       classData.activity = classData.activity?._id;
       reset(classData);
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
 
   const updateClass = async (data) => {
     try {
       const response = await dispatch(editClass(id, data));
-      showSuccesModal(response);
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/classes');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
 
   const createClass = async (data) => {
     try {
       const response = await dispatch(addClass(data));
-      showSuccesModal(response);
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/classes');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
   };
 
   useEffect(() => {
@@ -97,7 +119,7 @@ const Form = () => {
   }, []);
 
   const onSubmit = (data) => {
-    data.day = data.day.split(',').map((day) => day.trim());
+    data.day = [data.day];
     if (id) {
       updateClass(data);
     } else {
@@ -109,68 +131,89 @@ const Form = () => {
     history.push('/admins/classes');
   };
 
-  const handleCloseAlert = () => {
-    if (isSuccess) {
-      history.push('/admins/classes');
-    } else {
-      setShowAlert(false);
-    }
-  };
-
   return (
     <Container>
-      <SharedForm onSubmit={handleSubmit(onSubmit)}>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
+      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.container}>
           <h2>{id ? 'Update Class' : 'Create Class'}</h2>
-          <Input
-            register={register}
-            labelName={'Day'}
-            inputType={'text'}
-            inputName={'day'}
-            error={errors.day?.message}
-            testId={'admin-classes-input-day'}
-          />
-          <Input
-            register={register}
-            labelName={'Hour'}
-            inputType={'text'}
-            inputName={'hour'}
-            error={errors.hour?.message}
-            testId={'admin-classes-input-hour'}
-          />
-          <Input
-            register={register}
-            labelName={'Trainer'}
-            inputType={'list'}
-            inputName={'trainer'}
-            list={trainers}
-            listProp={'firstName'}
-            error={errors.trainer?.message}
-            testId={'admin-classes-input-trainer'}
-          />
-          <Input
-            register={register}
-            labelName={'Activity'}
-            inputType={'list'}
-            inputName={'activity'}
-            error={errors.activity?.message}
-            list={activities}
-            listProp={'name'}
-            testId={'admin-classes-input-activity'}
-          />
-          <Input
-            register={register}
-            labelName={'Slots'}
-            inputType={'number'}
-            inputName={'slots'}
-            error={errors.slots?.message}
-            testId={'admin-classes-input-slots'}
-          />
+          <div className={styles.inputsContainer}>
+            <div className={styles.inputContainerA}>
+              <FormControl fullWidth>
+                <InputLabel id="day-label">Day</InputLabel>
+                <Controller
+                  control={control}
+                  name="day"
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      labelId="day-label"
+                      id="day"
+                      multiple
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      onBlur={field.onBlur}
+                    >
+                      {daysOfWeek.map((day) => (
+                        <MenuItem key={day} value={day}>
+                          {day}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+              </FormControl>
+              <Input
+                register={register}
+                labelName={'Hour'}
+                inputType={'list'}
+                inputName={'hour'}
+                list={hoursOfDay}
+                listProp={'hours'}
+                error={errors.hour?.message}
+                testId={'admin-classes-input-hour'}
+              />
+              <Input
+                register={register}
+                labelName={'Trainer'}
+                inputType={'list'}
+                inputName={'trainer'}
+                list={trainers}
+                listProp={'firstName'}
+                error={errors.trainer?.message}
+                testId={'admin-classes-input-trainer'}
+              />
+            </div>
+            <div className={styles.inputContainerB}>
+              <Input
+                register={register}
+                labelName={'Activity'}
+                inputType={'list'}
+                inputName={'activity'}
+                error={errors.activity?.message}
+                list={activities}
+                listProp={'name'}
+                testId={'admin-classes-input-activity'}
+              />
+              <Input
+                register={register}
+                labelName={'Slots'}
+                inputType={'number'}
+                inputName={'slots'}
+                error={errors.slots?.message}
+                testId={'admin-classes-input-slots'}
+              />
+            </div>
+          </div>
         </div>
         <div className={styles.buttonsDiv}>
           <Button
-            type={'submit'}
-            info={'submit'}
+            type="submit"
+            info="submit"
             text={id ? 'Update' : 'Add'}
             testId={'admin-classes-button-submit-form'}
           />
@@ -190,18 +233,7 @@ const Form = () => {
             />
           </div>
         </div>
-      </SharedForm>
-
-      <SharedModal
-        isDelete={false}
-        show={showAlert}
-        closeModal={() => handleCloseAlert()}
-        typeStyle={isSuccess ? 'success' : 'error'}
-        title={isSuccess ? 'Success' : 'Something went wrong'}
-        body={alertMessage}
-        testId={'admin-classes-form-modal'}
-        closeTestId={'admin-classes-form-button-confirm-modal'}
-      />
+      </form>
     </Container>
   );
 };
