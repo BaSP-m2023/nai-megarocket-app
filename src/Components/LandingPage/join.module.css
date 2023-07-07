@@ -1,13 +1,51 @@
-.formContainer {
+.joined {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  padding: 6rem 0;
+  height: 20vh;
+}
+
+.joined h2 {
+  text-transform: uppercase;
+  font-size: 3rem;
+  letter-spacing: 0.8rem;
+  font-weight: 800;
+}
+
+.joined p {
+  width: 55vw;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  letter-spacing: 0.8rem;
+}
+
+.landscape {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  background-image: url('/public/assets/images/landing/12.jpg');
   background-size: cover;
   background-position: center;
-  padding: 20px;
-  height: 60vh;
+  padding: 0;
+  margin: 0;
+  height: 116vh;
 }
+
+.landscape h2 {
+  color: white;
+  font-size: 17rem;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+  text-shadow: -6px 6px 20px rgba(0, 0, 0, 1);
+}
+
 
 .formContainer > div {
   background-color: rgba(0, 0, 0, 0.9);

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './landing.module.css';
 import stylesForm from './form.module.css';
+import stylesJoin from './join.module.css';
 import stylesTrainers from './trainers.module.css';
 import Footer from 'Components/Footer';
 
@@ -28,11 +29,15 @@ const Landing = () => {
           <img className={stylesTrainers.trainer4}></img>
           <img className={stylesTrainers.trainer5}></img>
         </div>
-        <div className={styles.joined}>
-          <p>be fit - be happy - be megarocket</p>
+        <div className={stylesJoin.joined}>
+          <p>be fit &#8226; be happy &#124; be megarocket</p>
+        </div>
+        <div className={stylesJoin.landscape}>
+          <h2>join</h2>
+          <h2>now</h2>
         </div>
         <div className={stylesForm.formContainer}>
-          <h2>join now</h2>
+          <p>Form</p>
         </div>
       </div>
       <Footer />
