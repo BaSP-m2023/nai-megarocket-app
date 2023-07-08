@@ -10,7 +10,7 @@ const SuperAdminView = () => {
     { name: 'Home', link: '/super-admins/home' },
     { name: 'Admins', link: '/super-admins/admins' }
   ];
-  const chatMessage = 'Hola, qué tal? 🤝\nCómo podemos ayudarte?';
+  const chatMessage = 'Hello there! 🤝 \nHow can we help?';
   return (
     <>
       <Header />
@@ -22,8 +22,8 @@ const SuperAdminView = () => {
         phoneNumber="+59899548345"
         accountName="Mega Rocket Gym"
         avatar={Logo}
-        statusMessage="Atención al cliente"
-        placeholder="Escribe un mensaje"
+        statusMessage="Customer service"
+        placeholder="Type a message.."
         chatMessage={chatMessage}
         allowClickAway="true"
         darkMode="true"

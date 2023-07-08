@@ -13,7 +13,7 @@ const MemberView = () => {
     { name: 'Activities', link: '/members/activities' },
     { name: 'Memberships', link: '/members/memberships' }
   ];
-  const chatMessage = 'Hola, qué tal? 🤝\nCómo podemos ayudarte?';
+  const chatMessage = 'Hello there! 🤝 \nHow can we help?';
 
   return (
     <>
@@ -26,8 +26,8 @@ const MemberView = () => {
         phoneNumber="+59899548345"
         accountName="Mega Rocket Gym"
         avatar={Logo}
-        statusMessage="Atención al cliente"
-        placeholder="Escribe un mensaje"
+        statusMessage="Customer service"
+        placeholder="Type a message.."
         chatMessage={chatMessage}
         allowClickAway="true"
         darkMode="true"
