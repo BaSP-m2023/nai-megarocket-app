@@ -8,11 +8,40 @@
   height: 20vh;
 }
 
-.joined h2 {
+.joinButtonDiv {
+  display: flex;
+  justify-content: center;
+}
+.joinButtonDiv Button {
+  margin: 5rem;
+  padding: 0 10vw;
   text-transform: uppercase;
-  font-size: 3rem;
+  font-size: 5rem!important;
   letter-spacing: 0.8rem;
   font-weight: 800;
+  cursor: default;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+  color: black;
+  background-color: transparent!important;
+  border: none;
+  position: relative;
+}
+
+.joinButtonDiv Button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  transition: border-color 3s ease;
+}
+
+.joinButtonDiv Button:hover::after {
+  border-color: black;
 }
 
 .joined p {
@@ -21,6 +50,7 @@
   text-transform: uppercase;
   font-size: 1.2rem;
   letter-spacing: 0.8rem;
+  cursor: default;
 }
 
 .landscape {
@@ -29,61 +59,37 @@
   justify-content: center;
   align-items: flex-start;
   align-content: center;
-  background-image: url('/public/assets/images/landing/12.jpg');
   background-size: cover;
   background-position: center;
+  background-image: url('/public/assets/images/landing/12.jpg');
   padding: 0;
   margin: 0;
-  height: 116vh;
+  border: none;
+  height: 80vh;
+  width: 100vw;
+  cursor: pointer;
 }
 
-.landscape h2 {
-  color: white;
-  font-size: 17rem;
+.landscape Button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding: 0;
+  height: 100%;
+  background-color: transparent!important;
   margin: 0;
-  padding: 0;
-  text-transform: uppercase;
-  text-shadow: -6px 6px 20px rgba(0, 0, 0, 1);
+  border: none;
+  width: 100%;
+  font-size: 10rem!important;
+  color: rgba(0, 0, 0, 0.6)!important;
+  text-shadow: none;
+  transition: color 3s ease, font-size 3s ease, text-shadow 3s ease;
 }
 
-
-.formContainer > div {
-  background-color: rgba(0, 0, 0, 0.9);
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.938);
-  flex: 0 0 calc(33.33%);
-  max-width: calc(33.33% - 10vw);
-  min-height: 60vh;
-  text-align: center;
-}
-
-.formContainer h2 {
-  color: white;
-  font-size: 17rem;
-  text-transform: uppercase;
-  text-shadow: -6px 6px 20px rgba(0, 0, 0, 1);
-}
-
-.formContainer h4:nth-child(2) {
-  color: white;
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.formContainer ul {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 20px;
-}
-
-.formContainer li {
-  margin-bottom: 5px;
-  color: #fff;
-}
-
-.form {
-  color: white;
+.landscape Button:hover {
+  color: rgba(0, 0, 0, 1)!important;
+  font-size: 12rem!important;
+  text-shadow: 10px 10px 10px rgb(0, 0, 0);
+  transition: color 3s ease, font-size 3s ease, text-shadow 3s ease;
 }

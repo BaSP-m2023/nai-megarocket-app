@@ -30,6 +30,7 @@
   color: white;
   margin: 0;
   text-transform: uppercase;
+  cursor: default;
 }
 
 .socialIcon {
@@ -43,6 +44,7 @@
 .copyright p {
   color: white;
   font-size: 0.8rem;
+  cursor: default;
 }
 
 .contactData {
@@ -51,6 +53,7 @@
   color: white;
   width: 30vw;
   padding: 1rem 0;
+  cursor: default;
 }
 
 .contactData h5 {

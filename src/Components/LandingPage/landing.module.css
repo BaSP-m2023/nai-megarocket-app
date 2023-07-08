@@ -14,12 +14,14 @@
   color: white;
   text-transform: uppercase;
   width: 100%;
+  cursor: default;
 }
 
 .content p {
   text-align: center;
   font-size: 1.3rem;
   letter-spacing: 0.1rem;
+  cursor: default;
 }
 
 .imageContainer {
@@ -53,27 +55,9 @@
   transform: translate(-50%, -50%);
 }
 
-.joined {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 6rem 0;
-  height: 20vh;
-}
-
-.joined h2 {
+Button {
+  background-color: black!important;
   text-transform: uppercase;
-  font-size: 3rem;
-  letter-spacing: 0.8rem;
-  font-weight: 800;
-}
-
-.joined p {
-  width: 55vw;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 1.2rem;
-  letter-spacing: 0.8rem;
+  border-radius: 0!important;
+  font-size: 1.2rem!important;
 }
