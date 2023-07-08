@@ -13,18 +13,20 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Classes = () => {
   const history = useHistory();
-  const isLoading = useSelector((state) => state.classes.loading);
+  const isLoadingClasses = useSelector((state) => state.classes?.loading);
+  const isLoadingActivities = useSelector((state) => state.activities?.loading);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
   const { classes = [], activities = [] } = useSelector((state) => ({
-    classes: state.classes.data.data,
-    activities: state.activities.data.data
+    classes: state.classes?.data.data,
+    activities: state.activities?.data.data
   }));
   const [activity, setActivity] = useState('');
   const [calendarAlert, setCalendarAlert] = useState(false);
   const dispatch = useDispatch();
-
+  const isLoading = isLoadingActivities && isLoadingClasses;
   useEffect(() => {
+    toast.remove();
     dispatch(getClasses());
     dispatch(getActivities());
     const toastMessage = localStorage.getItem('toastMessage');
@@ -138,16 +140,18 @@ const Classes = () => {
   };
 
   return (
-    <Container>
+    <>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
         }}
       />
       {isLoading ? (
-        <ClipLoader />
+        <Container center={true}>
+          <ClipLoader />
+        </Container>
       ) : classes ? (
-        <>
+        <Container>
           <div className={styles.container}>
             <div className={styles.header}>
               <div className={styles.titleContainer}>
@@ -226,11 +230,13 @@ const Classes = () => {
             editTestId={'admin-classes-button-edit-modal'}
             closeTestId={'admin-classes-icon-cross-close-modal'}
           />
-        </>
+        </Container>
       ) : (
-        <h3>There are no Classes in the database</h3>
+        <Container center={true}>
+          <h3>There are no Classes in the database</h3>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 

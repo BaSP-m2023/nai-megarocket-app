@@ -3,8 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import InputComponent from 'Components/Shared/Input';
 import Button from 'Components/Shared/Button';
 import styles from './form.module.css';
-import { putActivities, postActivities, getActivitiesById } from 'Redux/activities/thunks';
-import { useDispatch } from 'react-redux';
+import { putActivities, postActivities } from 'Redux/activities/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import activityValidation from 'Validations/activities';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -16,6 +16,7 @@ const Form = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
+  const activities = useSelector((state) => state.activities.data.data);
 
   const {
     register,
@@ -29,8 +30,7 @@ const Form = () => {
 
   const getActivityData = async () => {
     try {
-      const response = await dispatch(getActivitiesById(id));
-      const activityData = response.data;
+      const activityData = activities.find((activity) => activity._id === id);
       delete activityData._id;
       delete activityData.__v;
       reset(activityData);
@@ -40,6 +40,7 @@ const Form = () => {
   };
 
   useEffect(() => {
+    toast.remove();
     if (id) {
       getActivityData();
     }

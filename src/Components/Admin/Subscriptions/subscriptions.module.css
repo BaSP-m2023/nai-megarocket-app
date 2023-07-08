@@ -1,9 +1,8 @@
 .buttonContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  width: 50vw;
-  padding: 2%;
+  width: 80%;
 }
 
 .addSubs {

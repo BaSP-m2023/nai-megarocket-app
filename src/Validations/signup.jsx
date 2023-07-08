@@ -53,17 +53,20 @@ const memberValidation = Joi.object({
     .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#%^&*<>_?\-¿¡])/)
     .label('Password')
     .messages({
-      'string.pattern.base': 'Invalid password: Example1!',
+      'string.pattern.base': 'Invalid format, Example: Password1!',
+      'string.min': 'Must have at least 8 characters',
+      'string.max': 'Must have less than 16 characters',
       'any.required': 'Password is required.',
       'string.empty': 'Password is required.'
     }),
   city: Joi.string()
     .trim()
-    .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
+    .regex(/^[a-zA-ZÀ-ÿ\s]+(?:[\s-][a-zA-ZÀ-ÿ\s]+)*$/)
     .min(5)
     .max(25)
     .messages({
       'string.min': 'City must have between 5 and 25 characters',
+      'string.pattern.base': 'Invalid City',
       'string.max': 'City must have between 5 and 25 characters',
       'string.empty': 'City is required.'
     }),
@@ -71,13 +74,14 @@ const memberValidation = Joi.object({
     .max(new Date(new Date().setFullYear(new Date().getFullYear() - 16)).toISOString())
     .messages({
       'date.max': 'You must have at least 16 years',
+      'date.base': 'Birthday is required',
       'any.required': 'Date cannot be empty'
     }),
   postalCode: Joi.number().integer().min(1000).max(99999).messages({
     'number.max': 'Postal code cannot have more than 5 numbers',
     'number.min': 'Postal code cannot have less than 4 numbers',
     'any.required': 'Postal code is required',
-    'number.empty': 'Postal code cannot be empty'
+    'number.base': 'Postal code cannot be empty'
   })
 });
 

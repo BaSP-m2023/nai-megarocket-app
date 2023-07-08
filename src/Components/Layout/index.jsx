@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 import LandingView from 'Components/Views/landingView';
@@ -10,9 +9,8 @@ import Container from 'Components/Shared/Container';
 
 const Layout = () => {
   const auth = useSelector((state) => state.auth);
-  const role = useState(sessionStorage.getItem('role'));
-
-  if (auth?.isAuthPending) {
+  const role = sessionStorage.getItem('role');
+  if (auth?.isAuthPending || auth?.isLoading) {
     <Container>
       <ClipLoader />
     </Container>;

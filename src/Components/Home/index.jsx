@@ -2,11 +2,18 @@ import Container from 'Components/Shared/Container';
 import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './home.module.css';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+  const user = useSelector((state) => state.auth.user);
+
   useEffect(() => {
-    const toastMessage = localStorage.getItem('toastMessage');
+    toast.remove();
+    let toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
+      toastMessage = `Welcome back, ${user?.firstName}${
+        user?.lastName ? ' ' + user?.lastName : ''
+      }!`;
       showToast(toastMessage, 'success');
       localStorage.removeItem('toastMessage');
     }

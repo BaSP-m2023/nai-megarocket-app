@@ -22,6 +22,7 @@ const Subscriptions = () => {
   const [subscriptionId, setSubscriptionId] = useState('');
 
   useEffect(() => {
+    toast.remove();
     dispatch(getSubscriptions());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
@@ -90,29 +91,37 @@ const Subscriptions = () => {
   };
 
   return (
-    <Container>
+    <>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
         }}
       />
-      <div className={styles.buttonContainer}>
-        <h2>Subscriptions</h2>
-        <Button
-          text={'+ Add Subscription'}
-          type={'add'}
-          clickAction={handleAdd}
-          testId={'admin-subscriptions-add-button'}
-        />
-      </div>
-      {loading && subscriptions.length > 0 ? (
-        <ClipLoader />
+
+      {loading ? (
+        <Container center={true}>
+          <ClipLoader />
+        </Container>
       ) : subscriptions && subscriptions.length > 0 ? (
-        <>
+        <Container>
+          <div className={styles.buttonContainer}>
+            <h2>Subscriptions</h2>
+            <Button
+              text={'+ Add Subscription'}
+              type={'add'}
+              clickAction={handleAdd}
+              testId={'admin-subscriptions-add-button'}
+            />
+          </div>
           <Table
             data={subscriptions}
-            properties={['member.firstName', 'member.lastName', 'classes.activity.name']}
-            columnTitles={['First Name', 'Last Name', 'Class Name']}
+            properties={[
+              'member.firstName',
+              'member.lastName',
+              'classes.activity.name',
+              'isActive'
+            ]}
+            columnTitles={['First Name', 'Last Name', 'Class Name', 'Active']}
             handleUpdateItem={handleEdit}
             handleDeleteItem={handleDeleteSubscription}
             testId={'admin-subscriptions-table'}
@@ -132,11 +141,13 @@ const Subscriptions = () => {
               confirmDeleteTestId={'admin-subscriptions-button-confirm-delete-modal'}
             />
           )}
-        </>
+        </Container>
       ) : (
-        <h3>There are no subscriptions in the database</h3>
+        <Container center={true}>
+          <h3>There are no subscriptions in the database</h3>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 

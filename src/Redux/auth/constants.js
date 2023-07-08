@@ -9,3 +9,6 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_ERROR = 'LOGOUT_ERROR';
 export const SET_USER_ROLE = 'SET_USER_ROLE';
 export const UPDATE_USER = 'UPDATE_USER';
+export const SIGN_UP_PENDING = 'SIGN_UP_PENDING';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';

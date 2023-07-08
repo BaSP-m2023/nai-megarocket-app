@@ -24,6 +24,7 @@ const Activities = () => {
   const activities = useSelector((state) => state.activities.data.data);
 
   useEffect(() => {
+    toast.remove();
     dispatch(getActivities());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
@@ -93,25 +94,28 @@ const Activities = () => {
   };
 
   return (
-    <Container>
+    <>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
         }}
       />
-      <div className={styles.topContainer}>
-        <h2>Activities</h2>
-        <Button
-          text={'+ Add Activity'}
-          type={'add'}
-          clickAction={handleAddItem}
-          testId={'admin-button-add-activity'}
-        />
-      </div>
+
       {loading ? (
-        <ClipLoader />
+        <Container center={true}>
+          <ClipLoader />
+        </Container>
       ) : activities ? (
-        <>
+        <Container>
+          <div className={styles.topContainer}>
+            <h2>Activities</h2>
+            <Button
+              text={'+ Add Activity'}
+              type={'add'}
+              clickAction={handleAddItem}
+              testId={'admin-button-add-activity'}
+            />
+          </div>
           <Table
             data={activities}
             properties={['name', 'description', 'isActive']}
@@ -136,11 +140,11 @@ const Activities = () => {
               closeTestId={'admin-activities-button-close-modal'}
             />
           )}
-        </>
+        </Container>
       ) : (
         <h3>There are no activities</h3>
       )}
-    </Container>
+    </>
   );
 };
 

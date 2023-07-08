@@ -28,6 +28,7 @@ const TrainerForm = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     loadAdminData();
   }, [id]);
 

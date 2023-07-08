@@ -1,12 +1,14 @@
+import { useState } from 'react';
 import styles from './modalShedule.module.css';
 import Button from 'Components/Shared/Button';
 import { BsCheck, BsFillPersonVcardFill, BsXLg } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 
-import { deleteSubscription, createSubscription } from 'Redux/subscriptions/thunks';
+import { updateSubscription, createSubscription } from 'Redux/subscriptions/thunks';
 
 const Modal = (data) => {
   const dispatch = useDispatch();
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   if (!data.show) {
     return null;
@@ -45,9 +47,16 @@ const Modal = (data) => {
   };
 
   const handleSubscribe = async () => {
+    if (isButtonDisabled) {
+      return;
+    }
+    setButtonDisabled(true);
     if (data.idSuscription) {
       try {
-        await dispatch(deleteSubscription(data.idSuscription));
+        const updateSuscription = {
+          isActive: false
+        };
+        await dispatch(updateSubscription(updateSuscription, data.idSuscription));
         showToast('Subscription was succesfully removed', 'success');
         data.closeModal();
       } catch (error) {
@@ -60,7 +69,8 @@ const Modal = (data) => {
         const newSuscription = {
           classes: data.idClass,
           member: data.idMember,
-          date: newDate.setHours(newDate.getHours() - 3)
+          date: newDate.setHours(newDate.getHours() - 3),
+          isActive: true
         };
         await dispatch(createSubscription(newSuscription));
         showToast('Subscription was succesfully added', 'success');
@@ -70,6 +80,7 @@ const Modal = (data) => {
         data.closeModal();
       }
     }
+    setButtonDisabled(false);
   };
 
   return (
