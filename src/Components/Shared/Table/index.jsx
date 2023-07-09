@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../Button';
 import styles from './table.module.css';
 import { IoChevronBackCircleOutline, IoChevronForwardCircleOutline } from 'react-icons/io5';
+import { TbArrowsDownUp, TbArrowsUpDown } from 'react-icons/tb';
 import Container from '../Container';
 import { ClipLoader } from 'react-spinners';
 
@@ -14,10 +15,14 @@ const Table = ({
   testId,
   testCancelId,
   testEditId,
-  showButtons = true
+  showButtons = true,
+  showNumberColumn = false,
+  showOrderButton = false
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterDate, setFilterDate] = useState('');
+  const [isDescending, setIsDescending] = useState(true);
   const itemsPerPage = 10;
 
   if (!Array.isArray(data)) {
@@ -46,9 +51,13 @@ const Table = ({
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
+    setFilterDate(event.target.value);
     setCurrentPage(1);
   };
 
+  const handleToggleOrder = () => {
+    setIsDescending((prevState) => !prevState);
+  };
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
@@ -64,16 +73,30 @@ const Table = ({
         const propertyValue = property
           .split('.')
           .reduce((acc, curr) => (acc ? acc[curr] : null), item);
-        return propertyValue?.toString().toLowerCase().includes(searchTermLower);
+        const propertyValueLower = propertyValue?.toString().toLowerCase();
+
+        if (filterDate) {
+          const formattedDate = formatDate(propertyValue);
+          return (
+            formattedDate.includes(filterDate) ||
+            propertyValueLower?.toString().toLowerCase().includes(searchTermLower)
+          );
+        }
+
+        return propertyValueLower?.toString().toLowerCase().includes(searchTermLower);
       });
     })
-    .sort((a, b) => b?.isActive - a?.isActive);
+    .sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return isDescending ? dateB - dateA : dateA - dateB;
+    });
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedData = filteredData?.slice(startIndex, endIndex);
-
-  const currentItems = paginatedData?.length; // calcular el número de elementos actuales
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const firstItemIndex = startIndex + 1;
 
   return (
     <div className={styles.containerT}>
@@ -86,27 +109,32 @@ const Table = ({
           onChange={handleSearchChange}
         />
       </div>
-
       <table id={testId} className={styles.tableShared}>
         <thead className={styles.tableHead}>
           <tr className={styles.tableTrHead}>
+            {showNumberColumn && <th className={styles.tableThtd}>N°</th>}
             {columnTitles.map((title) => (
               <th className={styles.tableThtd} key={title}>
                 {title}
               </th>
             ))}
             <th>
-              {currentItems}/{itemsPerPage}
+              {showOrderButton && (
+                <button className={styles.orderButton} onClick={handleToggleOrder}>
+                  {isDescending ? <TbArrowsDownUp /> : <TbArrowsUpDown />}
+                </button>
+              )}
             </th>
           </tr>
         </thead>
         <tbody>
-          {paginatedData?.map((item) => {
+          {paginatedData?.map((item, index) => {
             return (
               <tr
                 className={`${styles.tableTr} ${!item.isActive && styles.inactiveRow}`}
                 key={item._id}
               >
+                {showNumberColumn && <td className={styles.tableThtd}>{firstItemIndex + index}</td>}
                 {properties?.map((property) => {
                   const value = property
                     .split('.')
@@ -114,7 +142,7 @@ const Table = ({
                   const isArray = Array.isArray(value);
                   let displayValue = isArray ? value.join(', ') : value;
                   if (property === 'date') {
-                    displayValue = formatDate(displayValue); // formatear la fecha
+                    displayValue = formatDate(displayValue);
                   }
                   return (
                     <td className={styles.tableThtd} key={property}>
@@ -143,7 +171,6 @@ const Table = ({
           })}
         </tbody>
       </table>
-
       <div className={styles.pagination}>
         <button
           id="table-button-previous"
@@ -161,6 +188,9 @@ const Table = ({
         >
           <IoChevronForwardCircleOutline size={30} />
         </button>
+      </div>
+      <div className={styles.paginationContainer}>
+        Page {currentPage} of {totalPages}
       </div>
     </div>
   );

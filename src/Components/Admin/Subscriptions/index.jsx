@@ -152,6 +152,8 @@ const Subscriptions = () => {
             testCancelId={'admin-subscriptions-icon-delete'}
             testEditId={'admin-subscriptions-icon-edit'}
             showButtons={showButtons}
+            showNumberColumn={!showButtons}
+            showOrderButton={true}
           />
 
           {showModal && (
