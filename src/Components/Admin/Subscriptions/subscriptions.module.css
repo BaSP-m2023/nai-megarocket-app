@@ -3,6 +3,7 @@
   justify-content: space-between;
   align-items: center;
   width: 80%;
+  height: 7rem;
 }
 
 .addSubs {
@@ -11,4 +12,23 @@
   border: none;
   color: white;
   cursor: pointer;
+}
+
+.toggleButton {
+  background-color: inherit;
+  color: #0f232e;
+  border-radius: 29px;
+  font-size: 1.5rem;
+  padding-top: 6px;
+}
+
+.toggleButton.active {
+  background-color: #0f232e;
+  color: white;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 70%;
 }
