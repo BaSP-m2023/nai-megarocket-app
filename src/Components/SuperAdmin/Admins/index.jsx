@@ -107,7 +107,12 @@ const Admins = () => {
         <Container>
           <div className={styles.topAdminContainer}>
             <h2>Admins</h2>
-            <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
+            <Button
+              testId={'super-admin-add-button'}
+              text={'+ Add Admins'}
+              type={'add'}
+              clickAction={handleAddAdmin}
+            />
           </div>
           {Array.isArray(admins) && admins.length > 0 ? (
             <>

@@ -126,6 +126,7 @@ const Form = () => {
                 labelName={'First Name'}
                 inputType={'text'}
                 inputName={'firstName'}
+                testId={'super-admin-input-first-name'}
                 error={errors.firstName?.message}
               />
             </div>
@@ -135,6 +136,7 @@ const Form = () => {
                 labelName={'Last Name'}
                 inputType={'text'}
                 inputName={'lastName'}
+                testId={'super-admin-input-last-name'}
                 error={errors.lastName?.message}
               />
             </div>
@@ -144,6 +146,7 @@ const Form = () => {
                 labelName={'DNI'}
                 inputType={'number'}
                 inputName={'dni'}
+                testId={'super-admin-input-dni'}
                 error={errors.dni?.message}
               />
             </div>
@@ -154,6 +157,7 @@ const Form = () => {
                   labelName={'Password'}
                   inputType={'password'}
                   inputName={'password'}
+                  testId={'super-admin-input-password'}
                   error={errors.password?.message}
                 />
               </div>
@@ -166,6 +170,7 @@ const Form = () => {
                 labelName={'Email'}
                 inputType={'text'}
                 inputName={'email'}
+                testId={'super-admin-input-email'}
                 error={errors.email?.message}
               />
               <div className={styles.formInput}>
@@ -174,6 +179,7 @@ const Form = () => {
                   labelName={'Phone Number'}
                   inputType={'number'}
                   inputName={'phone'}
+                  testId={'super-admin-input-phone-number'}
                   error={errors.phone?.message}
                 />
               </div>
@@ -184,6 +190,7 @@ const Form = () => {
                 labelName={'City'}
                 inputType={'text'}
                 inputName={'city'}
+                testId={'super-admin-input-city'}
                 error={errors.city?.message}
               />
             </div>
