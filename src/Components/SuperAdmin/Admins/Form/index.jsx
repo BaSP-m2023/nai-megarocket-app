@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { putAdmin, postAdmin } from 'Redux/admins/thunks';
+import { putAdmin } from 'Redux/admins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -9,13 +9,16 @@ import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import Container from 'Components/Shared/Container';
+import { FiArrowLeft } from 'react-icons/fi';
 import { toast, Toaster } from 'react-hot-toast';
+
+import ChangePasswordModal from 'Components/Shared/ChangePasswordModal';
 
 const Form = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const admins = useSelector((state) => state.admins.data);
+  const admins = useSelector((state) => state.admins?.data);
 
   const {
     register,
@@ -43,6 +46,16 @@ const Form = () => {
     }
   }, []);
 
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   const getAdminById = (id) => {
     const admin = admins.find((admin) => admin._id === id);
     if (admin) {
@@ -58,11 +71,7 @@ const Form = () => {
   };
 
   const onSubmit = async (data) => {
-    if (id) {
-      putAdminFunction(id, data);
-    } else {
-      postAdminFunction(data);
-    }
+    putAdminFunction(id, data);
   };
 
   const showErrorToast = (message) => {
@@ -79,16 +88,6 @@ const Form = () => {
     });
   };
 
-  const postAdminFunction = async (admin) => {
-    try {
-      const data = await dispatch(postAdmin(admin));
-      localStorage.setItem('toastMessage', data.message);
-      history.push('/super-admins/admins');
-    } catch (error) {
-      showErrorToast(error.message);
-    }
-  };
-
   const putAdminFunction = async (id, admin) => {
     try {
       const data = await dispatch(putAdmin(id, admin));
@@ -102,9 +101,6 @@ const Form = () => {
   const handleBack = () => {
     history.push('/super-admins/admins');
   };
-  const handleReset = () => {
-    reset();
-  };
 
   return (
     <Container>
@@ -114,7 +110,14 @@ const Form = () => {
         }}
       />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitle}>{id ? 'Update Admin' : 'Add Admin'}</h2>
+        <div className={styles.head}>
+          {' '}
+          <div id="super-admin-form-go-back" className={styles.arrow} onClick={handleBack}>
+            <FiArrowLeft size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Admin' : 'Add Admin'}</h2>
+        </div>
+
         <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.firstInputs}>
             <div className={styles.formInput}>
@@ -144,15 +147,17 @@ const Form = () => {
                 error={errors.dni?.message}
               />
             </div>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'Phone Number'}
-                inputType={'number'}
-                inputName={'phone'}
-                error={errors.phone?.message}
-              />
-            </div>
+            {!id && (
+              <div className={styles.formInput}>
+                <Input
+                  register={register}
+                  labelName={'Password'}
+                  inputType={'password'}
+                  inputName={'password'}
+                  error={errors.password?.message}
+                />
+              </div>
+            )}
           </div>
           <div className={styles.secondInputs}>
             <div className={styles.formInput}>
@@ -163,6 +168,15 @@ const Form = () => {
                 inputName={'email'}
                 error={errors.email?.message}
               />
+              <div className={styles.formInput}>
+                <Input
+                  register={register}
+                  labelName={'Phone Number'}
+                  inputType={'number'}
+                  inputName={'phone'}
+                  error={errors.phone?.message}
+                />
+              </div>
             </div>
             <div className={styles.formInput}>
               <Input
@@ -173,24 +187,26 @@ const Form = () => {
                 error={errors.city?.message}
               />
             </div>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'Password'}
-                inputType={'text'}
-                inputName={'password'}
-                error={errors.password?.message}
-              />
-            </div>
           </div>
           <div className={styles.buttonsDiv}>
-            <Button text={id ? 'Update' : 'Add'} type="submit" info={'submit'} />
-            <div className={styles.buttonsAdmin}>
-              <Button text="Back" type="cancel" clickAction={handleBack} />
-              <Button type={'cancel'} clickAction={handleReset} info={'reset'} text={'Reset'} />
-            </div>
+            <Button
+              text={id ? 'Update' : 'Add'}
+              testId={'super-admin-button-add-admin'}
+              type="submit"
+              info={'submit'}
+            />
+            {id && (
+              <Button
+                type={'cancel'}
+                info="button"
+                testId={'super-admins-admin-change-password-open-modal'}
+                text="Change Password"
+                clickAction={openModal}
+              />
+            )}
           </div>
         </form>
+        <ChangePasswordModal show={isModalOpen} closeModal={closeModal} />
       </div>
     </Container>
   );
