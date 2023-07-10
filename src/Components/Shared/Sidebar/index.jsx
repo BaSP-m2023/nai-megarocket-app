@@ -13,7 +13,7 @@ const Sidebar = ({ routes, rol }) => {
                 <NavLink
                   to={route.link}
                   activeClassName={styles.active}
-                  testId={`sidebar-link-${rol}-${route.name}`}
+                  id={`sidebar-link-${rol}-${route.name.toLowerCase()}`}
                 >
                   {route.name}
                 </NavLink>
