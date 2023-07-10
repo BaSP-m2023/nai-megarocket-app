@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { putAdmin } from 'Redux/admins/thunks';
+import { putAdmin, postAdmin } from 'Redux/admins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -71,7 +71,11 @@ const Form = () => {
   };
 
   const onSubmit = async (data) => {
-    putAdminFunction(id, data);
+    if (id) {
+      putAdminFunction(id, data);
+    } else {
+      postAdminFunction(data);
+    }
   };
 
   const showErrorToast = (message) => {
@@ -98,6 +102,15 @@ const Form = () => {
     }
   };
 
+  const postAdminFunction = async (admin) => {
+    try {
+      const data = await dispatch(postAdmin(admin));
+      localStorage.setItem('toastMessage', data.message);
+      history.push('/super-admins/admins');
+    } catch (error) {
+      showErrorToast(error.message);
+    }
+  };
   const handleBack = () => {
     history.push('/super-admins/admins');
   };
