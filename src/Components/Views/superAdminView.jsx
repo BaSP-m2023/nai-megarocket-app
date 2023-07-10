@@ -8,11 +8,12 @@ const SuperAdminView = () => {
     { name: 'Home', link: '/super-admins/home' },
     { name: 'Admins', link: '/super-admins/admins' }
   ];
+  const rol = 'super-admin';
   return (
     <>
       <Header />
       <div className={styles.body}>
-        <Sidebar routes={routes} />
+        <Sidebar routes={routes} rol={rol} />
         <Routes />
       </div>
     </>
