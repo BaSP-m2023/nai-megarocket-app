@@ -16,7 +16,7 @@ const AdminView = () => {
     { name: 'Subscriptions', link: '/admins/subscriptions' },
     { name: 'Reports', link: '/admins/reports' }
   ];
-  const chatMessage = 'Hola, qué tal? 🤝\nCómo podemos ayudarte?';
+  const chatMessage = 'Hello there! 🤝 \nHow can we help?';
 
   return (
     <>
@@ -29,8 +29,8 @@ const AdminView = () => {
         phoneNumber="+59899548345"
         accountName="Mega Rocket Gym"
         avatar={Logo}
-        statusMessage="Atención al cliente"
-        placeholder="Escribe un mensaje"
+        statusMessage="Customer service"
+        placeholder="Type a message.."
         chatMessage={chatMessage}
         allowClickAway="true"
         darkMode="true"
