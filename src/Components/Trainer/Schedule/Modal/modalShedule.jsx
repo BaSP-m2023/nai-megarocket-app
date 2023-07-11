@@ -29,27 +29,30 @@ const Modal = (data) => {
             <BsXLg />
           </div>
         </div>
+        <div className={styles.activity}>{data.activity}</div>
         <div className={styles.centerTitle}>
           Class {data.day.length > 1 ? data.day.join(' - ') : data.day} {data.hour} Hs
         </div>
-        <div className={styles.activity}>{data.activity}</div>
-        <div className={styles.center}>Trainer:</div>
         <div className={styles.trainer}>
-          <div className={styles.trainerIcon}>
-            <BsFillPersonVcardFill />
+          <div className={styles.trainerTittle}>
+            <h4>Trainer</h4>
           </div>
-          <span className={styles.space}></span>
-          {data.trainer}
+          <div className={styles.trainerName}>
+            <BsFillPersonVcardFill className={styles.trainerIcon} />
+            {data.trainer}
+          </div>
         </div>
-        <div className={styles.listTitle}>Participants: </div>
+        <div className={styles.listTitle}>
+          <h4>Participants</h4>
+        </div>
         <div className={styles.listMembers}>
           {data.membersClass.map((subscription) => (
-            <div key={subscription.member._id}>
+            <div key={subscription?.member?._id}>
               <div className={styles.member}>
-                {subscription.member.firstName} {subscription.member.lastName}
+                {subscription?.member?.firstName} {subscription?.member?.lastName}
                 <span> </span>
-                <span className={getMembershipStyle(subscription.member.membership)}>
-                  {subscription.member.membership}
+                <span className={getMembershipStyle(subscription?.member?.membership)}>
+                  {subscription?.member?.membership}
                 </span>
               </div>
             </div>
@@ -60,7 +63,7 @@ const Modal = (data) => {
             Slots full {data.slotCount} / {data.slot}
           </div>
         ) : (
-          <div className={styles.center}>
+          <div className={styles.slotsCount}>
             Slots: {data.slotCount} / {data.slot}
           </div>
         )}
