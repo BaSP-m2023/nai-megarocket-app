@@ -105,78 +105,70 @@ const AdminProfile = () => {
         }}
       />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitleTwo}>admin data</h2>
+        <h2 className={styles.formTitleTwo}>
+          {editMode
+            ? `${admin?.firstName} ${admin?.lastName}'s Profile`
+            : `${admin?.firstName} ${admin?.lastName}'s Profile`}
+        </h2>
 
-        <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.firstInputs}>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'Name'}
-                inputType={'text'}
-                inputName={'firstName'}
-                error={errors.firstName?.message}
-                disabled={!editMode}
-                testId={'admin-profile-input-first-name'}
-              />
-            </div>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'Last Name'}
-                inputType={'text'}
-                inputName={'lastName'}
-                error={errors.lastName?.message}
-                disabled={!editMode}
-                testId={'admin-profile-input-last-name'}
-              />
-            </div>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'DNI'}
-                inputType={'text'}
-                inputName={'dni'}
-                error={errors.dni?.message}
-                disabled={!editMode}
-                testId={'admin-profile-input-dni'}
-              />
-            </div>
+        <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
+          <div className={`${styles.formColumn} ${styles.formLeft}`}>
+            <Input
+              register={register}
+              labelName={'First Name'}
+              inputType={'text'}
+              inputName={'firstName'}
+              error={errors.firstName?.message}
+              disabled={!editMode}
+              testId={'admin-profile-input-first-name'}
+            />
+            <Input
+              register={register}
+              labelName={'Last Name'}
+              inputType={'text'}
+              inputName={'lastName'}
+              error={errors.lastName?.message}
+              disabled={!editMode}
+              testId={'admin-profile-input-last-name'}
+            />
+            <Input
+              register={register}
+              labelName={'DNI'}
+              inputType={'text'}
+              inputName={'dni'}
+              error={errors.dni?.message}
+              disabled={true}
+              testId={'admin-profile-input-dni'}
+            />
           </div>
-          <div className={styles.secondInputs}>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'Email'}
-                inputType={'text'}
-                inputName={'email'}
-                error={errors.email?.message}
-                disabled={!editMode}
-                testId={'admin-profile-input-email'}
-              />
-            </div>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'City'}
-                inputType={'text'}
-                inputName={'city'}
-                error={errors.city?.message}
-                disabled={!editMode}
-                testId={'admin-profile-input-city'}
-              />
-            </div>
-            <div className={styles.formInput}>
-              <Input
-                register={register}
-                labelName={'Phone Number'}
-                inputType={'text'}
-                inputName={'phone'}
-                error={errors.phone?.message}
-                disabled={!editMode}
-                testId={'admin-profile-input-phone'}
-              />
-            </div>
+          <div className={`${styles.formColumn} ${styles.formRight}`}>
+            <Input
+              register={register}
+              labelName={'Email'}
+              inputType={'text'}
+              inputName={'email'}
+              error={errors.email?.message}
+              disabled={!editMode}
+              testId={'admin-profile-input-email'}
+            />
+            <Input
+              register={register}
+              labelName={'City'}
+              inputType={'text'}
+              inputName={'city'}
+              error={errors.city?.message}
+              disabled={!editMode}
+              testId={'admin-profile-input-city'}
+            />
+            <Input
+              register={register}
+              labelName={'Phone Number'}
+              inputType={'text'}
+              inputName={'phone'}
+              error={errors.phone?.message}
+              disabled={!editMode}
+              testId={'admin-profile-input-phone'}
+            />
           </div>
           <div className={styles.buttonContainer}>
             {!editMode && (
@@ -185,6 +177,7 @@ const AdminProfile = () => {
                 text={'Edit'}
                 type={'submit'}
                 clickAction={handleEnableEditMode}
+                testId={'admin-profile-edit-button'}
               />
             )}
             {editMode && (

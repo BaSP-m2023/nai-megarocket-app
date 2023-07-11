@@ -98,19 +98,23 @@ const TrainerForm = () => {
   };
 
   return (
-    <Container>
+    <Container center={true}>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
         }}
       />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitleTwo}>trainer data</h2>
-        <form className={styles.formTrainer} onSubmit={handleSubmit(onSubmit)}>
+        <h2 className={styles.formTitleTwo}>
+          {editMode
+            ? `${trainer?.firstName} ${trainer?.lastName}'s Profile`
+            : `${trainer?.firstName} ${trainer?.lastName}'s Profile`}
+        </h2>
+        <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
               register={register}
-              labelName={'Name'}
+              labelName={'First Name'}
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
@@ -132,9 +136,11 @@ const TrainerForm = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
-              disabled={!editMode}
+              disabled={true}
               testId={'trainers-input-dni'}
             />
+          </div>
+          <div className={`${styles.formColumn} ${styles.formRight}`}>
             <Input
               register={register}
               labelName={'Phone'}
@@ -144,8 +150,6 @@ const TrainerForm = () => {
               disabled={!editMode}
               testId={'trainers-input-phone'}
             />
-          </div>
-          <div className={`${styles.formColumn} ${styles.formRight}`}>
             <Input
               register={register}
               labelName={'City'}
@@ -154,15 +158,6 @@ const TrainerForm = () => {
               error={errors.city?.message}
               disabled={!editMode}
               testId={'trainers-input-city'}
-            />
-            <Input
-              register={register}
-              labelName={'Salary'}
-              inputType={'number'}
-              inputName={'salary'}
-              error={errors.salary?.message}
-              disabled={!editMode}
-              testId={'trainers-input-salary'}
             />
             <Input
               register={register}
@@ -181,6 +176,7 @@ const TrainerForm = () => {
                 text={'Edit'}
                 type={'submit'}
                 clickAction={handleEnableEditMode}
+                testId={'trainers-button-edit-form'}
               />
             )}
             {editMode && (

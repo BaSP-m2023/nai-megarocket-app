@@ -111,14 +111,18 @@ const MemberForm = () => {
   };
 
   return (
-    <Container>
+    <Container center={true}>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
         }}
       />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitleTwo}>My Profile</h2>
+        <h2 className={styles.formTitleTwo}>
+          {editMode
+            ? `${user?.firstName} ${user?.lastName}'s Profile`
+            : `${user?.firstName} ${user?.lastName}'s Profile`}
+        </h2>
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
@@ -137,14 +141,7 @@ const MemberForm = () => {
               error={errors.lastName?.message}
               disabled={!editMode}
             />
-            <Input
-              register={register}
-              labelName={'DNI'}
-              inputType={'number'}
-              inputName={'dni'}
-              error={errors.dni?.message}
-              disabled={!editMode}
-            />
+
             <Input
               register={register}
               labelName={'Phone'}
