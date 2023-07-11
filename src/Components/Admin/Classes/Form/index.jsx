@@ -11,7 +11,6 @@ import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import Container from 'Components/Shared/Container';
-import SharedForm from 'Components/Shared/Form';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Form = () => {
@@ -43,7 +42,24 @@ const Form = () => {
     activities: state.activities?.data?.data,
     classes: state.classes?.data?.data
   }));
-
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const hoursOfDay = [
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00',
+    '22:00'
+  ];
   const getClassData = async () => {
     try {
       const classData = classes.find((gymClass) => gymClass._id === id);
@@ -123,53 +139,63 @@ const Form = () => {
           margin: '10vh 0 0 0'
         }}
       />
-      <SharedForm onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.container}>
           <h2>{id ? 'Update Class' : 'Create Class'}</h2>
-          <Input
-            register={register}
-            labelName={'Day'}
-            inputType={'text'}
-            inputName={'day'}
-            error={errors.day?.message}
-            testId={'admin-classes-input-day'}
-          />
-          <Input
-            register={register}
-            labelName={'Hour'}
-            inputType={'text'}
-            inputName={'hour'}
-            error={errors.hour?.message}
-            testId={'admin-classes-input-hour'}
-          />
-          <Input
-            register={register}
-            labelName={'Trainer'}
-            inputType={'list'}
-            inputName={'trainer'}
-            list={trainers}
-            listProp={'firstName'}
-            error={errors.trainer?.message}
-            testId={'admin-classes-input-trainer'}
-          />
-          <Input
-            register={register}
-            labelName={'Activity'}
-            inputType={'list'}
-            inputName={'activity'}
-            error={errors.activity?.message}
-            list={activities}
-            listProp={'name'}
-            testId={'admin-classes-input-activity'}
-          />
-          <Input
-            register={register}
-            labelName={'Slots'}
-            inputType={'number'}
-            inputName={'slots'}
-            error={errors.slots?.message}
-            testId={'admin-classes-input-slots'}
-          />
+          <div className={styles.inputsContainer}>
+            <div className={styles.inputContainerA}>
+              <Input
+                register={register}
+                labelName={'Day'}
+                inputType={'list'}
+                inputName={'day'}
+                list={daysOfWeek}
+                listProp={'day'}
+                error={errors.day?.message}
+                testId={'admin-classes-input-day'}
+              />
+              <Input
+                register={register}
+                labelName={'Hour'}
+                inputType={'list'}
+                inputName={'hour'}
+                list={hoursOfDay}
+                listProp={'hours'}
+                error={errors.hour?.message}
+                testId={'admin-classes-input-hour'}
+              />
+              <Input
+                register={register}
+                labelName={'Trainer'}
+                inputType={'list'}
+                inputName={'trainer'}
+                list={trainers}
+                listProp={'firstName'}
+                error={errors.trainer?.message}
+                testId={'admin-classes-input-trainer'}
+              />
+            </div>
+            <div className={styles.inputContainerB}>
+              <Input
+                register={register}
+                labelName={'Activity'}
+                inputType={'list'}
+                inputName={'activity'}
+                error={errors.activity?.message}
+                list={activities}
+                listProp={'name'}
+                testId={'admin-classes-input-activity'}
+              />
+              <Input
+                register={register}
+                labelName={'Slots'}
+                inputType={'number'}
+                inputName={'slots'}
+                error={errors.slots?.message}
+                testId={'admin-classes-input-slots'}
+              />
+            </div>
+          </div>
         </div>
         <div className={styles.buttonsDiv}>
           <Button
@@ -194,7 +220,7 @@ const Form = () => {
             />
           </div>
         </div>
-      </SharedForm>
+      </form>
     </Container>
   );
 };

@@ -5,6 +5,19 @@
   align-items: center;
 }
 
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-self: center;
+  text-align: center;
+  min-width: 60%;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  padding-bottom: 5vh;
+  align-items: center;
+}
+
 .box {
   display: flex;
   flex-direction: column;
@@ -49,4 +62,22 @@
 
 .confirmButton > button {
   width: 9.5vw;
+}
+
+.inputContainerA {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainerB {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2%;
+  justify-content: center;
 }

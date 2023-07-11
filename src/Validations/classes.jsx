@@ -11,7 +11,7 @@ const classValidation = Joi.object({
       'string.empty': 'Day is required'
     }),
   hour: Joi.string()
-    .pattern(/^(?:[89]|1[0-9]|2[0-2]):00$/)
+    .pattern(/^(?:0[8-9]|1[0-9]|2[0-2]):[0-5][0-9]$/)
     .messages({
       'string.pattern': 'Hour must be in H:MM or HH:MM format',
       'string.pattern.base': 'Gym is only open between 08:00 and 22:00',
