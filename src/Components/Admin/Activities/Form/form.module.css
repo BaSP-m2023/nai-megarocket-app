@@ -44,7 +44,9 @@ display: flex;
 width: 20vw;
 justify-content: center;
 align-items: center;
-}.formTitle {
+}
+
+.formTitle {
   margin-right: auto;
   margin-left: auto;
   text-align: center;

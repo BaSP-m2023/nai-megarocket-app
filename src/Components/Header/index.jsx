@@ -46,7 +46,11 @@ function Header() {
   return (
     <>
       <header className={styles.container}>
-        <div onClick={() => history.push(`${routePath()}/home`)} className={styles.brand}>
+        <div
+          id="header-logo-link"
+          onClick={() => history.push(`${routePath()}/home`)}
+          className={styles.brand}
+        >
           MEGAROCKET
         </div>
         <div>
