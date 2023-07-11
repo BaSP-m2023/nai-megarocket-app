@@ -50,6 +50,7 @@ const Form = () => {
       delete classData?._id;
       delete classData?.createdAt;
       delete classData?.updatedAt;
+      delete classData?.subscriptions;
       delete classData?.__v;
       classData.day = Object.values(classData?.day).join(',');
       classData.trainer = classData.trainer?._id;

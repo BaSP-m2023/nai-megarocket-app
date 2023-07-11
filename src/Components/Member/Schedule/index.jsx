@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './schedule.module.css';
 import Modal from './Modal/modalShedule';
 import { useDispatch, useSelector } from 'react-redux';
-import { BsCheckCircleFill } from 'react-icons/bs';
+import { BsRocketTakeoffFill, BsFillCalendar2CheckFill } from 'react-icons/bs';
 import { getClasses } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
@@ -33,12 +33,17 @@ const Schedule = () => {
     day: '',
     trainer: '',
     activity: '',
+    subscriptions: [],
     slot: '',
     slotCount: '',
     idSuscription: '',
     idClass: '',
     idMember: ''
   });
+
+  const currentDate = new Date();
+  const currentDay = currentDate.getDay();
+  const currentHour = currentDate.getHours();
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -116,6 +121,7 @@ const Schedule = () => {
               slot: classItem.slots,
               slotCount: slotCount,
               day: classItem.day,
+              subscriptions: classItem.subscriptions,
               idSuscription: suscriptionFound?._id,
               idClass: classItem?._id,
               idMember: memberData?._id
@@ -123,16 +129,54 @@ const Schedule = () => {
           }}
           className={suscriptionFound ? styles.addedButton : styles.classesButton}
         >
+          <div className={styles.buttonText}>
+            {classItem.activity?.name}{' '}
+            {classItem.slots <= slotCount && <div className={styles.slotsFull}>Full</div>}
+          </div>
+          {!suscriptionFound
+            ? `${classItem.trainer?.firstName}  ${classItem.trainer?.lastName}`
+            : null}
+          {suscriptionFound && (
+            <div className={styles.slots}>
+              <BsRocketTakeoffFill /> Subscribed
+            </div>
+          )}
+        </div>
+      );
+    } else {
+      return <div className={styles.emptyButton}></div>;
+    }
+  };
+
+  const getClassButtonDisabled = (hour, day) => {
+    let classItem;
+    if (activity === 'all') {
+      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
+    } else {
+      classItem = classes?.find(
+        (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
+      );
+    }
+
+    if (classItem) {
+      const suscriptionFound = subscriptions?.find(
+        (item) =>
+          item.classes?._id === classItem?._id &&
+          item.member?._id === memberData?._id &&
+          item.isActive === true
+      );
+
+      return (
+        <div className={suscriptionFound ? styles.emptyButtonDisabled : styles.emptyButtonDisabled}>
           <div className={styles.buttonText}>{classItem.activity?.name}</div>
           {!suscriptionFound
             ? `${classItem.trainer?.firstName}  ${classItem.trainer?.lastName}`
             : null}
           {suscriptionFound && (
             <div className={styles.slots}>
-              <BsCheckCircleFill /> Subscribed
+              <BsFillCalendar2CheckFill /> Assisted
             </div>
           )}
-          <div className={styles.slotsFull}>{classItem.slots <= slotCount && <div>Full</div>}</div>
         </div>
       );
     } else {
@@ -157,7 +201,7 @@ const Schedule = () => {
       ) : (
         <>
           {error ? (
-            <Container>
+            <Container center={true}>
               <div className={styles.errorContainer}>
                 <p>An error occurred while loading the data.</p>
               </div>
@@ -171,7 +215,7 @@ const Schedule = () => {
               />
               <div className={styles.container}>
                 <div className={styles.header}>
-                  <h2 className={styles.title}>Scheduled Classes</h2>
+                  <h2 className={styles.title}>Class scheduling</h2>
                   <div className={styles.filterActivity}>
                     <label className={styles.selectLabel} htmlFor="activity">
                       Filter by activity:{' '}
@@ -207,14 +251,23 @@ const Schedule = () => {
                   <tbody>
                     {hoursOfDay?.map((hour) => (
                       <tr key={hour.value}>
-                        <td className={styles.hourColumn}>{hour.label} </td>
-                        {daysOfWeek?.map((day) => (
-                          <td className={styles.column} key={day}>
-                            <div className={styles.buttonContainer}>
-                              {getClassButton(hour.label, day)}
-                            </div>
-                          </td>
-                        ))}
+                        <td className={styles.hourColumn}>{hour.label}</td>
+                        {daysOfWeek?.map((day, index) => {
+                          const isPastDay = currentDay > index + 1;
+                          const isPastHour =
+                            isPastDay || (currentDay === index + 1 && hour.value <= currentHour);
+                          const isSunday = currentDay === 0;
+
+                          return (
+                            <td className={styles.column} key={day}>
+                              <div className={styles.buttonContainer}>
+                                {isPastHour && !isSunday
+                                  ? getClassButtonDisabled(hour.label, day)
+                                  : getClassButton(hour.label, day)}
+                              </div>
+                            </td>
+                          );
+                        })}
                       </tr>
                     ))}
                   </tbody>
@@ -238,6 +291,7 @@ const Schedule = () => {
         idSuscription={infoClass.idSuscription}
         idClass={infoClass.idClass}
         idMember={infoClass.idMember}
+        infoClass={infoClass}
       />
     </>
   );
