@@ -52,8 +52,8 @@ const Home = () => {
         }}
       />
       <Container className={styles.container}>
-        <h2>
-          Welcome to MEGAROCKET, {user?.firstName} {user?.lastName ? ' ' + user?.lastName : ''}!
+        <h2 className={styles.title}>
+          Welcome to MEGAROCKET, {user?.firstName} {user?.lastName ? ' ' + user?.lastName : ''} !
         </h2>
         <div className={styles.slider}>
           <ul>

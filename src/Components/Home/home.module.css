@@ -5,6 +5,10 @@
   margin-top: 20%;
 }
 
+.title {
+  text-shadow: 2px -10px 10px lightblue;;
+}
+
 .slider {
 	width: 800px;
   height: 500px;
@@ -31,7 +35,6 @@
 .slider img {
   width: 800px;
   height: 500px;
-  object-fit: cover;
 }
 
 @keyframes slide {
