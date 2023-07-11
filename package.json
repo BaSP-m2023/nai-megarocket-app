@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^14.4.3",
     "firebase": "^9.23.0",
     "joi": "^17.9.2",
+    "nodemailer": "^6.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
@@ -22,9 +23,9 @@
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
+    "stream-browserify": "^3.0.0",
     "web-vitals": "^2.1.4"
   },
-  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -33,7 +34,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "prepare": "husky install",
     "wdio": "wdio run ./wdio.conf.js",
-    "allure-report":"allure generate --clean allure-results && allure open"
+    "allure-report": "allure generate --clean allure-results && allure open"
   },
   "eslintConfig": {
     "extends": [

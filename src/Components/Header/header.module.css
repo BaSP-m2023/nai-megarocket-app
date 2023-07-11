@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10vh;
+  height: 12vh;
   background-color: black;
   width: 100vw;
   position: sticky;
@@ -12,12 +12,11 @@
 }
 
 .brand {
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: white;
   margin-left: 1.5vw;
-  text-transform: uppercase;
   cursor: pointer;
+}
+.brand img {
+  height: 9vh;
 }
 
 .logOut {
@@ -29,6 +28,8 @@
 }
 
 .icons {
+  display: flex;
+  flex-direction: row;
   margin-right: 2rem;
 }
 
@@ -38,6 +39,12 @@
   background-color: white;
   border-radius: 15rem;
   margin-right: 1rem;
+  transition: 1s ease;
+}
+
+.socialIcon:hover {
+  background-color: #68C8F0;
+  transition: 1s ease;
 }
 
 .appName {
@@ -48,4 +55,20 @@
 
 .brand > button {
   display: flex;
+}
+
+.buttonLog {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.buttonLog Button {
+  border: none;
+  border-radius: 0;
+  background-color: black;
+  margin: 0 2rem;
+  text-transform: capitalize;
+
 }

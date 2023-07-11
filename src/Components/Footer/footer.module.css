@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@1,700&display=swap');
+
 .footer {
   display: flex;
   flex-direction: row;
@@ -12,25 +14,21 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-content: center;
-  align-items: flex-start;
-  width: 30vw;
+  align-items: center;
+  width: 27vw;
 }
 
-.icons{
+.logo img {
+  width: 100%;
+}
+
+.icons {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-content: center;
   align-items: center;
-  width: 15vw;
-}
-
-.brand h2{
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: white;
-  margin: 0;
-  text-transform: uppercase;
-  cursor: default;
+  width: 100%;
 }
 
 .socialIcon {
@@ -38,7 +36,18 @@
   color: #f9a414;
   background-color: white;
   border-radius: 15rem;
-  margin-right: 1rem;
+  transition: 1s ease;
+}
+
+.socialIcon:hover {
+  background-color: #68C8F0;
+  transition: 1s ease;
+}
+
+.copyright {
+  display: flex;
+  justify-content: center;
+  width: 26vw;
 }
 
 .copyright p {
@@ -71,4 +80,17 @@
   display: flex;
   margin: 0;
   padding: 0.5rem;
+}
+
+.contactData a {
+  display: flex;
+  margin: 0;
+  padding: 0.5rem;
+  color: white;
+  text-decoration: none;
+  transition: 1s ease;
+}
+.contactData a:hover {
+  color: #68C8F0;
+  transition: 1s ease;
 }

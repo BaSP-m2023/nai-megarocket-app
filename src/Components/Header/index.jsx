@@ -48,14 +48,14 @@ function Header() {
     <>
       <header className={styles.container}>
         <div onClick={() => history.push(`${routePath()}/landing`)} className={styles.brand}>
-          MEGAROCKET
+          <img src="/assets/images/logos/logo-1.png" alt="logo" />
         </div>
 
         <div className={styles.icons}>
           <a id="logout-bar-link" onClick={showModalLogout} rel="noopener noreferrer">
             <img
               className={styles.logOut}
-              src={`${process.env.PUBLIC_URL}/assets/images/log-in.svg`}
+              src={`${process.env.PUBLIC_URL}/assets/images/log-in-1.svg`}
             />
           </a>
           <a

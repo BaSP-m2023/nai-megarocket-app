@@ -9,43 +9,40 @@
 }
 
 .joinButtonDiv {
+  padding: 0;
+  margin: 0;
   display: flex;
   justify-content: center;
+  transition: 3s ease;
+  width: 100vw;
+  height: 100%;
 }
 .joinButtonDiv Button {
-  margin: 5rem;
-  padding: 0 10vw;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 6rem;
   text-transform: uppercase;
   font-size: 5rem!important;
   letter-spacing: 0.8rem;
   font-weight: 800;
   cursor: default;
-  width: fit-content;
-  height: fit-content;
   cursor: pointer;
   color: black;
   background-color: transparent!important;
   border: none;
+  border-radius: 0;
   position: relative;
+  transition: 0.5s ease;
 }
 
-.joinButtonDiv Button::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 2px solid transparent;
-  transition: border-color 3s ease;
-}
-
-.joinButtonDiv Button:hover::after {
-  border-color: black;
+.joinButtonDiv Button:hover {
+  color: #3C748C;
+  transition: 0.5s ease;
 }
 
 .joined p {
-  width: 55vw;
+  width: 100vw;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 1.2rem;
@@ -82,14 +79,15 @@
   border: none;
   width: 100%;
   font-size: 10rem!important;
-  color: rgba(0, 0, 0, 0.6)!important;
+  color: rgba(0, 0, 0, 0)!important;
   text-shadow: none;
-  transition: color 3s ease, font-size 3s ease, text-shadow 3s ease;
+  transition: color 1s ease, font-size 1s ease, text-shadow 1s ease;
+  text-transform: uppercase;
 }
 
 .landscape Button:hover {
-  color: rgba(0, 0, 0, 1)!important;
-  font-size: 12rem!important;
+  color: white!important;
+  font-size: 11rem!important;
   text-shadow: 10px 10px 10px rgb(0, 0, 0);
-  transition: color 3s ease, font-size 3s ease, text-shadow 3s ease;
+  transition: color 1s ease, font-size 1s ease, text-shadow 1s ease;
 }
