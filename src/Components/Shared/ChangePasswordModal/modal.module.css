@@ -51,5 +51,6 @@
 .buttonContainer {
   display: flex;
   justify-content: flex-end;
+  gap: 1vw;
   width: 100%;
 }

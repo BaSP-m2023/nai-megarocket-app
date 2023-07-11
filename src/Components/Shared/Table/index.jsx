@@ -16,7 +16,6 @@ const Table = ({
   testCancelId,
   testEditId,
   showButtons = true,
-  showNumberColumn = false,
   showOrderButton = false
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -112,7 +111,7 @@ const Table = ({
       <table id={testId} className={styles.tableShared}>
         <thead className={styles.tableHead}>
           <tr className={styles.tableTrHead}>
-            {showNumberColumn && <th className={styles.tableThtd}>N°</th>}
+            {<th className={styles.tableThtd}>#</th>}
             {columnTitles.map((title) => (
               <th className={styles.tableThtd} key={title}>
                 {title}
@@ -134,7 +133,7 @@ const Table = ({
                 className={`${styles.tableTr} ${!item.isActive && styles.inactiveRow}`}
                 key={item._id}
               >
-                {showNumberColumn && <td className={styles.tableThtd}>{firstItemIndex + index}</td>}
+                {<td className={styles.tableThtd}>{firstItemIndex + index}</td>}
                 {properties?.map((property) => {
                   const value = property
                     .split('.')
@@ -171,26 +170,29 @@ const Table = ({
           })}
         </tbody>
       </table>
-      <div className={styles.pagination}>
-        <button
-          id="table-button-previous"
-          className={styles.pagButton}
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-        >
-          <IoChevronBackCircleOutline size={30} />
-        </button>
-        <button
-          id="table-button-next"
-          className={styles.pagButton}
-          onClick={handleNextPage}
-          disabled={currentPage === Math.ceil(filteredData.length / itemsPerPage)}
-        >
-          <IoChevronForwardCircleOutline size={30} />
-        </button>
-      </div>
-      <div className={styles.paginationContainer}>
-        Page {currentPage} of {totalPages}
+      <div className={styles.bottom}>
+        <div className={styles.pagination}>
+          <button
+            id="table-button-previous"
+            className={styles.pagButton}
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+          >
+            <IoChevronBackCircleOutline size={30} />
+          </button>
+          <button
+            id="table-button-next"
+            className={styles.pagButton}
+            onClick={handleNextPage}
+            disabled={currentPage === Math.ceil(filteredData.length / itemsPerPage)}
+          >
+            <IoChevronForwardCircleOutline size={30} />
+          </button>
+        </div>
+
+        <div className={styles.paginationContainer}>
+          Page {currentPage} of {totalPages}
+        </div>
       </div>
     </div>
   );
