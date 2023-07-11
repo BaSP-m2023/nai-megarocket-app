@@ -64,7 +64,7 @@ const SignUp = () => {
     <Container isLogin={true}>
       <Toaster />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitle}>{'Sign Up'}</h2>
+        <h2 className={styles.formTitle}>{'Sign Up'} </h2>
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
@@ -73,6 +73,7 @@ const SignUp = () => {
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
+              testId={'sing-up-input-first-name'}
             />
             <Input
               register={register}
@@ -80,6 +81,7 @@ const SignUp = () => {
               inputType={'text'}
               inputName={'lastName'}
               error={errors.lastName?.message}
+              testId={'sing-up-input-last-name'}
             />
             <Input
               register={register}
@@ -87,6 +89,7 @@ const SignUp = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
+              testId={'sing-up-input-dni'}
             />
             <Input
               register={register}
@@ -94,6 +97,7 @@ const SignUp = () => {
               inputType={'number'}
               inputName={'phone'}
               error={errors.phone?.message}
+              testId={'sing-up-input-phone'}
             />
             <Input
               register={register}
@@ -101,6 +105,7 @@ const SignUp = () => {
               inputType={'text'}
               inputName={'email'}
               error={errors.email?.message}
+              testId={'sing-up-input-email'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
@@ -110,6 +115,7 @@ const SignUp = () => {
               inputType={'password'}
               inputName={'password'}
               error={errors.password?.message}
+              testId={'sing-up-input-password'}
             />
             <Input
               register={register}
@@ -117,6 +123,7 @@ const SignUp = () => {
               inputType={'text'}
               inputName={'city'}
               error={errors.city?.message}
+              testId={'sing-up-input-city'}
             />
             <Input
               register={register}
@@ -124,6 +131,7 @@ const SignUp = () => {
               inputType={'date'}
               inputName={'birthDay'}
               error={errors.birthDay?.message}
+              testId={'sing-up-input-date'}
             />
             <Input
               register={register}
@@ -131,13 +139,25 @@ const SignUp = () => {
               inputType={'number'}
               inputName={'postalCode'}
               error={errors.postalCode?.message}
+              testId={'sing-up-input-postal-code'}
             />
           </div>
           <div className={styles.buttonContainer}>
-            <Button text={'Add'} type={'submit'} info={'submit'} />
+            <Button text={'Add'} type={'submit'} info={'submit'} testId={'sing-up-button-add'} />
             <div className={styles.buttonsLowContainer}>
-              <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
-              <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
+              <Button
+                text={'Back'}
+                type={'cancel'}
+                clickAction={handleCancel}
+                testId={'sing-up-button-cancel'}
+              />
+              <Button
+                type={'cancel'}
+                onClick={handleReset}
+                info={'reset'}
+                text={'Reset'}
+                testId={'sing-up-button-reset'}
+              />
             </div>
           </div>
         </form>
