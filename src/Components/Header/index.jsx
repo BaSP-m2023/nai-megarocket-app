@@ -48,7 +48,8 @@ function Header() {
     <>
       <header className={styles.container}>
         <div onClick={() => history.push(`${routePath()}/landing`)} className={styles.brand}>
-          <img src="/assets/images/logos/logo-1.png" alt="logo" />
+          <img src="/assets/images/logos/logo-3.png" alt="logo" className={styles.logo3} />
+          <img src="/assets/images/logos/logo-2.png" alt="logo" className={styles.logo2} />
         </div>
 
         <div className={styles.icons}>

@@ -12,12 +12,24 @@
 }
 
 .brand {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-left: 1.5vw;
   cursor: pointer;
 }
 
-.brand img {
-  height: 9vh;
+.logo3 {
+  height: 7vh;
+  padding-right: 1vw;
+  padding-bottom: 1vh;
+}
+
+.logo2 {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  height: 5vh;
 }
 
 .icons {
