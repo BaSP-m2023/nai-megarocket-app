@@ -95,11 +95,7 @@ const Form = () => {
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.head}>
           {' '}
-          <div
-            id="admin-subscriptions-form-go-back"
-            className={styles.arrow}
-            onClick={handleCancel}
-          >
+          <div id="admin-activities-form-go-back" className={styles.arrow} onClick={handleCancel}>
             <FiArrowLeft size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Activity' : 'Add Activity'}</h2>

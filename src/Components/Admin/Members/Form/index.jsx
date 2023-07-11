@@ -122,11 +122,7 @@ const MemberForm = () => {
         {' '}
         <div className={styles.head}>
           {' '}
-          <div
-            id="admin-subscriptions-form-go-back"
-            className={styles.arrow}
-            onClick={handleCancel}
-          >
+          <div id="admin-members-form-go-back" className={styles.arrow} onClick={handleCancel}>
             <FiArrowLeft size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Member' : 'Add Member'}</h2>

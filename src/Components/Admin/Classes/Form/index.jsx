@@ -128,11 +128,7 @@ const Form = () => {
         <div className={styles.container}>
           <div className={styles.head}>
             {' '}
-            <div
-              id="admin-subscriptions-form-go-back"
-              className={styles.arrow}
-              onClick={handleCancel}
-            >
+            <div id="admin-classes-form-go-back" className={styles.arrow} onClick={handleCancel}>
               <FiArrowLeft size={35} />
             </div>
             <h2 className={styles.formTitle}> {id ? 'Update Class' : 'Add Class'}</h2>

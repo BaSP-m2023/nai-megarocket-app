@@ -104,7 +104,7 @@ const AdminTrainerForm = () => {
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.head}>
           {' '}
-          <div id="admin-trainer-form-go-back" className={styles.arrow} onClick={handleCancel}>
+          <div id="admin-trainers-form-go-back" className={styles.arrow} onClick={handleCancel}>
             <FiArrowLeft size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Trainer' : 'Add Trainer'}</h2>
