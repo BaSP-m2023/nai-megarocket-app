@@ -4,8 +4,8 @@ class LoginPage {
     return browser.url(url);
   }
 
-  get linkLogin() {
-    return $('#login-bar-link');
+  get titleLogin() {
+    return $('h2');
   }
 
   get inputEmail() {
@@ -32,6 +32,14 @@ class LoginPage {
     return $('#login-input-password-error');
   }
 
+  get buttonRegister() {
+    return $('#login-button-register');
+  }
+
+  get titleRegister() {
+    return $('h2');
+  }
+
   async singIn() {
     await this.linkLogin.click();
   }
@@ -43,4 +51,4 @@ class LoginPage {
   }
 }
 
-module.exports = new LoginPage();
+export default new LoginPage();
