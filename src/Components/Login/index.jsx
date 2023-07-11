@@ -70,7 +70,7 @@ const Login = () => {
       if (response.type === LOGIN_SUCCESS) {
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
-            history.push('/super-admins/home');
+            history.push('/super-admins/admins');
             localStorage.setItem('toastMessage', 'Welcome to MegaRocketGYM');
             break;
           case 'ADMIN':

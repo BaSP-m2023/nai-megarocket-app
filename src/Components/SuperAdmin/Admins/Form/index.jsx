@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { putAdmin } from 'Redux/admins/thunks';
+import { putAdmin, postAdmin } from 'Redux/admins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -71,7 +71,11 @@ const Form = () => {
   };
 
   const onSubmit = async (data) => {
-    putAdminFunction(id, data);
+    if (id) {
+      putAdminFunction(id, data);
+    } else {
+      postAdminFunction(data);
+    }
   };
 
   const showErrorToast = (message) => {
@@ -98,6 +102,15 @@ const Form = () => {
     }
   };
 
+  const postAdminFunction = async (admin) => {
+    try {
+      const data = await dispatch(postAdmin(admin));
+      localStorage.setItem('toastMessage', data.message);
+      history.push('/super-admins/admins');
+    } catch (error) {
+      showErrorToast(error.message);
+    }
+  };
   const handleBack = () => {
     history.push('/super-admins/admins');
   };
@@ -126,6 +139,7 @@ const Form = () => {
                 labelName={'First Name'}
                 inputType={'text'}
                 inputName={'firstName'}
+                testId={'super-admin-input-first-name'}
                 error={errors.firstName?.message}
               />
             </div>
@@ -135,6 +149,7 @@ const Form = () => {
                 labelName={'Last Name'}
                 inputType={'text'}
                 inputName={'lastName'}
+                testId={'super-admin-input-last-name'}
                 error={errors.lastName?.message}
               />
             </div>
@@ -144,6 +159,7 @@ const Form = () => {
                 labelName={'DNI'}
                 inputType={'number'}
                 inputName={'dni'}
+                testId={'super-admin-input-dni'}
                 error={errors.dni?.message}
               />
             </div>
@@ -154,6 +170,7 @@ const Form = () => {
                   labelName={'Password'}
                   inputType={'password'}
                   inputName={'password'}
+                  testId={'super-admin-input-password'}
                   error={errors.password?.message}
                 />
               </div>
@@ -166,6 +183,7 @@ const Form = () => {
                 labelName={'Email'}
                 inputType={'text'}
                 inputName={'email'}
+                testId={'super-admin-input-email'}
                 error={errors.email?.message}
               />
               <div className={styles.formInput}>
@@ -174,6 +192,7 @@ const Form = () => {
                   labelName={'Phone Number'}
                   inputType={'number'}
                   inputName={'phone'}
+                  testId={'super-admin-input-phone-number'}
                   error={errors.phone?.message}
                 />
               </div>
@@ -184,6 +203,7 @@ const Form = () => {
                 labelName={'City'}
                 inputType={'text'}
                 inputName={'city'}
+                testId={'super-admin-input-city'}
                 error={errors.city?.message}
               />
             </div>
