@@ -5,6 +5,7 @@ import stylesTrainers from './trainers.module.css';
 import Footer from 'Components/Footer';
 import Button from 'Components/Shared/Button';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import ContactForm from './Form';
 
 const Landing = () => {
   const history = useHistory();
@@ -35,7 +36,6 @@ const Landing = () => {
           <Button
             testId={'login-button-register'}
             type="submit"
-            className={stylesJoin.joinButton}
             text={'join our gym'}
             clickAction={handleRegister}
           />
@@ -59,6 +59,7 @@ const Landing = () => {
             clickAction={handleRegister}
           />
         </div>
+        <ContactForm />
       </div>
       <Footer />
     </>

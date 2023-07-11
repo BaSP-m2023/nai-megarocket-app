@@ -45,7 +45,7 @@ function Footer() {
           </div>
           <div className={styles.copyright}>
             <p>
-              &copy;Megarocket. All rigths reserved &nbsp;&nbsp;|&nbsp;|&nbsp;&nbsp; Nai & Luchito
+              &copy;Megarocket. All rights reserved &nbsp;&nbsp;|&nbsp;|&nbsp;&nbsp; Nai & Luchito
               team.
             </p>
           </div>
