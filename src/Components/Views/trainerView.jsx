@@ -9,11 +9,12 @@ const TrainerView = () => {
     { name: 'Profile', link: '/trainers/profile' },
     { name: 'Classes', link: '/trainers/schedule' }
   ];
+  const rol = 'trainer';
   return (
     <>
       <Header />
       <div className={styles.body}>
-        <Sidebar routes={routes} />
+        <Sidebar routes={routes} rol={rol} />
         <Routes />
       </div>
     </>

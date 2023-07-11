@@ -14,11 +14,12 @@ const AdminView = () => {
     { name: 'Subscriptions', link: '/admins/subscriptions' },
     { name: 'Reports', link: '/admins/reports' }
   ];
+  const rol = 'admin';
   return (
     <>
       <Header />
       <div className={styles.body}>
-        <Sidebar routes={routes} />
+        <Sidebar routes={routes} rol={rol} />
         <Routes />
       </div>
     </>
