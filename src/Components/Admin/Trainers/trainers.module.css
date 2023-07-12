@@ -1,6 +1,7 @@
 .headContainer {
   display: flex;
   width: 80%;
-  justify-content: space-around;
+
+  justify-content: space-between;
   align-items: center;
 }

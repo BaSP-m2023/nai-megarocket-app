@@ -1,22 +1,32 @@
-import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addMember } from 'Redux/members/thunks';
+import { signUp } from 'Redux/auth/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './signup.module.css';
-import SharedModal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import memberValidation from 'Validations/signup';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SignUp = () => {
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
+  };
 
   const {
     register,
@@ -27,46 +37,34 @@ const SignUp = () => {
     mode: 'all',
     resolver: joiResolver(memberValidation)
   });
+
   const onSubmit = (data) => {
     memberAddFunction(data);
   };
+
   const memberAddFunction = async (member) => {
     try {
-      const data = await dispatch(addMember(member));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
-    } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
-    }
-  };
-  const handleCloseAlert = () => {
-    if (isSuccess) {
+      const data = await dispatch(signUp(member));
+      localStorage.setItem('toastMessage', data.message);
       history.push('/auth/login');
-    } else {
-      setShowAlert(false);
+    } catch (error) {
+      showErrorToast(error.message);
     }
   };
+
   const handleCancel = () => {
     history.push('/auth/login');
   };
+
   const handleReset = () => {
     reset();
   };
+
   return (
     <Container isLogin={true}>
+      <Toaster />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitle}>{'Sign Up'}</h2>
-        <SharedModal
-          isDelete={false}
-          show={showAlert}
-          closeModal={handleCloseAlert}
-          typeStyle={isSuccess ? 'success' : 'error'}
-          title={isSuccess ? 'Success' : 'Something went wrong'}
-          body={alertMessage}
-        />
+        <h2 className={styles.formTitle}>{'Sign Up'} </h2>
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
@@ -75,6 +73,7 @@ const SignUp = () => {
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
+              testId={'sing-up-input-first-name'}
             />
             <Input
               register={register}
@@ -82,6 +81,7 @@ const SignUp = () => {
               inputType={'text'}
               inputName={'lastName'}
               error={errors.lastName?.message}
+              testId={'sing-up-input-last-name'}
             />
             <Input
               register={register}
@@ -89,6 +89,7 @@ const SignUp = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
+              testId={'sing-up-input-dni'}
             />
             <Input
               register={register}
@@ -96,6 +97,7 @@ const SignUp = () => {
               inputType={'number'}
               inputName={'phone'}
               error={errors.phone?.message}
+              testId={'sing-up-input-phone'}
             />
             <Input
               register={register}
@@ -103,6 +105,7 @@ const SignUp = () => {
               inputType={'text'}
               inputName={'email'}
               error={errors.email?.message}
+              testId={'sing-up-input-email'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
@@ -112,6 +115,7 @@ const SignUp = () => {
               inputType={'password'}
               inputName={'password'}
               error={errors.password?.message}
+              testId={'sing-up-input-password'}
             />
             <Input
               register={register}
@@ -119,6 +123,7 @@ const SignUp = () => {
               inputType={'text'}
               inputName={'city'}
               error={errors.city?.message}
+              testId={'sing-up-input-city'}
             />
             <Input
               register={register}
@@ -126,6 +131,7 @@ const SignUp = () => {
               inputType={'date'}
               inputName={'birthDay'}
               error={errors.birthDay?.message}
+              testId={'sing-up-input-date'}
             />
             <Input
               register={register}
@@ -133,13 +139,25 @@ const SignUp = () => {
               inputType={'number'}
               inputName={'postalCode'}
               error={errors.postalCode?.message}
+              testId={'sing-up-input-postal-code'}
             />
           </div>
           <div className={styles.buttonContainer}>
-            <Button text={'Add'} type={'submit'} info={'submit'} />
+            <Button text={'Add'} type={'submit'} info={'submit'} testId={'sing-up-button-add'} />
             <div className={styles.buttonsLowContainer}>
-              <Button text={'Back'} type={'cancel'} clickAction={handleCancel} />
-              <Button type={'cancel'} onClick={handleReset} info={'reset'} text={'Reset'} />
+              <Button
+                text={'Back'}
+                type={'cancel'}
+                clickAction={handleCancel}
+                testId={'sing-up-button-cancel'}
+              />
+              <Button
+                type={'cancel'}
+                onClick={handleReset}
+                info={'reset'}
+                text={'Reset'}
+                testId={'sing-up-button-reset'}
+              />
             </div>
           </div>
         </form>
@@ -147,4 +165,5 @@ const SignUp = () => {
     </Container>
   );
 };
+
 export default SignUp;

@@ -8,23 +8,57 @@ import Button from 'Components/Shared/Button/index';
 import SharedModal from 'Components/Shared/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Trainers = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const [stateModal, setStateModal] = useState('success');
   const [modalMessage, setModalMessage] = useState('');
   const [selectedTrainerId, setSelectedTrainerId] = useState(null);
   const [isConfirmationModal, setIsConfirmationModal] = useState(true);
   const [typeStyle, setTypeStyle] = useState('default');
-
-  const dispatch = useDispatch();
-  const trainers = useSelector((state) => state.trainers.data);
-  const isLoading = useSelector((state) => state.trainers.loading);
+  const trainersState = useSelector((state) => state.trainers);
+  const trainers = trainersState.data;
+  const isLoading = trainersState.loading;
 
   useEffect(() => {
+    toast.remove();
     dispatch(getTrainers());
+    const toastMessage = localStorage.getItem('toastMessage');
+    if (toastMessage) {
+      showToast(toastMessage, 'success');
+      localStorage.removeItem('toastMessage');
+    }
   }, []);
+
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      toast.success(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      toast.error(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    }
+  };
 
   const handleDelete = (id) => {
     setSelectedTrainerId(id);
@@ -37,15 +71,12 @@ const Trainers = () => {
   const handleDeleteConfirmation = async () => {
     if (selectedTrainerId) {
       try {
-        await dispatch(deleteTrainer(selectedTrainerId));
-        setModalMessage('Trainer deleted successfully');
-        setIsConfirmationModal(false);
-        setTypeStyle('success');
+        const data = await dispatch(deleteTrainer(selectedTrainerId));
+        showToast(data.message, 'success');
+        setShowModal(false);
       } catch (error) {
-        console.error('Error deleting trainer:', error);
-        setModalMessage('Error deleting trainer');
-        setTypeStyle('error');
-        setStateModal('fail');
+        showToast(error.message, 'error');
+        setShowModal(false);
       }
     }
   };
@@ -65,20 +96,28 @@ const Trainers = () => {
   };
 
   return (
-    <Container>
-      <div className={styles.headContainer}>
-        <h2>Trainers</h2>
-        <Button
-          text="+ Add Trainer"
-          clickAction={handleAddTrainer}
-          type="add"
-          testId={'admin-trainer-add-button'}
-        />
-      </div>
+    <>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
+
       {isLoading ? (
-        <ClipLoader />
+        <Container center={true}>
+          <ClipLoader />
+        </Container>
       ) : (
-        <>
+        <Container>
+          <div className={styles.headContainer}>
+            <h2>Trainers</h2>
+            <Button
+              text="+ Add Trainer"
+              clickAction={handleAddTrainer}
+              type="add"
+              testId={'admin-trainer-add-button'}
+            />
+          </div>
           {!trainers ? (
             <h3>No trainers to show</h3>
           ) : trainers.length > 0 ? (
@@ -102,12 +141,11 @@ const Trainers = () => {
           ) : (
             <h3>No data to retrieve</h3>
           )}
-        </>
+        </Container>
       )}
       {showModal && (
         <SharedModal
           show={showModal}
-          state={stateModal}
           title="Delete Trainer"
           body={modalMessage}
           isDelete={isConfirmationModal}
@@ -119,7 +157,7 @@ const Trainers = () => {
           confirmDeleteTestId={'admin-trainers-button-confirm-delete-modal'}
         />
       )}
-    </Container>
+    </>
   );
 };
 

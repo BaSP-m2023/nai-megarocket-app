@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { editClass, addClass, getClassById } from 'Redux/classes/thunks';
+import { editClass, addClass } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
 import { getTrainers } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,6 +15,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { FormControl, InputLabel } from '@mui/material';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const Form = () => {
   const {
@@ -37,9 +38,14 @@ const Form = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { trainers = [], activities = [] } = useSelector((state) => ({
-    trainers: state.trainers.data,
-    activities: state.activities.data.data
+  const {
+    trainers = [],
+    activities = [],
+    classes = []
+  } = useSelector((state) => ({
+    trainers: state.trainers?.data,
+    activities: state.activities?.data?.data,
+    classes: state.classes?.data?.data
   }));
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const hoursOfDay = [
@@ -62,8 +68,7 @@ const Form = () => {
 
   const getClassData = async () => {
     try {
-      const response = await dispatch(getClassById(id));
-      const classData = response.data;
+      const classData = classes.find((gymClass) => gymClass._id === id);
       delete classData?._id;
       delete classData?.createdAt;
       delete classData?.updatedAt;
@@ -111,6 +116,7 @@ const Form = () => {
   };
 
   useEffect(() => {
+    toast.remove();
     dispatch(getTrainers());
     dispatch(getActivities());
     if (id) {
@@ -139,7 +145,13 @@ const Form = () => {
       />
       <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.container}>
-          <h2>{id ? 'Update Class' : 'Create Class'}</h2>
+          <div className={styles.head}>
+            {' '}
+            <div id="admin-classes-form-go-back" className={styles.arrow} onClick={handleCancel}>
+              <FiArrowLeft size={35} />
+            </div>
+            <h2 className={styles.formTitle}> {id ? 'Update Class' : 'Add Class'}</h2>
+          </div>
           <div className={styles.inputsContainer}>
             <div className={styles.inputContainerA}>
               <FormControl variant="standard" fullWidth>
@@ -201,7 +213,7 @@ const Form = () => {
                       id={'admin-classes-input-day'}
                     >
                       {trainers.map((trainer) => (
-                        <MenuItem key={trainer} value={trainer}>
+                        <MenuItem key={trainer._id} value={trainer._id}>
                           {trainer.firstName}
                         </MenuItem>
                       ))}
@@ -239,13 +251,13 @@ const Form = () => {
                   render={({ field }) => (
                     <Select
                       {...field}
-                      value={field.value || []}
+                      value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
                       error={errors.activity?.message}
                       id={'admin-classes-input-day'}
                     >
                       {activities.map((activity) => (
-                        <MenuItem key={activity} value={activity}>
+                        <MenuItem key={activity._id} value={activity._id}>
                           {activity.name}
                         </MenuItem>
                       ))}
@@ -281,21 +293,6 @@ const Form = () => {
             text={id ? 'Update' : 'Add'}
             testId={'admin-classes-button-submit-form'}
           />
-          <div className={styles.confirmButton}>
-            <Button
-              type="cancel"
-              text="Back"
-              clickAction={handleCancel}
-              testId={'admin-classes-button-back-form'}
-            />
-            <Button
-              type={'cancel'}
-              clickAction={() => reset()}
-              info={'reset'}
-              text={'Reset'}
-              testId={'admin-classes-button-reset-form'}
-            />
-          </div>
         </div>
       </form>
     </Container>

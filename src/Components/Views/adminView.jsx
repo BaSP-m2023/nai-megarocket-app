@@ -1,6 +1,6 @@
-import Header from 'Components/Header/index';
 import styles from 'Components/Layout/layout.module.css';
 import Routes from 'Routes/Routes';
+import Header from 'Components/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 
 const AdminView = () => {
@@ -14,11 +14,12 @@ const AdminView = () => {
     { name: 'Subscriptions', link: '/admins/subscriptions' },
     { name: 'Reports', link: '/admins/reports' }
   ];
+  const rol = 'admin';
   return (
     <>
       <Header />
       <div className={styles.body}>
-        <Sidebar routes={routes} />
+        <Sidebar routes={routes} rol={rol} />
         <Routes />
       </div>
     </>

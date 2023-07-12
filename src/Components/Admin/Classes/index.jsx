@@ -5,20 +5,18 @@ import SharedModal from 'Components/Shared/Modal';
 import { useHistory } from 'react-router-dom';
 import { getClasses, deleteClass } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
+import { getTrainers } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import CalendarModal from './Modal';
 import Container from 'Components/Shared/Container';
-import { getTrainers } from 'Redux/trainers/thunks';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Classes = () => {
   const history = useHistory();
-
-  const isLoading = useSelector((state) => state.classes.loading);
+  const isLoadingClasses = useSelector((state) => state.classes?.loading);
+  const isLoadingActivities = useSelector((state) => state.activities?.loading);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const [classToDelete, setClassToDelete] = useState(null);
   const {
     classes = [],
@@ -33,12 +31,52 @@ const Classes = () => {
   const [trainer, setTrainer] = useState('all');
   const [calendarAlert, setCalendarAlert] = useState(false);
   const dispatch = useDispatch();
-
+  const isLoading = isLoadingActivities && isLoadingClasses;
   useEffect(() => {
+    toast.remove();
     dispatch(getClasses());
     dispatch(getActivities());
     dispatch(getTrainers());
+    const toastMessage = localStorage.getItem('toastMessage');
+    if (toastMessage) {
+      showToast(toastMessage, 'success');
+      localStorage.removeItem('toastMessage');
+    };
   }, []);
+
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      toast.success(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      toast.error(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (activities.length > 0) {
+      setActivity(activities[0].name);
+    }
+  }, [activities]);
 
   const handleDeleteClass = () => {
     setCalendarAlert(false);
@@ -49,13 +87,9 @@ const Classes = () => {
     setShowDeleteWarning(false);
     try {
       const data = await dispatch(deleteClass(classToDelete));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
+      showToast(data.message, 'success');
     } catch (error) {
-      setAlertMessage(error);
-      setShowAlert(true);
-      setIsSuccess(false);
+      showToast(error.message, 'error');
     }
   };
 
@@ -178,11 +212,18 @@ const Classes = () => {
   };
 
   return (
-    <Container>
+    <>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       {isLoading ? (
-        <ClipLoader />
+        <Container center={true}>
+          <ClipLoader />
+        </Container>
       ) : classes ? (
-        <>
+        <Container>
           <div className={styles.container}>
             <div className={styles.header}>
               <div className={styles.titleContainer}>
@@ -277,16 +318,6 @@ const Classes = () => {
             confirmDeleteTestId={'admin-classes-button-confirm-modal'}
             closeTestId={'admin-classes-button-close-warning-modal'}
           />
-          <SharedModal
-            isDelete={false}
-            show={showAlert}
-            typeStyle={isSuccess ? 'success' : 'error'}
-            closeModal={() => setShowAlert(false)}
-            title={isSuccess ? 'Success' : 'Error'}
-            body={alertMessage}
-            testId={'admin-classes-modal'}
-            closeTestId={'admin-classes-button-close-success-modal'}
-          />
           <CalendarModal
             show={calendarAlert}
             title={'Class Options'}
@@ -299,11 +330,13 @@ const Classes = () => {
             editTestId={'admin-classes-button-edit-modal'}
             closeTestId={'admin-classes-icon-cross-close-modal'}
           />
-        </>
+        </Container>
       ) : (
-        <h3>There are no Classes in the database</h3>
+        <Container center={true}>
+          <h3>There are no Classes in the database</h3>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 

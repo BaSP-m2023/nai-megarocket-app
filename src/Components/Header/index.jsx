@@ -13,9 +13,26 @@ function Header() {
   const history = useHistory();
 
   const showModalLogout = () => {
-    setTitleModal('Warning:');
-    setBodyModal('Are you sure you want to log out?');
+    setTitleModal('Warning');
+    setBodyModal('You want to log out?');
     setShowModal(true);
+  };
+
+  const role = sessionStorage.getItem('role');
+
+  const routePath = () => {
+    switch (role) {
+      case 'ADMIN':
+        return '/admins';
+      case 'SUPER_ADMIN':
+        return '/super-admins';
+      case 'TRAINER':
+        return '/trainers';
+      case 'MEMBER':
+        return '/members';
+      default:
+        return '';
+    }
   };
 
   const handleLogOut = () => {
@@ -23,17 +40,23 @@ function Header() {
     sessionStorage.removeItem('role');
     sessionStorage.removeItem('token');
     setShowModal(false);
+    localStorage.setItem('toastMessage', 'See you soon!');
     history.push('/auth/login');
   };
+
   return (
     <>
       <header className={styles.container}>
-        <div className={styles.brand}>MEGAROCKET</div>
-        <div>
+        <div onClick={() => history.push(`${routePath()}/landing`)} className={styles.brand}>
+          <img src="/assets/images/logos/logo-3.png" alt="logo" className={styles.logo3} />
+          <img src="/assets/images/logos/logo-2.png" alt="logo" className={styles.logo2} />
+        </div>
+
+        <div className={styles.icons}>
           <a id="logout-bar-link" onClick={showModalLogout} rel="noopener noreferrer">
             <img
               className={styles.logOut}
-              src={`${process.env.PUBLIC_URL}/assets/images/log-in.svg`}
+              src={`${process.env.PUBLIC_URL}/assets/images/log-in-1.svg`}
             />
           </a>
           <a
