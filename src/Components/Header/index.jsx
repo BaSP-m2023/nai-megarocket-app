@@ -43,17 +43,20 @@ function Header() {
     localStorage.setItem('toastMessage', 'See you soon!');
     history.push('/auth/login');
   };
+
   return (
     <>
       <header className={styles.container}>
-        <div onClick={() => history.push(`${routePath()}/home`)} className={styles.brand}>
-          MEGAROCKET
+        <div onClick={() => history.push(`${routePath()}/landing`)} className={styles.brand}>
+          <img src="/assets/images/logos/logo-3.png" alt="logo" className={styles.logo3} />
+          <img src="/assets/images/logos/logo-2.png" alt="logo" className={styles.logo2} />
         </div>
-        <div>
+
+        <div className={styles.icons}>
           <a id="logout-bar-link" onClick={showModalLogout} rel="noopener noreferrer">
             <img
               className={styles.logOut}
-              src={`${process.env.PUBLIC_URL}/assets/images/log-in.svg`}
+              src={`${process.env.PUBLIC_URL}/assets/images/log-in-1.svg`}
             />
           </a>
           <a

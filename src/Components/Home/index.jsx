@@ -1,8 +1,8 @@
 import Container from 'Components/Shared/Container';
 import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import styles from './home.module.css';
 import { useSelector } from 'react-redux';
-import styles from 'Components/Home/home.module.css';
 
 const Home = () => {
   const user = useSelector((state) => state.auth.user);

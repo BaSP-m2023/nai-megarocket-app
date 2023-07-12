@@ -1,12 +1,10 @@
 .container {
   display: flex;
   justify-content: center;
-  margin-left: 30%;
-  margin-top: 20%;
+  align-items: center;
 }
 
 .title {
-  text-shadow: 2px -10px 20px lightblue;;
 }
 
 .slider {

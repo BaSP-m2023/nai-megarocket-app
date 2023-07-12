@@ -1,18 +1,29 @@
 .formContainer {
   display: flex;
   flex-direction: column;
-  align-self: center;
+  width: 60%;
   border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  padding-bottom: 5vh;
+  padding-bottom: 3vh;
 }
 
 .formTitle {
+  margin-right: auto;
+  margin-left: auto;
   text-align: center;
   color: #0f232e;
-  margin-top: 4%;
-  margin-bottom: 2%;
 }
+
+.arrow {
+  cursor: pointer;
+}
+
+.head {
+  margin: 2vh 4vw 2vh 4vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
 
 .formMembers {
   display: flex;

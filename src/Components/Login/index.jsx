@@ -70,7 +70,7 @@ const Login = () => {
       if (response.type === LOGIN_SUCCESS) {
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
-            history.push('/super-admins/home');
+            history.push('/super-admins/admins');
             localStorage.setItem('toastMessage', 'Welcome to MegaRocketGYM');
             break;
           case 'ADMIN':
@@ -103,52 +103,54 @@ const Login = () => {
   return (
     <Container isLogin={true}>
       <Toaster />
-      <div className={styles.container}>
-        <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
-          <h2>Login</h2>
-          <div className={styles.emailContainer}>
-            <InputComponent
-              inputName="email"
-              inputType="text"
-              labelName="Email"
-              placeholder={'Email'}
-              register={register}
-              error={errors.email?.message}
-              testId={'login-input-email'}
-              errorTestId={'login-input-email-error'}
-            />
-          </div>
-          <div className={styles.passwordContainer}>
-            <div>
+      <div className={styles.big}>
+        <div className={styles.container}>
+          <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
+            <h2>Login</h2>
+            <div className={styles.emailContainer}>
               <InputComponent
-                inputName="password"
-                inputType={showPassword ? 'text' : 'password'}
-                id="password"
-                labelName="Password"
-                placeholder={'Password'}
+                inputName="email"
+                inputType="text"
+                labelName="Email"
+                placeholder={'Email'}
                 register={register}
-                error={errors.password?.message}
-                testId={'login-input-password'}
-                errorTestId={'login-input-password-error'}
+                error={errors.email?.message}
+                testId={'login-input-email'}
+                errorTestId={'login-input-email-error'}
               />
             </div>
-            <button
-              id="login-eye-button"
-              className={styles.eyeButton}
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaRegEye />}
-            </button>
-          </div>
-          <Button testId={'login-button-submit'} type="submit" text={'Log In'} />
-          <Button
-            testId={'login-button-register'}
-            type="submit"
-            text={'Create an Account'}
-            clickAction={handleRegister}
-          />
-        </form>
+            <div className={styles.passwordContainer}>
+              <div>
+                <InputComponent
+                  inputName="password"
+                  inputType={showPassword ? 'text' : 'password'}
+                  id="password"
+                  labelName="Password"
+                  placeholder={'Password'}
+                  register={register}
+                  error={errors.password?.message}
+                  testId={'login-input-password'}
+                  errorTestId={'login-input-password-error'}
+                />
+              </div>
+              <button
+                id="login-eye-button"
+                className={styles.eyeButton}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaRegEye />}
+              </button>
+            </div>
+            <Button testId={'login-button-submit'} type="submit" text={'Log In'} />
+            <Button
+              testId={'login-button-register'}
+              type="submit"
+              text={'Create an Account'}
+              clickAction={handleRegister}
+            />
+          </form>
+        </div>
       </div>
     </Container>
   );

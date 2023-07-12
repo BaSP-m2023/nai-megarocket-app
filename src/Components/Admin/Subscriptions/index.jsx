@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getSubscriptions, deleteSubscription } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
+import { FaHistory } from 'react-icons/fa';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Subscriptions = () => {
@@ -20,6 +21,8 @@ const Subscriptions = () => {
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const [subscriptionId, setSubscriptionId] = useState('');
+  const [showInactive, setShowInactive] = useState(false);
+  const [showButtons, setShowButtons] = useState(true);
 
   useEffect(() => {
     toast.remove();
@@ -90,6 +93,11 @@ const Subscriptions = () => {
     setShowModal(false);
   };
 
+  const handleToggleInactive = () => {
+    setShowInactive(!showInactive);
+    setShowButtons(!showButtons);
+  };
+
   return (
     <>
       <Toaster
@@ -105,29 +113,53 @@ const Subscriptions = () => {
       ) : subscriptions && subscriptions.length > 0 ? (
         <Container>
           <div className={styles.buttonContainer}>
-            <h2>Subscriptions</h2>
-            <Button
-              text={'+ Add Subscription'}
-              type={'add'}
-              clickAction={handleAdd}
-              testId={'admin-subscriptions-add-button'}
-            />
+            <h2>{showInactive ? 'Subscriptions history' : 'Subscriptions'}</h2>
+
+            <div className={styles.buttons}>
+              {showButtons && (
+                <Button
+                  text={'+ Add Subscription'}
+                  type={'add'}
+                  clickAction={handleAdd}
+                  testId={'admin-subscriptions-add-button'}
+                />
+              )}
+              <div className={styles.iconContainer}>
+                <button
+                  onClick={handleToggleInactive}
+                  className={`${styles.toggleButton} ${showInactive ? styles.active : ''}`}
+                  id="admin-subscriptions-toggle-inactive-button"
+                >
+                  {showInactive ? <FaHistory /> : <FaHistory />}
+                </button>
+              </div>
+            </div>
           </div>
+
           <Table
-            data={subscriptions}
+            data={
+              showInactive
+                ? subscriptions
+                : subscriptions.filter((subscription) => subscription.isActive)
+            }
             properties={[
               'member.firstName',
               'member.lastName',
               'classes.activity.name',
+              'date',
               'isActive'
             ]}
-            columnTitles={['First Name', 'Last Name', 'Class Name', 'Active']}
+            columnTitles={['First Name', 'Last Name', 'Class Name', 'Date', 'Active']}
             handleUpdateItem={handleEdit}
             handleDeleteItem={handleDeleteSubscription}
             testId={'admin-subscriptions-table'}
             testCancelId={'admin-subscriptions-icon-delete'}
             testEditId={'admin-subscriptions-icon-edit'}
+            showButtons={showButtons}
+            showNumberColumn={!showButtons}
+            showOrderButton={true}
           />
+
           {showModal && (
             <SharedModal
               show={showModal}
