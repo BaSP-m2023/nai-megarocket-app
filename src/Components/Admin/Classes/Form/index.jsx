@@ -13,6 +13,7 @@ import Input from 'Components/Shared/Input';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
 import toast, { Toaster } from 'react-hot-toast';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const Form = () => {
   const {
@@ -125,7 +126,13 @@ const Form = () => {
       />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.container}>
-          <h2>{id ? 'Update Class' : 'Create Class'}</h2>
+          <div className={styles.head}>
+            {' '}
+            <div id="admin-classes-form-go-back" className={styles.arrow} onClick={handleCancel}>
+              <FiArrowLeft size={35} />
+            </div>
+            <h2 className={styles.formTitle}> {id ? 'Update Class' : 'Add Class'}</h2>
+          </div>
           <Input
             register={register}
             labelName={'Day'}
@@ -178,21 +185,6 @@ const Form = () => {
             text={id ? 'Update' : 'Add'}
             testId={'admin-classes-button-submit-form'}
           />
-          <div className={styles.confirmButton}>
-            <Button
-              type="cancel"
-              text="Back"
-              clickAction={handleCancel}
-              testId={'admin-classes-button-back-form'}
-            />
-            <Button
-              type={'cancel'}
-              clickAction={() => reset()}
-              info={'reset'}
-              text={'Reset'}
-              testId={'admin-classes-button-reset-form'}
-            />
-          </div>
         </div>
       </SharedForm>
     </Container>

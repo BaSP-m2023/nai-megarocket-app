@@ -1,6 +1,7 @@
 import Container from 'Components/Shared/Container';
 import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import styles from './home.module.css';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
@@ -44,16 +45,12 @@ const Home = () => {
   };
 
   return (
-    <>
-      <Toaster
-        containerStyle={{
-          margin: '10vh 0 0 0'
-        }}
-      />
-      <Container center={true}>
+    <div className={styles.container}>
+      <Container>
+        <Toaster />
         <h2>Welcome to MEGAROCKET</h2>
       </Container>
-    </>
+    </div>
   );
 };
 

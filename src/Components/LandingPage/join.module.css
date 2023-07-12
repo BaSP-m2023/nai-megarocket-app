@@ -1,0 +1,93 @@
+.joinButtonDiv {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100%;
+  transition: 3s ease;
+}
+
+.joinButtonDiv Button {
+  margin: 0;
+  padding: 6rem;
+  height: 100%;
+  width: 100%;
+  font-size: 5rem!important;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.8rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  color: black;
+  background-color: transparent!important;
+  position: relative;
+  transition: 0.5s ease;
+}
+
+.joinButtonDiv Button:hover {
+  color: #157CAA;
+  transition: 0.5s ease;
+}
+
+.joined {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 0;
+  height: 20vh;
+  text-align: center;
+}
+
+.joined p {
+  width: 100vw;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8rem;
+  cursor: default;
+}
+
+.landscape {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 80vh;
+  border: none;
+  background-image: url('/public/assets/images/landing/12.jpg');
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+
+.landscape Button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent!important;
+  font-size: 0rem!important;
+  text-shadow: none;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0)!important;
+  transition: color 1s ease, font-size 1s ease, text-shadow 1s ease;
+}
+
+.landscape Button:hover {
+  font-size: 7rem!important;
+  text-shadow: 10px 10px 10px rgb(0, 0, 0);
+  color: white!important;
+  transition: color 0.5s ease, font-size 1s ease, text-shadow 1s ease;
+}

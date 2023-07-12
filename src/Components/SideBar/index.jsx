@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
-import styles from './sideBar.module.css';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from 'Redux/auth/thunks';
 import SharedModal from 'Components/Shared/Modal/index';
 
 const SideBar = () => {
-  const [role, setRole] = useState();
+  const [role, setRole] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [typeStyle, setTypeStyle] = useState('');
-  const [titleModal, setTitleModal] = useState('');
-  const [bodyModal, setBodyModal] = useState('');
+  const [typeStyle] = useState('');
+  const [titleModal] = useState('');
+  const [bodyModal] = useState('');
   const dispatch = useDispatch();
-
-  const showModalLogout = () => {
-    setTitleModal('Warning:');
-    setBodyModal('Are you sure you want to log out? :(');
-    setTypeStyle('success');
-    setShowModal(true);
-  };
 
   const handleLogOut = () => {
     dispatch(logout());
@@ -27,64 +19,58 @@ const SideBar = () => {
 
   return (
     <>
-      <aside className={styles.aside}>
-        <nav className={styles.navbar}>
-          <ul className={styles.routes}>
+      <aside>
+        <nav>
+          <ul>
             {!role && (
               <>
-                <button className={styles.button} onClick={() => setRole('super-admins')}>
-                  Super Admin
-                </button>
-                <button className={styles.button} onClick={() => setRole('admins')}>
-                  Admin
-                </button>
-                <button className={styles.button} onClick={() => setRole('members')}>
-                  Member
-                </button>
+                <button onClick={() => setRole('super-admins')}>Super Admin</button>
+                <button onClick={() => setRole('admins')}>Admin</button>
+                <button onClick={() => setRole('members')}>Member</button>
               </>
             )}
 
             {role && (
               <>
                 <li>
-                  <NavLink activeClassName={styles.active} exact to="/" onClick={() => setRole()}>
+                  <NavLink active exact to="/" onClick={() => setRole()}>
                     Home
                   </NavLink>
                 </li>
                 {role === 'admins' && (
                   <>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/profile`}>
+                      <NavLink active to={`/${role}/profile`}>
                         Profile
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/activities`}>
+                      <NavLink active to={`/${role}/activities`}>
                         Activities
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/classes`}>
+                      <NavLink active to={`/${role}/classes`}>
                         Classes
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/members`}>
+                      <NavLink active to={`/${role}/members`}>
                         Members
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/subscriptions`}>
+                      <NavLink active to={`/${role}/subscriptions`}>
                         Subscriptions
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/trainers`}>
+                      <NavLink active to={`/${role}/trainers`}>
                         Trainers
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/reports`}>
+                      <NavLink active to={`/${role}/reports`}>
                         Reports
                       </NavLink>
                     </li>
@@ -94,7 +80,7 @@ const SideBar = () => {
                 {role === 'super-admins' && (
                   <>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/admins`}>
+                      <NavLink active to={`/${role}/admins`}>
                         Admins
                       </NavLink>
                     </li>
@@ -104,22 +90,22 @@ const SideBar = () => {
                 {role === 'members' && (
                   <>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/profile`}>
+                      <NavLink active to={`/${role}/profile`}>
                         Profile
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/schedule`}>
+                      <NavLink active to={`/${role}/schedule`}>
                         Schedule
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/activities`}>
+                      <NavLink active to={`/${role}/activities`}>
                         Activities
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink activeClassName={styles.active} to={`/${role}/memberships`}>
+                      <NavLink active to={`/${role}/memberships`}>
                         Memberships
                       </NavLink>
                     </li>
@@ -127,12 +113,6 @@ const SideBar = () => {
                 )}
               </>
             )}
-
-            <li>
-              <NavLink activeClassName={styles.active} to={`/auth/login`} onClick={showModalLogout}>
-                Log Out
-              </NavLink>
-            </li>
           </ul>
         </nav>
       </aside>

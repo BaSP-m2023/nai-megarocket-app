@@ -27,8 +27,13 @@
   color: white;
 }
 
-.iconContainer {
+
+.buttons > button {
+  margin: 0;
+}
+
+.buttons {
   display: flex;
-  justify-content: flex-end;
-  width: 70%;
+  align-items: center;
+  gap: 10px;
 }

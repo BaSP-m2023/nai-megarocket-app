@@ -10,6 +10,7 @@ import Input from 'Components/Shared/Input';
 import memberValidation from 'Validations/members';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const MemberForm = () => {
   const members = useSelector((state) => state.members.data.data);
@@ -96,10 +97,6 @@ const MemberForm = () => {
     history.push('/admins/members');
   };
 
-  const handleReset = () => {
-    reset();
-  };
-
   const formatDate = (dateString) => {
     const parts = dateString.split('-');
     const year = parseInt(parts[0]);
@@ -122,7 +119,14 @@ const MemberForm = () => {
         }}
       />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitle}>{id ? 'Update Member' : 'Add Member'}</h2>
+        {' '}
+        <div className={styles.head}>
+          {' '}
+          <div id="admin-members-form-go-back" className={styles.arrow} onClick={handleCancel}>
+            <FiArrowLeft size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Member' : 'Add Member'}</h2>
+        </div>
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
@@ -226,21 +230,6 @@ const MemberForm = () => {
               info={'submit'}
               testId={'admin-members-button-submit-form'}
             />
-            <div className={styles.buttonsLowContainer}>
-              <Button
-                text={'Back'}
-                type={'cancel'}
-                clickAction={handleCancel}
-                testId={'admin-members-button-back-form'}
-              />
-              <Button
-                type={'cancel'}
-                clickAction={handleReset}
-                info={'reset'}
-                text={'Reset'}
-                testId={'admin-members-button-reset-form'}
-              />
-            </div>
           </div>
         </form>
       </div>
