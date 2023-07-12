@@ -1,24 +1,18 @@
-import React, { useEffect } from 'react';
-import VerticalBar from '../VerticalBar';
+// import styles from './memberships.module.css';
+import { useSelector } from 'react-redux';
 import styles from './memberships.module.css';
-import { getMembers } from 'Redux/members/thunks';
-import { useSelector, useDispatch } from 'react-redux';
-
+import { PieChart } from '@mui/x-charts/PieChart';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 const ReportsMemberships = () => {
-  const dispatch = useDispatch();
   const members = useSelector((state) => state.members.data.data);
   const loading = useSelector((state) => state.members.loading);
 
-  useEffect(() => {
-    dispatch(getMembers());
-  }, []);
-
-  if (loading) {
-    return <ClipLoader />;
-  }
   const memberCount = {};
+  //const palette = ['#0f232e', '#a8a5a5', '#e7ad4a'];
 
   if (members) {
     members?.forEach((item) => {
@@ -27,13 +21,35 @@ const ReportsMemberships = () => {
     });
   }
 
-  const uniqueMembers = members ? Array.from(new Set(members.map((item) => item.membership))) : [];
+  const data = Object.entries(memberCount).map(([label, value]) => ({
+    label,
+    value
+  }));
 
-  return (
+  console.log(data);
+
+  return loading ? (
+    <ClipLoader />
+  ) : (
     <div className={styles.container}>
-      {uniqueMembers.map((memberMembership, idx) => (
-        <VerticalBar key={idx} name={memberMembership} value={memberCount[memberMembership] * 20} />
-      ))}
+      <Stack direction="row" width="100%" textAlign="center" margin="1%" height="100%">
+        <Box>
+          <Typography padding="5%">Memberships</Typography>
+          <PieChart
+            //colors={palette}
+            series={[
+              {
+                data,
+                highlightScope: { faded: 'global', highlighted: 'item' },
+                faded: { innerRadius: 30, additionalRadius: -30 },
+                cornerRadius: 5
+              }
+            ]}
+            width={500}
+            height={300}
+          />
+        </Box>
+      </Stack>
     </div>
   );
 };

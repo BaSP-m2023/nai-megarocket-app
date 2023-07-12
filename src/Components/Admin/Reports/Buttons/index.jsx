@@ -12,16 +12,22 @@ const ButtonGroup = ({ setActiveComponent }) => {
   return (
     <div className={styles.buttons}>
       <button
+        className={`${styles.button} ${activeButton === 'subscriptions' ? styles.active : ''}`}
+        onClick={() => handleButtonClick('subscriptions')}
+      >
+        Class subscriptions
+      </button>
+      <button
         className={`${styles.button} ${activeButton === 'members' ? styles.active : ''}`}
         onClick={() => handleButtonClick('members')}
       >
         Members
       </button>
       <button
-        className={`${styles.button} ${activeButton === 'activities' ? styles.active : ''}`}
-        onClick={() => handleButtonClick('activities')}
+        className={`${styles.button} ${activeButton === 'trainers' ? styles.active : ''}`}
+        onClick={() => handleButtonClick('trainers')}
       >
-        Activities
+        Trainers
       </button>
       <button
         className={`${styles.button} ${activeButton === 'memberships' ? styles.active : ''}`}
