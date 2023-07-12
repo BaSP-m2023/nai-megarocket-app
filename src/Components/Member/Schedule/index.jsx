@@ -105,7 +105,6 @@ const Schedule = () => {
       );
 
       const slotCount = subscriptionsForClass.length;
-      console.log(memberData);
 
       return (
         <div
