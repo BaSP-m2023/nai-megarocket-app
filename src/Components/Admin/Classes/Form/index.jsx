@@ -27,7 +27,7 @@ const Form = () => {
     mode: 'onBlur',
     resolver: joiResolver(classValidation),
     defaultValues: {
-      day: '',
+      day: [],
       hour: '',
       trainer: '',
       activity: '',
@@ -119,7 +119,6 @@ const Form = () => {
   }, []);
 
   const onSubmit = (data) => {
-    data.day = [data.day];
     if (id) {
       updateClass(data);
     } else {
@@ -143,7 +142,7 @@ const Form = () => {
           <h2>{id ? 'Update Class' : 'Create Class'}</h2>
           <div className={styles.inputsContainer}>
             <div className={styles.inputContainerA}>
-              <FormControl fullWidth>
+              <FormControl variant="standard" fullWidth>
                 <InputLabel id="day-label">Day</InputLabel>
                 <Controller
                   control={control}
@@ -151,12 +150,11 @@ const Form = () => {
                   render={({ field }) => (
                     <Select
                       {...field}
-                      labelId="day-label"
-                      id="day"
                       multiple
-                      value={field.value}
+                      value={field.value || []}
                       onChange={(e) => field.onChange(e.target.value)}
-                      onBlur={field.onBlur}
+                      error={errors.day?.message}
+                      id={'admin-classes-input-day'}
                     >
                       {daysOfWeek.map((day) => (
                         <MenuItem key={day} value={day}>
@@ -167,7 +165,51 @@ const Form = () => {
                   )}
                 />
               </FormControl>
-              <Input
+              <FormControl variant="standard" fullWidth>
+                <InputLabel id="day-label">Hour</InputLabel>
+                <Controller
+                  control={control}
+                  name="hour"
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      value={field.value || []}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      error={errors.hour?.message}
+                      id={'admin-classes-input-day'}
+                    >
+                      {hoursOfDay.map((hour) => (
+                        <MenuItem key={hour} value={hour}>
+                          {hour}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+              </FormControl>
+              <FormControl variant="standard" fullWidth>
+                <InputLabel id="day-label">Trainer</InputLabel>
+                <Controller
+                  control={control}
+                  name="trainer"
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      value={field.value || []}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      error={errors.trainer?.message}
+                      id={'admin-classes-input-day'}
+                    >
+                      {trainers.map((trainer) => (
+                        <MenuItem key={trainer} value={trainer}>
+                          {trainer.firstName}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+              </FormControl>
+              {/* <Input
                 register={register}
                 labelName={'Hour'}
                 inputType={'list'}
@@ -176,8 +218,8 @@ const Form = () => {
                 listProp={'hours'}
                 error={errors.hour?.message}
                 testId={'admin-classes-input-hour'}
-              />
-              <Input
+              /> */}
+              {/* <Input
                 register={register}
                 labelName={'Trainer'}
                 inputType={'list'}
@@ -186,10 +228,32 @@ const Form = () => {
                 listProp={'firstName'}
                 error={errors.trainer?.message}
                 testId={'admin-classes-input-trainer'}
-              />
+              /> */}
             </div>
             <div className={styles.inputContainerB}>
-              <Input
+              <FormControl variant="standard" fullWidth>
+                <InputLabel id="day-label">Activity</InputLabel>
+                <Controller
+                  control={control}
+                  name="activity"
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      value={field.value || []}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      error={errors.activity?.message}
+                      id={'admin-classes-input-day'}
+                    >
+                      {activities.map((activity) => (
+                        <MenuItem key={activity} value={activity}>
+                          {activity.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+              </FormControl>
+              {/* <Input
                 register={register}
                 labelName={'Activity'}
                 inputType={'list'}
@@ -198,7 +262,7 @@ const Form = () => {
                 list={activities}
                 listProp={'name'}
                 testId={'admin-classes-input-activity'}
-              />
+              /> */}
               <Input
                 register={register}
                 labelName={'Slots'}

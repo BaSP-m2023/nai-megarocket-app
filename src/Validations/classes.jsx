@@ -1,15 +1,17 @@
 import Joi from 'joi';
 
 const classValidation = Joi.object({
-  day: Joi.string()
-    .regex(
-      /^(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)(,(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday))*$/
-    )
-    .messages({
-      'string.pattern.base': 'Invalid days. Please use a comma-separated list of valid days.',
-      'string.required': 'Day is required',
-      'string.empty': 'Day is required'
-    }),
+  day: Joi.array().items(
+    Joi.string()
+      .regex(
+        /^(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)(,(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday))*$/
+      )
+      .messages({
+        'string.pattern.base': 'Invalid days. Please use a comma-separated list of valid days.',
+        'string.required': 'Day is required',
+        'string.empty': 'Day is required'
+      })
+  ),
   hour: Joi.string()
     .pattern(/^(?:0[8-9]|1[0-9]|2[0-2]):[0-5][0-9]$/)
     .messages({

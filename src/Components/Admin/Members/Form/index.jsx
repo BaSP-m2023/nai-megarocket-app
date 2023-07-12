@@ -42,6 +42,7 @@ const MemberForm = () => {
       member.birthDay = formatDate(member.birthDay);
       delete member._id;
       delete member.__v;
+      console.log(member);
       reset(member);
     } else {
       console.error('Member not found');
@@ -214,6 +215,7 @@ const MemberForm = () => {
             <Input
               register={register}
               labelName={'Active ?'}
+              value={members.isActive}
               inputType={'isActive'}
               inputName={'isActive'}
               error={errors.isActive}

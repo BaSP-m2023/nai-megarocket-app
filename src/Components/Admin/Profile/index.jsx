@@ -105,7 +105,6 @@ const AdminProfile = () => {
       />
       <div className={styles.formContainer}>
         <h2 className={styles.formTitleTwo}>admin data</h2>
-
         <form className={styles.formAdmin} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.firstInputs}>
             <div className={styles.formInput}>
