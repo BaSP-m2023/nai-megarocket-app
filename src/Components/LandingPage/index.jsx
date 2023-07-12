@@ -6,6 +6,7 @@ import Footer from 'Components/Footer';
 import Button from 'Components/Shared/Button';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import ContactForm from './Form';
+import Header from 'Components/Shared/Header/index';
 
 const Landing = () => {
   const history = useHistory();
@@ -16,6 +17,7 @@ const Landing = () => {
 
   return (
     <>
+      <Header />
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           <img

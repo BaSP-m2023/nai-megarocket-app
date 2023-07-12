@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './dropDownMenu.moule.css';
 
-const DropDownMenu = ({ userData, role }) => {
+const DropDownMenu = ({ userData, role, profileRoute }) => {
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState('');
@@ -16,9 +16,6 @@ const DropDownMenu = ({ userData, role }) => {
 
   const userIcon = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/user.png`;
   const userPicture = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/userPicture.png`;
-  const editIcon = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/edit.png`;
-  const inboxIcon = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/envelope.png`;
-  const settingsIcon = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/settings.png`;
   const helpIcon = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/question.png`;
   const logoutIcon = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/log-out.png`;
 
@@ -40,6 +37,7 @@ const DropDownMenu = ({ userData, role }) => {
     setBodyModal('You want to log out?');
     setShowModal(true);
   };
+
   const sendWhatsapp = () => {
     window.open('https://wa.me/+59899548345', '_blank');
   };
@@ -51,6 +49,10 @@ const DropDownMenu = ({ userData, role }) => {
     setShowModal(false);
     localStorage.setItem('toastMessage', 'See you soon!');
     history.push('/auth/login');
+  };
+
+  const sendToProfile = () => {
+    history.push(profileRoute);
   };
 
   const DropdownItem = (props) => {
@@ -75,13 +77,15 @@ const DropDownMenu = ({ userData, role }) => {
         </div>
 
         <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
-          <p className="user-name">Name: {userData?.firstName}</p>
-          <p className="user-role">Role: {role}</p>
+          <p className="user-name">
+            {' '}
+            {userData?.firstName} {userData?.lastName}
+          </p>
+          <p className="user-role">{role}</p>
           <ul>
-            <DropdownItem img={userIcon} text={'My Profile'} />
-            <DropdownItem img={editIcon} text={'Edit Profile'} />
-            <DropdownItem img={inboxIcon} text={'Inbox'} />
-            <DropdownItem img={settingsIcon} text={'Settings'} />
+            {profileRoute && (
+              <DropdownItem img={userIcon} text={'My Profile'} onClick={sendToProfile} />
+            )}
             <DropdownItem img={helpIcon} text={'Chat Support'} onClick={sendWhatsapp} />
             <DropdownItem img={logoutIcon} text={'Logout'} onClick={showModalLogout} />
           </ul>

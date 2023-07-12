@@ -1,15 +1,14 @@
 import styles from './header.module.css';
-
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from 'react-redux';
 
 import DropDownMenu from 'Components/Shared/DropDownMenu/index';
 
-function Header() {
+function Header({ profileRoute }) {
   const history = useHistory();
   const userData = useSelector((state) => state.auth.user);
   const role = sessionStorage.getItem('role');
-
+  console.log('hola', profileRoute);
   const routePath = () => {
     switch (role) {
       case 'ADMIN':
@@ -54,7 +53,7 @@ function Header() {
           </>
         ) : (
           <>
-            <DropDownMenu userData={userData} role={role} />
+            <DropDownMenu userData={userData} role={role} profileRoute={profileRoute} />
           </>
         )}
       </header>

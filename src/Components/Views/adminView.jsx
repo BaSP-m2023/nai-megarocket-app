@@ -17,7 +17,7 @@ const AdminView = () => {
   const rol = 'admin';
   return (
     <>
-      <Header />
+      <Header profileRoute={routes[1].link} />
       <div className={styles.body}>
         <Sidebar routes={routes} rol={rol} />
         <Routes />

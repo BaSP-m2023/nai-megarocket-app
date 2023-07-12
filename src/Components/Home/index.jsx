@@ -47,7 +47,11 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <Container>
-        <Toaster />
+        <Toaster
+          containerStyle={{
+            margin: '11vh 0 0 0'
+          }}
+        />
         <h2>Welcome to MEGAROCKET</h2>
       </Container>
     </div>
