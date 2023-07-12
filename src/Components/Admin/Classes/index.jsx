@@ -41,7 +41,7 @@ const Classes = () => {
     if (toastMessage) {
       showToast(toastMessage, 'success');
       localStorage.removeItem('toastMessage');
-    };
+    }
   }, []);
 
   const showToast = (message, type) => {
