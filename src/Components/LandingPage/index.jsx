@@ -19,13 +19,16 @@ const Landing = () => {
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           <img
-            src="/assets/images/landing/img-gym-001.jpg"
+            src="/assets/images/landing/portrait.jpg"
             alt="gym image"
             className={styles.imgPortrait}
           />
           <div className={styles.overlay}>
             <div className={styles.content}>
-              <img src="/assets/images/logos/logo-2.png" alt="gym image" />
+              <div>
+                <h2>mega</h2>
+                <h2 className={styles.rocket}>rocket</h2>
+              </div>
               <p>
                 it&apos;s gym <span className={styles.bullet}>&#8226;</span> it&apos;s life
               </p>
@@ -41,11 +44,11 @@ const Landing = () => {
           />
         </div>
         <div className={stylesTrainers.trainerContainer}>
-          <div className={stylesTrainers.trainer1}></div>
-          <div className={stylesTrainers.trainer2}></div>
-          <div className={stylesTrainers.trainer3}></div>
-          <div className={stylesTrainers.trainer4}></div>
-          <div className={stylesTrainers.trainer5}></div>
+          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer1}`}></div>
+          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer2}`}></div>
+          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer3}`}></div>
+          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer4}`}></div>
+          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer5}`}></div>
         </div>
         <div className={stylesJoin.joined}>
           <p>be fit &#8226; be happy &#8226; be megarocket</p>
@@ -55,7 +58,14 @@ const Landing = () => {
             testId={'login-button-register'}
             type="submit"
             className={stylesJoin.joinButton}
-            text={'join now'}
+            text={'join'}
+            clickAction={handleRegister}
+          />
+          <Button
+            testId={'login-button-register'}
+            type="submit"
+            className={stylesJoin.joinButton}
+            text={'now'}
             clickAction={handleRegister}
           />
         </div>
