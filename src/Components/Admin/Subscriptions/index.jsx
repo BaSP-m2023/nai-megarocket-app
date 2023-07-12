@@ -114,24 +114,28 @@ const Subscriptions = () => {
         <Container>
           <div className={styles.buttonContainer}>
             <h2>{showInactive ? 'Subscriptions history' : 'Subscriptions'}</h2>
-            {showButtons && (
-              <Button
-                text={'+ Add Subscription'}
-                type={'add'}
-                clickAction={handleAdd}
-                testId={'admin-subscriptions-add-button'}
-              />
-            )}
+
+            <div className={styles.buttons}>
+              {showButtons && (
+                <Button
+                  text={'+ Add Subscription'}
+                  type={'add'}
+                  clickAction={handleAdd}
+                  testId={'admin-subscriptions-add-button'}
+                />
+              )}
+              <div className={styles.iconContainer}>
+                <button
+                  onClick={handleToggleInactive}
+                  className={`${styles.toggleButton} ${showInactive ? styles.active : ''}`}
+                  id="admin-subscriptions-toggle-inactive-button"
+                >
+                  {showInactive ? <FaHistory /> : <FaHistory />}
+                </button>
+              </div>
+            </div>
           </div>
-          <div className={styles.iconContainer}>
-            <button
-              onClick={handleToggleInactive}
-              className={`${styles.toggleButton} ${showInactive ? styles.active : ''}`}
-              id="admin-subscriptions-toggle-inactive-button"
-            >
-              {showInactive ? <FaHistory /> : <FaHistory />}
-            </button>
-          </div>
+
           <Table
             data={
               showInactive

@@ -63,6 +63,8 @@ width: 80%;
 .pagination {
   display: flex;
   margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pagButton {
@@ -74,11 +76,6 @@ width: 80%;
   background-color: #f2f2f2;
 }
 
-.paginationContainer {
-  display: flex;
-  width: 80%;
-  justify-content: flex-end;
-}
 
 .orderButton {
   cursor: pointer;
@@ -87,4 +84,15 @@ width: 80%;
   border: none;
   font-size: 1.4rem;
   margin-left: 1.9rem;
+}
+
+.bottom {
+  display: flex;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+}
+
+.paginationContainer {
+  color: #7e7d7d;
 }
