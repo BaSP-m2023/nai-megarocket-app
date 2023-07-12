@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 12vh;
+  margin-right: 10rem;
+  background-color: black;
+  top: 0;
+  z-index: 1;
+  position: sticky;
+}
+
+.brand {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 1.5vw;
+  cursor: pointer;
+}
+
+.logo3 {
+  height: 7vh;
+  padding-right: 1vw;
+  padding-bottom: 1vh;
+}
+
+.logo2 {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  height: 5vh;
+}
+
+.icons {
+  display: flex;
+  flex-direction: row;
+  margin-right: 2rem;
+}
+
+.logOut {
+  width: 24px;
+  height: 24px;
+  margin-left: 5px;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.socialIcon {
+  margin-left: 5px;
+  margin-right: 1rem;
+  background-color: white;
+  border-radius: 15rem;
+  transition: 1s ease;
+}
+
+.socialIcon:hover {
+  background-color: #157caa;
+  transition: 1s ease;
+}
+
+.logLinks {
+  display: flex;
+  justify-content: space-between;
+  width: 14rem;
+  font-size: 1rem;
+  color: white;
+  margin-right: 2.5rem;
+  cursor: pointer;
+  transition: 1s ease;
+}
+
+.logLinks a {
+  width: 100vw;
+  font-size: 1rem;
+  font-weight: 550;
+  letter-spacing: 0.4rem;
+  transition: 1s ease;
+}
+
+.logLinks a:hover {
+  color: #157caa;
+}

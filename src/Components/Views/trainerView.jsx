@@ -1,4 +1,4 @@
-import Header from 'Components/Header/index';
+import Header from 'Components/Shared/Header/index';
 import styles from 'Components/Layout/layout.module.css';
 import Routes from 'Routes/Routes';
 import Sidebar from 'Components/Shared/Sidebar';

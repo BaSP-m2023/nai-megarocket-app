@@ -1,6 +1,6 @@
 import styles from 'Components/LandingPage/landing.module.css';
 import Routes from 'Routes/Routes';
-import Header from 'Components/Header/index';
+import Header from 'Components/Shared/Header/index';
 
 const LandingView = () => {
   return (
