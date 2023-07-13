@@ -7,8 +7,8 @@ import styles from './signup.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import memberValidation from 'Validations/signup';
-import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const SignUp = () => {
   const history = useHistory();
@@ -30,7 +30,6 @@ const SignUp = () => {
 
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -56,113 +55,102 @@ const SignUp = () => {
     history.push('/auth/login');
   };
 
-  const handleReset = () => {
-    reset();
-  };
-
   return (
-    <Container isLogin={true}>
+    <>
       <Toaster />
-      <div className={styles.formContainer}>
-        <h2 className={styles.formTitle}>{'Sign Up'} </h2>
-        <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
-          <div className={`${styles.formColumn} ${styles.formLeft}`}>
-            <Input
-              register={register}
-              labelName={'First Name'}
-              inputType={'text'}
-              inputName={'firstName'}
-              error={errors.firstName?.message}
-              testId={'sing-up-input-first-name'}
-            />
-            <Input
-              register={register}
-              labelName={'Last Name'}
-              inputType={'text'}
-              inputName={'lastName'}
-              error={errors.lastName?.message}
-              testId={'sing-up-input-last-name'}
-            />
-            <Input
-              register={register}
-              labelName={'DNI'}
-              inputType={'number'}
-              inputName={'dni'}
-              error={errors.dni?.message}
-              testId={'sing-up-input-dni'}
-            />
-            <Input
-              register={register}
-              labelName={'Phone'}
-              inputType={'number'}
-              inputName={'phone'}
-              error={errors.phone?.message}
-              testId={'sing-up-input-phone'}
-            />
-            <Input
-              register={register}
-              labelName={'Email'}
-              inputType={'text'}
-              inputName={'email'}
-              error={errors.email?.message}
-              testId={'sing-up-input-email'}
-            />
+      <div className={styles.containerSignUp}>
+        <div className={styles.imgSignUp}>
+          <img src={`${process.env.PUBLIC_URL}/assets/images/Sign-up/coversignup.jpg`} alt=""></img>
+        </div>
+        <div className={styles.containerForm}>
+          <div className={styles.head}>
+            <div id="sign-up-form-go-back" className={styles.arrow} onClick={handleCancel}>
+              <FiArrowLeft size={35} />
+            </div>
+            <h2 className={styles.formTitle}>{'Sign Up'}</h2>
           </div>
-          <div className={`${styles.formColumn} ${styles.formRight}`}>
-            <Input
-              register={register}
-              labelName={'Password'}
-              inputType={'password'}
-              inputName={'password'}
-              error={errors.password?.message}
-              testId={'sing-up-input-password'}
-            />
-            <Input
-              register={register}
-              labelName={'City'}
-              inputType={'text'}
-              inputName={'city'}
-              error={errors.city?.message}
-              testId={'sing-up-input-city'}
-            />
-            <Input
-              register={register}
-              labelName={'Date of birth'}
-              inputType={'date'}
-              inputName={'birthDay'}
-              error={errors.birthDay?.message}
-              testId={'sing-up-input-date'}
-            />
-            <Input
-              register={register}
-              labelName={'Postal Code'}
-              inputType={'number'}
-              inputName={'postalCode'}
-              error={errors.postalCode?.message}
-              testId={'sing-up-input-postal-code'}
-            />
-          </div>
-          <div className={styles.buttonContainer}>
-            <Button text={'Add'} type={'submit'} info={'submit'} testId={'sing-up-button-add'} />
-            <div className={styles.buttonsLowContainer}>
-              <Button
-                text={'Back'}
-                type={'cancel'}
-                clickAction={handleCancel}
-                testId={'sing-up-button-cancel'}
+          <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.formColumn}>
+              <Input
+                register={register}
+                labelName={'First Name'}
+                inputType={'text'}
+                inputName={'firstName'}
+                error={errors.firstName?.message}
+                testId={'sing-up-input-first-name'}
               />
-              <Button
-                type={'cancel'}
-                onClick={handleReset}
-                info={'reset'}
-                text={'Reset'}
-                testId={'sing-up-button-reset'}
+              <Input
+                register={register}
+                labelName={'Last Name'}
+                inputType={'text'}
+                inputName={'lastName'}
+                error={errors.lastName?.message}
+                testId={'sing-up-input-last-name'}
+              />
+              <Input
+                register={register}
+                labelName={'DNI'}
+                inputType={'number'}
+                inputName={'dni'}
+                error={errors.dni?.message}
+                testId={'sing-up-input-dni'}
+              />
+              <Input
+                register={register}
+                labelName={'Phone'}
+                inputType={'number'}
+                inputName={'phone'}
+                error={errors.phone?.message}
+                testId={'sing-up-input-phone'}
+              />
+              <Input
+                register={register}
+                labelName={'Email'}
+                inputType={'text'}
+                inputName={'email'}
+                error={errors.email?.message}
+                testId={'sing-up-input-email'}
               />
             </div>
-          </div>
-        </form>
+            <div className={styles.formColumn}>
+              <Input
+                register={register}
+                labelName={'Password'}
+                inputType={'password'}
+                inputName={'password'}
+                error={errors.password?.message}
+                testId={'sing-up-input-password'}
+              />
+              <Input
+                register={register}
+                labelName={'City'}
+                inputType={'text'}
+                inputName={'city'}
+                error={errors.city?.message}
+                testId={'sing-up-input-city'}
+              />
+              <Input
+                register={register}
+                labelName={'Date of birth'}
+                inputType={'date'}
+                inputName={'birthDay'}
+                error={errors.birthDay?.message}
+                testId={'sing-up-input-date'}
+              />
+              <Input
+                register={register}
+                labelName={'Postal Code'}
+                inputType={'number'}
+                inputName={'postalCode'}
+                error={errors.postalCode?.message}
+                testId={'sing-up-input-postal-code'}
+              />
+              <Button text={'Add'} type={'submit'} info={'submit'} testId={'sing-up-button-add'} />
+            </div>
+          </form>
+        </div>
       </div>
-    </Container>
+    </>
   );
 };
 
