@@ -104,6 +104,7 @@ const InputComponent = ({
         variant="standard"
         size="small"
         label={labelName}
+        {...(type === 'date' ? { InputLabelProps: { shrink: true } } : {})}
       />
     </div>
   );
