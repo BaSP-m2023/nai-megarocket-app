@@ -99,7 +99,7 @@ const InputComponent = ({
         className={error ? styles.formInputError : styles.formInput}
         type={type}
         helperText={error}
-        error={error}
+        error={error ? true : false}
         value={value}
         placeholder={placeholder}
         disabled={disabled}
@@ -119,11 +119,6 @@ const InputComponent = ({
         disabled={disabled}
         id={testId}
       />
-      {error && (
-        <p className={styles.errorMsg} id={errorTestId}>
-          {error}
-        </p>
-      )}
     </div>
   );
   const renderInputType = (inputType) => {

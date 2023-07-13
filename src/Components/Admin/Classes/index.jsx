@@ -11,6 +11,9 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import CalendarModal from './Modal';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { FormControl, InputLabel } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 const Classes = () => {
   const history = useHistory();
@@ -71,12 +74,6 @@ const Classes = () => {
       });
     }
   };
-
-  useEffect(() => {
-    if (activities.length > 0) {
-      setActivity(activities[0].name);
-    }
-  }, [activities]);
 
   const handleDeleteClass = () => {
     setCalendarAlert(false);
@@ -236,50 +233,40 @@ const Classes = () => {
                 />
               </div>
               <div className={styles.select}>
-                <label htmlFor="activity">Select Activity: </label>
-                <select id="activity" value={activity} onChange={handleActivityChange}>
-                  <option value="all">All</option>
-                  {activities?.map((activityItem, index) => (
-                    <option
-                      value={activityItem.name}
-                      key={index}
-                      id={`admin-classes-select-activity-${activityItem.name}`}
-                    >
-                      {activityItem.name}
-                    </option>
-                  ))}
-                </select>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="activity">Activity</InputLabel>
+                  <Select
+                    value={activity}
+                    onChange={handleActivityChange}
+                    id={'admin-classes-input-day'}
+                  >
+                    <MenuItem value="all">All</MenuItem>
+                    {activities?.map((activityItem, index) => (
+                      <MenuItem key={index} value={activityItem.name}>
+                        {activityItem.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </div>
               <div className={styles.select}>
-                <label htmlFor="trainer">Select Trainer: </label>
-                <select id="trainer" value={trainer} onChange={handleTrainerChange}>
-                  <option value="all">All</option>
-                  <option value="notAssign">Not Assign</option>
-                  {trainers?.map((trainerItem, index) => {
-                    if (trainerItem.isActive) {
-                      return (
-                        <option
-                          value={trainerItem.firstName + trainerItem.lastName}
-                          key={index}
-                          id={`admin-classes-select-trainer-${trainerItem.firstName}`}
-                        >
-                          {trainerItem.firstName + ' ' + trainerItem.lastName}
-                        </option>
-                      );
-                    } else {
-                      return (
-                        <option
-                          style={{ backgroundColor: '#878E88' }}
-                          value={trainerItem.firstName + trainerItem.lastName}
-                          key={index}
-                          id={`admin-classes-select-trainer-${trainerItem.firstName}`}
-                        >
-                          {trainerItem.firstName + ' ' + trainerItem.lastName}
-                        </option>
-                      );
-                    }
-                  })}
-                </select>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="trainer">Select Trainer</InputLabel>
+                  <Select value={trainer} onChange={handleTrainerChange} id="trainer">
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="notAssign">Not Assign</MenuItem>
+                    {trainers?.map((trainerItem, index) => (
+                      <MenuItem
+                        value={trainerItem.firstName + trainerItem.lastName}
+                        key={index}
+                        id={`admin-classes-select-trainer-${trainerItem.firstName}`}
+                        sx={trainerItem.isActive ? null : { color: '#878E88' }}
+                      >
+                        {trainerItem.firstName + ' ' + trainerItem.lastName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </div>
             </div>
             <table>

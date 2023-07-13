@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.13.7",
-    "@mui/material": "^5.13.7",
+    "@mui/material": "^5.14.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -26,7 +28,6 @@
     "redux-thunk": "^2.4.2",
     "web-vitals": "^2.1.4"
   },
-  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -35,7 +36,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "prepare": "husky install",
     "wdio": "wdio run ./wdio.conf.js",
-    "allure-report":"allure generate --clean allure-results && allure open"
+    "allure-report": "allure generate --clean allure-results && allure open"
   },
   "eslintConfig": {
     "extends": [

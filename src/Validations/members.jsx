@@ -83,9 +83,12 @@ const memberValidation = Joi.object({
     'number.base': 'Postal code is required'
   }),
   isActive: Joi.boolean(),
-  membership: Joi.string().valid('Only Classes', 'Classic', 'Black').messages({
-    'any.only': 'Enter a valid membership: Only Classes, Classic or Black'
-  })
+  membership: Joi.string()
+    .pattern(/^(Only Classes|Classic|Black)$/)
+    .messages({
+      'string.pattern.base': 'Enter a valid membership: Only Classes, Classic, or Black',
+      'string.empty': 'Membership should not be empty'
+    })
 });
 
 export default memberValidation;

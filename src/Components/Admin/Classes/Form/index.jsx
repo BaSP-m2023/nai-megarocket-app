@@ -1,20 +1,18 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { editClass, addClass } from 'Redux/classes/thunks';
-import { getActivities } from 'Redux/activities/thunks';
-import { getTrainers } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import toast, { Toaster } from 'react-hot-toast';
+import { editClass, addClass } from 'Redux/classes/thunks';
+import { getActivities } from 'Redux/activities/thunks';
+import { getTrainers } from 'Redux/trainers/thunks';
 import classValidation from 'Validations/classes';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import Container from 'Components/Shared/Container';
-import toast, { Toaster } from 'react-hot-toast';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import { FormControl, InputLabel } from '@mui/material';
+import { FormControl, InputLabel, FormHelperText, MenuItem, Select } from '@mui/material';
 import { FiArrowLeft } from 'react-icons/fi';
 
 const Form = () => {
@@ -73,6 +71,7 @@ const Form = () => {
       delete classData?.createdAt;
       delete classData?.updatedAt;
       delete classData?.__v;
+      delete classData?.subscriptions;
       classData.trainer = classData.trainer?._id;
       classData.activity = classData.activity?._id;
       reset(classData);
@@ -154,7 +153,7 @@ const Form = () => {
           </div>
           <div className={styles.inputsContainer}>
             <div className={styles.inputContainerA}>
-              <FormControl variant="standard" fullWidth>
+              <FormControl variant="standard" fullWidth error={errors.day?.message ? true : false}>
                 <InputLabel id="day-label">Day</InputLabel>
                 <Controller
                   control={control}
@@ -165,7 +164,6 @@ const Form = () => {
                       multiple
                       value={field.value || []}
                       onChange={(e) => field.onChange(e.target.value)}
-                      error={errors.day?.message}
                       id={'admin-classes-input-day'}
                     >
                       {daysOfWeek.map((day) => (
@@ -176,18 +174,18 @@ const Form = () => {
                     </Select>
                   )}
                 />
+                <FormHelperText>{errors.day?.message}</FormHelperText>
               </FormControl>
-              <FormControl variant="standard" fullWidth>
-                <InputLabel id="day-label">Hour</InputLabel>
+              <FormControl variant="standard" fullWidth error={errors.hour?.message ? true : false}>
+                <InputLabel id="hour-label">Hour</InputLabel>
                 <Controller
                   control={control}
                   name="hour"
                   render={({ field }) => (
                     <Select
                       {...field}
-                      value={field.value || []}
+                      value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      error={errors.hour?.message}
                       id={'admin-classes-input-day'}
                     >
                       {hoursOfDay.map((hour) => (
@@ -198,18 +196,22 @@ const Form = () => {
                     </Select>
                   )}
                 />
+                <FormHelperText>{errors.hour?.message}</FormHelperText>
               </FormControl>
-              <FormControl variant="standard" fullWidth>
-                <InputLabel id="day-label">Trainer</InputLabel>
+              <FormControl
+                variant="standard"
+                fullWidth
+                error={errors.trainer?.message ? true : false}
+              >
+                <InputLabel id="trainer-label">Trainer</InputLabel>
                 <Controller
                   control={control}
                   name="trainer"
                   render={({ field }) => (
                     <Select
                       {...field}
-                      value={field.value || []}
+                      value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      error={errors.trainer?.message}
                       id={'admin-classes-input-day'}
                     >
                       {trainers.map((trainer) => (
@@ -220,30 +222,15 @@ const Form = () => {
                     </Select>
                   )}
                 />
+                <FormHelperText>{errors.trainer?.message}</FormHelperText>
               </FormControl>
-              {/* <Input
-                register={register}
-                labelName={'Hour'}
-                inputType={'list'}
-                inputName={'hour'}
-                list={hoursOfDay}
-                listProp={'hours'}
-                error={errors.hour?.message}
-                testId={'admin-classes-input-hour'}
-              /> */}
-              {/* <Input
-                register={register}
-                labelName={'Trainer'}
-                inputType={'list'}
-                inputName={'trainer'}
-                list={trainers}
-                listProp={'firstName'}
-                error={errors.trainer?.message}
-                testId={'admin-classes-input-trainer'}
-              /> */}
             </div>
             <div className={styles.inputContainerB}>
-              <FormControl variant="standard" fullWidth>
+              <FormControl
+                variant="standard"
+                fullWidth
+                error={errors.activity?.message ? true : false}
+              >
                 <InputLabel id="day-label">Activity</InputLabel>
                 <Controller
                   control={control}
@@ -253,7 +240,6 @@ const Form = () => {
                       {...field}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      error={errors.activity?.message}
                       id={'admin-classes-input-day'}
                     >
                       {activities.map((activity) => (
@@ -264,17 +250,8 @@ const Form = () => {
                     </Select>
                   )}
                 />
+                <FormHelperText>{errors.activity?.message}</FormHelperText>
               </FormControl>
-              {/* <Input
-                register={register}
-                labelName={'Activity'}
-                inputType={'list'}
-                inputName={'activity'}
-                error={errors.activity?.message}
-                list={activities}
-                listProp={'name'}
-                testId={'admin-classes-input-activity'}
-              /> */}
               <Input
                 register={register}
                 labelName={'Slots'}
