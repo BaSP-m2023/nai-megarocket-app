@@ -1,6 +1,7 @@
 import Container from 'Components/Shared/Container';
 import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import styles from './home.module.css';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
@@ -50,8 +51,23 @@ const Home = () => {
           margin: '10vh 0 0 0'
         }}
       />
-      <Container center={true}>
-        <h2>Welcome to MEGAROCKET</h2>
+      <Container className={styles.container}>
+        <h2 className={styles.title}>
+          Welcome to MEGAROCKET, {user?.firstName} {user?.lastName ? ' ' + user?.lastName : ''} !
+        </h2>
+        <div className={styles.slider}>
+          <ul>
+            <li>
+              <img src={`${process.env.PUBLIC_URL}/assets/images/Home/372927100.jpg`} alt="" />
+            </li>
+            <li>
+              <img src={`${process.env.PUBLIC_URL}/assets/images/Home/372927101.jpg`} alt=""></img>
+            </li>
+            <li>
+              <img src={`${process.env.PUBLIC_URL}/assets/images/Home/372927102.jpg`} alt=""></img>
+            </li>
+          </ul>
+        </div>
       </Container>
     </>
   );

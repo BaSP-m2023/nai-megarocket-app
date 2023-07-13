@@ -13,6 +13,7 @@ import subscriptionValidation from 'Validations/subscriptions';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
 import toast, { Toaster } from 'react-hot-toast';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const Form = () => {
   const { id } = useParams();
@@ -100,10 +101,6 @@ const Form = () => {
     id ? editSubscription(data) : addSubscription(data);
   };
 
-  const handleReset = () => {
-    reset();
-  };
-
   const validClasses = classes.filter((item) => item.activity);
 
   return (
@@ -114,7 +111,17 @@ const Form = () => {
         }}
       />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
-        <h2>{id ? 'Update subscription' : 'Create subscription'}</h2>
+        <div className={styles.head}>
+          {' '}
+          <div
+            id="admin-subscriptions-form-go-back"
+            className={styles.arrow}
+            onClick={handleCancel}
+          >
+            <FiArrowLeft size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Subscription' : 'Add Subscription'}</h2>
+        </div>
         <InputComponent
           inputName="classes"
           inputType="list"
@@ -152,21 +159,6 @@ const Form = () => {
             info={'submit'}
             testId={'admin-subscriptions-button-submit-form'}
           />
-          <div className={styles.cleanButtons}>
-            <Button
-              text={'Back'}
-              type={'cancel'}
-              clickAction={handleCancel}
-              testId={'admin-subscriptions-button-back-form'}
-            />
-            <Button
-              type={'cancel'}
-              clickAction={handleReset}
-              info={'reset'}
-              text={'Reset'}
-              testId={'admin-subscriptions-button-reset-form'}
-            />
-          </div>
         </fieldset>
       </SharedForm>
     </Container>
