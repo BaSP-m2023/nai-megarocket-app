@@ -107,8 +107,8 @@ const AdminProfile = () => {
       <div className={styles.formContainer}>
         <h2 className={styles.formTitleTwo}>
           {editMode
-            ? `${admin?.firstName} ${admin?.lastName}'s Profile`
-            : `${admin?.firstName} ${admin?.lastName}'s Profile`}
+            ? `${admin?.firstName} ${admin?.lastName} Profile`
+            : `${admin?.firstName} ${admin?.lastName} Profile`}
         </h2>
 
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>

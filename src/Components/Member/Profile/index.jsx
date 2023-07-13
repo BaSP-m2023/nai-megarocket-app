@@ -120,8 +120,8 @@ const MemberForm = () => {
       <div className={styles.formContainer}>
         <h2 className={styles.formTitleTwo}>
           {editMode
-            ? `${user?.firstName} ${user?.lastName}'s Profile`
-            : `${user?.firstName} ${user?.lastName}'s Profile`}
+            ? `${user?.firstName} ${user?.lastName} Profile`
+            : `${user?.firstName} ${user?.lastName} Profile`}
         </h2>
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>

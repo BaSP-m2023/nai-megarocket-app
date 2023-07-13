@@ -107,8 +107,8 @@ const TrainerForm = () => {
       <div className={styles.formContainer}>
         <h2 className={styles.formTitleTwo}>
           {editMode
-            ? `${trainer?.firstName} ${trainer?.lastName}'s Profile`
-            : `${trainer?.firstName} ${trainer?.lastName}'s Profile`}
+            ? `${trainer?.firstName} ${trainer?.lastName} Profile`
+            : `${trainer?.firstName} ${trainer?.lastName} Profile`}
         </h2>
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
