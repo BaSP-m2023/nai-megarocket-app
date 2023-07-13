@@ -22,7 +22,7 @@ const Schedule = () => {
   }));
   const trainer = useSelector((state) => state.auth?.user);
   const loading = useSelector((state) => state.classes?.loading);
-  const [activity, setActivity] = useState('');
+  const [activity, setActivity] = useState('all');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -72,16 +72,24 @@ const Schedule = () => {
       }
     };
     fetchData();
-    setActivity('all');
   }, []);
 
   const getClassButton = (hour, day) => {
     let classItem;
     if (activity === 'all') {
-      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
+      classItem = classes?.find(
+        (item) =>
+          item.day.includes(day) &&
+          item.hour === hour &&
+          item.trainer?.firstName === trainer?.firstName
+      );
     } else {
       classItem = classes?.find(
-        (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
+        (item) =>
+          item.day.includes(day) &&
+          item.hour === hour &&
+          item.activity?.name === activity &&
+          item.trainer?.firstName === trainer?.firstName
       );
     }
 
