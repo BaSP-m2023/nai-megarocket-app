@@ -36,7 +36,7 @@ const Landing = () => {
         </div>
         <div className={stylesJoin.joinButtonDiv}>
           <Button
-            testId={'login-button-register'}
+            testId={'login-button-register-1'}
             type="submit"
             text={'join our gym'}
             clickAction={handleRegister}
@@ -54,7 +54,7 @@ const Landing = () => {
         </div>
         <div className={stylesJoin.landscape}>
           <Button
-            testId={'login-button-register'}
+            testId={'login-button-register-2'}
             type="submit"
             className={stylesJoin.joinButton}
             text={'join now'}

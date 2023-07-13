@@ -56,8 +56,9 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
   };
 
   const DropdownItem = (props) => {
+    const idString = props.text.toLowerCase().replace(/\s+/g, '-');
     return (
-      <li className="dropdownItem" onClick={props.onClick}>
+      <li id={`${idString}-button-drop-down-menu`} className="dropdownItem" onClick={props.onClick}>
         <img src={props.img}></img>
         <a> {props.text} </a>
       </li>
@@ -73,7 +74,7 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
             setOpen(!open);
           }}
         >
-          <img src={userPicture}></img>
+          <img id="user-avatar-button-drop-down-menu" src={userPicture}></img>
         </div>
 
         <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
@@ -91,6 +92,7 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
           </ul>
         </div>
       </div>
+
       {showModal && (
         <SharedModal
           isDelete={true}

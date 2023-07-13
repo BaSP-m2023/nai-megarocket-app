@@ -1,14 +1,13 @@
 import styles from './header.module.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from 'react-redux';
-
 import DropDownMenu from 'Components/Shared/DropDownMenu/index';
 
 function Header({ profileRoute }) {
   const history = useHistory();
   const userData = useSelector((state) => state.auth.user);
   const role = sessionStorage.getItem('role');
-  console.log('hola', profileRoute);
+
   const routePath = () => {
     switch (role) {
       case 'ADMIN':
@@ -27,6 +26,7 @@ function Header({ profileRoute }) {
   const loginLink = () => {
     history.push('/auth/login');
   };
+
   const singUpLink = () => {
     history.push('/auth/register');
   };
@@ -35,6 +35,7 @@ function Header({ profileRoute }) {
     <>
       <header className={styles.container}>
         <div
+          id="logo-button-header"
           onClick={() => {
             history.push(!role ? `${routePath()}/landing` : `${routePath()}/home`);
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -47,8 +48,12 @@ function Header({ profileRoute }) {
         {!role ? (
           <>
             <div className={styles.logLinks}>
-              <a onClick={loginLink}>LOGIN</a>
-              <a onClick={singUpLink}>SIGN UP</a>
+              <a id="login-button-header" onClick={loginLink}>
+                LOGIN
+              </a>
+              <a id="sign-up-button-header" onClick={singUpLink}>
+                SIGN UP
+              </a>
             </div>
           </>
         ) : (
