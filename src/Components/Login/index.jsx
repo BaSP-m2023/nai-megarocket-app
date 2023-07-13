@@ -182,7 +182,13 @@ const Login = () => {
               </a>
             </p>
             <div className={styles.buttonContainer}>
-              <Button id="login-button-submit" type="submit" variant="contained" size="large">
+              <Button
+                sx={{ width: '10vw', fontSize: '18px' }}
+                id="login-button-submit"
+                type="submit"
+                variant="contained"
+                size="large"
+              >
                 Sign In
               </Button>
             </div>
