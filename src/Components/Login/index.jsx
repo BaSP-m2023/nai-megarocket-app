@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './login.module.css';
-import Button from 'Components/Shared/Button';
-import InputComponent from 'Components/Shared/Input';
-import loginValidation from 'Validations/login';
+import { loginValidation } from 'Validations/login';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 import Container from 'Components/Shared/Container';
@@ -12,13 +10,22 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { LOGIN_SUCCESS } from 'Redux/auth/constants';
 import toast, { Toaster } from 'react-hot-toast';
+import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import FormControl from '@mui/material/FormControl';
+import RecoveryModal from './Modal/Modal';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -28,6 +35,7 @@ const Login = () => {
 
   useEffect(() => {
     toast.remove();
+    reset();
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
       showToast(toastMessage, 'success');
@@ -51,19 +59,19 @@ const Login = () => {
       });
     } else if (type === 'error') {
       toast.error(message, {
-        duration: 4000,
-        position: 'top-right',
+        duration: 3000,
+        position: 'bottom-center',
         style: {
-          background: 'rgba(227, 23, 10, 0.5)'
+          background: '#d32f2f',
+          color: 'white'
         },
         iconTheme: {
-          primary: '#0f232e',
-          secondary: '#fff'
+          primary: '#fff',
+          secondary: '#d32f2f'
         }
       });
     }
   };
-
   const handleLogin = async (data) => {
     try {
       const response = await dispatch(login(data));
@@ -105,50 +113,79 @@ const Login = () => {
       <Toaster />
       <div className={styles.big}>
         <div className={styles.container}>
-          <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
-            <h2>Login</h2>
-            <div className={styles.emailContainer}>
-              <InputComponent
-                inputName="email"
-                inputType="text"
-                labelName="Email"
-                placeholder={'Email'}
-                register={register}
-                error={errors.email?.message}
-                testId={'login-input-email'}
-                errorTestId={'login-input-email-error'}
-              />
-            </div>
-            <div className={styles.passwordContainer}>
-              <div>
-                <InputComponent
-                  inputName="password"
-                  inputType={showPassword ? 'text' : 'password'}
-                  id="password"
-                  labelName="Password"
-                  placeholder={'Password'}
-                  register={register}
-                  error={errors.password?.message}
-                  testId={'login-input-password'}
-                  errorTestId={'login-input-password-error'}
+          <img
+            onClick={() => history.push('/landing')}
+            className={styles.logo}
+            src="/assets/images/logos/logo-black.png"
+            alt="MegaRocket Logo"
+          />
+          <h2>Sign In</h2>
+          <RecoveryModal
+            open={showModal}
+            handleClose={() => {
+              setShowModal(false);
+            }}
+          />
+          <form onSubmit={handleSubmit(handleLogin)} className={styles.formLogin}>
+            <div className={styles.inputsLogin}>
+              <FormControl sx={{ width: '20vw' }} variant="standart">
+                <InputLabel htmlFor="email">Email</InputLabel>
+                <Input
+                  id="login-input-email"
+                  name="email"
+                  error={errors['email'] ? true : false}
+                  {...register('email')}
+                  type={'text'}
                 />
-              </div>
-              <button
-                id="login-eye-button"
-                className={styles.eyeButton}
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaRegEye />}
-              </button>
+                {errors['email'] && <p className={styles.errorText}>{errors['email'].message}</p>}
+              </FormControl>
             </div>
-            <Button testId={'login-button-submit'} type="submit" text={'Log In'} />
-            <Button
-              testId={'login-button-register'}
-              type="submit"
-              text={'Create an Account'}
-              clickAction={handleRegister}
-            />
+            <div className={styles.inputsLogin}>
+              <FormControl sx={{ width: '20vw' }} variant="standard">
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  id="login-input-password"
+                  name="password"
+                  error={errors['password'] ? true : false}
+                  {...register('password')}
+                  type={showPassword ? 'text' : 'password'}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <FaEyeSlash size={15} /> : <FaRegEye size={15} />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                {errors['password'] && (
+                  <p className={styles.errorText}>{errors['password'].message}</p>
+                )}
+              </FormControl>
+            </div>
+
+            <p className={styles.forgot}>
+              <a
+                id="login-button-forgot-password"
+                onClick={() => {
+                  setShowModal(true);
+                }}
+              >
+                Forgot Password
+              </a>{' '}
+              or{' '}
+              <a id="login-button-create-account" onClick={handleRegister}>
+                Create Account
+              </a>
+            </p>
+            <div className={styles.buttonContainer}>
+              <Button id="login-button-submit" type="submit" variant="contained" size="large">
+                Sign In
+              </Button>
+            </div>
           </form>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import Container from 'Components/Shared/Container';
 import React, { Suspense, lazy } from 'react';
 import { Route } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -8,7 +9,13 @@ const NotAllowed = lazy(() => import('Components/NotAllowed'));
 
 const AuthRoutes = () => {
   return (
-    <Suspense fallback={<ClipLoader />}>
+    <Suspense
+      fallback={
+        <Container isLogin={true}>
+          <ClipLoader />
+        </Container>
+      }
+    >
       <Route exact path="/auth/login" component={Login} />
       <Route exact path="/auth/register" component={SignUp} />
       <Route exact path="/auth/not-allowed" component={NotAllowed} />
