@@ -112,7 +112,6 @@ const Login = () => {
                 inputName="email"
                 inputType="text"
                 labelName="Email"
-                placeholder={'Email'}
                 register={register}
                 error={errors.email?.message}
                 testId={'login-input-email'}
@@ -126,7 +125,6 @@ const Login = () => {
                   inputType={showPassword ? 'text' : 'password'}
                   id="password"
                   labelName="Password"
-                  placeholder={'Password'}
                   register={register}
                   error={errors.password?.message}
                   testId={'login-input-password'}

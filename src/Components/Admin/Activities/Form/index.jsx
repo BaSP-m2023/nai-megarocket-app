@@ -11,7 +11,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
 import toast, { Toaster } from 'react-hot-toast';
-import { FiArrowLeft } from 'react-icons/fi';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const Form = () => {
   const history = useHistory();
@@ -97,7 +97,7 @@ const Form = () => {
         <div className={styles.head}>
           {' '}
           <div id="admin-activities-form-go-back" className={styles.arrow} onClick={handleCancel}>
-            <FiArrowLeft size={35} />
+            <ArrowBackIosNewIcon size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Activity' : 'Add Activity'}</h2>
         </div>
@@ -106,7 +106,6 @@ const Form = () => {
           inputName="name"
           inputType="text"
           labelName="Activity"
-          placeholder="Activity"
           error={errors.name?.message}
           testId={'admin-activity-input-name'}
         />
@@ -115,7 +114,6 @@ const Form = () => {
           inputName="description"
           inputType="text"
           labelName="Description"
-          placeholder="Description"
           error={errors.description?.message}
           testId={'admin-activity-input-description'}
         />

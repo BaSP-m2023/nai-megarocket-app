@@ -11,7 +11,6 @@ const InputComponent = ({
   list,
   listProp,
   labelName,
-  placeholder,
   register,
   error,
   disabled,
@@ -92,7 +91,6 @@ const InputComponent = ({
   );
   const renderInput = (type) => (
     <div className={styles.inputDiv} id={testId}>
-      <label>{labelName}</label>
       <TextField
         {...register(inputName)}
         name={inputName}
@@ -101,11 +99,11 @@ const InputComponent = ({
         helperText={error}
         error={error ? true : false}
         value={value}
-        placeholder={placeholder}
         disabled={disabled}
         id={testId}
         variant="standard"
         size="small"
+        label={labelName}
       />
     </div>
   );

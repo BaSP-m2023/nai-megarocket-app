@@ -11,9 +11,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import CalendarModal from './Modal';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
-import { FormControl, InputLabel } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const Classes = () => {
   const history = useHistory();
