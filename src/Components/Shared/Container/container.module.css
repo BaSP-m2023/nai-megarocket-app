@@ -1,9 +1,10 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 85vw;
+  width: 95vw;
   align-items: center;
   margin-top: 7.5vh;
+  margin-left: 5vh;
 }
 
 .login {
