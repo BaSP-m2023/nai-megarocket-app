@@ -4,6 +4,10 @@ class LoginPage {
     return browser.url(url);
   }
 
+  get btnLogin() {
+    return $('#logout-bar-link');
+  }
+
   get titleLogin() {
     return $('h2');
   }
@@ -16,28 +20,24 @@ class LoginPage {
     return $('#login-input-password');
   }
 
-  get eyeButtonPassword() {
+  get eyeBtnPassword() {
     return $('#eye-button');
   }
 
-  get buttonLogin() {
-    return $('#login-button-submit');
-  }
-
-  get errorEmailMessage() {
+  get errorMessageEmail() {
     return $('#login-input-email-error');
   }
 
-  get errorPasswordMessage() {
+  get errorMessagePassword() {
     return $('#login-input-password-error');
   }
 
-  get buttonRegister() {
-    return $('#login-button-register');
+  get btnSubmit() {
+    return $('#login-button-submit');
   }
 
-  get titleRegister() {
-    return $('h2');
+  get btnRegister() {
+    return $('#login-button-register');
   }
 
   async singIn() {
@@ -51,4 +51,4 @@ class LoginPage {
   }
 }
 
-export default new LoginPage();
+module.exports = new LoginPage();

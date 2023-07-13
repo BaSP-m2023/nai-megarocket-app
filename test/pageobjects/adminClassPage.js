@@ -1,9 +1,5 @@
 /* eslint-disable no-undef */
 class AdminClassPage {
-  open(url) {
-    return browser.url(url);
-  }
-
   get addClassButton() {
     return $('#admin-classes-add-button');
   }
@@ -68,4 +64,4 @@ class AdminClassPage {
   }
 }
 
-export default new AdminClassPage();
+module.exports = new AdminClassPage();

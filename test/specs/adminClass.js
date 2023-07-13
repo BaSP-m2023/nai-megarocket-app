@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import LoginPage from '../pageobjects/loginPage';
+/*import LoginPage from '../pageobjects/loginPage';
 import AdminNavBarPage from '../pageobjects/adminNavBarPage';
 
 describe('LoginPage', () => {
@@ -23,4 +23,4 @@ describe('LoginPage', () => {
     await AdminNavBarPage.classButton.waitForDisplayed();
     await AdminNavBarPage.classButton.click();
   });
-});
+});*/

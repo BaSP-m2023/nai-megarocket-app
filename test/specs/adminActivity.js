@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import LoginPage from '../pageobjects/loginPage';
-import AdminNavBarPage from '../pageobjects/adminNavBarPage';
+const LoginPage = required('../pageobjects/loginPage');
+const AdminNavBarPage = required('../pageobjects/adminNavBarPage');
 
 describe('LoginPage', () => {
   it('should login with correct email and password', async () => {
