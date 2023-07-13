@@ -122,7 +122,7 @@ const MemberForm = () => {
         {' '}
         <div className={styles.head}>
           {' '}
-          <div id="admin-members-form-go-back" className={styles.arrow} onClick={handleCancel}>
+          <div id="admin-form-go-back" className={styles.arrow} onClick={handleCancel}>
             <FiArrowLeft size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Member' : 'Add Member'}</h2>
@@ -135,7 +135,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
-              testId={'admin-members-input-first-name'}
+              testId={'admin-input-first-name'}
             />
             <Input
               register={register}
@@ -143,7 +143,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'lastName'}
               error={errors.lastName?.message}
-              testId={'admin-members-input-last-name'}
+              testId={'admin-input-last-name'}
             />
             <Input
               register={register}
@@ -151,7 +151,7 @@ const MemberForm = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
-              testId={'admin-members-input-dni'}
+              testId={'admin-input-dni'}
             />
             <Input
               register={register}
@@ -159,7 +159,7 @@ const MemberForm = () => {
               inputType={'number'}
               inputName={'phone'}
               error={errors.phone?.message}
-              testId={'admin-members-input-phone'}
+              testId={'admin-input-phone'}
             />
             <Input
               register={register}
@@ -167,7 +167,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'email'}
               error={errors.email?.message}
-              testId={'admin-members-input-email'}
+              testId={'admin-input-email'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
@@ -178,7 +178,7 @@ const MemberForm = () => {
                 inputType={'password'}
                 inputName={'password'}
                 error={errors.password?.message}
-                testId={'admin-members-input-password'}
+                testId={'admin-input-password'}
               />
             )}
             <Input
@@ -187,7 +187,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'city'}
               error={errors.city?.message}
-              testId={'admin-members-input-city'}
+              testId={'admin-input-city'}
             />
             <Input
               register={register}
@@ -195,7 +195,7 @@ const MemberForm = () => {
               inputType={'date'}
               inputName={'birthDay'}
               error={errors.birthDay?.message}
-              testId={'admin-members-input-date'}
+              testId={'admin-input-date'}
             />
             <Input
               register={register}
@@ -203,7 +203,7 @@ const MemberForm = () => {
               inputType={'number'}
               inputName={'postalCode'}
               error={errors.postalCode?.message}
-              testId={'admin-members-input-zip'}
+              testId={'admin-input-zip'}
             />
             <Input
               register={register}
@@ -212,7 +212,7 @@ const MemberForm = () => {
               list={membership}
               inputName={'membership'}
               error={errors.membership?.message}
-              testId={'admin-members-input-memebrship'}
+              testId={'admin-input-memebrship'}
             />
             <Input
               register={register}
@@ -220,7 +220,7 @@ const MemberForm = () => {
               inputType={'isActive'}
               inputName={'isActive'}
               error={errors.isActive}
-              testId={'admin-members-input-checkbox'}
+              testId={'admin-input-checkbox'}
             />
           </div>
           <div className={styles.buttonContainer}>
@@ -228,7 +228,7 @@ const MemberForm = () => {
               text={id ? 'Update' : 'Add'}
               type={'submit'}
               info={'submit'}
-              testId={'admin-members-button-submit-form'}
+              testId={'admin-button-submit-form'}
             />
           </div>
         </form>

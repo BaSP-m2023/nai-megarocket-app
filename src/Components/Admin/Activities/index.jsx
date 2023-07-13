@@ -113,7 +113,7 @@ const Activities = () => {
               text={'+ Add Activity'}
               type={'add'}
               clickAction={handleAddItem}
-              testId={'admin-button-add-activity'}
+              testId={'admin-button-add'}
             />
           </div>
           <Table
@@ -122,9 +122,9 @@ const Activities = () => {
             columnTitles={['Name', 'Description', 'Active']}
             handleUpdateItem={handleEditItem}
             handleDeleteItem={handleDeleteClick}
-            testId={'admin-activities-table'}
-            testCancelId={'admin-activities-icon-delete'}
-            testEditId={'admin-activities-icon-edit'}
+            testId={'admin-table'}
+            testCancelId={'admin-icon-delete'}
+            testEditId={'admin-icon-edit'}
           />
           {showModal && (
             <SharedModal
@@ -135,9 +135,9 @@ const Activities = () => {
               isDelete={isDelete}
               onConfirm={handleConfirmDelete}
               closeModal={handleCloseModal}
-              testId={'admin-activities-modal'}
-              confirmDeleteTestId={'admin-activities-button-confirm-modal'}
-              closeTestId={'admin-activities-button-close-modal'}
+              testId={'admin-modal'}
+              confirmDeleteTestId={'admin-button-confirm-modal'}
+              closeTestId={'admin-button-close-modal'}
             />
           )}
         </Container>

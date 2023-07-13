@@ -117,7 +117,7 @@ const AdminProfile = () => {
                 inputName={'firstName'}
                 error={errors.firstName?.message}
                 disabled={!editMode}
-                testId={'admin-profile-input-first-name'}
+                testId={'admin-input-first-name'}
               />
             </div>
             <div className={styles.formInput}>
@@ -128,7 +128,7 @@ const AdminProfile = () => {
                 inputName={'lastName'}
                 error={errors.lastName?.message}
                 disabled={!editMode}
-                testId={'admin-profile-input-last-name'}
+                testId={'admin-input-last-name'}
               />
             </div>
             <div className={styles.formInput}>
@@ -139,7 +139,7 @@ const AdminProfile = () => {
                 inputName={'dni'}
                 error={errors.dni?.message}
                 disabled={!editMode}
-                testId={'admin-profile-input-dni'}
+                testId={'admin-input-dni'}
               />
             </div>
           </div>
@@ -152,7 +152,7 @@ const AdminProfile = () => {
                 inputName={'email'}
                 error={errors.email?.message}
                 disabled={!editMode}
-                testId={'admin-profile-input-email'}
+                testId={'admin-input-email'}
               />
             </div>
             <div className={styles.formInput}>
@@ -163,7 +163,7 @@ const AdminProfile = () => {
                 inputName={'city'}
                 error={errors.city?.message}
                 disabled={!editMode}
-                testId={'admin-profile-input-city'}
+                testId={'admin-input-city'}
               />
             </div>
             <div className={styles.formInput}>
@@ -174,7 +174,7 @@ const AdminProfile = () => {
                 inputName={'phone'}
                 error={errors.phone?.message}
                 disabled={!editMode}
-                testId={'admin-profile-input-phone'}
+                testId={'admin-input-phone'}
               />
             </div>
           </div>
@@ -194,13 +194,13 @@ const AdminProfile = () => {
                     text={'Cancel'}
                     type={'cancel'}
                     clickAction={handleDisableEditMode}
-                    testId={'admin-profile-cancel-button'}
+                    testId={'admin-button-cancel'}
                   />
                   <Button
                     text={'Confirm'}
                     type={'submit'}
                     info={'submit'}
-                    testId={'admin-profile-submit-button'}
+                    testId={'admin-button-submit'}
                   />
                 </div>
               </>

@@ -4,6 +4,7 @@ import SharedModal from 'Components/Shared/Modal/index';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './dropDownMenu.moule.css';
+import Avatar from '@mui/material/Avatar';
 
 const DropDownMenu = ({ userData, role, profileRoute }) => {
   const [open, setOpen] = useState(false);
@@ -15,7 +16,7 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
   const history = useHistory();
 
   const userIcon = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/user.png`;
-  const userPicture = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/userPicture.png`;
+  // const userPicture = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/userPicture.png`;
   const helpIcon = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/question.png`;
   const logoutIcon = `${process.env.PUBLIC_URL}/assets/images/dropDownMenu/log-out.png`;
 
@@ -64,6 +65,34 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
       </li>
     );
   };
+  function stringToColor(string) {
+    let hash = 0;
+    let i;
+
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#';
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+    /* eslint-enable no-bitwise */
+
+    return color;
+  }
+
+  function stringAvatar(name) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name)
+      },
+      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`
+    };
+  }
 
   return (
     <>
@@ -74,7 +103,12 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
             setOpen(!open);
           }}
         >
-          <img id="user-avatar-button-drop-down-menu" src={userPicture}></img>
+          <div id="user-avatar-button-drop-down-menu" className="avatar-div">
+            <Avatar
+              className="avatar"
+              {...stringAvatar(`${userData?.firstName} ${userData?.lastName}`)}
+            />
+          </div>
         </div>
 
         <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>

@@ -107,7 +107,7 @@ const Members = () => {
               text={'+ Add Member'}
               type={'add'}
               clickAction={handleAdd}
-              testId={'admin-members-add-button'}
+              testId={'admin-add-button'}
             />
           </div>
           <Table
@@ -116,9 +116,9 @@ const Members = () => {
             handleUpdateItem={handleEdit}
             columnTitles={['Name', 'Surname', 'Email', 'Membership', 'Active']}
             properties={['firstName', 'lastName', 'email', 'membership', 'isActive']}
-            testId={'admin-member-table'}
-            testCancelId={'admin-member-icon-delete'}
-            testEditId={'admin-member-icon-edit'}
+            testId={'admin-table'}
+            testCancelId={'admin-icon-delete'}
+            testEditId={'admin-icon-edit'}
           />
           <SharedModal
             isDelete={isDelete}
@@ -127,8 +127,8 @@ const Members = () => {
             title={title}
             body={alertMessage}
             onConfirm={handleConfirmDelete}
-            testId={'admin-member-modal'}
-            closeTestId={'admin-member-button-close-success-modal'}
+            testId={'admin-modal'}
+            closeTestId={'admin-close-success-modal'}
           />
         </Container>
       ) : (
