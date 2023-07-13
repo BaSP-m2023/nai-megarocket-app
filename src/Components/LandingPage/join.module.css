@@ -5,7 +5,6 @@
   padding: 0;
   width: 100vw;
   height: 100%;
-  transition: 3s ease;
 }
 
 .joinButtonDiv Button {
@@ -22,7 +21,6 @@
   border-radius: 0;
   color: black;
   background-color: transparent!important;
-  position: relative;
   transition: 0.5s ease;
 }
 
@@ -43,7 +41,7 @@
 
 .joined p {
   width: 100vw;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.8rem;
@@ -61,7 +59,7 @@
   width: 100vw;
   height: 80vh;
   border: none;
-  background-image: url('/public/assets/images/landing/12.jpg');
+  background-image: url('/public/assets/images/landing/landscape.jpg');
   background-size: cover;
   background-position: center;
   cursor: pointer;
@@ -69,25 +67,24 @@
 
 .landscape Button {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
   align-content: center;
   margin: 0;
-  padding: 0;
+  padding: 0 5vw;
   width: 100%;
-  height: 100%;
+  height: 50%;
   border: none;
   background-color: transparent!important;
-  font-size: 0rem!important;
   text-shadow: none;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0)!important;
-  transition: color 1s ease, font-size 1s ease, text-shadow 1s ease;
+  font-size: 10rem;
+  color: white!important;
+  transition: 1s ease;
 }
 
 .landscape Button:hover {
-  font-size: 7rem!important;
   text-shadow: 10px 10px 10px rgb(0, 0, 0);
-  color: white!important;
-  transition: color 0.5s ease, font-size 1s ease, text-shadow 1s ease;
+  transition: 1s ease;
 }
