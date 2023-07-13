@@ -3,7 +3,6 @@
   flex-direction: column;
   align-self: center;
   margin: 1%;
-  border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   height: auto;
   padding: 1%;
@@ -16,7 +15,6 @@
   flex-direction: column;
   align-self: center;
   width: 70%;
-  border-radius: 20px;
   height: auto;
   padding-bottom: 5vh;
   font-size: 2rem;
@@ -53,14 +51,12 @@
   height: 30px;
   padding: 0;
   border: solid 1px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
   text-align: center;
 }
 
 .hourColumn {
   background-color: #f7f9ed;
   border: solid 1px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
   text-align: center;
   font-size: 0.9rem;
 }
@@ -79,9 +75,8 @@
   width: 100%;
   padding: 2%;
   text-align: center;
-  border-radius: 5px;
-  background-color: #fddba1;
-  color: #0f232e;
+  background-color: #ff7c01a6;
+  color: black;
   cursor: pointer;
   font-size: 0.9rem;
 }
@@ -94,19 +89,18 @@
   width: 100%;
   margin:0;
   padding: 2%;
-  background-color: #F9A414;
-  border-radius: 5px;
-  color:#0F232E;
+  background-color: #157CAA;
+  color:black;
   font-size: 0.9rem;
   cursor: pointer;
 }
 
 .classesButton:hover {
-  background-color: #c7ac7d;
+  background-color: #157CAA;
 }
 
 .addedButton:hover {
-  background-color: #ca8611;
+  background-color: #157CAA;
 }
 
 .title {
@@ -133,7 +127,6 @@
   height: auto;
   padding: 1%;
   font-weight:normal;
-  border-radius: 5px;
   text-align: center;
 }
 
@@ -151,9 +144,8 @@
 .headerTable th {
   width: 10%;
   border: solid 1px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
   padding: 1% 0 1% 0;
-  background-color: #0f232e;
+  background-color: black;
   color: #f7f9ed;
   font-weight: normal;
   font-size: 0.9rem;
@@ -172,5 +164,5 @@
 }
 
 .styleActivity4 {
-  background-color: #F9A414;
+  background-color: #157CAA;
 }

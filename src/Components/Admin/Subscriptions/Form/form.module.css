@@ -6,7 +6,6 @@
   margin: 5%;
   text-align: center;
   margin-top: 10%;
-  border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   margin-left: 25%;
   padding-bottom: 5vh;
@@ -17,7 +16,7 @@
   margin-right: auto;
   margin-left: auto;
   text-align: center;
-  color: #0f232e;
+  color: black;
 }
 
 .head {

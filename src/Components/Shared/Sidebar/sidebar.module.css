@@ -3,46 +3,63 @@
     flex-direction: column;
     width: 15vw;
     position: sticky;
-    background-color: #0f232e;
+    background-color: black;
     top: 10vh;
     height: 100%;
   }
 
   .navbar {
     display: flex;
-    height: 90vh;
-    justify-content: center;
+    flex-direction: column;
+    height: fit-content;
+    min-height: 70vh;
+    justify-content: flex-start;
     align-items: center;
+    width: 100%;
+    padding: 10vh 0;
   }
 
   .routes {
     display: flex;
+    justify-content: center;
     align-self: center;
-    gap: 8vh;
+    gap: 5vh;
     max-height: 100%;
+    width: 100%;
     list-style-type: none;
-    padding-left: 1rem;
+    padding: 0;
+    margin: 0;
     flex-direction: column;
   }
 
+  .routes > li {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
   .routes > li > a {
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.2rem;
     font-weight: 500;
     text-decoration: none;
     text-transform: capitalize;
     white-space: nowrap;
-    color: #f9a414;
+    color: white;
+    height: 7vh;
+    width: 100%;
   }
-  
+
   .routes > li > a.active {
-    border-bottom: 2px solid #f9a414;
+    background-color: #157CAA;
   }
-  
+
   .routes > li > a {
     position: relative;
   }
-  
+
   .routes > li > a::after {
     content: '';
     position: absolute;
@@ -50,42 +67,41 @@
     bottom: 0;
     width: 100%;
     height: 2px;
-    background-color: #f9a414;
+    background-color: #157CAA;
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 0.2s ease-in-out;
   }
-  
+
   .routes > li > a:hover::after {
     transform: scaleX(1);
   }
-  
+
   .button {
     width: 90%;
     padding: 2rem;
-    background-color: #f9a414;
+    background-color: #157CAA;
     border: solid 1px;
-    border-color: #f9a414;
-    color: #0f232e;
+    border-color: #157CAA;
+    color: black;
     text-align: center;
     font-size: 1rem;
-    border-radius: 0.5rem;
     cursor: pointer;
     font-weight: bold;
   }
-  
+
   .button:hover {
     background-color: #dfdfdf;
     border: solid 1px;
-    border-color: #0f232e;
-    color: #f9a414;
+    border-color: black;
+    color: #157CAA;
   }
-  
+
   .button::before {
     transform: scaleX(0);
     transform-origin: bottom right;
   }
-  
+
   .button:hover::before {
     transform: scaleX(1);
     transform-origin: bottom left;

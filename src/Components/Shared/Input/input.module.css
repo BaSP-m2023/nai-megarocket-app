@@ -1,16 +1,14 @@
 .formInput {
   height: 2rem;
-  border-radius: 5px;
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20vw;
   border: solid 1px;
-  border-color: #0f232e;
+  border-color: black;
 }
 
 .formInputError {
   height: 2rem;
-  border-radius: 5px;
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20vw;
@@ -21,18 +19,16 @@
 .formSelect {
   height: 2.3rem;
   font-size: 80%;
-  border-radius: 5px;
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20.35vw;
   border: solid 1px;
-  border-color: #0f232e;
+  border-color: black;
 }
 
 .formSelectError {
   height: 2.3rem;
   font-size: 80%;
-  border-radius: 5px;
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20.35vw;

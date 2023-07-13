@@ -20,7 +20,6 @@
   align-self: center;
   width: 90%;
   margin: 1%;
-  border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   height: auto;
   padding: 1%;
@@ -46,14 +45,12 @@
   height: 30px;
   padding: 0;
   border: solid 1px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
   text-align: center;
 }
 
 .hourColumn {
   background-color: #f7f9ed;
   border: solid 1px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
   text-align: center;
   font-size: 0.9rem;
 }
@@ -66,9 +63,8 @@
 
 .classesButton {
   width: 100%;
-  border-radius: 5px;
   background-color: #fddba1;
-  color: #0f232e;
+  color: black;
   cursor: pointer;
   border: none;
   font-size: 0.9rem;
@@ -80,16 +76,15 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  border-radius: 5px;
-  background-color: #f9a414;
-  color: #0f232e;
+  background-color: #ff7c01a6;
+  color: black;
   font-size: 0.9rem;
   border: none;
   cursor: pointer;
 }
 
 .classesButton:hover {
-  background-color: #f9a414;
+  background-color: #ff7c01a6;
 }
 
 .title {
@@ -102,7 +97,6 @@
   font-size: 1rem;
   height: auto;
   font-weight: normal;
-  border-radius: 10px;
   background-color: #fddba1;
   text-align: center;
 }
@@ -120,9 +114,8 @@
 .headerTable th {
   width: 10%;
   border: solid 1px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
   padding: 1% 0 1% 0;
-  background-color: #0f232e;
+  background-color: black;
   color: #f7f9ed;
   font-weight: normal;
   font-size: 0.9rem;
@@ -135,8 +128,7 @@
   height: 2vh;
   width: 10vw;
   font-weight: normal;
-  border-radius: 10px;
-  background-color: #fddba1;
+  background-color: #ff7c01a6;
   text-align: center;
   font-size: 0.8rem;
   font-weight: bold;

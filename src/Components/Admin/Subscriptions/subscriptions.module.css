@@ -16,14 +16,13 @@
 
 .toggleButton {
   background-color: inherit;
-  color: #0f232e;
-  border-radius: 29px;
+  color: black;
   font-size: 1.5rem;
   padding-top: 6px;
 }
 
 .toggleButton.active {
-  background-color: #0f232e;
+  background-color: black;
   color: white;
 }
 

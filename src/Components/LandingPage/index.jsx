@@ -25,10 +25,7 @@ const Landing = () => {
           />
           <div className={styles.overlay}>
             <div className={styles.content}>
-              <div>
-                <h2>mega</h2>
-                <h2 className={styles.rocket}>rocket</h2>
-              </div>
+              <h2>megarocket</h2>
               <p>
                 it&apos;s gym <span className={styles.bullet}>&#8226;</span> it&apos;s life
               </p>

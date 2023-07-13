@@ -8,8 +8,8 @@
   box-shadow: none;
   padding: 0;
   margin: 0;
-  border: none!important;
-  box-shadow: none !important;
+  border: none;
+  box-shadow: none;
   padding-bottom: 10vh;
 }
 
@@ -30,16 +30,16 @@
 .input {
   font-size: 1.2rem;
   margin: 3vh 0;
-  width: 25vw!important;
-  height: 10vh!important;
-  border-radius: 0!important;
-  border-color: rgb(0, 0, 0, 0.2)!important;
+  width: 25vw;
+  height: 10vh;
+  border-radius: 0;
+  border-color: rgb(0, 0, 0, 0.2);
   padding: 0 2vw;
   transition: 1s ease;
 }
 
 Input:hover {
-  border-color: black!important;
+  border-color: black;
   transition: 1s ease;
 }
 
@@ -67,7 +67,6 @@ Input:hover {
 .buttonsDiv Button {
   border: none;
   border-radius: 0;
-  background-color: black;
   text-transform: uppercase;
   transition: 1s ease;
 }

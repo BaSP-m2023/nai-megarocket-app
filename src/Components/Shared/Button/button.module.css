@@ -3,13 +3,13 @@
   padding: 0.9rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
-  background-color: rgba(253, 219, 161);
+  background-color: #ff7c01a6;
   border: solid 1px;
   border-color: rgba(253, 219, 161);
-  color: rgba(15, 35, 46);
+  color: black;
   text-align: center;
   font-size: 1rem;
-  border-radius: 0.5rem;
+
   cursor: pointer;
   font-weight: bold;
 }
@@ -18,11 +18,11 @@
   width: 8rem;
   padding: 0.7rem;
   margin-top: 1rem;
-  background-color: rgba(15, 35, 46);
+  background-color: black;
   border: solid 1px;
   color: white;
   font-size: 1rem;
-  border-radius: 0.5rem;
+
   cursor: pointer;
   font-weight: bold;
 }
@@ -31,11 +31,11 @@
   width: 8rem;
   padding: 0.7rem;
   margin-top: 1rem;
-  background-color: rgba(15, 35, 46);
-  border: solid 1px;
+  background-color: black;
+  border: solid 1px black;
   color: white;
   font-size: 1rem;
-  border-radius: 0.5rem;
+
   cursor: pointer;
   font-weight: bold;
 }
@@ -46,10 +46,10 @@
   margin-top: 1rem;
   background-color: white;
   border: solid 1px;
-  border-color: rgba(15, 35, 46);
-  color: rgba(15, 35, 46);
+  border-color: black;
+  color: black;
   font-size: 1rem;
-  border-radius: 0.5rem;
+
   cursor: pointer;
   font-weight: bold;
 }

@@ -49,7 +49,7 @@
   font-size: 1rem;
   height: 2rem;
   border: solid 1px;
-  border-color: #0f232e;
+  border-color: black;
   margin-bottom: 2%;
 }
 
@@ -73,13 +73,15 @@
 }
 
 .formTitleTwo {
-  color: #f9a414;
-  border-bottom: solid 2px #f9a414;
+  color: #157CAA;
+  border-bottom: solid 2px #157CAA;
   margin: 2rem 5rem 2rem 5rem;
   text-transform: uppercase;
+  font-size: 2rem;
   line-height: 3rem;
-  font-weight: 100;
+  font-weight: 400;
   letter-spacing: 2px;
+  cursor: default;
 }
 
 .toggleButton {

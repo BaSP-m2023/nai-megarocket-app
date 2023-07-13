@@ -16,9 +16,8 @@
   width: 20%;
   flex-direction: column;
   padding: 30px;
-  background-color: #0f232e;
+  background-color: black;
   color: #f7f9ed;
-  border-radius: 9px;
   margin-left: 15vw;
 }
 
@@ -27,7 +26,6 @@
   flex-direction: column;
   padding: 30px;
   background-color: #e93528;
-  border-radius: 9px;
   max-width: 50%;
   margin-left: 15vw;
 }
@@ -37,7 +35,6 @@
   flex-direction: column;
   padding: 30px;
   background-color: #fddba1;
-  border-radius: 9px;
   margin-left: 15vw;
 }
 
@@ -48,7 +45,7 @@
 }
 
 .buttonContainer > button {
-  background-color: #f9a414;
+  background-color: #157caa;
   color: #0f232e;
   width: 60%;
   margin-top: 10%;
