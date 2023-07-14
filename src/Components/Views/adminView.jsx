@@ -1,6 +1,6 @@
 import styles from 'Components/Layout/layout.module.css';
 import Routes from 'Routes/Routes';
-import Header from 'Components/Header/index';
+import Header from 'Components/Shared/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
@@ -25,7 +25,7 @@ const AdminView = () => {
   const rol = 'admin';
   return (
     <>
-      <Header />
+      <Header profileRoute={routes[1].link} />
       <div className={styles.body}>
         <Sidebar routes={routes} rol={rol} />
         <Routes />
