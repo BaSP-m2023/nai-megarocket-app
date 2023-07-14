@@ -1,19 +1,43 @@
 /* eslint-disable no-undef */
 class AdminNavBarPage {
-  get btnHome() {
+  get btnHomeadmin() {
     return $('#sidebar-link-admin-home');
   }
 
-  get btnProfile() {
+  get btnHomeMember() {
+    return $('#sidebar-link-member-home');
+  }
+
+  get btnHomeTrainer() {
+    return $('#sidebar-link-trainer-home');
+  }
+
+  get btnProfileAdmin() {
     return $('#sidebar-link-admin-profile');
   }
 
-  get btnActivity() {
+  get btnProfileMember() {
+    return $('#sidebar-link-member-profile');
+  }
+
+  get btnProfileTrainer() {
+    return $('#sidebar-link-trainer-profile');
+  }
+
+  get btnActivityAdmin() {
     return $('#sidebar-link-admin-activities');
   }
 
-  get btnClass() {
+  get btnActivityMember() {
+    return $('#sidebar-link-member-activities');
+  }
+
+  get btnClassAdmin() {
     return $('#sidebar-link-admin-classes');
+  }
+
+  get btnClassTrainer() {
+    return $('#sidebar-link-trainer-classes');
   }
 
   get btnMember() {
@@ -28,8 +52,16 @@ class AdminNavBarPage {
     return $('#sidebar-link-admin-subscriptions');
   }
 
+  get btnSchedule() {
+    return $('#sidebar-link-member-schedule');
+  }
+
   get btnReports() {
     return $('#sidebar-link-admin-reports');
+  }
+
+  get btnMembership() {
+    return $('#sidebar-link-member-memberships');
   }
 }
 
