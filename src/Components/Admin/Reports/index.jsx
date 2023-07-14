@@ -9,10 +9,13 @@ import { getMembers } from 'Redux/members/thunks';
 import { getClasses } from 'Redux/classes/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import { useDispatch } from 'react-redux';
+import BarLoader from 'react-spinners/BarLoader';
+import { useSelector } from 'react-redux';
 
 const Reports = () => {
   const [activeComponent, setActiveComponent] = useState('subscriptions');
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.members.loading);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,10 +45,14 @@ const Reports = () => {
 
   return (
     <Container>
-      <div className={styles.container}>
-        <ButtonGroup setActiveComponent={setActiveComponent} activeComponent={activeComponent} />
-        {renderComponent()}
-      </div>
+      {loading ? (
+        <BarLoader color="#157CAA" />
+      ) : (
+        <div className={styles.container}>
+          <ButtonGroup setActiveComponent={setActiveComponent} />
+          {renderComponent()}
+        </div>
+      )}
     </Container>
   );
 };

@@ -6,12 +6,10 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { LineChart, PieChart } from '@mui/x-charts';
-import BarLoader from 'react-spinners/BarLoader';
 import Container from 'Components/Shared/Container';
 
 const ReportsMembers = () => {
   const members = useSelector((state) => state.members.data.data);
-  const loading = useSelector((state) => state.members.loading);
 
   const membersDates = members?.map((member) =>
     member?.createdAt ? parseISO(member.createdAt) : null
@@ -58,30 +56,22 @@ const ReportsMembers = () => {
 
   return (
     <Container>
-      {loading ? (
-        <BarLoader color="#157CAA" />
-      ) : (
-        <div className={styles.container}>
+      <div className={styles.container}>
+        {membersCounts?.length > 0 ? (
           <Stack>
-            {membersCounts?.length > 0 ? (
-              <Box direction="row" width="100%" textAlign="center" padding="2%">
-                <Typography fontWeight="bold">Number of registered members per month</Typography>
-                <LineChart
-                  xAxis={[{ scaleType: 'band', data: months }]}
-                  series={[
-                    {
-                      data: membersCounts
-                    }
-                  ]}
-                  width={500}
-                  height={300}
-                />
-              </Box>
-            ) : (
-              <Typography fontWeight="bold">No data available for the chart</Typography>
-            )}
-          </Stack>
-          <Stack>
+            <Box direction="row" width="100%" textAlign="center" padding="2%">
+              <Typography fontWeight="bold">Number of registered members per month</Typography>
+              <LineChart
+                xAxis={[{ scaleType: 'band', data: months }]}
+                series={[
+                  {
+                    data: membersCounts
+                  }
+                ]}
+                width={500}
+                height={300}
+              />
+            </Box>
             <Box direction="row" width="100%" textAlign="center" padding="2%">
               <Typography padding="5%" fontWeight="bold">
                 Total memberships
@@ -100,8 +90,10 @@ const ReportsMembers = () => {
               />
             </Box>
           </Stack>
-        </div>
-      )}
+        ) : (
+          <Typography fontWeight="bold">No data available for the chart</Typography>
+        )}
+      </div>
     </Container>
   );
 };
