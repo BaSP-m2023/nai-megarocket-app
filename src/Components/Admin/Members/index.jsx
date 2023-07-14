@@ -87,6 +87,11 @@ const Members = () => {
   const handleEdit = (id) => {
     history.push(`/admins/members/form/${id}`);
   };
+
+  const membersData = members.map((item) => ({
+    ...item,
+    name: `${item.firstName} ${item.lastName}`
+  }));
   return (
     <>
       <Toaster
@@ -111,11 +116,11 @@ const Members = () => {
             />
           </div>
           <Table
-            data={members}
+            data={membersData}
             handleDeleteItem={handleDelete}
             handleUpdateItem={handleEdit}
-            columnTitles={['Name', 'Surname', 'Email', 'Membership', 'Active']}
-            properties={['firstName', 'lastName', 'email', 'membership', 'isActive']}
+            columnTitles={['Name', 'Phone Number', 'Email', 'Membership', 'Active']}
+            properties={['name', 'phone', 'email', 'membership', 'isActive']}
             testId={'admin-member-table'}
             testCancelId={'admin-member-icon-delete'}
             testEditId={'admin-member-icon-edit'}

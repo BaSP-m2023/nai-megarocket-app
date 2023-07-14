@@ -95,6 +95,10 @@ const Trainers = () => {
     history.push(`/admins/trainers/form/${id}`);
   };
 
+  const trainersData = trainers.map((item) => ({
+    ...item,
+    name: `${item.firstName} ${item.lastName}`
+  }));
   return (
     <>
       <Toaster
@@ -122,16 +126,9 @@ const Trainers = () => {
             <h3>No trainers to show</h3>
           ) : trainers.length > 0 ? (
             <Table
-              data={trainers}
-              properties={['firstName', 'lastName', 'phone', 'email', 'salary', 'isActive']}
-              columnTitles={[
-                'First Name',
-                'Last Name',
-                'Phone Number',
-                'Email',
-                'Salary',
-                'Active'
-              ]}
+              data={trainersData}
+              properties={['name', 'phone', 'email', 'salary', 'isActive']}
+              columnTitles={['Name', 'Phone Number', 'Email', 'Salary', 'Active']}
               handleUpdateItem={editItem}
               handleDeleteItem={handleDelete}
               testId={'admin-trainers-table'}
