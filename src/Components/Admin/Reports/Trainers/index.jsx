@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './trainers.module.css';
+import styles from '../reports.module.css';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
@@ -21,47 +21,72 @@ const ReportsTrainers = () => {
     }
   });
 
-  const trainers = classes?.map((item) => {
-    const firstName = item?.trainer?.firstName ?? 'Trainer not assigned';
-    const lastName = item?.trainer?.lastName ?? '';
-    return `${firstName} ${lastName}`;
-  });
-
-  const data1 = Object.keys(activityCount)?.map((activity) => ({
+  const dataActivity = Object.keys(activityCount)?.map((activity) => ({
     label: activity,
     value: activityCount[activity]
   }));
 
-  const data2 = trainers?.map((index) => ({
-    label: `${index}`,
-    value: 1
-  }));
+  const trainersCount = {};
+  classes.forEach((item) => {
+    const trainer = item?.trainer ? `${item?.trainer?.firstName}` : null;
+    if (trainer) {
+      if (trainersCount[trainer]) {
+        trainersCount[trainer] += 1;
+      } else {
+        trainersCount[trainer] = 1;
+      }
+    }
+  });
 
-  console.log(data1);
-  console.log(data2);
+  const dataTrainers = Object.keys(trainersCount)?.map((trainer) => ({
+    label: trainer,
+    value: trainersCount[trainer]
+  }));
 
   return (
     <div className={styles.container}>
-      <Stack>
-        <Box direction="row" width="100%" textAlign="center" padding="2%">
-          <Typography padding="5%">Classes with trainers</Typography>
-          <PieChart
-            series={[
-              {
-                innerRadius: 0,
-                outerRadius: 80,
-                data: data1
-              },
-              {
-                innerRadius: 100,
-                outerRadius: 120,
-                data: data2
-              }
-            ]}
-            width={500}
-            height={300}
-            legend={{ hidden: true }}
-          />
+      <Stack direction="row" width="100%" textAlign="center" paddingRight="30%" paddingTop="10%">
+        <Box>
+          <Typography padding="5%" fontWeight="bold">
+            Total class activities
+          </Typography>
+          {Array.isArray(dataActivity) && dataActivity.length > 0 ? (
+            <PieChart
+              series={[
+                {
+                  data: dataActivity,
+                  labelKey: 'label',
+                  valueKey: 'value',
+                  innerRadius: 60
+                }
+              ]}
+              width={500}
+              height={300}
+            />
+          ) : (
+            <Typography fontWeight="bold">No data available for the chart</Typography>
+          )}
+        </Box>
+        <Box>
+          <Typography padding="5%" fontWeight="bold">
+            Total class trainers
+          </Typography>
+          {Array.isArray(dataTrainers) && dataTrainers.length > 0 ? (
+            <PieChart
+              series={[
+                {
+                  data: dataTrainers,
+                  labelKey: 'label',
+                  valueKey: 'value',
+                  innerRadius: 60
+                }
+              ]}
+              width={500}
+              height={300}
+            />
+          ) : (
+            <Typography fontWeight="bold">No data available for the chart</Typography>
+          )}
         </Box>
       </Stack>
     </div>

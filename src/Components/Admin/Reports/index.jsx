@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ReportsTrainers from './Trainers';
 import ReportsSubscriptions from './Subscriptions';
 import ButtonGroup from './Buttons';
-import ReportsMemberships from './Memberships';
 import ReportsMembers from './Members';
 import Container from 'Components/Shared/Container';
 import styles from './reports.module.css';
@@ -12,13 +11,20 @@ import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import { useDispatch } from 'react-redux';
 
 const Reports = () => {
-  const [activeComponent, setActiveComponent] = useState('');
+  const [activeComponent, setActiveComponent] = useState('subscriptions');
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getMembers());
-    dispatch(getClasses());
-    dispatch(getSubscriptions());
+    const fetchData = async () => {
+      try {
+        dispatch(getMembers());
+        dispatch(getClasses());
+        dispatch(getSubscriptions());
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchData();
   }, []);
 
   const renderComponent = () => {
@@ -27,8 +33,6 @@ const Reports = () => {
         return <ReportsSubscriptions />;
       case 'trainers':
         return <ReportsTrainers />;
-      case 'memberships':
-        return <ReportsMemberships />;
       case 'members':
         return <ReportsMembers />;
       default:
@@ -39,7 +43,7 @@ const Reports = () => {
   return (
     <Container>
       <div className={styles.container}>
-        <ButtonGroup setActiveComponent={setActiveComponent} />
+        <ButtonGroup setActiveComponent={setActiveComponent} activeComponent={activeComponent} />
         {renderComponent()}
       </div>
     </Container>

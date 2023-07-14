@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './buttons.module.css';
 
-const ButtonGroup = ({ setActiveComponent }) => {
-  const [activeButton, setActiveButton] = useState('activities');
+const ButtonGroup = ({ setActiveComponent, activeComponent }) => {
+  const [activeButton, setActiveButton] = useState(activeComponent);
 
   const handleButtonClick = (component) => {
     setActiveComponent(component);
@@ -21,19 +21,13 @@ const ButtonGroup = ({ setActiveComponent }) => {
         className={`${styles.button} ${activeButton === 'members' ? styles.active : ''}`}
         onClick={() => handleButtonClick('members')}
       >
-        Members
+        Members & memberships
       </button>
       <button
         className={`${styles.button} ${activeButton === 'trainers' ? styles.active : ''}`}
         onClick={() => handleButtonClick('trainers')}
       >
-        Trainers
-      </button>
-      <button
-        className={`${styles.button} ${activeButton === 'memberships' ? styles.active : ''}`}
-        onClick={() => handleButtonClick('memberships')}
-      >
-        Memberships
+        Class activities and trainers
       </button>
     </div>
   );
