@@ -3,13 +3,13 @@
   padding: 0.9rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
-  background-color: #157CAA;;
+  background-color: #157CAA;
   border: solid 1px;
-  border-color: #157CAA;;
+  border-color: #157CAA;
+  border-radius: 5px;
   color: white;
   text-align: center;
   font-size: 1rem;
-
   cursor: pointer;
   font-weight: bold;
 }
