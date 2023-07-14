@@ -2,7 +2,7 @@
   --primary-bg: #242526;
   --secondary-bg: #fff;
   --primary-text-color: #555;
-  --secondary-text-color: #cecece;
+  --secondary-text-color: #555;
   --border-radius: 8px;
   --speed: 500ms;
 }
@@ -19,8 +19,8 @@
 
 .dropdown-menu {
   position: absolute;
-  top: 90px;
-  right: 40px;
+  top: 14vh;
+  right: 7.3vh;
   background-color: #f3f3f3;
   border-radius: var(--border-radius);
   padding: 10px 20px;
@@ -56,7 +56,6 @@
   width: 100%;
   text-align: center;
   font-size: 18px;
-  /* padding: 5px 0; */
   font-weight: 500;
   font-size: 18px;
   color: var(--primary-text-color);
@@ -101,4 +100,9 @@
   max-width: 100px;
   margin-left: 10px;
   transition: var(--speed);
+}
+
+.avatar {
+  margin-right: 7vh;
+  cursor: pointer;
 }
