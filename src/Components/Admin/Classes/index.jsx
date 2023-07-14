@@ -160,7 +160,7 @@ const Classes = () => {
                   text={'+ Add Class'}
                   type={'add'}
                   clickAction={handleAddClass}
-                  testId={'admin-classes-add-button'}
+                  testId={'admin-button-add'}
                 />
               </div>
               <div className={styles.select}>
@@ -174,7 +174,7 @@ const Classes = () => {
                     <option
                       value={activityItem.name}
                       key={index}
-                      id={`admin-classes-select-activity-${activityItem.name}`}
+                      id={`admin-select-activity-${activityItem.name}`}
                     >
                       {activityItem.name}
                     </option>
@@ -214,9 +214,9 @@ const Classes = () => {
             title={'Delete Class'}
             body={'Are you sure you want to delete this class?'}
             onConfirm={handleConfirmDeleteClass}
-            testId={'admin-classes-modal'}
-            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
-            closeTestId={'admin-classes-button-close-warning-modal'}
+            testId={'admin-modal'}
+            confirmDeleteTestId={'admin-button-confirm-modal'}
+            closeTestId={'admin-button-close-warning-modal'}
           />
           <CalendarModal
             show={calendarAlert}
@@ -225,10 +225,10 @@ const Classes = () => {
             onClose={handleCloseModalCalendar}
             closeModal={handleUpdateClass}
             onConfirm={handleDeleteClass}
-            testId={'admin-classes-modal-calendar'}
-            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
-            editTestId={'admin-classes-button-edit-modal'}
-            closeTestId={'admin-classes-icon-cross-close-modal'}
+            testId={'admin-modal-calendar'}
+            confirmDeleteTestId={'admin-button-confirm-modal'}
+            editTestId={'admin-button-edit-modal'}
+            closeTestId={'admin-icon-cross-close-modal'}
           />
         </Container>
       ) : (

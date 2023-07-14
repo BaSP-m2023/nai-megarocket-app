@@ -118,6 +118,7 @@ const Login = () => {
             className={styles.logo}
             src="/assets/images/logos/logo-black.png"
             alt="MegaRocket Logo"
+            id="logo-megarocket-login"
           />
           <h2>Sign In</h2>
           <RecoveryModal
@@ -137,7 +138,11 @@ const Login = () => {
                   {...register('email')}
                   type={'text'}
                 />
-                {errors['email'] && <p className={styles.errorText}>{errors['email'].message}</p>}
+                {errors['email'] && (
+                  <p id="login-input-email-error" className={styles.errorText}>
+                    {errors['email'].message}
+                  </p>
+                )}
               </FormControl>
             </div>
             <div className={styles.inputsLogin}>
@@ -155,6 +160,7 @@ const Login = () => {
                         aria-label="toggle password visibility"
                         onClick={() => setShowPassword(!showPassword)}
                         edge="end"
+                        id="login-eye-button"
                       >
                         {showPassword ? <FaEyeSlash size={15} /> : <FaRegEye size={15} />}
                       </IconButton>
@@ -162,7 +168,9 @@ const Login = () => {
                   }
                 />
                 {errors['password'] && (
-                  <p className={styles.errorText}>{errors['password'].message}</p>
+                  <p id="login-input-password-error" className={styles.errorText}>
+                    {errors['password'].message}
+                  </p>
                 )}
               </FormControl>
             </div>

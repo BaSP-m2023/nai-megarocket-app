@@ -95,7 +95,7 @@ const Form = () => {
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.head}>
           {' '}
-          <div id="admin-activities-form-go-back" className={styles.arrow} onClick={handleCancel}>
+          <div id="admin-arrow-back" className={styles.arrow} onClick={handleCancel}>
             <FiArrowLeft size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Activity' : 'Add Activity'}</h2>
@@ -107,7 +107,7 @@ const Form = () => {
           labelName="Activity"
           placeholder="Activity"
           error={errors.name?.message}
-          testId={'admin-activity-input-name'}
+          testId={'admin-input-name'}
         />
         <InputComponent
           register={register}
@@ -116,7 +116,7 @@ const Form = () => {
           labelName="Description"
           placeholder="Description"
           error={errors.description?.message}
-          testId={'admin-activity-input-description'}
+          testId={'admin-input-description'}
         />
         {id && (
           <InputComponent
@@ -125,7 +125,7 @@ const Form = () => {
             inputType={'isActive'}
             inputName={'isActive'}
             error={errors.isActive}
-            testId={'admin-activity-input-checkbox'}
+            testId={'admin-input-checkbox'}
           />
         )}
         <div className={styles.buttonContainer}>
@@ -133,7 +133,7 @@ const Form = () => {
             text={id ? 'Update' : 'Add'}
             type={'submit'}
             info={'submit'}
-            testId={'admin-activity-button-submit-form'}
+            testId={'admin-button-submit-form'}
           />
         </div>
       </SharedForm>

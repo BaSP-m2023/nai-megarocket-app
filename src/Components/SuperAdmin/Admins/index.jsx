@@ -122,9 +122,9 @@ const Admins = () => {
                 columnTitles={['First Name', 'Last Name', 'Phone Number', 'Email']}
                 handleUpdateItem={handleUpdateAdmin}
                 handleDeleteItem={handleDeleteAdmin}
-                testId={'superadmin-admins-table'}
-                testCancelId={'superadmin-admins-icon-delete'}
-                testEditId={'superadmin-admins-icon-edit'}
+                testId={'super-admin-table'}
+                testCancelId={'super-admin-icon-delete'}
+                testEditId={'super-admin-icon-edit'}
               />
 
               <SharedModal
@@ -135,6 +135,9 @@ const Admins = () => {
                 title={modalInformation.title}
                 body={modalInformation.body}
                 onConfirm={confirmDelete}
+                testId={'super-admin-modal'}
+                confirmDeleteTestId={'super-admin-button-confirm-modal'}
+                closeTestId={'super-admin-button-close-modal'}
               />
             </>
           ) : (

@@ -121,14 +121,14 @@ const Subscriptions = () => {
                   text={'+ Add Subscription'}
                   type={'add'}
                   clickAction={handleAdd}
-                  testId={'admin-subscriptions-add-button'}
+                  testId={'admin-button-add'}
                 />
               )}
               <div className={styles.iconContainer}>
                 <button
                   onClick={handleToggleInactive}
                   className={`${styles.toggleButton} ${showInactive ? styles.active : ''}`}
-                  id="admin-subscriptions-toggle-inactive-button"
+                  id="admin-button-toggle-inactive"
                 >
                   {showInactive ? <FaHistory /> : <FaHistory />}
                 </button>
@@ -152,9 +152,9 @@ const Subscriptions = () => {
             columnTitles={['First Name', 'Last Name', 'Class Name', 'Date', 'Active']}
             handleUpdateItem={handleEdit}
             handleDeleteItem={handleDeleteSubscription}
-            testId={'admin-subscriptions-table'}
-            testCancelId={'admin-subscriptions-icon-delete'}
-            testEditId={'admin-subscriptions-icon-edit'}
+            testId={'admin-table'}
+            testCancelId={'admin-icon-delete'}
+            testEditId={'admin-icon-edit'}
             showButtons={showButtons}
             showNumberColumn={!showButtons}
             showOrderButton={true}
@@ -168,9 +168,9 @@ const Subscriptions = () => {
               isDelete={isDelete}
               onConfirm={handleConfirmDelete}
               closeModal={handleCloseModal}
-              testId={'admin-subscriptions-modal'}
-              closeTestId={'admin-subscriptions-button-close-success-modal'}
-              confirmDeleteTestId={'admin-subscriptions-button-confirm-delete-modal'}
+              testId={'admin-modal'}
+              closeTestId={'admin-button-close-success-modal'}
+              confirmDeleteTestId={'admin-button-confirm-delete-modal'}
             />
           )}
         </Container>

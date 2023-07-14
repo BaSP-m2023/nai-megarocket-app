@@ -113,11 +113,7 @@ const Form = () => {
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.head}>
           {' '}
-          <div
-            id="admin-subscriptions-form-go-back"
-            className={styles.arrow}
-            onClick={handleCancel}
-          >
+          <div id="admin-arrow-back" className={styles.arrow} onClick={handleCancel}>
             <FiArrowLeft size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Subscription' : 'Add Subscription'}</h2>
@@ -130,7 +126,7 @@ const Form = () => {
           listProp={'activity.name'}
           register={register}
           error={errors.classes?.message}
-          testId={'admin-subscriptions-input-classes'}
+          testId={'admin-input-classes'}
         />
         <InputComponent
           inputName="member"
@@ -140,7 +136,7 @@ const Form = () => {
           listProp={'firstName'}
           register={register}
           error={errors.member?.message}
-          testId={'admin-subscriptions-input-members'}
+          testId={'admin-input-members'}
         />
         {id ? (
           <InputComponent
@@ -149,7 +145,7 @@ const Form = () => {
             inputName={'isActive'}
             register={register}
             error={errors.isActive}
-            testId={'admin-subscriptions-input-checkbox'}
+            testId={'admin-input-checkbox'}
           />
         ) : null}
         <fieldset className={styles.flexButtons}>
@@ -157,7 +153,7 @@ const Form = () => {
             text={id ? 'Update' : 'Add'}
             type={'submit'}
             info={'submit'}
-            testId={'admin-subscriptions-button-submit-form'}
+            testId={'admin-button-submit-form'}
           />
         </fieldset>
       </SharedForm>

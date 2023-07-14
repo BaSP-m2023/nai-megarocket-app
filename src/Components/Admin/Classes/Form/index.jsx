@@ -128,7 +128,7 @@ const Form = () => {
         <div className={styles.container}>
           <div className={styles.head}>
             {' '}
-            <div id="admin-classes-form-go-back" className={styles.arrow} onClick={handleCancel}>
+            <div id="admin-arrow-back" className={styles.arrow} onClick={handleCancel}>
               <FiArrowLeft size={35} />
             </div>
             <h2 className={styles.formTitle}> {id ? 'Update Class' : 'Add Class'}</h2>
@@ -139,7 +139,7 @@ const Form = () => {
             inputType={'text'}
             inputName={'day'}
             error={errors.day?.message}
-            testId={'admin-classes-input-day'}
+            testId={'admin-input-day'}
           />
           <Input
             register={register}
@@ -147,7 +147,7 @@ const Form = () => {
             inputType={'text'}
             inputName={'hour'}
             error={errors.hour?.message}
-            testId={'admin-classes-input-hour'}
+            testId={'admin-input-hour'}
           />
           <Input
             register={register}
@@ -157,7 +157,7 @@ const Form = () => {
             list={trainers}
             listProp={'firstName'}
             error={errors.trainer?.message}
-            testId={'admin-classes-input-trainer'}
+            testId={'admin-input-trainer'}
           />
           <Input
             register={register}
@@ -167,7 +167,7 @@ const Form = () => {
             error={errors.activity?.message}
             list={activities}
             listProp={'name'}
-            testId={'admin-classes-input-activity'}
+            testId={'admin-input-activity'}
           />
           <Input
             register={register}
@@ -175,7 +175,7 @@ const Form = () => {
             inputType={'number'}
             inputName={'slots'}
             error={errors.slots?.message}
-            testId={'admin-classes-input-slots'}
+            testId={'admin-input-slots'}
           />
         </div>
         <div className={styles.buttonsDiv}>
@@ -183,7 +183,7 @@ const Form = () => {
             type={'submit'}
             info={'submit'}
             text={id ? 'Update' : 'Add'}
-            testId={'admin-classes-button-submit-form'}
+            testId={'admin-button-submit-form'}
           />
         </div>
       </SharedForm>
