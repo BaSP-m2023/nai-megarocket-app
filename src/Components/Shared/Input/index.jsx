@@ -118,6 +118,8 @@ const InputComponent = ({
         name={inputName}
         disabled={disabled}
         id={testId}
+        variant="standard"
+        size="small"
       />
     </div>
   );
@@ -139,4 +141,5 @@ const InputComponent = ({
   };
   return renderInputType(inputType);
 };
+
 export default InputComponent;
