@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 95vw;
+  width: 100vw;
   align-items: center;
   margin-top: 7.5vh;
   margin-left: 5vh;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+
 import { styled } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -12,7 +13,7 @@ const collapsedWidth = 60;
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
-    marginTop: '6.5rem',
+    marginTop: '9vh',
     backgroundColor: 'black',
     color: 'white',
     width: collapsedWidth,
@@ -57,10 +58,9 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
     backgroundColor: 'transparent'
   }
 }));
-
 const Sidebar = ({ routes, rol }) => {
+  const location = useLocation();
   const [expanded, setExpanded] = useState(false);
-  const [activeRoute, setActiveRoute] = useState(window.location.pathname);
 
   const handleMouseEnter = () => {
     setExpanded(true);
@@ -68,10 +68,6 @@ const Sidebar = ({ routes, rol }) => {
 
   const handleMouseLeave = () => {
     setExpanded(false);
-  };
-
-  const handleLinkClick = (link) => {
-    setActiveRoute(link);
   };
 
   return (
@@ -89,13 +85,14 @@ const Sidebar = ({ routes, rol }) => {
             to={route.link}
             id={`sidebar-link-${rol}-${route.name.toLowerCase()}`}
             key={index}
-            onClick={() => handleLinkClick(route.link)}
           >
-            <StyledListItemIcon classes={{ root: activeRoute === route.link ? 'active' : '' }}>
+            <StyledListItemIcon
+              classes={{ root: location.pathname === route.link ? 'active' : '' }}
+            >
               {React.createElement(route.icon)}
             </StyledListItemIcon>
             <StyledListItemText
-              classes={{ root: activeRoute === route.link ? 'active' : '' }}
+              classes={{ root: location.pathname === route.link ? 'active' : '' }}
               primary={route.name}
             />
           </StyledListItem>
