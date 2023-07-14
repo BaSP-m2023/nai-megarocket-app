@@ -5,7 +5,7 @@
   width: 100vw;
   height: 10vh;
   margin-right: 10rem;
-  background-color: black;
+  background-color: #212121;
   top: 0;
   z-index: 1;
   position: sticky;
@@ -15,12 +15,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 3vw;
+  margin-left: 20px;
   cursor: pointer;
 }
 
 .logo3 {
-  height: 7vh;
+  height: 42px;
   padding-right: 1vw;
   padding-bottom: 1vh;
 }
@@ -29,13 +29,13 @@
   display: flex;
   align-items: center;
   align-content: center;
-  height: 5vh;
+  height: 35px;
 }
 
 .icons {
   display: flex;
   flex-direction: row;
-  margin-right: 2rem;
+  margin-right: px;
 }
 
 .logOut {
@@ -56,5 +56,6 @@
 
 .socialIcon:hover {
   background-color: #157CAA;
+  color: white;
   transition: 1s ease;
 }

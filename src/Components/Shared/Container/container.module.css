@@ -3,8 +3,9 @@
   flex-direction: column;
   width: 100vw;
   align-items: center;
-  margin-top: 7.5vh;
-  margin-left: 5vh;
+  margin-top: 30px;
+  margin-left: 160px;
+  margin-right: 80px;
 }
 
 .login {
@@ -19,7 +20,8 @@
 .center {
   display: flex;
   flex-direction: column;
-  width: 85vw;
+  width: 100vw;
+  margin-left: 160px;
   align-items: center;
   justify-content: space-around;
 }

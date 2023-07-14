@@ -18,7 +18,7 @@
   border-radius: 10px;
   box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
   width: 35vw;
-  height: 70%;
+  height: 40rem;
 }
 
 .big  h2 {
@@ -29,7 +29,7 @@
 .logo {
   width: 15vw;
   cursor: pointer;
-  margin: 5vh auto 0 auto;
+  margin: 3rem auto 0 auto;
 }
 
 .formLogin {
@@ -43,12 +43,12 @@
   width: 20vw;
 }
 .buttonContainer  button {
-  margin-top: 5vh;
+  margin-top: 3rem;
   font-weight: 500;
 }
 
 .inputsLogin {
-  min-height: 10vh;
+  min-height: 7rem;
 }
 
 .formLogin a {
@@ -72,6 +72,6 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 40vh;
+  height: 23rem;
 }
 

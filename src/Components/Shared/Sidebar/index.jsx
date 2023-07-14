@@ -14,7 +14,7 @@ const collapsedWidth = 60;
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
     marginTop: '9vh',
-    backgroundColor: 'black',
+    backgroundColor: '#212121',
     color: 'white',
     width: collapsedWidth,
     transition: theme.transitions.create('width', {

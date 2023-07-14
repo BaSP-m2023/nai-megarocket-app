@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import Button from '../Button';
 import styles from './table.module.css';
-import { IoChevronBackCircleOutline, IoChevronForwardCircleOutline } from 'react-icons/io5';
 import { TbArrowsDownUp, TbArrowsUpDown } from 'react-icons/tb';
 import Container from '../Container';
+import TextField from '@mui/material/TextField';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Pagination from '@mui/material/Pagination';
+import InputAdornment from '@mui/material/InputAdornment';
+import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
+import SearchIcon from '@mui/icons-material/Search';
 import { ClipLoader } from 'react-spinners';
 
 const Table = ({
@@ -16,7 +22,11 @@ const Table = ({
   testCancelId,
   testEditId,
   showButtons = true,
-  showOrderButton = false
+  showOrderButton = false,
+  title,
+  buttonId,
+  addClick,
+  historyAction
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,13 +67,6 @@ const Table = ({
   const handleToggleOrder = () => {
     setIsDescending((prevState) => !prevState);
   };
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const handlePreviousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
 
   const filteredData = data
     .filter((item) => {
@@ -100,98 +103,120 @@ const Table = ({
   return (
     <div className={styles.containerT}>
       <div className={styles.search}>
-        <input
-          type="text"
-          placeholder="Search"
-          id="table-input-search"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-      </div>
-      <table id={testId} className={styles.tableShared}>
-        <thead className={styles.tableHead}>
-          <tr className={styles.tableTrHead}>
-            {<th className={styles.tableThtd}>#</th>}
-            {columnTitles.map((title) => (
-              <th className={styles.tableThtd} key={title}>
-                {title}
-              </th>
-            ))}
-            <th>
-              {showOrderButton && (
-                <button className={styles.orderButton} onClick={handleToggleOrder}>
-                  {isDescending ? <TbArrowsDownUp /> : <TbArrowsUpDown />}
-                </button>
-              )}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedData?.map((item, index) => {
-            return (
-              <tr
-                className={`${styles.tableTr} ${!item.isActive && styles.inactiveRow}`}
-                key={item._id}
-              >
-                {<td className={styles.tableThtd}>{firstItemIndex + index}</td>}
-                {properties?.map((property) => {
-                  const value = property
-                    .split('.')
-                    .reduce((acc, curr) => (acc ? acc[curr] : null), item);
-                  const isArray = Array.isArray(value);
-                  let displayValue = isArray ? value.join(', ') : value;
-                  if (property === 'date') {
-                    displayValue = formatDate(displayValue);
-                  }
-                  return (
-                    <td className={styles.tableThtd} key={property}>
-                      {isBoolean(displayValue) ? isBoolean(displayValue) : displayValue}
-                    </td>
-                  );
-                })}
-                <td className={`${styles.tableThtd} ${styles.tableLastColumn}`}>
-                  {showButtons && (
-                    <>
-                      <Button
-                        testId={testEditId}
-                        type="edit"
-                        clickAction={() => handleUpdateItem(item._id)}
-                      />
-                      <Button
-                        testId={testCancelId}
-                        type="delete"
-                        clickAction={() => handleDeleteItem(item._id)}
-                      />
-                    </>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div className={styles.bottom}>
-        <div className={styles.pagination}>
-          <button
-            id="table-button-previous"
-            className={styles.pagButton}
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-          >
-            <IoChevronBackCircleOutline size={30} />
-          </button>
-          <button
-            id="table-button-next"
-            className={styles.pagButton}
-            onClick={handleNextPage}
-            disabled={currentPage === Math.ceil(filteredData.length / itemsPerPage)}
-          >
-            <IoChevronForwardCircleOutline size={30} />
-          </button>
+        <div className={styles.titleAndButton}>
+          {' '}
+          <h2>{title}</h2>
+          <TextField
+            type="search"
+            placeholder="Search"
+            variant="standard"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              )
+            }}
+          />
         </div>
-
-        <div className={styles.paginationContainer}>
-          Page {currentPage} of {totalPages}
+        <div>
+          {' '}
+          {historyAction && (
+            <Fab
+              sx={{
+                marginRight: '10px',
+                backgroundColor: '#212121',
+                '&:hover': {
+                  backgroundColor: '#263238'
+                }
+              }}
+              id={'subscription-button-history'}
+              onClick={historyAction}
+              color="primary"
+            >
+              <ManageHistoryIcon />
+            </Fab>
+          )}
+          <Fab id={buttonId} onClick={addClick} color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+        </div>
+      </div>
+      <div className={styles.tableAndPag}>
+        <table id={testId} className={styles.tableShared}>
+          <thead className={styles.tableHead}>
+            <tr className={styles.tableTrHead}>
+              {<th className={`${styles.tableThtd} ${styles.thCorner}`}>#</th>}
+              {columnTitles.map((title) => (
+                <th className={styles.tableThtd} key={title}>
+                  {title}
+                </th>
+              ))}
+              <th className={`${styles.tableThtd} ${styles.thCornerRight}`}>
+                {showOrderButton && (
+                  <button className={styles.orderButton} onClick={handleToggleOrder}>
+                    {isDescending ? <TbArrowsDownUp /> : <TbArrowsUpDown />}
+                  </button>
+                )}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedData?.map((item, index) => {
+              return (
+                <tr className={`${styles.tableTr} `} key={item._id}>
+                  {
+                    <td className={`${styles.tableThtd} ${styles.trFirst}`}>
+                      {firstItemIndex + index}
+                    </td>
+                  }
+                  {properties?.map((property, index) => {
+                    const value = property
+                      .split('.')
+                      .reduce((acc, curr) => (acc ? acc[curr] : null), item);
+                    const isArray = Array.isArray(value);
+                    let displayValue = isArray ? value.join(', ') : value;
+                    if (property === 'date') {
+                      displayValue = formatDate(displayValue);
+                    }
+                    return (
+                      <td className={styles.tableThtd} key={index}>
+                        {isBoolean(displayValue) ? isBoolean(displayValue) : displayValue}
+                      </td>
+                    );
+                  })}
+                  <td className={`${styles.tableThtd} ${styles.tableLastColumn}`}>
+                    {showButtons && (
+                      <>
+                        <Button
+                          testId={testEditId}
+                          type="edit"
+                          clickAction={() => handleUpdateItem(item._id)}
+                        />
+                        <Button
+                          testId={testCancelId}
+                          type="delete"
+                          clickAction={() => handleDeleteItem(item._id)}
+                        />
+                      </>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <div className={styles.bottom}>
+          <div className={styles.paginationContainer}>
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={(event, value) => setCurrentPage(value)}
+              color="primary"
+            />
+          </div>
         </div>
       </div>
     </div>
