@@ -7,6 +7,7 @@ import Container from '../Container';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
 import InputAdornment from '@mui/material/InputAdornment';
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 import SearchIcon from '@mui/icons-material/Search';
@@ -227,6 +228,9 @@ const Table = ({
               page={currentPage}
               onChange={(event, value) => setCurrentPage(value)}
               color="primary"
+              renderItem={(item) => (
+                <PaginationItem component="li" {...item} id={`pagination-button-${item.page}`} />
+              )}
             />
           </div>
         </div>
