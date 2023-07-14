@@ -98,7 +98,7 @@ const TrainerForm = () => {
   };
 
   return (
-    <Container center={true}>
+    <Container>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'
