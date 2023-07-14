@@ -4,13 +4,13 @@ import ReportsSubscriptions from './Subscriptions';
 import ButtonGroup from './Buttons';
 import ReportsMembers from './Members';
 import Container from 'Components/Shared/Container';
-import styles from './reports.module.css';
 import { getMembers } from 'Redux/members/thunks';
 import { getClasses } from 'Redux/classes/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import { useDispatch } from 'react-redux';
 import BarLoader from 'react-spinners/BarLoader';
 import { useSelector } from 'react-redux';
+import Box from '@mui/material/Box';
 
 const Reports = () => {
   const [activeComponent, setActiveComponent] = useState('subscriptions');
@@ -48,10 +48,10 @@ const Reports = () => {
       {loading ? (
         <BarLoader color="#157CAA" />
       ) : (
-        <div className={styles.container}>
+        <Box>
           <ButtonGroup setActiveComponent={setActiveComponent} />
           {renderComponent()}
-        </div>
+        </Box>
       )}
     </Container>
   );

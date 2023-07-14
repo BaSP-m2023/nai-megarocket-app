@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import styles from '../reports.module.css';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { format, parseISO, startOfMonth, subYears, isWithinInterval } from 'date-fns';
 import Typography from '@mui/material/Typography';
@@ -26,7 +25,7 @@ const ReportsSubscriptions = () => {
   filteredDates
     ?.sort((a, b) => a.getTime() - b.getTime())
     ?.forEach((date) => {
-      const month = format(startOfMonth(date), 'MMMM yyyy');
+      const month = format(startOfMonth(date), 'MMM-yy');
       if (subscriptionsByMonth[month]) {
         subscriptionsByMonth[month] += 1;
       } else {
@@ -69,46 +68,44 @@ const ReportsSubscriptions = () => {
   }));
   return (
     <Container>
-      <div className={styles.container}>
-        {months.length > 0 && subscriptionCounts.length > 0 ? (
-          <>
-            <Stack>
-              <Box direction="row" width="100%" textAlign="center">
-                <Typography fontWeight="bold">Monthly class subscriptions</Typography>
-                <LineChart
-                  xAxis={[{ scaleType: 'band', data: months }]}
-                  series={[{ data: subscriptionCounts }]}
-                  width={800}
+      {months.length > 0 && subscriptionCounts.length > 0 ? (
+        <>
+          <Stack direction="row">
+            <Box direction="row" width="100%" textAlign="center">
+              <Typography padding="5%" fontWeight="bold">
+                Monthly class subscriptions
+              </Typography>
+              <LineChart
+                xAxis={[{ scaleType: 'band', data: months }]}
+                series={[{ data: subscriptionCounts }]}
+                width={800}
+                height={300}
+              />
+            </Box>
+            <Box direction="row" width="100%" textAlign="center">
+              <Typography padding="5%" fontWeight="bold">
+                Active class subscriptions by activity
+              </Typography>
+              <Box display="flex" justifyContent="center">
+                <PieChart
+                  series={[
+                    {
+                      data,
+                      labelKey: 'label',
+                      valueKey: 'value',
+                      innerRadius: 70
+                    }
+                  ]}
+                  width={500}
                   height={300}
                 />
               </Box>
-            </Stack>
-            <Stack>
-              <Box direction="row" width="100%" textAlign="center">
-                <Typography padding="5%" fontWeight="bold">
-                  Active class subscriptions by activity
-                </Typography>
-                <Box display="flex" justifyContent="center">
-                  <PieChart
-                    series={[
-                      {
-                        data,
-                        labelKey: 'label',
-                        valueKey: 'value',
-                        innerRadius: 60
-                      }
-                    ]}
-                    width={600}
-                    height={300}
-                  />
-                </Box>
-              </Box>
-            </Stack>
-          </>
-        ) : (
-          <Typography fontWeight="bold">No data available for the chart</Typography>
-        )}
-      </div>
+            </Box>
+          </Stack>
+        </>
+      ) : (
+        <Typography fontWeight="bold">No data available for the chart</Typography>
+      )}
     </Container>
   );
 };
