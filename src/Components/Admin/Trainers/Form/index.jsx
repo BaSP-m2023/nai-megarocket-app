@@ -21,6 +21,7 @@ const AdminTrainerForm = () => {
   const {
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -186,6 +187,7 @@ const AdminTrainerForm = () => {
                   register={register}
                   labelName={'Active ?'}
                   inputType={'isActive'}
+                  value={watch('isActive')}
                   inputName={'isActive'}
                   error={errors.isActive}
                   testId={'admin-trainers-input-checkbox'}
