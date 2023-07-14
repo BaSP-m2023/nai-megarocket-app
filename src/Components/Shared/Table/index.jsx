@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Button from '../Button';
+import { Button as ButtonMui } from '@mui/material/';
 import styles from './table.module.css';
 import { TbArrowsDownUp, TbArrowsUpDown } from 'react-icons/tb';
 import Container from '../Container';
 import TextField from '@mui/material/TextField';
-import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Pagination from '@mui/material/Pagination';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -124,24 +124,36 @@ const Table = ({
         <div>
           {' '}
           {historyAction && (
-            <Fab
+            <ButtonMui
               sx={{
                 marginRight: '10px',
                 backgroundColor: '#212121',
+                borderRadius: '300px',
+                color: 'white',
+                height: '62px',
                 '&:hover': {
                   backgroundColor: '#263238'
                 }
               }}
               id={'subscription-button-history'}
               onClick={historyAction}
-              color="primary"
             >
               <ManageHistoryIcon />
-            </Fab>
+            </ButtonMui>
           )}
-          <Fab id={buttonId} onClick={addClick} color="primary" aria-label="add">
+          <ButtonMui
+            sx={{
+              borderRadius: '300px',
+              height: '62px'
+            }}
+            id={buttonId}
+            onClick={addClick}
+            color="primary"
+            aria-label="add"
+            variant="contained"
+          >
             <AddIcon />
-          </Fab>
+          </ButtonMui>
         </div>
       </div>
       <div className={styles.tableAndPag}>
