@@ -46,7 +46,8 @@ const SignUp = () => {
   const memberAddFunction = async (member) => {
     try {
       const data = await dispatch(signUp(member));
-      localStorage.setItem('toastMessage', data.message);
+      const newMember = data.data;
+      localStorage.setItem('toastMessage', `Welcome to MegaRocket ${newMember.firstName}!`);
       history.push('/auth/login');
     } catch (error) {
       showErrorToast(error.message);

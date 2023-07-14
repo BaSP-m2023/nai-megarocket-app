@@ -18,7 +18,6 @@ const Landing = () => {
   return (
     <>
       <Header />
-
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           <img

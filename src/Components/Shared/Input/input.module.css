@@ -4,8 +4,6 @@
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20vw;
-  border: solid 1px;
-  border-color: #0f232e;
 }
 
 .formInputError {
@@ -14,8 +12,6 @@
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20vw;
-  border: solid 1px;
-  border-color: red;
 }
 
 .formSelect {

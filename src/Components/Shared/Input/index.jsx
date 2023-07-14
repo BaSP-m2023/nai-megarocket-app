@@ -11,7 +11,6 @@ const InputComponent = ({
   list,
   listProp,
   labelName,
-  placeholder,
   register,
   error,
   disabled,
@@ -92,23 +91,24 @@ const InputComponent = ({
   );
   const renderInput = (type) => (
     <div className={styles.inputDiv} id={testId}>
-      <label>{labelName}</label>
       <TextField
         {...register(inputName)}
         name={inputName}
         className={error ? styles.formInputError : styles.formInput}
         type={type}
         helperText={error}
-        error={error}
+        error={error ? true : false}
         value={value}
-        placeholder={placeholder}
         disabled={disabled}
         id={testId}
         variant="standard"
         size="small"
+        label={labelName}
+        {...(type === 'date' ? { InputLabelProps: { shrink: true } } : {})}
       />
     </div>
   );
+
   const renderIsActive = () => (
     <div id={testId}>
       <FormControlLabel
@@ -118,12 +118,9 @@ const InputComponent = ({
         name={inputName}
         disabled={disabled}
         id={testId}
+        variant="standard"
+        size="small"
       />
-      {error && (
-        <p className={styles.errorMsg} id={errorTestId}>
-          {error}
-        </p>
-      )}
     </div>
   );
   const renderInputType = (inputType) => {
