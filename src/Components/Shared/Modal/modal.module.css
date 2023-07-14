@@ -4,7 +4,7 @@
   left: 0;
   min-width: 100vw;
   min-height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.658);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +16,6 @@
   flex-direction: column;
   padding: 30px;
   background-color: white;
-  border-radius: 9px;
   margin-left: 15vw;
 }
 
@@ -25,7 +24,6 @@
   flex-direction: column;
   padding: 30px;
   background-color: #e93528;
-  border-radius: 9px;
   max-width: 50%;
   margin-left: 15vw;
 }
@@ -35,7 +33,6 @@
   flex-direction: column;
   padding: 30px;
   background-color: #fddba1;
-  border-radius: 9px;
   margin-left: 15vw;
 }
 

@@ -1,6 +1,5 @@
 .formInput {
   height: 2rem;
-  border-radius: 5px;
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20vw;
@@ -8,7 +7,6 @@
 
 .formInputError {
   height: 2rem;
-  border-radius: 5px;
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20vw;
@@ -17,18 +15,14 @@
 .formSelect {
   height: 2.3rem;
   font-size: 80%;
-  border-radius: 5px;
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20.35vw;
-  border: solid 1px;
-  border-color: #0f232e;
 }
 
 .formSelectError {
   height: 2.3rem;
   font-size: 80%;
-  border-radius: 5px;
   margin-top: 2%;
   margin-bottom: 2%;
   width: 20.35vw;
@@ -45,7 +39,8 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  height: 6.5rem;
+  height: 10vh;
+  padding-bottom: 4vh;
 }
 
 .inputDiv > input {

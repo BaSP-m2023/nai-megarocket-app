@@ -3,7 +3,6 @@
   margin-top: 5vh;
   width: 60%;
   flex-direction: column;
-  border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   padding-bottom: 5vh;
 }
@@ -25,7 +24,7 @@ align-items: center;
   margin-right: auto;
   margin-left: auto;
   text-align: center;
-  color: #0f232e;
+  color: black;
 }
 
 .inputAdmin {

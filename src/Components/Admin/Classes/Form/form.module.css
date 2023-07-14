@@ -31,8 +31,7 @@
   width: 100%;
   padding: 3%;
   margin-top: 2%;
-  border-radius: 5px;
-  border: 1px solid #373867;
+  border: 1px solid #157caa;
 }
 
 .select {
@@ -40,8 +39,7 @@
   width: 106%;
   margin-top: 2%;
   padding: 3%;
-  border-radius: 5px;
-  border: 1px solid #373867;
+  border: 1px solid #157caa;
 }
 
 .buttonsDiv {
@@ -85,7 +83,7 @@
   margin-right: auto;
   margin-left: auto;
   text-align: center;
-  color: #0f232e;
+  color: black;
 }
 
 .head {

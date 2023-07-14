@@ -13,7 +13,7 @@ const ContactForm = () => {
   const onSubmit = async () => {
     event.preventDefault();
     setTypeStyle();
-    setTitleModal('Mail send');
+    setTitleModal('Email sent');
     setBodyModal('');
     setShowModal(true);
   };

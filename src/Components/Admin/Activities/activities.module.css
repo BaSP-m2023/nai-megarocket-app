@@ -16,10 +16,9 @@
   margin-bottom: 2rem;
   background-color: white;
   border: solid 1px;
-  border-color: rgba(55, 56, 103);
-  color: rgba(55, 56, 103);
+  border-color: #157caa;
+  color: #157caa;
   text-align: center;
   font-size: 1rem;
-  border-radius: 0.5rem;
   cursor: pointer;
 }

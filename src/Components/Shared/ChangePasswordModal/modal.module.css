@@ -17,7 +17,6 @@
   margin-left: 15vw;
   padding: 30px;
   background-color: white;
-  border-radius: 9px;
 }
 
 .modalContainer h3 {
@@ -44,7 +43,7 @@
 .eyeButton {
   background-color: inherit;
   border: none;
-  color: rgba(15, 35, 46);
+  color: black;
   font-size: 1.2rem;
 }
 
