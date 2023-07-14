@@ -1,4 +1,4 @@
-import { TextField, InputLabel } from '@mui/material';
+import { TextField } from '@mui/material';
 import styles from './input.module.css';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -11,7 +11,6 @@ const InputComponent = ({
   list,
   listProp,
   labelName,
-  placeholder,
   register,
   error,
   disabled,
@@ -91,8 +90,7 @@ const InputComponent = ({
     </div>
   );
   const renderInput = (type) => (
-    <div className={styles.inputDiv}>
-      <InputLabel>{labelName}</InputLabel>
+    <div className={styles.inputDiv} id={testId}>
       <TextField
         {...register(inputName)}
         name={inputName}
@@ -101,11 +99,12 @@ const InputComponent = ({
         helperText={error}
         error={error ? true : false}
         value={value}
-        placeholder={placeholder}
         disabled={disabled}
         id={testId}
         variant="standard"
         size="small"
+        label={labelName}
+        {...(type === 'date' ? { InputLabelProps: { shrink: true } } : {})}
       />
     </div>
   );
@@ -120,11 +119,6 @@ const InputComponent = ({
         disabled={disabled}
         id={testId}
       />
-      {error && (
-        <p className={styles.errorMsg} id={errorTestId}>
-          {error}
-        </p>
-      )}
     </div>
   );
   const renderInputType = (inputType) => {

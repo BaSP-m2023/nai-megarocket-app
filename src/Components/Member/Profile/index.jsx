@@ -35,6 +35,8 @@ const MemberForm = () => {
     delete formattedMember?._id;
     delete formattedMember?.__v;
     delete formattedMember?.firebaseUid;
+    delete formattedMember?.createdAt;
+    delete formattedMember?.updatedAt;
     reset(formattedMember);
   };
 
