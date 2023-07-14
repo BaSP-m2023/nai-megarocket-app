@@ -2,9 +2,10 @@ import Header from 'Components/Shared/Header/index';
 import styles from 'Components/Layout/layout.module.css';
 import Routes from 'Routes/Routes';
 import Sidebar from 'Components/Shared/Sidebar';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 const SuperAdminView = () => {
-  const routes = [{ name: 'Admins', link: '/super-admins/admins' }];
+  const routes = [{ name: 'Admins', link: '/super-admins/admins', icon: AdminPanelSettingsIcon }];
   const rol = 'super-admin';
   return (
     <>
