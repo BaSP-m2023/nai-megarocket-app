@@ -163,7 +163,7 @@ const Schedule = () => {
               </div>
             </Container>
           ) : (
-            <Container>
+            <div className={styles.mainContainer}>
               <Toaster
                 containerStyle={{
                   margin: '10vh 0 0 0'
@@ -172,7 +172,7 @@ const Schedule = () => {
               <div className={styles.container}>
                 <div className={styles.header}>
                   <h2 className={styles.title}>
-                    Scheduled Classes - Trainer: {trainer?.firstName}
+                    Scheduled Classes - Trainer: {trainer?.firstName} {trainer?.lastName}
                   </h2>
                   <div className={styles.filterActivity}>
                     <label className={styles.selectLabel} htmlFor="activity">
@@ -222,7 +222,7 @@ const Schedule = () => {
                   </tbody>
                 </table>
               </div>
-            </Container>
+            </div>
           )}
         </>
       )}
