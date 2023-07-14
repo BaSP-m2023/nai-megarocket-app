@@ -112,7 +112,11 @@ const Modal = (data) => {
             Slots: {data.slotCount} / {data.slot}
           </div>
         )}
-        {data.idSuscription ? (
+        {data.membership === 'Classic' ? (
+          <div className={styles.center}>
+            You cannot enroll in classes. Upgrade your membership!
+          </div>
+        ) : data.idSuscription ? (
           <div className={styles.added}>
             <BsCheck /> You are subscribed to this class
           </div>
@@ -120,7 +124,7 @@ const Modal = (data) => {
           <div className={styles.center}>You are not in this class</div>
         )}
         <div className={styles.buttonContainer}>
-          {data.slot <= data.slotCount ? (
+          {data.slot <= data.slotCount || data.membership === 'Classic' ? (
             <Button type="cancel" text={<>Back</>} clickAction={onCloseModal} />
           ) : (
             <Button
