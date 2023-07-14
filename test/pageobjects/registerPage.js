@@ -5,39 +5,39 @@ class RegisterPage {
   }
 
   get inputFirstName() {
-    return $('[id="sing-up-input-first-name"][type="text"]');
+    return $('#sing-up-input-first-name');
   }
 
   get inputLastName() {
-    return $('[id="sing-up-input-last-name"][type="text"]');
+    return $('#sing-up-input-last-name');
   }
 
   get inputDni() {
-    return $('[id="sing-up-input-dni"][type="number"]');
+    return $('#sing-up-input-dni');
   }
 
   get inputPhone() {
-    return $('[id="sing-up-input-phone"][type="number"]');
+    return $('#sing-up-input-phone');
   }
 
   get inputEmail() {
-    return $('[id="sing-up-input-email"][type="text"]');
+    return $('#sing-up-input-email');
   }
 
   get inputPassword() {
-    return $('[id="sing-up-input-password"][type="password"]');
+    return $('#sing-up-input-password');
   }
 
   get inputCity() {
-    return $('[id="sing-up-input-city"][type="text"]');
+    return $('#sing-up-input-city');
   }
 
   get inputDate() {
-    return $('[id="sing-up-input-date"][type="date"]');
+    return $('#sing-up-input-date');
   }
 
   get inputPostalCode() {
-    return $('[id="sing-up-input-postal-code"][type="number"]');
+    return $('#sing-up-input-postal-code');
   }
 
   get btnSignUp() {

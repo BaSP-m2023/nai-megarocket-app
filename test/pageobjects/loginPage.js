@@ -24,6 +24,14 @@ class LoginPage {
     return $('#eye-button');
   }
 
+  get linkForgotPassword() {
+    return $('#login-button-forgot-password');
+  }
+
+  get linkCreateAccount() {
+    return $('#login-button-create-account');
+  }
+
   get errorMessageEmail() {
     return $('#login-input-email-error');
   }

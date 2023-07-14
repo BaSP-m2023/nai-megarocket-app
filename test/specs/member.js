@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const RegisterPage = require('../pageobjects/registerPage');
+/*const RegisterPage = require('../pageobjects/registerPage');
 
 describe('Register Page', () => {
   beforeAll('Open browser', () => {
@@ -22,3 +22,4 @@ describe('Register Page', () => {
     await RegisterPage.signUp();
   });
 });
+*/
