@@ -1,20 +1,41 @@
-import React, { useState } from 'react';
-import Activities from './Activities';
+import React, { useState, useEffect } from 'react';
+import ReportsTrainers from './Trainers';
+import ReportsSubscriptions from './Subscriptions';
 import ButtonGroup from './Buttons';
-import ReportsMemberships from './Memberships';
 import ReportsMembers from './Members';
 import Container from 'Components/Shared/Container';
 import styles from './reports.module.css';
+import { getMembers } from 'Redux/members/thunks';
+import { getClasses } from 'Redux/classes/thunks';
+import { getSubscriptions } from 'Redux/subscriptions/thunks';
+import { useDispatch } from 'react-redux';
+import BarLoader from 'react-spinners/BarLoader';
+import { useSelector } from 'react-redux';
 
 const Reports = () => {
-  const [activeComponent, setActiveComponent] = useState('activities');
+  const [activeComponent, setActiveComponent] = useState('subscriptions');
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.members.loading);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        dispatch(getMembers());
+        dispatch(getClasses());
+        dispatch(getSubscriptions());
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const renderComponent = () => {
     switch (activeComponent) {
-      case 'activities':
-        return <Activities />;
-      case 'memberships':
-        return <ReportsMemberships />;
+      case 'subscriptions':
+        return <ReportsSubscriptions />;
+      case 'trainers':
+        return <ReportsTrainers />;
       case 'members':
         return <ReportsMembers />;
       default:
@@ -24,10 +45,14 @@ const Reports = () => {
 
   return (
     <Container>
-      <div className={styles.container}>
-        <ButtonGroup setActiveComponent={setActiveComponent} />
-        {renderComponent()}
-      </div>
+      {loading ? (
+        <BarLoader color="#157CAA" />
+      ) : (
+        <div className={styles.container}>
+          <ButtonGroup setActiveComponent={setActiveComponent} />
+          {renderComponent()}
+        </div>
+      )}
     </Container>
   );
 };

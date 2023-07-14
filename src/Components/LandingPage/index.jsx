@@ -6,7 +6,7 @@ import Footer from 'Components/Footer';
 import Button from 'Components/Shared/Button';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import ContactForm from './Form';
-import Header from 'Components/Header';
+import Header from 'Components/Shared/Header/index';
 
 const Landing = () => {
   const history = useHistory();
@@ -36,7 +36,7 @@ const Landing = () => {
         </div>
         <div className={stylesJoin.joinButtonDiv}>
           <Button
-            testId={'login-button-register'}
+            testId={'login-button-register-1'}
             type="submit"
             text={'join our gym'}
             clickAction={handleRegister}
@@ -54,7 +54,7 @@ const Landing = () => {
         </div>
         <div className={stylesJoin.landscape}>
           <Button
-            testId={'login-button-register'}
+            testId={'login-button-register-2'}
             type="submit"
             className={stylesJoin.joinButton}
             text={'join now'}
