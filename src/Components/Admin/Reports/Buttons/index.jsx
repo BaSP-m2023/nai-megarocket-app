@@ -14,7 +14,7 @@ const ButtonsGroup = ({ setActiveComponent }) => {
     display: 'flex',
     position: 'fixed',
     top: '15%',
-    left: '58%',
+    left: '55%',
     transform: 'translateX(-50%)',
     zIndex: 100
   };

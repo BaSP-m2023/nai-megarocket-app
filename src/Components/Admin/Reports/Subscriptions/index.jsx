@@ -78,28 +78,30 @@ const ReportsSubscriptions = () => {
                 <LineChart
                   xAxis={[{ scaleType: 'band', data: months }]}
                   series={[{ data: subscriptionCounts }]}
-                  width={700}
+                  width={800}
                   height={300}
                 />
               </Box>
             </Stack>
             <Stack>
-              <Box direction="row" width="100%" textAlign="center" padding="2%">
+              <Box direction="row" width="100%" textAlign="center">
                 <Typography padding="5%" fontWeight="bold">
                   Active class subscriptions by activity
                 </Typography>
-                <PieChart
-                  series={[
-                    {
-                      data,
-                      labelKey: 'label',
-                      valueKey: 'value',
-                      innerRadius: 60
-                    }
-                  ]}
-                  width={500}
-                  height={300}
-                />
+                <Box display="flex" justifyContent="center">
+                  <PieChart
+                    series={[
+                      {
+                        data,
+                        labelKey: 'label',
+                        valueKey: 'value',
+                        innerRadius: 60
+                      }
+                    ]}
+                    width={600}
+                    height={300}
+                  />
+                </Box>
               </Box>
             </Stack>
           </>

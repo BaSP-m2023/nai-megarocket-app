@@ -68,26 +68,29 @@ const ReportsMembers = () => {
                     data: membersCounts
                   }
                 ]}
-                width={500}
+                width={800}
                 height={300}
               />
             </Box>
-            <Box direction="row" width="100%" textAlign="center" padding="2%">
+
+            <Box direction="row" width="100%" textAlign="center">
               <Typography padding="5%" fontWeight="bold">
                 Total memberships
               </Typography>
-              <PieChart
-                series={[
-                  {
-                    data: membershipsCount,
-                    labelKey: 'label',
-                    valueKey: 'value',
-                    innerRadius: 60
-                  }
-                ]}
-                width={500}
-                height={300}
-              />
+              <Box display="flex" justifyContent="center">
+                <PieChart
+                  series={[
+                    {
+                      data: membershipsCount,
+                      labelKey: 'label',
+                      valueKey: 'value',
+                      innerRadius: 60
+                    }
+                  ]}
+                  width={500}
+                  height={300}
+                />
+              </Box>
             </Box>
           </Stack>
         ) : (
