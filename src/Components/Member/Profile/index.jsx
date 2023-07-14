@@ -35,6 +35,8 @@ const MemberForm = () => {
     delete formattedMember?._id;
     delete formattedMember?.__v;
     delete formattedMember?.firebaseUid;
+    delete formattedMember?.createdAt;
+    delete formattedMember?.updatedAt;
     reset(formattedMember);
   };
 
@@ -111,7 +113,7 @@ const MemberForm = () => {
   };
 
   return (
-    <Container center={true}>
+    <Container>
       <Toaster
         containerStyle={{
           margin: '10vh 0 0 0'

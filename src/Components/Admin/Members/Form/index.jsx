@@ -11,6 +11,7 @@ import memberValidation from 'Validations/members';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
 import { FiArrowLeft } from 'react-icons/fi';
+import { FormControl, InputLabel, FormHelperText, MenuItem, Select } from '@mui/material';
 
 const MemberForm = () => {
   const members = useSelector((state) => state.members.data.data);
@@ -21,6 +22,7 @@ const MemberForm = () => {
   const {
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -205,18 +207,21 @@ const MemberForm = () => {
               error={errors.postalCode?.message}
               testId={'admin-members-input-zip'}
             />
-            <Input
-              register={register}
-              labelName={'Memberships'}
-              inputType={'list'}
-              list={membership}
-              inputName={'membership'}
-              error={errors.membership?.message}
-              testId={'admin-members-input-memebrship'}
-            />
+            <FormControl variant="standard" fullWidth error={errors.membership?.message}>
+              <InputLabel id="Memberships">Memberships</InputLabel>
+              <Select {...register('membership')} id={'admin-members-input-membership'}>
+                {membership.map((membership) => (
+                  <MenuItem key={membership} value={membership}>
+                    {membership}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>{errors.membership?.message}</FormHelperText>
+            </FormControl>
             <Input
               register={register}
               labelName={'Active ?'}
+              value={watch('isActive')}
               inputType={'isActive'}
               inputName={'isActive'}
               error={errors.isActive}
