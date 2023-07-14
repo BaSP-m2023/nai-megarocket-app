@@ -108,6 +108,7 @@ const InputComponent = ({
       />
     </div>
   );
+
   const renderIsActive = () => (
     <div id={testId}>
       <FormControlLabel

@@ -46,17 +46,20 @@ const Modal = (data) => {
           <h4>Participants</h4>
         </div>
         <div className={styles.listMembers}>
-          {data.membersClass.map((subscription) => (
-            <div key={subscription?.member?._id}>
-              <div className={styles.member}>
-                {subscription?.member?.firstName} {subscription?.member?.lastName}
-                <span> </span>
-                <span className={getMembershipStyle(subscription?.member?.membership)}>
-                  {subscription?.member?.membership}
-                </span>
-              </div>
-            </div>
-          ))}
+          {data.membersClass.map(
+            (subscription) =>
+              subscription.isActive && (
+                <div key={subscription?.member?._id}>
+                  <div className={styles.member}>
+                    {subscription?.member?.firstName} {subscription?.member?.lastName}
+                    <span> </span>
+                    <span className={getMembershipStyle(subscription?.member?.membership)}>
+                      {subscription?.member?.membership}
+                    </span>
+                  </div>
+                </div>
+              )
+          )}
         </div>
         {data.slot <= data.slotCount ? (
           <div className={styles.slotsFull}>

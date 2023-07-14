@@ -1,6 +1,47 @@
 .container {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.title {
+}
+
+.slider {
+	width: 800px;
+  height: 500px;
+	overflow: hidden;
+  box-shadow: 5px 8px 12px black;
+  border-radius: 5px;
+}
+
+.slider ul {
+	display: flex;
+  height: 500px;
+  margin: 0;
+  padding:0;
+	width: 400%;
+  animation: slide 16s infinite alternate ease-in-out;
+}
+
+.slider li {
+	width: 800px;
+  height: 500px;
+	list-style: none;
+}
+
+.slider img {
+  width: 800px;
+  height: 500px;
+}
+
+@keyframes slide {
+  0% { margin-left: 0; }
+  33.33% { margin-left: 0; }
+  
+  37.5% { margin-left: -100%; }
+  70.83% { margin-left: -100%; }
+  
+  75% { margin-left: -200%; }
+  100% { margin-left: -200%; }
 }

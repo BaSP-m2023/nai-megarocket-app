@@ -5,16 +5,18 @@
   border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
+
+.formMembers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
+}
+
 .formTitle {
   text-align: center;
   color: #0f232e;
   margin-top: 4%;
   margin-bottom: 2%;
-}
-.formMembers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2vw;
 }
 
 .formColumn {
@@ -64,7 +66,7 @@
   margin: 2rem 5rem 2rem 5rem;
   text-transform: uppercase;
   line-height: 3rem;
-  font-weight: 100;
+  font-weight: 400;
   letter-spacing: 2px;
 }
 
