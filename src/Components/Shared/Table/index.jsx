@@ -5,6 +5,8 @@ import { IoChevronBackCircleOutline, IoChevronForwardCircleOutline } from 'react
 import { TbArrowsDownUp, TbArrowsUpDown } from 'react-icons/tb';
 import Container from '../Container';
 import { ClipLoader } from 'react-spinners';
+import { TextField, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Table = ({
   data,
@@ -100,12 +102,20 @@ const Table = ({
   return (
     <div className={styles.containerT}>
       <div className={styles.search}>
-        <input
-          type="text"
-          placeholder="Search"
+        <TextField
+          type="search"
+          label={'Search'}
           id="table-input-search"
           value={searchTerm}
           onChange={handleSearchChange}
+          variant="standard"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            )
+          }}
         />
       </div>
       <table id={testId} className={styles.tableShared}>
