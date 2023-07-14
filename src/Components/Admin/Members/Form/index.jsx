@@ -209,7 +209,7 @@ const MemberForm = () => {
             />
             <FormControl variant="standard" fullWidth error={errors.membership?.message}>
               <InputLabel id="Memberships">Memberships</InputLabel>
-              <Select {...register('membership')} id={'admin-members-input-membership'} value={''}>
+              <Select {...register('membership')} id={'admin-members-input-membership'}>
                 {membership.map((membership) => (
                   <MenuItem key={membership} value={membership}>
                     {membership}
