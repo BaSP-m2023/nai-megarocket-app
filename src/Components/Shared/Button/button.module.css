@@ -3,10 +3,10 @@
   padding: 0.9rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
-  background-color: #ff7c01a6;
+  background-color: #157CAA;;
   border: solid 1px;
-  border-color: rgba(253, 219, 161);
-  color: black;
+  border-color: #157CAA;;
+  color: white;
   text-align: center;
   font-size: 1rem;
 
@@ -19,7 +19,7 @@
   padding: 0.7rem;
   margin-top: 1rem;
   background-color: black;
-  border: solid 1px;
+  border: solid 1px black;
   color: white;
   font-size: 1rem;
 
