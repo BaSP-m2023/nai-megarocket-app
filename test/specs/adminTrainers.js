@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const LoginPage = require('../pageobjects/loginPage');
 const NavBarPage = require('../pageobjects/navBarPage');
 const TrainerPage = require('../pageobjects/trainerPage');

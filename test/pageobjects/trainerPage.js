@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 class TrainerPage {
   get trainerTitle() {
     return $('#root > div > div > div > h2');
