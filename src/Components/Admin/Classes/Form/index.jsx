@@ -70,6 +70,7 @@ const Form = () => {
       delete classData?._id;
       delete classData?.createdAt;
       delete classData?.updatedAt;
+      delete classData?.subscriptions;
       delete classData?.__v;
       delete classData?.subscriptions;
       classData.trainer = classData.trainer?._id;

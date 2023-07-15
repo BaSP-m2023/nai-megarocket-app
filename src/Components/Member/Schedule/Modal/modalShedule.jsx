@@ -4,7 +4,7 @@ import Button from 'Components/Shared/Button';
 import { BsCheck, BsFillPersonVcardFill, BsXLg } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 
-import { updateSubscription, createSubscription } from 'Redux/subscriptions/thunks';
+import { createSubscription, deleteSubscription } from 'Redux/subscriptions/thunks';
 
 const Modal = (data) => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const Modal = (data) => {
   const showToast = (message, type) => {
     if (type === 'success') {
       data.toast.success(message, {
-        duration: 2500,
+        duration: 3000,
         position: 'top-right',
         style: {
           background: '#fddba1'
@@ -33,7 +33,7 @@ const Modal = (data) => {
       });
     } else if (type === 'error') {
       data.toast.error(message, {
-        duration: 2500,
+        duration: 3000,
         position: 'top-right',
         style: {
           background: 'rgba(227, 23, 10, 0.5)'
@@ -53,11 +53,8 @@ const Modal = (data) => {
     setButtonDisabled(true);
     if (data.idSuscription) {
       try {
-        const updateSuscription = {
-          isActive: false
-        };
-        await dispatch(updateSubscription(updateSuscription, data.idSuscription));
-        showToast('Subscription was succesfully removed', 'success');
+        await dispatch(deleteSubscription(data.idSuscription));
+        showToast(`Succesfully removed from ${data.activity}`, 'success');
         data.closeModal();
       } catch (error) {
         showToast(error.message, 'error');
@@ -73,7 +70,7 @@ const Modal = (data) => {
           isActive: true
         };
         await dispatch(createSubscription(newSuscription));
-        showToast('Subscription was succesfully added', 'success');
+        showToast(`Succesfully subscribed to ${data.activity}`, 'success');
         data.closeModal();
       } catch (error) {
         showToast(error.message, 'error');
@@ -84,10 +81,14 @@ const Modal = (data) => {
   };
 
   return (
-    <div className={styles.modalContainer}>
+    <div id="member-schedule-modal" className={styles.modalContainer}>
       <div className={styles.modalContentDefault}>
         <div className={styles.closeContainer}>
-          <div className={styles.close} onClick={onCloseModal}>
+          <div
+            id="member-schedule-modal-button-close"
+            className={styles.close}
+            onClick={onCloseModal}
+          >
             <BsXLg />
           </div>
         </div>
@@ -124,11 +125,21 @@ const Modal = (data) => {
           <div className={styles.center}>You are not in this class</div>
         )}
         <div className={styles.buttonContainer}>
-          {data.slot <= data.slotCount || data.membership === 'Classic' ? (
-            <Button type="cancel" text={<>Back</>} clickAction={onCloseModal} />
+          {data.slot <= data.slotCount && !data.idSuscription ? (
+            <Button
+              type="cancel"
+              testId={'member-schedule-button-back-modal'}
+              text={<>Back</>}
+              clickAction={onCloseModal}
+            />
           ) : (
             <Button
               type="cancel"
+              testId={
+                data.idSuscription
+                  ? 'member-schedule-modal-button-unsubscribe'
+                  : 'member-schedule-modal-button-subscribe'
+              }
               text={data.idSuscription ? <>Unsubscribe</> : <>Subscribe</>}
               clickAction={handleSubscribe}
             />
