@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'Components/Shared/Table';
-import Button from 'Components/Shared/Button';
-import SharedModal from 'Components/Shared/Modal';
-import styles from './members.module.css';
 import { useHistory } from 'react-router-dom';
 import { getMembers, deleteMember } from 'Redux/members/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import ConfirmModal from 'Components/Shared/Modal/ConfirmModal';
 
 const Members = () => {
   const dispatch = useDispatch();
@@ -18,7 +16,6 @@ const Members = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [memberToDelete, setMemberToDelete] = useState(null);
-  const [isDelete, setIsDelete] = useState(false);
   const [title, setTitle] = useState('');
 
   useEffect(() => {
@@ -60,7 +57,6 @@ const Members = () => {
   };
 
   const handleConfirmDelete = async () => {
-    setIsDelete(false);
     setShowAlert(false);
     try {
       const data = await dispatch(deleteMember(memberToDelete));
@@ -74,7 +70,6 @@ const Members = () => {
 
   const handleDelete = (id) => {
     setMemberToDelete(id);
-    setIsDelete(true);
     setTitle('Delete Member');
     setAlertMessage('Are you sure you want to delete this member?');
     setShowAlert(true);
@@ -101,16 +96,10 @@ const Members = () => {
         </Container>
       ) : members ? (
         <Container>
-          <div className={styles.membersSection}>
-            <h2>Members</h2>
-            <Button
-              text={'+ Add Member'}
-              type={'add'}
-              clickAction={handleAdd}
-              testId={'admin-members-add-button'}
-            />
-          </div>
           <Table
+            title={'Members'}
+            buttonId={'admin-members-add-button'}
+            addClick={handleAdd}
             data={members}
             handleDeleteItem={handleDelete}
             handleUpdateItem={handleEdit}
@@ -120,15 +109,16 @@ const Members = () => {
             testCancelId={'admin-member-icon-delete'}
             testEditId={'admin-member-icon-edit'}
           />
-          <SharedModal
-            isDelete={isDelete}
-            show={showAlert}
-            closeModal={() => setShowAlert(false)}
+          <ConfirmModal
+            open={showAlert}
+            onClose={() => setShowAlert(false)}
+            isDelete={true}
             title={title}
             body={alertMessage}
             onConfirm={handleConfirmDelete}
-            testId={'admin-member-modal'}
-            closeTestId={'admin-member-button-close-success-modal'}
+            id="admin-members-confirm-modal"
+            confirmId={'button-confirm-delete-modal'}
+            closeId={'button-close-modal'}
           />
         </Container>
       ) : (

@@ -3,13 +3,14 @@
     flex-direction: column;
     width: 15vw;
     position: sticky;
-    background-color: #0f232e;
+    background-color: black;
     top: 10vh;
     height: 100%;
   }
 
   .navbar {
     display: flex;
+    background-color: #212121;
     height: 90vh;
     justify-content: center;
     align-items: center;
@@ -32,11 +33,11 @@
     text-decoration: none;
     text-transform: capitalize;
     white-space: nowrap;
-    color: #f9a414;
+    color: white;
   }
   
   .routes > li > a.active {
-    border-bottom: 2px solid #f9a414;
+    border-bottom: 2px solid #1976d2;;
   }
   
   .routes > li > a {
@@ -50,7 +51,7 @@
     bottom: 0;
     width: 100%;
     height: 2px;
-    background-color: #f9a414;
+    background-color: #1976d2;;
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 0.2s ease-in-out;

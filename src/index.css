@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
 body {
   margin: 0;
-  font-family: 'Roboto', 'Open Sans', BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu',
+  font-family: 'Noto Sans', 'Roboto', 'Open Sans', BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

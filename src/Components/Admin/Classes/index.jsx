@@ -5,11 +5,13 @@ import SharedModal from 'Components/Shared/Modal';
 import { useHistory } from 'react-router-dom';
 import { getClasses, deleteClass } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
+import { getTrainers } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import CalendarModal from './Modal';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const Classes = () => {
   const history = useHistory();
@@ -17,11 +19,17 @@ const Classes = () => {
   const isLoadingActivities = useSelector((state) => state.activities?.loading);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
-  const { classes = [], activities = [] } = useSelector((state) => ({
-    classes: state.classes?.data.data,
-    activities: state.activities?.data.data
+  const {
+    classes = [],
+    activities = [],
+    trainers = []
+  } = useSelector((state) => ({
+    classes: state.classes.data.data,
+    activities: state.activities.data.data,
+    trainers: state.trainers.data
   }));
-  const [activity, setActivity] = useState('');
+  const [activity, setActivity] = useState('all');
+  const [trainer, setTrainer] = useState('all');
   const [calendarAlert, setCalendarAlert] = useState(false);
   const dispatch = useDispatch();
   const isLoading = isLoadingActivities && isLoadingClasses;
@@ -29,6 +37,7 @@ const Classes = () => {
     toast.remove();
     dispatch(getClasses());
     dispatch(getActivities());
+    dispatch(getTrainers());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
       showToast(toastMessage, 'success');
@@ -63,12 +72,6 @@ const Classes = () => {
       });
     }
   };
-
-  useEffect(() => {
-    if (activities.length > 0) {
-      setActivity(activities[0].name);
-    }
-  }, [activities]);
 
   const handleDeleteClass = () => {
     setCalendarAlert(false);
@@ -117,6 +120,10 @@ const Classes = () => {
     setActivity(e.target.value);
   };
 
+  const handleTrainerChange = (e) => {
+    setTrainer(e.target.value);
+  };
+
   const handleCloseModalCalendar = () => {
     setCalendarAlert(false);
   };
@@ -126,17 +133,77 @@ const Classes = () => {
   };
 
   const getClassButton = (hour, day) => {
-    const classItem = classes.find(
-      (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
-    );
-    return classItem ? (
-      <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
-        <div className={styles.buttonText}>{activity}</div>
-        {classItem?.trainer?.firstName}
-      </div>
-    ) : (
-      <div className={styles.emptyButton}></div>
-    );
+    let classItem;
+
+    if (activity === 'all' && trainer === 'all') {
+      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
+    } else if (trainer !== 'all' && activity === 'all') {
+      if (trainer === 'notAssign') {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            (!item.trainer || !item.trainer?.isActive)
+        );
+      } else {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            item.trainer?.firstName + item.trainer?.lastName === trainer
+        );
+      }
+    } else if (activity !== 'all' && trainer === 'all') {
+      classItem = classes?.find(
+        (item) =>
+          item.day.includes(day) &&
+          item.hour === hour &&
+          item.activity?.name === activity &&
+          (!item.trainer || item.trainer?.isActive)
+      );
+    } else {
+      if (trainer === 'notAssign') {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            item.activity?.name === activity &&
+            (!item.trainer || !item.trainer?.isActive)
+        );
+      } else {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            item.activity?.name === activity &&
+            item.trainer?.firstName + item.trainer?.lastName === trainer
+        );
+      }
+    }
+
+    if (classItem) {
+      if (classItem.trainer && classItem.trainer?.isActive) {
+        return (
+          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
+            <div className={styles.buttonText}>
+              {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
+            </div>
+            {classItem?.trainer?.firstName}
+          </div>
+        );
+      } else {
+        return (
+          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
+            <div className={styles.buttonText}>
+              {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
+            </div>
+            Not assigned trainer
+          </div>
+        );
+      }
+    } else {
+      return <div className={styles.emptyButton}></div>;
+    }
   };
 
   return (
@@ -164,22 +231,40 @@ const Classes = () => {
                 />
               </div>
               <div className={styles.select}>
-                <label htmlFor="activity">Select Activity: </label>
-                <select
-                  id="activity"
-                  value={activity ? activity : activities[0]}
-                  onChange={handleActivityChange}
-                >
-                  {activities?.map((activityItem, index) => (
-                    <option
-                      value={activityItem.name}
-                      key={index}
-                      id={`admin-classes-select-activity-${activityItem.name}`}
-                    >
-                      {activityItem.name}
-                    </option>
-                  ))}
-                </select>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="activity">Activity</InputLabel>
+                  <Select
+                    value={activity}
+                    onChange={handleActivityChange}
+                    id={'admin-classes-input-day'}
+                  >
+                    <MenuItem value="all">All</MenuItem>
+                    {activities?.map((activityItem, index) => (
+                      <MenuItem key={index} value={activityItem.name}>
+                        {activityItem.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              <div className={styles.select}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="trainer">Select Trainer</InputLabel>
+                  <Select value={trainer} onChange={handleTrainerChange} id="trainer">
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="notAssign">Not Assign</MenuItem>
+                    {trainers?.map((trainerItem, index) => (
+                      <MenuItem
+                        value={trainerItem.firstName + trainerItem.lastName}
+                        key={index}
+                        id={`admin-classes-select-trainer-${trainerItem.firstName}`}
+                        sx={trainerItem.isActive ? null : { color: '#878E88' }}
+                      >
+                        {trainerItem.firstName + ' ' + trainerItem.lastName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </div>
             </div>
             <table>
