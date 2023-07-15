@@ -107,7 +107,7 @@ const Trainers = () => {
           ) : trainers.length > 0 ? (
             <Table
               title={'Trainers'}
-              buttonId={'admin-trainer-add-button'}
+              buttonId={'admin-add-button'}
               addClick={handleAddTrainer}
               data={trainers}
               properties={['firstName', 'lastName', 'phone', 'email', 'salary', 'isActive']}
@@ -137,8 +137,7 @@ const Trainers = () => {
         title={'Delete Trainer'}
         body={modalMessage}
         onConfirm={handleDeleteConfirmation}
-        closeTestId={'admin-button-close-success-modal'}
-        id="admin-trainers-modal"
+        id="admin-modal"
         confirmId={'admin-button-confirm-delete-modal'}
         closeId={'admin-button-close-success-modal'}
       />

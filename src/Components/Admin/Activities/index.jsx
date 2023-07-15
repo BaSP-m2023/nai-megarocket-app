@@ -121,7 +121,7 @@ const Activities = () => {
             title={titleModal}
             body={bodyModal}
             onConfirm={handleConfirmDelete}
-            id="admin-activities-modal"
+            id="admin-modal"
             confirmId={'admin-button-confirm-modal'}
             closeId={'admin-button-close-modal'}
           />

@@ -98,7 +98,7 @@ const Members = () => {
         <Container>
           <Table
             title={'Members'}
-            buttonId={'admin-members-add-button'}
+            buttonId={'admin-add-button'}
             addClick={handleAdd}
             data={members}
             handleDeleteItem={handleDelete}
@@ -116,9 +116,9 @@ const Members = () => {
             title={title}
             body={alertMessage}
             onConfirm={handleConfirmDelete}
-            id="admin-members-confirm-modal"
-            confirmId={'button-confirm-delete-modal'}
-            closeId={'button-close-modal'}
+            id="admin-confirm-modal"
+            confirmId={'admin-button-confirm-delete-modal'}
+            closeId={'admin-button-close-modal'}
           />
         </Container>
       ) : (

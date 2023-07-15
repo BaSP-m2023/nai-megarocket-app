@@ -235,7 +235,7 @@ const Form = () => {
                 fullWidth
                 error={errors.activity?.message ? true : false}
               >
-                <InputLabel id="day-label">Activity</InputLabel>
+                <InputLabel id="activity-label">Activity</InputLabel>
                 <Controller
                   control={control}
                   name="activity"

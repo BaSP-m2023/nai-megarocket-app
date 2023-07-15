@@ -232,7 +232,7 @@ const Classes = () => {
               </div>
               <div className={styles.select}>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel id="activity">Activity</InputLabel>
+                  <InputLabel id="activity-label">Activity</InputLabel>
                   <Select
                     value={activity}
                     onChange={handleActivityChange}
@@ -255,7 +255,7 @@ const Classes = () => {
               </div>
               <div className={styles.select}>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel id="trainer">Select Trainer</InputLabel>
+                  <InputLabel id="trainer-label">Select Trainer</InputLabel>
                   <Select
                     value={trainer}
                     onChange={handleTrainerChange}
@@ -264,7 +264,7 @@ const Classes = () => {
                     <MenuItem id={'admin-input-activity-all'} value="all">
                       All
                     </MenuItem>
-                    <MenuItem id={'admin-input-activity-notAssign'} value="notAssign">
+                    <MenuItem id={'admin-input-activity-not-assign'} value="notAssign">
                       Not Assign
                     </MenuItem>
                     {trainers?.map((trainerItem, index) => (
@@ -315,7 +315,7 @@ const Classes = () => {
             onConfirm={handleConfirmDeleteClass}
             testId={'admin-modal'}
             confirmDeleteTestId={'admin-button-confirm-modal'}
-            closeTestId={'admin-button-close-warning-modal'}
+            closeTestId={'admin-button-close-modal'}
           />
           <CalendarModal
             show={calendarAlert}
@@ -327,7 +327,7 @@ const Classes = () => {
             testId={'admin-modal-calendar'}
             confirmDeleteTestId={'admin-button-confirm-modal'}
             editTestId={'admin-button-edit-modal'}
-            closeTestId={'admin-icon-cross-close-modal'}
+            closeTestId={'admin-button-close-modal'}
           />
         </Container>
       ) : (

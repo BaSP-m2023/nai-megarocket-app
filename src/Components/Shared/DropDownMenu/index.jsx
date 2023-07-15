@@ -84,6 +84,7 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
     <>
       <div className="menu-container" ref={menuRef}>
         <div
+          id="header-button-avatar"
           className="menu-trigger"
           onClick={() => {
             setOpen(!open);

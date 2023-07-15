@@ -141,7 +141,11 @@ const Form = () => {
               >
                 {validClasses?.map((classes) =>
                   classes.trainer ? (
-                    <MenuItem key={classes?._id} value={classes?._id}>
+                    <MenuItem
+                      key={classes?._id}
+                      value={classes?._id}
+                      id={'admin-input-classes-' + classes._id}
+                    >
                       {classes.activity?.name +
                         ' | ' +
                         classes.hour +
@@ -160,7 +164,7 @@ const Form = () => {
           <FormHelperText>{errors.classes?.message}</FormHelperText>
         </FormControl>
         <FormControl variant="standard" fullWidth error={errors.member?.message}>
-          <InputLabel id="day-label">Member</InputLabel>
+          <InputLabel id="member-label">Member</InputLabel>
           <Controller
             control={control}
             name="member"
@@ -169,10 +173,14 @@ const Form = () => {
                 {...field}
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
-                id={'admin-input-members'}
+                id={'admin-input-member'}
               >
                 {members?.map((member) => (
-                  <MenuItem key={member?._id} value={member?._id}>
+                  <MenuItem
+                    key={member?._id}
+                    value={member?._id}
+                    id={'admin-input-member-' + member._id}
+                  >
                     {member?.firstName + ' ' + member?.lastName}
                   </MenuItem>
                 ))}

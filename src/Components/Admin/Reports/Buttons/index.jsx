@@ -39,13 +39,25 @@ const ButtonsGroup = ({ setActiveComponent }) => {
       variant="contained"
       aria-label="outlined primary button group"
     >
-      <Button sx={styleSx('subscriptions')} onClick={() => handleButtonClick('subscriptions')}>
+      <Button
+        id={'admin-button-report-subscription'}
+        sx={styleSx('subscriptions')}
+        onClick={() => handleButtonClick('subscriptions')}
+      >
         Class subscriptions
       </Button>
-      <Button sx={styleSx('members')} onClick={() => handleButtonClick('members')}>
+      <Button
+        id={'admin-button-report-member'}
+        sx={styleSx('members')}
+        onClick={() => handleButtonClick('members')}
+      >
         Members & memberships
       </Button>
-      <Button sx={styleSx('trainers')} onClick={() => handleButtonClick('trainers')}>
+      <Button
+        id={'admin-button-report-trainer'}
+        sx={styleSx('trainers')}
+        onClick={() => handleButtonClick('trainers')}
+      >
         Class activities and trainers
       </Button>
     </ButtonGroup>
