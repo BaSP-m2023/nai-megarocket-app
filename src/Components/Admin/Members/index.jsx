@@ -88,7 +88,7 @@ const Members = () => {
     history.push(`/admins/members/form/${id}`);
   };
 
-  const membersData = members.map((item) => ({
+  const membersData = members?.map((item) => ({
     ...item,
     name: `${item.firstName} ${item.lastName}`
   }));

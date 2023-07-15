@@ -7,6 +7,8 @@ import Container from '../Container';
 import { ClipLoader } from 'react-spinners';
 import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Table = ({
   data,
@@ -41,13 +43,6 @@ const Table = ({
       month: '2-digit',
       day: '2-digit'
     });
-  };
-
-  const isBoolean = (value) => {
-    if (typeof value === 'boolean') {
-      return value === true ? 'Yes' : 'No';
-    }
-    return value;
   };
 
   const handleSearchChange = (event) => {
@@ -155,13 +150,22 @@ const Table = ({
                   }
                   return (
                     <td className={styles.tableThtd} key={property}>
-                      {isBoolean(displayValue) ? isBoolean(displayValue) : displayValue}
+                      {typeof displayValue === 'boolean' ? (
+                        displayValue ? (
+                          <CheckIcon />
+                        ) : (
+                          <CloseIcon />
+                        )
+                      ) : (
+                        displayValue
+                      )}
                     </td>
                   );
                 })}
                 <td className={`${styles.tableThtd} ${styles.tableLastColumn}`}>
                   {showButtons && (
                     <>
+                      {console.log(item)}
                       <Button
                         testId={testEditId}
                         type="edit"
