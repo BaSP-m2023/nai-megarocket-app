@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrainers, deleteTrainer } from 'Redux/trainers/thunks';
 import { useHistory } from 'react-router-dom';
-import styles from './trainers.module.css';
 import Table from 'Components/Shared/Table/index';
-import Button from 'Components/Shared/Button/index';
-import SharedModal from 'Components/Shared/Modal';
+import ConfirmModal from 'Components/Shared/Modal/ConfirmModal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
@@ -16,8 +14,6 @@ const Trainers = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [selectedTrainerId, setSelectedTrainerId] = useState(null);
-  const [isConfirmationModal, setIsConfirmationModal] = useState(true);
-  const [typeStyle, setTypeStyle] = useState('default');
   const trainersState = useSelector((state) => state.trainers);
   const trainers = trainersState.data;
   const isLoading = trainersState.loading;
@@ -64,8 +60,6 @@ const Trainers = () => {
     setSelectedTrainerId(id);
     setModalMessage('Are you sure you want to delete this trainer?');
     setShowModal(true);
-    setTypeStyle('default');
-    setIsConfirmationModal(true);
   };
 
   const handleDeleteConfirmation = async () => {
@@ -84,7 +78,6 @@ const Trainers = () => {
   const handleDeleteCancel = () => {
     setSelectedTrainerId(null);
     setShowModal(false);
-    setIsConfirmationModal(true);
   };
 
   const handleAddTrainer = () => {
@@ -109,19 +102,13 @@ const Trainers = () => {
         </Container>
       ) : (
         <Container>
-          <div className={styles.headContainer}>
-            <h2>Trainers</h2>
-            <Button
-              text="+ Add Trainer"
-              clickAction={handleAddTrainer}
-              type="add"
-              testId={'admin-add-button'}
-            />
-          </div>
           {!trainers ? (
             <h3>No trainers to show</h3>
           ) : trainers.length > 0 ? (
             <Table
+              title={'Trainers'}
+              buttonId={'admin-trainer-add-button'}
+              addClick={handleAddTrainer}
               data={trainers}
               properties={['firstName', 'lastName', 'phone', 'email', 'salary', 'isActive']}
               columnTitles={[
@@ -143,20 +130,18 @@ const Trainers = () => {
           )}
         </Container>
       )}
-      {showModal && (
-        <SharedModal
-          show={showModal}
-          title="Delete Trainer"
-          body={modalMessage}
-          isDelete={isConfirmationModal}
-          typeStyle={typeStyle}
-          closeModal={handleDeleteCancel}
-          onConfirm={handleDeleteConfirmation}
-          testId={'admin-modal'}
-          closeTestId={'admin-button-close-success-modal'}
-          confirmDeleteTestId={'admin-button-confirm-delete-modal'}
-        />
-      )}
+      <ConfirmModal
+        open={showModal}
+        onClose={handleDeleteCancel}
+        isDelete={true}
+        title={'Delete Trainer'}
+        body={modalMessage}
+        onConfirm={handleDeleteConfirmation}
+        closeTestId={'admin-button-close-success-modal'}
+        id="admin-trainers-modal"
+        confirmId={'admin-button-confirm-delete-modal'}
+        closeId={'admin-button-close-success-modal'}
+      />
     </>
   );
 };

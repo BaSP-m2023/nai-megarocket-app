@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './button.module.css';
-import { FaEdit, FaTimes } from 'react-icons/fa';
+import { EditTooltip, DeleteTooltip } from './Tooltip/Tooltip';
 
 const Button = ({ text, clickAction, type, info, testId }) => {
   let buttonStyle = styles.button;
@@ -21,19 +21,23 @@ const Button = ({ text, clickAction, type, info, testId }) => {
       break;
     case 'edit':
       buttonStyle = styles.iconButton;
-      icon = <FaEdit />;
+      icon = <EditTooltip />;
       break;
     case 'delete':
       buttonStyle = styles.iconButton;
-      icon = <FaTimes />;
+      icon = <DeleteTooltip />;
       break;
     default:
       buttonStyle = styles.noButton;
   }
 
-  return (
+  return icon ? (
+    <div onClick={clickAction} type={info} className={buttonStyle} id={testId}>
+      {icon}
+    </div>
+  ) : (
     <button onClick={clickAction} type={info} className={buttonStyle} id={testId}>
-      {icon ? icon : text}
+      {text}
     </button>
   );
 };
