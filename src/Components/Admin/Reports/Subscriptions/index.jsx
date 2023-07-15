@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { PieChart } from '@mui/x-charts/PieChart';
-import Container from 'Components/Shared/Container';
 
 const ReportsSubscriptions = () => {
   const subscriptions = useSelector((state) => state.subscriptions.data);
@@ -67,46 +66,44 @@ const ReportsSubscriptions = () => {
     value: activityCount[name] || 0
   }));
   return (
-    <Container>
+    <Stack direction="row" marginTop="80px">
       {months.length > 0 && subscriptionCounts.length > 0 ? (
         <>
-          <Stack direction="row">
-            <Box direction="row" width="100%" textAlign="center">
-              <Typography padding="5%" fontWeight="bold">
-                Monthly class subscriptions
-              </Typography>
-              <LineChart
-                xAxis={[{ scaleType: 'band', data: months }]}
-                series={[{ data: subscriptionCounts }]}
-                width={800}
+          <Box direction="row" width="100%" textAlign="center">
+            <Typography padding="5%" fontWeight="bold">
+              Monthly class subscriptions
+            </Typography>
+            <LineChart
+              xAxis={[{ scaleType: 'band', data: months }]}
+              series={[{ data: subscriptionCounts }]}
+              width={800}
+              height={300}
+            />
+          </Box>
+          <Box direction="row" width="100%" textAlign="center">
+            <Typography padding="5%" fontWeight="bold">
+              Active class subscriptions by activity
+            </Typography>
+            <Box display="flex" justifyContent="center">
+              <PieChart
+                series={[
+                  {
+                    data,
+                    labelKey: 'label',
+                    valueKey: 'value',
+                    innerRadius: 70
+                  }
+                ]}
+                width={500}
                 height={300}
               />
             </Box>
-            <Box direction="row" width="100%" textAlign="center">
-              <Typography padding="5%" fontWeight="bold">
-                Active class subscriptions by activity
-              </Typography>
-              <Box display="flex" justifyContent="center">
-                <PieChart
-                  series={[
-                    {
-                      data,
-                      labelKey: 'label',
-                      valueKey: 'value',
-                      innerRadius: 70
-                    }
-                  ]}
-                  width={500}
-                  height={300}
-                />
-              </Box>
-            </Box>
-          </Stack>
+          </Box>
         </>
       ) : (
         <Typography fontWeight="bold">No data available for the chart</Typography>
       )}
-    </Container>
+    </Stack>
   );
 };
 

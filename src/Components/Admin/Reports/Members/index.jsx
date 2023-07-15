@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { LineChart, PieChart } from '@mui/x-charts';
-import Container from 'Components/Shared/Container';
 
 const ReportsMembers = () => {
   const members = useSelector((state) => state.members.data.data);
@@ -54,9 +53,9 @@ const ReportsMembers = () => {
   }));
 
   return (
-    <Container>
+    <Stack direction="row" marginTop="80px">
       {membersCounts?.length > 0 ? (
-        <Stack direction="row">
+        <>
           <Box direction="row" width="100%" textAlign="center">
             <Typography padding="5%" fontWeight="bold">
               Number of registered members per month
@@ -72,7 +71,6 @@ const ReportsMembers = () => {
               height={300}
             />
           </Box>
-
           <Box direction="row" width="100%" textAlign="center">
             <Typography padding="5%" fontWeight="bold">
               Total memberships
@@ -92,11 +90,11 @@ const ReportsMembers = () => {
               />
             </Box>
           </Box>
-        </Stack>
+        </>
       ) : (
         <Typography fontWeight="bold">No data available for the chart</Typography>
       )}
-    </Container>
+    </Stack>
   );
 };
 

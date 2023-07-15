@@ -56,6 +56,8 @@ export const logout = () => {
     dispatch(logoutPending());
     try {
       await firebaseApp.auth().signOut();
+      sessionStorage.removeItem('role');
+      sessionStorage.removeItem('token');
       return dispatch(logoutSuccess());
     } catch (error) {
       return dispatch(logoutError(error.toString()));

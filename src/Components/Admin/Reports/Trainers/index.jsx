@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Container from 'Components/Shared/Container';
 
 const ReportsTrainers = () => {
   const classes = useSelector((state) => state.classes.data.data);
@@ -44,9 +43,9 @@ const ReportsTrainers = () => {
   }));
 
   return (
-    <Container>
+    <Stack direction="row" marginTop="80px">
       {dataTrainers.length > 0 && dataActivity.length > 0 ? (
-        <Stack direction="row">
+        <>
           <Box textAlign="center">
             <Typography padding="5%" fontWeight="bold">
               Total class activities
@@ -81,11 +80,11 @@ const ReportsTrainers = () => {
               height={300}
             />
           </Box>
-        </Stack>
+        </>
       ) : (
         <Typography fontWeight="bold">No data available for the chart</Typography>
       )}
-    </Container>
+    </Stack>
   );
 };
 

@@ -1,6 +1,7 @@
 .containerSignUp {
   display: flex;
   height: 100vh;
+  width: 100vw;
 }
 
 .imgSignUp {
@@ -9,7 +10,14 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  max-width: 50vw;
+  width: 50vw;
+  height: 100vh;
+}
+
+.imgSignUp img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .containerForm {
@@ -18,25 +26,20 @@
   flex-direction: column;
   align-items: center;
   max-width: 50vw;
-  padding: 0 2vw;
-  margin-top: 6vh;
+  padding: 2vh 2vw;
 }
 
 .head {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: 100% ;
-}
-
-.formTitle {
-  margin-left: 10px;
-  cursor: default;
 }
 
 .formMembers {
   display: flex;
   width: 100%;
+  padding-top: 6vh;
 }
 
 .formColumn {
@@ -44,35 +47,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-}
-
-.formColumn Button {
- border-radius: 0;
- background-color: black;
- border: none;
- transition: .5s ease;
-}
-
-.formColumn Button:hover {
-  background-color: #157caa;
-  transition: 1s ease;
 }
 
 .formColumn:not(:last-child) {
-  margin-right: 20px;
-}
-
-.imgSignUp img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; 
+  margin-right: 2vw;
 }
 
 .arrow {
-  width: 100%;
-  margin-left: 20px;
-  margin-bottom: 2vh;
+  margin-left: 1vw;
   cursor: pointer;
 }
 
@@ -81,7 +63,7 @@
 }
 
 .checkBox p {
-  font-size: 12px;
+  font-size: .8rem;
   color: grey;
 }
 
@@ -89,4 +71,3 @@
   display: flex;
   justify-content: center;
 }
-
