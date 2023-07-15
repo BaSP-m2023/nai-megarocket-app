@@ -184,7 +184,16 @@ const Classes = () => {
     if (classItem) {
       if (classItem.trainer && classItem.trainer?.isActive) {
         return (
-          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
+          <div
+            onClick={() => handleClass(classItem._id)}
+            id={
+              'admin-button-' +
+              classItem.day.toString().toLowerCase() +
+              '-' +
+              classItem.hour.slice(0, 2)
+            }
+            className={styles.classesButton}
+          >
             <div className={styles.buttonText}>
               {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
             </div>
@@ -193,7 +202,16 @@ const Classes = () => {
         );
       } else {
         return (
-          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
+          <div
+            onClick={() => handleClass(classItem._id)}
+            id={
+              'admin-button-' +
+              classItem.day.toString().toLowerCase() +
+              '-' +
+              classItem.hour.slice(0, 2)
+            }
+            className={styles.classesButton}
+          >
             <div className={styles.buttonText}>
               {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
             </div>
