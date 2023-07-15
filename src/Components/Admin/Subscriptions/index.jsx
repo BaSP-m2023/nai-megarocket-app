@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import styles from './subscriptions.module.css';
 import Table from 'Components/Shared/Table/index';
 import { useHistory } from 'react-router-dom';
-import SharedModal from 'Components/Shared/Modal/index';
-import Button from 'Components/Shared/Button/index';
+import ConfirmModal from 'Components/Shared/Modal/ConfirmModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSubscriptions, deleteSubscription } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
-import { FaHistory } from 'react-icons/fa';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Subscriptions = () => {
@@ -17,7 +14,6 @@ const Subscriptions = () => {
   const loading = useSelector((state) => state.subscriptions.loading);
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const [showModal, setShowModal] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const [subscriptionId, setSubscriptionId] = useState('');
@@ -72,7 +68,6 @@ const Subscriptions = () => {
 
   const handleDeleteSubscription = (id) => {
     setSubscriptionId(id);
-    setIsDelete(true);
     setTitleModal('Delete subscription');
     setBodyModal('Do you want to delete this subscription?');
     setShowModal(true);
@@ -112,31 +107,11 @@ const Subscriptions = () => {
         </Container>
       ) : subscriptions && subscriptions.length > 0 ? (
         <Container>
-          <div className={styles.buttonContainer}>
-            <h2>{showInactive ? 'Subscriptions history' : 'Subscriptions'}</h2>
-
-            <div className={styles.buttons}>
-              {showButtons && (
-                <Button
-                  text={'+ Add Subscription'}
-                  type={'add'}
-                  clickAction={handleAdd}
-                  testId={'admin-subscriptions-add-button'}
-                />
-              )}
-              <div className={styles.iconContainer}>
-                <button
-                  onClick={handleToggleInactive}
-                  className={`${styles.toggleButton} ${showInactive ? styles.active : ''}`}
-                  id="admin-subscriptions-toggle-inactive-button"
-                >
-                  {showInactive ? <FaHistory /> : <FaHistory />}
-                </button>
-              </div>
-            </div>
-          </div>
-
           <Table
+            title={showInactive ? 'Subscriptions History' : 'Subscriptions'}
+            historyAction={handleToggleInactive}
+            buttonId={'admin-subscriptions-add-button'}
+            addClick={handleAdd}
             data={
               showInactive
                 ? subscriptions
@@ -159,20 +134,17 @@ const Subscriptions = () => {
             showNumberColumn={!showButtons}
             showOrderButton={true}
           />
-
-          {showModal && (
-            <SharedModal
-              show={showModal}
-              title={titleModal}
-              body={bodyModal}
-              isDelete={isDelete}
-              onConfirm={handleConfirmDelete}
-              closeModal={handleCloseModal}
-              testId={'admin-subscriptions-modal'}
-              closeTestId={'admin-subscriptions-button-close-success-modal'}
-              confirmDeleteTestId={'admin-subscriptions-button-confirm-delete-modal'}
-            />
-          )}
+          <ConfirmModal
+            open={showModal}
+            onClose={handleCloseModal}
+            isDelete={true}
+            title={titleModal}
+            body={bodyModal}
+            onConfirm={handleConfirmDelete}
+            closeTestId={'admin-subscriptions-button-close-success-modal'}
+            confirmId={''}
+            closeId={'admin-button-close-success-modal'}
+          />
         </Container>
       ) : (
         <Container center={true}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { logout } from 'Redux/auth/thunks';
-import SharedModal from 'Components/Shared/Modal/index';
+import ConfirmModal from '../Modal/ConfirmModal';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Avatar from '@mui/material/Avatar';
@@ -33,8 +33,9 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
   });
 
   const showModalLogout = () => {
-    setTitleModal('Warning');
-    setBodyModal('You want to log out?');
+    setOpen(!open);
+    setTitleModal('Leaving soon?');
+    setBodyModal('Are you sure you want to log out?');
     setShowModal(true);
   };
 
@@ -55,35 +56,15 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
     history.push(profileRoute);
   };
 
-  function stringToColor(string) {
-    let hash = 0;
-    let i;
-
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = '#';
-
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    /* eslint-enable no-bitwise */
-
-    return color;
-  }
-
   function stringAvatar(name) {
     return {
       sx: {
-        width: 65,
-        height: 65,
-        bgcolor: stringToColor(name)
+        width: 50,
+        height: 50,
+        color: 'white'
       },
       children: (
-        <Typography variant="h1" sx={{ fontSize: 23 }}>
+        <Typography variant="h2" sx={{ fontSize: 16 }}>
           {`${name.split(' ')[0][0]}${name.split(' ')[1][0]}`}
         </Typography>
       )
@@ -111,48 +92,49 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
           <div className="avatar">
             <Avatar {...stringAvatar(`${userData?.firstName} ${userData?.lastName}`)} />
           </div>
-        </div>
 
-        <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
-          <p className="user-name">
-            {' '}
-            {userData?.firstName} {userData?.lastName}
-          </p>
-          <p className="user-role">{role}</p>
-          <ul>
-            {profileRoute && (
+          <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
+            <p className="user-name">
+              {' '}
+              {userData?.firstName} {userData?.lastName}
+            </p>
+            <p className="user-role">{role}</p>
+            <ul>
+              {profileRoute && (
+                <DropdownItem
+                  img={<PermIdentityOutlinedIcon style={{ color: 'grey' }} />}
+                  text={'My Profile'}
+                  onClick={sendToProfile}
+                />
+              )}
               <DropdownItem
-                img={<PermIdentityOutlinedIcon style={{ color: 'grey' }} />}
-                text={'My Profile'}
-                onClick={sendToProfile}
+                img={<ContactSupportOutlinedIcon style={{ color: 'grey' }} />}
+                text={'Chat Support'}
+                onClick={sendWhatsapp}
               />
-            )}
-            <DropdownItem
-              img={<ContactSupportOutlinedIcon style={{ color: 'grey' }} />}
-              text={'Chat Support'}
-              onClick={sendWhatsapp}
-            />
-            <DropdownItem
-              img={<LogoutOutlinedIcon style={{ color: 'grey' }} />}
-              text={'Logout'}
-              onClick={showModalLogout}
-            />
-          </ul>
+              <DropdownItem
+                img={<LogoutOutlinedIcon style={{ color: 'grey' }} />}
+                text={'Logout'}
+                onClick={showModalLogout}
+              />
+            </ul>
+          </div>
         </div>
-      </div>
 
-      {showModal && (
-        <SharedModal
-          isDelete={true}
-          show={showModal}
-          title={titleModal}
-          body={bodyModal}
-          closeModal={() => setShowModal(false)}
-          onConfirm={handleLogOut}
-          testId={'logout-modal'}
-          closeTestId={'logout-button-close-success-modal'}
-        />
-      )}
+        {showModal && (
+          <ConfirmModal
+            open={showModal}
+            onClose={() => setShowModal(false)}
+            isDelete={false}
+            title={titleModal}
+            body={bodyModal}
+            onConfirm={handleLogOut}
+            id="logout-modal"
+            confirmId={'logout-button-confirm-modal'}
+            closeId={'logout-button-close-modal'}
+          />
+        )}
+      </div>
     </>
   );
 };

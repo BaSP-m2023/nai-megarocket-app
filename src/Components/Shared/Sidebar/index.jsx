@@ -14,7 +14,7 @@ const collapsedWidth = 60;
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
     marginTop: '9vh',
-    backgroundColor: 'black',
+    backgroundColor: '#212121',
     color: 'white',
     width: collapsedWidth,
     transition: theme.transitions.create('width', {
@@ -52,7 +52,7 @@ const StyledListItemText = styled(ListItemText)(({ theme }) => ({
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   '&.active, &:hover': {
-    backgroundColor: '#2196f3'
+    backgroundColor: '#1976d2'
   },
   '&.active': {
     backgroundColor: 'transparent'

@@ -43,7 +43,7 @@ function Header({ profileRoute }) {
           className={styles.brand}
         >
           <img src="/assets/images/logos/logo-3.png" alt="logo" className={styles.logo3} />
-          <img src="/assets/images/logos/logo-2.png" alt="logo" className={styles.logo2} />
+          <img src="/assets/images/logos/logo-4.png" alt="logo" className={styles.logo2} />
         </div>
         {!role ? (
           <>

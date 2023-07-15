@@ -128,7 +128,7 @@ const Login = () => {
           />
           <form onSubmit={handleSubmit(handleLogin)} className={styles.formLogin}>
             <div className={styles.inputsLogin}>
-              <FormControl sx={{ width: '20vw' }} variant="standart">
+              <FormControl sx={{ width: '20vw' }} variant="standard">
                 <InputLabel htmlFor="email">Email</InputLabel>
                 <Input
                   id="login-input-email"
