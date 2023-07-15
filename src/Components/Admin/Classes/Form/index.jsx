@@ -167,7 +167,11 @@ const Form = () => {
                       id={'admin-input-day'}
                     >
                       {daysOfWeek.map((day) => (
-                        <MenuItem key={day} value={day} id={'admin-input-day-' + day}>
+                        <MenuItem
+                          key={day}
+                          value={day}
+                          id={'admin-input-day-' + day.toString().toLowerCase()}
+                        >
                           {day}
                         </MenuItem>
                       ))}
@@ -214,11 +218,11 @@ const Form = () => {
                       onChange={(e) => field.onChange(e.target.value)}
                       id={'admin-input-trainer'}
                     >
-                      {trainers.map((trainer) => (
+                      {trainers.map((trainer, index) => (
                         <MenuItem
                           key={trainer._id}
                           value={trainer._id}
-                          id={`admin-input-trainer-` + trainer._id}
+                          id={`admin-input-trainer-` + index}
                         >
                           {trainer.firstName}
                         </MenuItem>
@@ -246,11 +250,11 @@ const Form = () => {
                       onChange={(e) => field.onChange(e.target.value)}
                       id={'admin-input-activity'}
                     >
-                      {activities.map((activity) => (
+                      {activities.map((activity, index) => (
                         <MenuItem
                           key={activity._id}
                           value={activity._id}
-                          id={'admin-input-activity-' + activity._id}
+                          id={'admin-input-activity-' + index}
                         >
                           {activity.name}
                         </MenuItem>

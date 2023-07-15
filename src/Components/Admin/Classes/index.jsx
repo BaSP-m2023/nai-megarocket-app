@@ -250,7 +250,7 @@ const Classes = () => {
               </div>
               <div className={styles.select}>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel id="activity-label">Activity</InputLabel>
+                  <InputLabel id="activity-label">Select Activity</InputLabel>
                   <Select
                     value={activity}
                     onChange={handleActivityChange}
@@ -263,7 +263,7 @@ const Classes = () => {
                       <MenuItem
                         key={index}
                         value={activityItem.name}
-                        id={'admin-input-activity-' + activity._id}
+                        id={'admin-input-activity-' + index}
                       >
                         {activityItem.name}
                       </MenuItem>
@@ -279,17 +279,17 @@ const Classes = () => {
                     onChange={handleTrainerChange}
                     id={`admin-select-trainer`}
                   >
-                    <MenuItem id={'admin-input-activity-all'} value="all">
+                    <MenuItem id={'admin-input-trainer-all'} value="all">
                       All
                     </MenuItem>
-                    <MenuItem id={'admin-input-activity-not-assign'} value="notAssign">
+                    <MenuItem id={'admin-input-trainer-not-assign'} value="notAssign">
                       Not Assign
                     </MenuItem>
                     {trainers?.map((trainerItem, index) => (
                       <MenuItem
                         value={trainerItem.firstName + trainerItem.lastName}
                         key={index}
-                        id={`admin-select-trainer-${trainerItem._id}`}
+                        id={`admin-select-trainer-${index}`}
                         sx={trainerItem.isActive ? null : { color: '#878E88' }}
                       >
                         {trainerItem.firstName + ' ' + trainerItem.lastName}
