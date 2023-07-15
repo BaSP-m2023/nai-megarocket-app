@@ -52,7 +52,7 @@ const StyledListItemText = styled(ListItemText)(({ theme }) => ({
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   '&.active, &:hover': {
-    backgroundColor: '#2196f3'
+    backgroundColor: '#1976d2'
   },
   '&.active': {
     backgroundColor: 'transparent'
