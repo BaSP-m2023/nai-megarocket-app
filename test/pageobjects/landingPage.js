@@ -43,6 +43,10 @@ class LandingPage {
   get linkEmail() {
     return $('#mail-bar-link');
   }
+
+  async clickLogin() {
+    await this.btnLogin.click();
+  }
 }
 
 module.exports = new LandingPage();

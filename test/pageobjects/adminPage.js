@@ -1,7 +1,11 @@
 /* eslint-disable no-undef */
-class AdminProfilePage {
+class AdminPage {
   get sectionTitle() {
     return $('h2');
+  }
+
+  get btnEdit() {
+    return $('#admin-profile-edit-button');
   }
 
   get btnAdd() {
@@ -40,8 +44,8 @@ class AdminProfilePage {
     return $('#admin-input-description');
   }
 
-  get btnSubmit() {
-    return $('#admin-button-submit-form');
+  get btnSubmitProfile() {
+    return $('#admin-profile-submit-button');
   }
 
   get btnActive() {
@@ -93,7 +97,7 @@ class AdminProfilePage {
   }
 
   get inputPhone() {
-    return $('#admin-input-phone');
+    return $('[id="admin-profile-input-phone"][type="text"]');
   }
 
   get inputEmail() {
@@ -135,6 +139,10 @@ class AdminProfilePage {
   get btnHistory() {
     return $('#admin-button-toggle-inactive');
   }
+
+  async fillForm() {
+    await this.inputPhone.setValue('3415853663');
+  }
 }
 
-module.exports = new AdminProfilePage();
+module.exports = new AdminPage();

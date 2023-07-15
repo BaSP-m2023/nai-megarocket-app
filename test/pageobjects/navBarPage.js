@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-class AdminNavBarPage {
+class NavBarPage {
   get btnHomeadmin() {
     return $('#sidebar-link-admin-home');
   }
@@ -65,4 +65,4 @@ class AdminNavBarPage {
   }
 }
 
-module.exports = new AdminNavBarPage();
+module.exports = new NavBarPage();

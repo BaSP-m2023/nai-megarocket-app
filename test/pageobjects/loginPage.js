@@ -1,13 +1,5 @@
 /* eslint-disable no-undef */
 class LoginPage {
-  open(url) {
-    return browser.url(url);
-  }
-
-  get btnLogin() {
-    return $('#logout-bar-link');
-  }
-
   get titleLogin() {
     return $('h2');
   }
@@ -48,14 +40,10 @@ class LoginPage {
     return $('#login-button-register');
   }
 
-  async singIn() {
-    await this.linkLogin.click();
-  }
-
   async login(email, password) {
     await this.inputEmail.setValue(email);
     await this.inputPassword.setValue(password);
-    await this.buttonLogin.click();
+    await this.btnSubmit.click();
   }
 }
 
