@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import styles from './subscriptions.module.css';
 import Table from 'Components/Shared/Table/index';
 import { useHistory } from 'react-router-dom';
-import SharedModal from 'Components/Shared/Modal/index';
-import Button from 'Components/Shared/Button/index';
+import ConfirmModal from 'Components/Shared/Modal/ConfirmModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSubscriptions, deleteSubscription } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -16,10 +14,11 @@ const Subscriptions = () => {
   const loading = useSelector((state) => state.subscriptions.loading);
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const [showModal, setShowModal] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const [subscriptionId, setSubscriptionId] = useState('');
+  const [showInactive, setShowInactive] = useState(false);
+  const [showButtons, setShowButtons] = useState(true);
 
   useEffect(() => {
     toast.remove();
@@ -69,7 +68,6 @@ const Subscriptions = () => {
 
   const handleDeleteSubscription = (id) => {
     setSubscriptionId(id);
-    setIsDelete(true);
     setTitleModal('Delete subscription');
     setBodyModal('Do you want to delete this subscription?');
     setShowModal(true);
@@ -90,6 +88,11 @@ const Subscriptions = () => {
     setShowModal(false);
   };
 
+  const handleToggleInactive = () => {
+    setShowInactive(!showInactive);
+    setShowButtons(!showButtons);
+  };
+
   return (
     <>
       <Toaster
@@ -104,43 +107,44 @@ const Subscriptions = () => {
         </Container>
       ) : subscriptions && subscriptions.length > 0 ? (
         <Container>
-          <div className={styles.buttonContainer}>
-            <h2>Subscriptions</h2>
-            <Button
-              text={'+ Add Subscription'}
-              type={'add'}
-              clickAction={handleAdd}
-              testId={'admin-subscriptions-add-button'}
-            />
-          </div>
           <Table
-            data={subscriptions}
+            title={showInactive ? 'Subscriptions History' : 'Subscriptions'}
+            historyAction={handleToggleInactive}
+            buttonId={'admin-subscriptions-add-button'}
+            addClick={handleAdd}
+            data={
+              showInactive
+                ? subscriptions
+                : subscriptions.filter((subscription) => subscription.isActive)
+            }
             properties={[
               'member.firstName',
               'member.lastName',
               'classes.activity.name',
+              'date',
               'isActive'
             ]}
-            columnTitles={['First Name', 'Last Name', 'Class Name', 'Active']}
+            columnTitles={['First Name', 'Last Name', 'Class Name', 'Date', 'Active']}
             handleUpdateItem={handleEdit}
             handleDeleteItem={handleDeleteSubscription}
             testId={'admin-subscriptions-table'}
             testCancelId={'admin-subscriptions-icon-delete'}
             testEditId={'admin-subscriptions-icon-edit'}
+            showButtons={showButtons}
+            showNumberColumn={!showButtons}
+            showOrderButton={true}
           />
-          {showModal && (
-            <SharedModal
-              show={showModal}
-              title={titleModal}
-              body={bodyModal}
-              isDelete={isDelete}
-              onConfirm={handleConfirmDelete}
-              closeModal={handleCloseModal}
-              testId={'admin-subscriptions-modal'}
-              closeTestId={'admin-subscriptions-button-close-success-modal'}
-              confirmDeleteTestId={'admin-subscriptions-button-confirm-delete-modal'}
-            />
-          )}
+          <ConfirmModal
+            open={showModal}
+            onClose={handleCloseModal}
+            isDelete={true}
+            title={titleModal}
+            body={bodyModal}
+            onConfirm={handleConfirmDelete}
+            closeTestId={'admin-subscriptions-button-close-success-modal'}
+            confirmId={''}
+            closeId={'admin-button-close-success-modal'}
+          />
         </Container>
       ) : (
         <Container center={true}>

@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import SharedModal from 'Components/Shared/Modal';
+import ConfirmModal from 'Components/Shared/Modal/ConfirmModal';
 import Table from 'Components/Shared/Table';
-import Button from 'Components/Shared/Button';
-import styles from './activities.module.css';
 import { useHistory } from 'react-router-dom';
 import { getActivities, deleteActivities } from 'Redux/activities/thunks';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,8 +12,6 @@ const Activities = () => {
   const history = useHistory();
   const [activityId, setActivityId] = useState();
   const [showModal, setShowModal] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
-  const [typeStyle, setTypeStyle] = useState('');
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
   const dispatch = useDispatch();
@@ -67,10 +63,8 @@ const Activities = () => {
 
   const handleDeleteClick = (id) => {
     setActivityId(id);
-    setIsDelete(true);
-    setTypeStyle();
-    setTitleModal('Do you want to delete this activity?');
-    setBodyModal('');
+    setTitleModal('Delete Activity');
+    setBodyModal('Are you sure you want to delete this activity?');
     setShowModal(true);
   };
 
@@ -107,16 +101,10 @@ const Activities = () => {
         </Container>
       ) : activities ? (
         <Container>
-          <div className={styles.topContainer}>
-            <h2>Activities</h2>
-            <Button
-              text={'+ Add Activity'}
-              type={'add'}
-              clickAction={handleAddItem}
-              testId={'admin-button-add-activity'}
-            />
-          </div>
           <Table
+            title={'Activities'}
+            buttonId={'admin-button-add-activity'}
+            addClick={handleAddItem}
             data={activities}
             properties={['name', 'description', 'isActive']}
             columnTitles={['Name', 'Description', 'Active']}
@@ -126,20 +114,17 @@ const Activities = () => {
             testCancelId={'admin-activities-icon-delete'}
             testEditId={'admin-activities-icon-edit'}
           />
-          {showModal && (
-            <SharedModal
-              show={showModal}
-              typeStyle={typeStyle}
-              title={titleModal}
-              body={bodyModal}
-              isDelete={isDelete}
-              onConfirm={handleConfirmDelete}
-              closeModal={handleCloseModal}
-              testId={'admin-activities-modal'}
-              confirmDeleteTestId={'admin-activities-button-confirm-modal'}
-              closeTestId={'admin-activities-button-close-modal'}
-            />
-          )}
+          <ConfirmModal
+            open={showModal}
+            onClose={handleCloseModal}
+            isDelete={true}
+            title={titleModal}
+            body={bodyModal}
+            onConfirm={handleConfirmDelete}
+            id="admin-activities-modal"
+            confirmId={'admin-button-confirm-modal'}
+            closeId={'admin-button-close-modal'}
+          />
         </Container>
       ) : (
         <h3>There are no activities</h3>

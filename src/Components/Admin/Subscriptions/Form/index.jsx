@@ -7,12 +7,17 @@ import { getClasses } from 'Redux/classes/thunks';
 import { getMembers } from 'Redux/members/thunks';
 import { createSubscription, updateSubscription } from 'Redux/subscriptions/thunks';
 import InputComponent from 'Components/Shared/Input';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import subscriptionValidation from 'Validations/subscriptions';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
 import toast, { Toaster } from 'react-hot-toast';
+import { FiArrowLeft } from 'react-icons/fi';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { FormControl, InputLabel } from '@mui/material';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const Form = () => {
   const { id } = useParams();
@@ -24,6 +29,8 @@ const Form = () => {
   const {
     register,
     reset,
+    control,
+    watch,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -52,14 +59,10 @@ const Form = () => {
   const getSubscriptionData = async () => {
     try {
       const subToUpdate = subscriptions.find((sub) => sub._id === id);
-
       delete subToUpdate._id;
-      delete subToUpdate.createdAt;
-      delete subToUpdate.updatedAt;
       delete subToUpdate.__v;
       subToUpdate.classes = subToUpdate.classes._id;
       subToUpdate.member = subToUpdate.member._id;
-      console.log(subToUpdate);
       reset(subToUpdate);
     } catch (error) {
       showErrorToast('Oops, something went wrong.');
@@ -104,10 +107,6 @@ const Form = () => {
     id ? editSubscription(data) : addSubscription(data);
   };
 
-  const handleReset = () => {
-    reset();
-  };
-
   const validClasses = classes.filter((item) => item.activity);
 
   return (
@@ -118,33 +117,81 @@ const Form = () => {
         }}
       />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
-        <h2>{id ? 'Update subscription' : 'Create subscription'}</h2>
-        <InputComponent
-          inputName="classes"
-          inputType="list"
-          labelName="Classes"
-          list={validClasses}
-          listProp={'activity.name'}
-          register={register}
-          error={errors.classes?.message}
-          testId={'admin-subscriptions-input-classes'}
-        />
-        <InputComponent
-          inputName="member"
-          inputType="list"
-          labelName="Member"
-          list={members}
-          listProp={'firstName'}
-          register={register}
-          error={errors.member?.message}
-          testId={'admin-subscriptions-input-members'}
-        />
+        <div className={styles.head}>
+          {' '}
+          <div
+            id="admin-subscriptions-form-go-back"
+            className={styles.arrow}
+            onClick={handleCancel}
+          >
+            <FiArrowLeft size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Subscription' : 'Add Subscription'}</h2>
+        </div>
+        <FormControl variant="standard" fullWidth error={errors.classes?.message}>
+          <InputLabel id="classes-label">Classes</InputLabel>
+          <Controller
+            control={control}
+            name="classes"
+            render={({ field }) => (
+              <Select
+                {...field}
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value)}
+                id={'admin-subscriptions-input-classes'}
+                MenuProps={{
+                  sx: { height: '400px' }
+                }}
+              >
+                {validClasses?.map((classes) =>
+                  classes.trainer ? (
+                    <MenuItem key={classes?._id} value={classes?._id}>
+                      {classes.activity?.name +
+                        ' | ' +
+                        classes.hour +
+                        ' | ' +
+                        classes.day +
+                        ' | ' +
+                        classes.trainer?.firstName +
+                        ' ' +
+                        classes.trainer?.lastName}
+                    </MenuItem>
+                  ) : null
+                )}
+              </Select>
+            )}
+          />
+          <FormHelperText>{errors.classes?.message}</FormHelperText>
+        </FormControl>
+        <FormControl variant="standard" fullWidth error={errors.member?.message}>
+          <InputLabel id="day-label">Member</InputLabel>
+          <Controller
+            control={control}
+            name="member"
+            render={({ field }) => (
+              <Select
+                {...field}
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value)}
+                id={'admin-subscriptions-input-members'}
+              >
+                {members?.map((member) => (
+                  <MenuItem key={member?._id} value={member?._id}>
+                    {member?.firstName + ' ' + member?.lastName}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+          />
+          <FormHelperText>{errors.member?.message}</FormHelperText>
+        </FormControl>
         {id ? (
           <InputComponent
+            register={register}
             labelName={'Active ?'}
             inputType={'isActive'}
             inputName={'isActive'}
-            register={register}
+            value={watch('isActive')}
             error={errors.isActive}
             testId={'admin-subscriptions-input-checkbox'}
           />
@@ -156,21 +203,6 @@ const Form = () => {
             info={'submit'}
             testId={'admin-subscriptions-button-submit-form'}
           />
-          <div className={styles.cleanButtons}>
-            <Button
-              text={'Back'}
-              type={'cancel'}
-              clickAction={handleCancel}
-              testId={'admin-subscriptions-button-back-form'}
-            />
-            <Button
-              type={'cancel'}
-              clickAction={handleReset}
-              info={'reset'}
-              text={'Reset'}
-              testId={'admin-subscriptions-button-reset-form'}
-            />
-          </div>
         </fieldset>
       </SharedForm>
     </Container>

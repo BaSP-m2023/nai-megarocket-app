@@ -1,57 +1,56 @@
 .modalContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-width: 100vw;
   min-height: 100vh;
+  top: 0;
+  left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 2;
+  position: fixed;
 }
 
 .modalContentDefault {
   display: flex;
-  width: 20%;
   flex-direction: column;
-  padding: 30px;
-  background-color: #0f232e;
+  padding: 2vh 5vw;
+  width: 15vw;
+  height: 50vh;
+  max-height: 90vh;
+  background-color: black;
   color: #f7f9ed;
-  border-radius: 9px;
-  margin-left: 15vw;
 }
 
 .modalContentError {
   display: flex;
   flex-direction: column;
-  padding: 30px;
-  background-color: #e93528;
-  border-radius: 9px;
-  max-width: 50%;
   margin-left: 15vw;
+  padding: 30px;
+  max-width: 50%;
+  background-color: #e93528;
 }
 
 .modalContentSuccess {
   display: flex;
   flex-direction: column;
+  margin-left: 15vw;
   padding: 30px;
   background-color: #fddba1;
-  border-radius: 9px;
-  margin-left: 15vw;
 }
 
 .buttonContainer {
   display: flex;
-  width: 100%;
   justify-content: center;
+  width: 100%;
 }
 
 .buttonContainer > button {
+  margin-top: 10%;
+  width: 60%;
   background-color: #f9a414;
   color: #0f232e;
-  width: 60%;
-  margin-top: 10%;
 }
 
 .buttonContainer > button:hover {
@@ -69,6 +68,7 @@
 
 .trainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 5%;
@@ -77,31 +77,42 @@
   border-bottom: 1px solid #f7f9ed;
 }
 
-.trainerIcon {
-  margin-top: 1%;
+.trainerTittle h4 {
+  margin: 0;
 }
 
-.space {
-  margin-right: 10px;
+.trainerName {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.trainerIcon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  padding-right: 1vw;
 }
 
 .centerTitle{
   text-align: center;
   margin-top: 1%;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .center{
   padding-top: 5%;
-  text-align: center;
-  margin-top: 5%;
   font-size: 1.2rem;
+  text-align: center;
 }
 
 .closeContainer {
-  color: #f7f9ed;
   display: flex;
   justify-content: flex-end;
+  color: white;
 }
 
 .close {
@@ -110,10 +121,25 @@
 }
 
 .listMembers {
-  text-align: center;
-  font-size: 1rem;
-  color: #F9A414;
+  padding-bottom: 4vh;
   font-size: 1.2rem;
+  text-align: center;
+  color: white;
+  overflow-y: auto;
+  height: 33vh;
+  max-height: 60vh;
+}
+.listMembers::-webkit-scrollbar {
+  width: 10px;
+}
+.listMembers::-webkit-scrollbar-thumb {
+  background-color: #7e8588;
+}
+.listMembers::-webkit-scrollbar-thumb:hover {
+  background-color: #5e6365;
+}
+.listMembers::-webkit-scrollbar-track {
+  background-color: #0f232e;
 }
 
 .member {
@@ -121,13 +147,10 @@
 }
 
 .membershipBlack {
-  padding: 1%;
-  padding-left: 5%;
-  padding-right: 5%;
   margin: 2%;
+  padding: 0.5vh 1vw;
   background-color: #000000;
   color: white;
-  border-radius: 5px;
   font-size: 1.2rem;
   border: 1px solid #5b5c59;
 }
@@ -137,9 +160,8 @@
   padding-left: 5%;
   padding-right: 5%;
   margin: 2%;
-  background-color: #7e8588;
+  background-color: #e7e7e7;
   color: white;
-  border-radius: 5px;
   font-size: 1.2rem;
 }
 
@@ -148,16 +170,22 @@
   padding-left: 5%;
   padding-right: 5%;
   margin: 2%;
-  background-color: #ac720d;
+  background-color: #157CAA;
   color: white;
-  border-radius: 5px;
   font-size: 1.2rem;
 }
 
 .listTitle {
   text-align: center;
   font-size: 1.3rem;
-  margin-top: 5%;
+}
+.listTitle h4 {
+  margin: 3vh 0;
+}
+
+.slotsCount {
+  display: flex;
+  justify-content: center;
 }
 
 .slotsFull {
@@ -165,5 +193,4 @@
   margin-top: 5%;
   font-size: 1.3rem;
   color: #f52821;
-  font-weight: bold;
 }

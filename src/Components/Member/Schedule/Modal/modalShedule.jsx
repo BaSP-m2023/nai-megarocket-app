@@ -113,7 +113,11 @@ const Modal = (data) => {
             Slots: {data.slotCount} / {data.slot}
           </div>
         )}
-        {data.idSuscription ? (
+        {data.membership === 'Classic' ? (
+          <div className={styles.center}>
+            You cannot enroll in classes. Upgrade your membership!
+          </div>
+        ) : data.idSuscription ? (
           <div className={styles.added}>
             <BsCheck /> You are subscribed to this class
           </div>

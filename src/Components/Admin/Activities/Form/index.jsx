@@ -11,6 +11,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
 import toast, { Toaster } from 'react-hot-toast';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const Form = () => {
   const history = useHistory();
@@ -21,6 +22,7 @@ const Form = () => {
   const {
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -92,13 +94,18 @@ const Form = () => {
         }}
       />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
-        <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
+        <div className={styles.head}>
+          {' '}
+          <div id="admin-activities-form-go-back" className={styles.arrow} onClick={handleCancel}>
+            <ArrowBackIosNewIcon size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Activity' : 'Add Activity'}</h2>
+        </div>
         <InputComponent
           register={register}
           inputName="name"
           inputType="text"
           labelName="Activity"
-          placeholder="Activity"
           error={errors.name?.message}
           testId={'admin-activity-input-name'}
         />
@@ -107,39 +114,26 @@ const Form = () => {
           inputName="description"
           inputType="text"
           labelName="Description"
-          placeholder="Description"
           error={errors.description?.message}
           testId={'admin-activity-input-description'}
         />
-        <InputComponent
-          register={register}
-          labelName={'Active ?'}
-          inputType={'isActive'}
-          inputName={'isActive'}
-          error={errors.isActive}
-          testId={'admin-activity-input-checkbox'}
-        />
+        {id && (
+          <InputComponent
+            register={register}
+            labelName={'Active ?'}
+            inputType={'isActive'}
+            inputName={'isActive'}
+            value={watch('isActive')}
+            error={errors.isActive}
+            testId={'admin-activity-input-checkbox'}
+          />
+        )}
         <div className={styles.buttonContainer}>
           <Button
             text={id ? 'Update' : 'Add'}
             type={'submit'}
             info={'submit'}
             testId={'admin-activity-button-submit-form'}
-          />
-        </div>
-        <div className={styles.buttons}>
-          <Button
-            text={'Back'}
-            type={'cancel'}
-            clickAction={handleCancel}
-            testId={'admin-activity-button-back-form'}
-          />
-          <Button
-            type={'cancel'}
-            clickAction={() => reset()}
-            text={'Reset'}
-            info={'reset'}
-            testId={'admin-activity-button-reset-form'}
           />
         </div>
       </SharedForm>

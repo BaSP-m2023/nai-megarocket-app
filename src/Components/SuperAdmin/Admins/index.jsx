@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdmins, deleteAdmin } from 'Redux/admins/thunks';
-import styles from './admins.module.css';
 import Table from 'Components/Shared/Table';
-import Button from 'Components/Shared/Button';
-import SharedModal from 'Components/Shared/Modal';
+import ConfirmModal from 'Components/Shared/Modal/ConfirmModal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
@@ -14,10 +12,8 @@ const Admins = () => {
   const history = useHistory();
   const admins = useSelector((state) => state.admins.data);
   const isLoading = useSelector((state) => state.admins.loading);
-  const [isDelete, setIsDelete] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalInformation, setModalInformation] = useState({ title: '', body: '' });
-  const [isSuccess, setIsSuccess] = useState('');
   const [idAdmin, setIdAdmin] = useState('');
   const dispatch = useDispatch();
 
@@ -73,9 +69,10 @@ const Admins = () => {
 
   const handleDeleteAdmin = (id) => {
     setIdAdmin(id);
-    setModalInformation({ title: 'Warning:', body: 'Are you sure?' });
-    setIsDelete(true);
-    setIsSuccess('default');
+    setModalInformation({
+      title: 'Delete Admin',
+      body: 'Are you sure you want to delete this admin?'
+    });
     setShowModal(true);
   };
 
@@ -105,13 +102,12 @@ const Admins = () => {
         </Container>
       ) : (
         <Container>
-          <div className={styles.topAdminContainer}>
-            <h2>Admins</h2>
-            <Button text={'+ Add Admins'} type={'add'} clickAction={handleAddAdmin} />
-          </div>
           {Array.isArray(admins) && admins.length > 0 ? (
             <>
               <Table
+                title={'Admins'}
+                buttonId={'super-admin-add-button'}
+                addClick={handleAddAdmin}
                 data={admins}
                 properties={['firstName', 'lastName', 'phone', 'email']}
                 columnTitles={['First Name', 'Last Name', 'Phone Number', 'Email']}
@@ -121,15 +117,16 @@ const Admins = () => {
                 testCancelId={'superadmin-admins-icon-delete'}
                 testEditId={'superadmin-admins-icon-edit'}
               />
-
-              <SharedModal
-                isDelete={isDelete}
-                show={showModal}
-                closeModal={handleExitAlert}
-                typeStyle={isSuccess}
+              <ConfirmModal
+                open={showModal}
+                onClose={handleExitAlert}
+                isDelete={true}
                 title={modalInformation.title}
                 body={modalInformation.body}
                 onConfirm={confirmDelete}
+                id="logout-modal"
+                confirmId={'logout-button-confirm-modal'}
+                closeId={'logout-button-close-modal'}
               />
             </>
           ) : (

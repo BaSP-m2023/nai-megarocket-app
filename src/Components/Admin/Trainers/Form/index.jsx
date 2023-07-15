@@ -11,6 +11,7 @@ import Input from 'Components/Shared/Input';
 import SharedForm from 'Components/Shared/Form';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const AdminTrainerForm = () => {
   const history = useHistory();
@@ -20,6 +21,7 @@ const AdminTrainerForm = () => {
   const {
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -40,6 +42,8 @@ const AdminTrainerForm = () => {
       delete trainer._id;
       delete trainer.__v;
       delete trainer.firebaseUid;
+      delete trainer.createdAt;
+      delete trainer.updatedAt;
       reset(trainer);
     }
   };
@@ -91,10 +95,6 @@ const AdminTrainerForm = () => {
     history.push('/admins/trainers');
   };
 
-  const handleReset = () => {
-    reset();
-  };
-
   return (
     <Container>
       <Toaster
@@ -103,8 +103,12 @@ const AdminTrainerForm = () => {
         }}
       />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.headContainer}>
-          <h2>{id ? 'Update Trainer' : 'Add Trainer'}</h2>
+        <div className={styles.head}>
+          {' '}
+          <div id="admin-trainers-form-go-back" className={styles.arrow} onClick={handleCancel}>
+            <FiArrowLeft size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Trainer' : 'Add Trainer'}</h2>
         </div>
         <div className={styles.container}>
           <div>
@@ -176,41 +180,30 @@ const AdminTrainerForm = () => {
                 testId={'admin-trainers-input-password'}
               />
             )}
-            <Input
-              register={register}
-              labelName={'Active ?'}
-              inputType={'isActive'}
-              inputName={'isActive'}
-              error={errors.isActive}
-              testId={'admin-trainers-input-checkbox'}
-            />
+            {id && (
+              <div className={styles.active}>
+                {' '}
+                <Input
+                  register={register}
+                  labelName={'Active ?'}
+                  inputType={'isActive'}
+                  value={watch('isActive')}
+                  inputName={'isActive'}
+                  error={errors.isActive}
+                  testId={'admin-trainers-input-checkbox'}
+                />
+              </div>
+            )}
           </div>
         </div>
-        <div>
-          <div className={styles.buttons}>
-            <Button
-              text={id ? 'Update' : 'Add'}
-              type="submit"
-              info={'submit'}
-              testId={'admin-trainers-button-submit-form'}
-            />
 
-            <div className={styles.buttonsLow}>
-              <Button
-                text="Back"
-                type="cancel"
-                clickAction={handleCancel}
-                testId={'admin-trainers-button-back-form'}
-              />
-              <Button
-                type={'cancel'}
-                clickAction={handleReset}
-                text={'Reset'}
-                info={'reset'}
-                testId={'admin-trainers-button-reset-form'}
-              />
-            </div>
-          </div>
+        <div className={styles.buttons}>
+          <Button
+            text={id ? 'Update' : 'Add'}
+            type="submit"
+            info={'submit'}
+            testId={'admin-trainers-button-submit-form'}
+          />
         </div>
       </SharedForm>
     </Container>

@@ -1,5 +1,7 @@
 .formContainer {
   display: flex;
+  margin-top: 5vh;
+  width: 60%;
   flex-direction: column;
   border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -12,11 +14,18 @@
   justify-content: center;
 }
 
+.head {
+margin: 2vh 4vw 2vh 4vw;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
 .formTitle {
+  margin-right: auto;
+  margin-left: auto;
   text-align: center;
   color: #0f232e;
-  margin-top: 4%;
-  margin-bottom: 4%;
 }
 
 .inputAdmin {
@@ -41,7 +50,7 @@
   align-items: flex-start;
 }
 
-.buttonsDiv > button {
+.buttonsDiv > Button {
   width: 20vw;
 }
 
@@ -51,7 +60,7 @@
   justify-content: center;
 }
 
-.buttonsAdmin > button {
+.buttonsAdmin > Button {
   width: 9.5vw;
 }
 
@@ -59,4 +68,17 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+}
+
+.buttonsDiv > Button{
+width: 20vw;
+}
+
+.buttonsChangePassword > Button {
+width: 20vw;
+}
+
+.arrow {
+  cursor: pointer;
 }

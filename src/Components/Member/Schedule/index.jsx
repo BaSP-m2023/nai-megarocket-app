@@ -38,7 +38,8 @@ const Schedule = () => {
     slotCount: '',
     idSuscription: '',
     idClass: '',
-    idMember: ''
+    idMember: '',
+    membership: ''
   });
 
   const currentDate = new Date();
@@ -125,7 +126,8 @@ const Schedule = () => {
               subscriptions: classItem.subscriptions,
               idSuscription: suscriptionFound?._id,
               idClass: classItem?._id,
-              idMember: memberData?._id
+              idMember: memberData?._id,
+              membership: memberData?.membership
             }));
           }}
           className={suscriptionFound ? styles.addedButton : styles.classesButton}
@@ -219,7 +221,8 @@ const Schedule = () => {
               />
               <div className={styles.container}>
                 <div className={styles.header}>
-                  <h2 className={styles.title}>Class scheduling</h2>
+                  <h2 className={styles.title}>Scheduled Classes</h2>
+                  <h3 className={styles.title}>You membership: {memberData?.membership}</h3>
                   <div className={styles.filterActivity}>
                     <label className={styles.selectLabel} htmlFor="activity">
                       Filter by activity:{' '}
@@ -295,7 +298,7 @@ const Schedule = () => {
         idSuscription={infoClass.idSuscription}
         idClass={infoClass.idClass}
         idMember={infoClass.idMember}
-        infoClass={infoClass}
+        membership={infoClass.membership}
       />
     </>
   );

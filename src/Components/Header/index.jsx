@@ -3,7 +3,7 @@ import { logout } from 'Redux/auth/thunks';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import SharedModal from 'Components/Shared/Modal/index';
+import ConfirmModal from 'Components/Shared/Modal/ConfirmModal';
 
 function Header() {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +14,7 @@ function Header() {
 
   const showModalLogout = () => {
     setTitleModal('Warning');
-    setBodyModal('You want to log out?');
+    setBodyModal('Are you sure you want to log out?');
     setShowModal(true);
   };
 
@@ -35,25 +35,26 @@ function Header() {
     }
   };
 
-  const handleLogOut = () => {
-    dispatch(logout());
-    sessionStorage.removeItem('role');
-    sessionStorage.removeItem('token');
+  const handleLogOut = async () => {
+    await dispatch(logout());
     setShowModal(false);
     localStorage.setItem('toastMessage', 'See you soon!');
     history.push('/auth/login');
   };
+
   return (
     <>
       <header className={styles.container}>
-        <div onClick={() => history.push(`${routePath()}/home`)} className={styles.brand}>
-          MEGAROCKET
+        <div onClick={() => history.push(`${routePath()}/landing`)} className={styles.brand}>
+          <img src="/assets/images/logos/logo-3.png" alt="logo" className={styles.logo3} />
+          <img src="/assets/images/logos/logo-4.png" alt="logo" className={styles.logo2} />
         </div>
-        <div>
+
+        <div className={styles.icons}>
           <a id="logout-bar-link" onClick={showModalLogout} rel="noopener noreferrer">
             <img
               className={styles.logOut}
-              src={`${process.env.PUBLIC_URL}/assets/images/log-in.svg`}
+              src={`${process.env.PUBLIC_URL}/assets/images/log-in-1.svg`}
             />
           </a>
           <a
@@ -91,18 +92,17 @@ function Header() {
           </a>
         </div>
       </header>
-      {showModal && (
-        <SharedModal
-          isDelete={true}
-          show={showModal}
-          title={titleModal}
-          body={bodyModal}
-          closeModal={() => setShowModal(false)}
-          onConfirm={handleLogOut}
-          testId={'logout-modal'}
-          closeTestId={'logout-button-close-success-modal'}
-        />
-      )}
+      <ConfirmModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        isDelete={false}
+        title={titleModal}
+        body={bodyModal}
+        onConfirm={handleLogOut}
+        id="logout-modal"
+        confirmId={'logout-button-confirm-modal'}
+        closeId={'logout-button-close-modal'}
+      />
     </>
   );
 }
