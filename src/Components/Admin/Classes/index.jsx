@@ -236,11 +236,17 @@ const Classes = () => {
                   <Select
                     value={activity}
                     onChange={handleActivityChange}
-                    id={'admin-classes-input-day'}
+                    id={'admin-select-activity'}
                   >
-                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem id={'admin-input-activity-all'} value="all">
+                      All
+                    </MenuItem>
                     {activities?.map((activityItem, index) => (
-                      <MenuItem key={index} value={activityItem.name}>
+                      <MenuItem
+                        key={index}
+                        value={activityItem.name}
+                        id={'admin-input-activity-' + activity._id}
+                      >
                         {activityItem.name}
                       </MenuItem>
                     ))}
@@ -250,14 +256,22 @@ const Classes = () => {
               <div className={styles.select}>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel id="trainer">Select Trainer</InputLabel>
-                  <Select value={trainer} onChange={handleTrainerChange} id="trainer">
-                    <MenuItem value="all">All</MenuItem>
-                    <MenuItem value="notAssign">Not Assign</MenuItem>
+                  <Select
+                    value={trainer}
+                    onChange={handleTrainerChange}
+                    id={`admin-select-trainer`}
+                  >
+                    <MenuItem id={'admin-input-activity-all'} value="all">
+                      All
+                    </MenuItem>
+                    <MenuItem id={'admin-input-activity-notAssign'} value="notAssign">
+                      Not Assign
+                    </MenuItem>
                     {trainers?.map((trainerItem, index) => (
                       <MenuItem
                         value={trainerItem.firstName + trainerItem.lastName}
                         key={index}
-                        id={`admin-classes-select-trainer-${trainerItem.firstName}`}
+                        id={`admin-select-trainer-${trainerItem._id}`}
                         sx={trainerItem.isActive ? null : { color: '#878E88' }}
                       >
                         {trainerItem.firstName + ' ' + trainerItem.lastName}
@@ -299,9 +313,9 @@ const Classes = () => {
             title={'Delete Class'}
             body={'Are you sure you want to delete this class?'}
             onConfirm={handleConfirmDeleteClass}
-            testId={'admin-classes-modal'}
-            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
-            closeTestId={'admin-classes-button-close-warning-modal'}
+            testId={'admin-modal'}
+            confirmDeleteTestId={'admin-button-confirm-modal'}
+            closeTestId={'admin-button-close-warning-modal'}
           />
           <CalendarModal
             show={calendarAlert}
@@ -310,10 +324,10 @@ const Classes = () => {
             onClose={handleCloseModalCalendar}
             closeModal={handleUpdateClass}
             onConfirm={handleDeleteClass}
-            testId={'admin-classes-modal-calendar'}
-            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
-            editTestId={'admin-classes-button-edit-modal'}
-            closeTestId={'admin-classes-icon-cross-close-modal'}
+            testId={'admin-modal-calendar'}
+            confirmDeleteTestId={'admin-button-confirm-modal'}
+            editTestId={'admin-button-edit-modal'}
+            closeTestId={'admin-icon-cross-close-modal'}
           />
         </Container>
       ) : (

@@ -115,7 +115,7 @@ const Trainers = () => {
               text="+ Add Trainer"
               clickAction={handleAddTrainer}
               type="add"
-              testId={'admin-trainer-add-button'}
+              testId={'admin-add-button'}
             />
           </div>
           {!trainers ? (
@@ -134,9 +134,9 @@ const Trainers = () => {
               ]}
               handleUpdateItem={editItem}
               handleDeleteItem={handleDelete}
-              testId={'admin-trainers-table'}
-              testCancelId={'admin-trainers-icon-delete'}
-              testEditId={'admin-trainers-icon-edit'}
+              testId={'admin-table'}
+              testCancelId={'admin-icon-delete'}
+              testEditId={'admin-icon-edit'}
             />
           ) : (
             <h3>No data to retrieve</h3>
@@ -152,9 +152,9 @@ const Trainers = () => {
           typeStyle={typeStyle}
           closeModal={handleDeleteCancel}
           onConfirm={handleDeleteConfirmation}
-          testId={'admin-trainers-modal'}
-          closeTestId={'admin-trainers-button-close-success-modal'}
-          confirmDeleteTestId={'admin-trainers-button-confirm-delete-modal'}
+          testId={'admin-modal'}
+          closeTestId={'admin-button-close-success-modal'}
+          confirmDeleteTestId={'admin-button-confirm-delete-modal'}
         />
       )}
     </>

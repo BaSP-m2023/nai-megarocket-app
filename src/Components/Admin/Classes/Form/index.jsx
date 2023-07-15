@@ -146,7 +146,7 @@ const Form = () => {
         <div className={styles.container}>
           <div className={styles.head}>
             {' '}
-            <div id="admin-classes-form-go-back" className={styles.arrow} onClick={handleCancel}>
+            <div id="admin-form-go-back" className={styles.arrow} onClick={handleCancel}>
               <FiArrowLeft size={35} />
             </div>
             <h2 className={styles.formTitle}> {id ? 'Update Class' : 'Add Class'}</h2>
@@ -164,10 +164,10 @@ const Form = () => {
                       multiple
                       value={field.value || []}
                       onChange={(e) => field.onChange(e.target.value)}
-                      id={'admin-classes-input-day'}
+                      id={'admin-input-day'}
                     >
                       {daysOfWeek.map((day) => (
-                        <MenuItem key={day} value={day}>
+                        <MenuItem key={day} value={day} id={'admin-input-day-' + day}>
                           {day}
                         </MenuItem>
                       ))}
@@ -186,10 +186,10 @@ const Form = () => {
                       {...field}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      id={'admin-classes-input-day'}
+                      id={'admin-input-hour'}
                     >
                       {hoursOfDay.map((hour) => (
-                        <MenuItem key={hour} value={hour}>
+                        <MenuItem key={hour} value={hour} id={'admin-input-hour-' + hour}>
                           {hour}
                         </MenuItem>
                       ))}
@@ -212,10 +212,14 @@ const Form = () => {
                       {...field}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      id={'admin-classes-input-day'}
+                      id={'admin-input-trainer'}
                     >
                       {trainers.map((trainer) => (
-                        <MenuItem key={trainer._id} value={trainer._id}>
+                        <MenuItem
+                          key={trainer._id}
+                          value={trainer._id}
+                          id={`admin-input-trainer-` + trainer._id}
+                        >
                           {trainer.firstName}
                         </MenuItem>
                       ))}
@@ -240,10 +244,14 @@ const Form = () => {
                       {...field}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      id={'admin-classes-input-day'}
+                      id={'admin-input-activity'}
                     >
                       {activities.map((activity) => (
-                        <MenuItem key={activity._id} value={activity._id}>
+                        <MenuItem
+                          key={activity._id}
+                          value={activity._id}
+                          id={'admin-input-activity-' + activity._id}
+                        >
                           {activity.name}
                         </MenuItem>
                       ))}
@@ -258,7 +266,7 @@ const Form = () => {
                 inputType={'number'}
                 inputName={'slots'}
                 error={errors.slots?.message}
-                testId={'admin-classes-input-slots'}
+                testId={'admin-input-slots'}
               />
             </div>
           </div>
@@ -268,7 +276,7 @@ const Form = () => {
             type="submit"
             info="submit"
             text={id ? 'Update' : 'Add'}
-            testId={'admin-classes-button-submit-form'}
+            testId={'admin-button-submit-form'}
           />
         </div>
       </form>
