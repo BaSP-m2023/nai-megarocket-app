@@ -1,4 +1,4 @@
-.container {
+.mainContainer {
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -92,11 +92,11 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin:0;
+  margin: 0;
   padding: 2%;
-  background-color: #F9A414;
+  background-color: #f9a414;
   border-radius: 5px;
-  color:#0F232E;
+  color: #0f232e;
   font-size: 0.9rem;
   cursor: pointer;
 }
@@ -115,7 +115,7 @@
   margin: 0;
 }
 
-.selectContainer{
+.selectContainer {
   display: flex;
   justify-content: flex-end;
   width: 50%;
@@ -127,19 +127,19 @@
   width: 50%;
 }
 
-.select{
+.select {
   font-size: 1rem;
   width: 150px;
   height: auto;
   padding: 1%;
-  font-weight:normal;
+  font-weight: normal;
   border-radius: 5px;
   text-align: center;
 }
 
 .selectLabel {
   font-size: 1.1rem;
-  font-weight:bold;
+  font-weight: bold;
   padding-right: 2%;
 }
 
@@ -160,17 +160,17 @@
 }
 
 .styleActivity1 {
-  background-color: #8D9795;
+  background-color: #8d9795;
 }
 
 .styleActivity2 {
-  background-color: #9FA7AB;
+  background-color: #9fa7ab;
 }
 
 .styleActivity3 {
-  background-color: #E0E4DB;
+  background-color: #e0e4db;
 }
 
 .styleActivity4 {
-  background-color: #F9A414;
+  background-color: #f9a414;
 }

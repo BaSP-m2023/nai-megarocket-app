@@ -81,7 +81,8 @@ const Schedule = () => {
         (item) =>
           item.day.includes(day) &&
           item.hour === hour &&
-          item.trainer?.firstName === trainer?.firstName
+          item.trainer?.firstName === trainer?.firstName &&
+          item.activity?.name
       );
     } else {
       classItem = classes?.find(
@@ -157,19 +158,19 @@ const Schedule = () => {
       ) : (
         <>
           {error ? (
-            <Container>
+            <Container center={true}>
               <div className={styles.errorContainer}>
                 <p>An error occurred while loading the data.</p>
               </div>
             </Container>
           ) : (
-            <div className={styles.mainContainer}>
+            <Container>
               <Toaster
                 containerStyle={{
                   margin: '10vh 0 0 0'
                 }}
               />
-              <div className={styles.container}>
+              <div className={styles.mainContainer}>
                 <div className={styles.header}>
                   <h2 className={styles.title}>
                     Scheduled Classes - Trainer: {trainer?.firstName} {trainer?.lastName}
@@ -222,7 +223,7 @@ const Schedule = () => {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </Container>
           )}
         </>
       )}
