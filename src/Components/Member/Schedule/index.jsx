@@ -112,6 +112,7 @@ const Schedule = () => {
 
       return (
         <div
+          id={`member-schedule-enabled-${hour.slice(0, 2)}-${day.toLowerCase()}-button`}
           onClick={() => {
             setShowModal(true);
             setInfoClass(() => ({
@@ -167,7 +168,10 @@ const Schedule = () => {
       );
 
       return (
-        <div className={suscriptionFound ? styles.emptyButtonDisabled : styles.emptyButtonDisabled}>
+        <div
+          id={`member-schedule-disabled-${hour.slice(0, 2)}-${day.toLowerCase()}-button`}
+          className={suscriptionFound ? styles.emptyButtonDisabled : styles.emptyButtonDisabled}
+        >
           <div className={styles.buttonText}>{classItem.activity?.name}</div>
           {!suscriptionFound
             ? `${classItem.trainer?.firstName}  ${classItem.trainer?.lastName}`
