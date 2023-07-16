@@ -25,7 +25,7 @@ const Button = ({ text, clickAction, type, info, testId }) => {
       break;
     case 'delete':
       buttonStyle = styles.iconButton;
-      icon = <DeleteTooltip testId={testId} s />;
+      icon = <DeleteTooltip testId={testId} />;
       break;
     default:
       buttonStyle = styles.noButton;

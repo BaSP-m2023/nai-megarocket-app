@@ -206,12 +206,12 @@ const Table = ({
                     {showButtons && (
                       <>
                         <Button
-                          testId={`${testEditId}-${index} `}
+                          testId={`${testEditId}-${index}`}
                           type="edit"
                           clickAction={() => handleUpdateItem(item._id)}
                         />
                         <Button
-                          testId={`${testCancelId}-${index} `}
+                          testId={`${testCancelId}-${index}`}
                           type="delete"
                           clickAction={() => handleDeleteItem(item._id)}
                         />
