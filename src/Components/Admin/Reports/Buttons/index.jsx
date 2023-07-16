@@ -14,7 +14,7 @@ const ButtonsGroup = ({ setActiveComponent }) => {
     display: 'flex',
     position: 'fixed',
     top: '15%',
-    left: '55%',
+    left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 100
   };
@@ -23,9 +23,9 @@ const ButtonsGroup = ({ setActiveComponent }) => {
     fontWeight: '600',
     fontSize: '20',
     width: '300px',
-    backgroundColor: activeComponentButton === type ? '#1f90c4' : '#fff',
-    color: activeComponentButton === type ? '#fff' : '#1f90c4',
-    textShadow: '1px 1px 1px rgba(0, 0, 0, 0.1)',
+    backgroundColor: activeComponentButton === type ? '#1976d2' : '#fff',
+    color: activeComponentButton === type ? '#fff' : '#1976d2',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)',
     textTransform: 'none',
     '&:hover': {
       backgroundColor: '#c0e5f7',

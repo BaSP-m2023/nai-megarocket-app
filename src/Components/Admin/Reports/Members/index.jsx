@@ -1,12 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import styles from '../reports.module.css';
 import { format, parseISO, startOfMonth, subYears, isWithinInterval } from 'date-fns';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { LineChart, PieChart } from '@mui/x-charts';
-import Container from 'Components/Shared/Container';
 
 const ReportsMembers = () => {
   const members = useSelector((state) => state.members.data.data);
@@ -28,7 +26,7 @@ const ReportsMembers = () => {
     ?.sort((a, b) => a.getTime() - b.getTime())
     ?.forEach((date) => {
       if (date) {
-        const month = format(startOfMonth(date), 'MMMM yyyy');
+        const month = format(startOfMonth(date), 'MMM-yy');
         if (membersByMonth[month]) {
           membersByMonth[month] += 1;
         } else {
@@ -55,49 +53,48 @@ const ReportsMembers = () => {
   }));
 
   return (
-    <Container>
-      <div className={styles.container}>
-        {membersCounts?.length > 0 ? (
-          <Stack>
-            <Box direction="row" width="100%" textAlign="center" padding="2%">
-              <Typography fontWeight="bold">Number of registered members per month</Typography>
-              <LineChart
-                xAxis={[{ scaleType: 'band', data: months }]}
+    <Stack direction="row" marginTop="80px">
+      {membersCounts?.length > 0 ? (
+        <>
+          <Box direction="row" width="100%" textAlign="center">
+            <Typography padding="5%" fontWeight="bold">
+              Number of registered members per month
+            </Typography>
+            <LineChart
+              xAxis={[{ scaleType: 'band', data: months }]}
+              series={[
+                {
+                  data: membersCounts
+                }
+              ]}
+              width={800}
+              height={300}
+            />
+          </Box>
+          <Box direction="row" width="100%" textAlign="center">
+            <Typography padding="5%" fontWeight="bold">
+              Total memberships
+            </Typography>
+            <Box display="flex" justifyContent="center">
+              <PieChart
                 series={[
                   {
-                    data: membersCounts
+                    data: membershipsCount,
+                    labelKey: 'label',
+                    valueKey: 'value',
+                    innerRadius: 70
                   }
                 ]}
-                width={800}
+                width={500}
                 height={300}
               />
             </Box>
-
-            <Box direction="row" width="100%" textAlign="center">
-              <Typography padding="5%" fontWeight="bold">
-                Total memberships
-              </Typography>
-              <Box display="flex" justifyContent="center">
-                <PieChart
-                  series={[
-                    {
-                      data: membershipsCount,
-                      labelKey: 'label',
-                      valueKey: 'value',
-                      innerRadius: 60
-                    }
-                  ]}
-                  width={500}
-                  height={300}
-                />
-              </Box>
-            </Box>
-          </Stack>
-        ) : (
-          <Typography fontWeight="bold">No data available for the chart</Typography>
-        )}
-      </div>
-    </Container>
+          </Box>
+        </>
+      ) : (
+        <Typography fontWeight="bold">No data available for the chart</Typography>
+      )}
+    </Stack>
   );
 };
 

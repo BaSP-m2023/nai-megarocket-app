@@ -7,12 +7,14 @@ import { getSubscriptions, deleteSubscription } from 'Redux/subscriptions/thunks
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { getClasses } from 'Redux/classes/thunks';
 
 const Subscriptions = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.subscriptions.loading);
   const subscriptions = useSelector((state) => state.subscriptions.data);
+  const classes = useSelector((state) => state.classes.data.data);
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState('');
   const [bodyModal, setBodyModal] = useState('');
@@ -23,6 +25,7 @@ const Subscriptions = () => {
   useEffect(() => {
     toast.remove();
     dispatch(getSubscriptions());
+    dispatch(getClasses());
     const toastMessage = localStorage.getItem('toastMessage');
     if (toastMessage) {
       showToast(toastMessage, 'success');
@@ -93,6 +96,20 @@ const Subscriptions = () => {
     setShowButtons(!showButtons);
   };
 
+  const subscriptionsData = subscriptions?.map((item) => {
+    const classInfo = classes?.find((c) => c._id === item.classes?._id);
+    return {
+      ...item,
+      memberName: `${item.member.firstName} ${item.member.lastName}`,
+      classFound:
+        item.classes === null
+          ? 'Class not found'
+          : item.classes.activity === null
+          ? 'Activity not found'
+          : `${classInfo.activity.name} | ${classInfo.hour} | ${classInfo.day} | ${classInfo.trainer.firstName} ${classInfo.trainer.lastName}`
+    };
+  });
+
   return (
     <>
       <Toaster
@@ -114,17 +131,11 @@ const Subscriptions = () => {
             addClick={handleAdd}
             data={
               showInactive
-                ? subscriptions
-                : subscriptions.filter((subscription) => subscription.isActive)
+                ? subscriptionsData
+                : subscriptionsData.filter((subscription) => subscription.isActive)
             }
-            properties={[
-              'member.firstName',
-              'member.lastName',
-              'classes.activity.name',
-              'date',
-              'isActive'
-            ]}
-            columnTitles={['First Name', 'Last Name', 'Class Name', 'Date', 'Active']}
+            properties={['memberName', 'classFound', 'date', 'isActive']}
+            columnTitles={['Member', 'Class', 'Date', 'Active']}
             handleUpdateItem={handleEdit}
             handleDeleteItem={handleDeleteSubscription}
             testId={'admin-table'}

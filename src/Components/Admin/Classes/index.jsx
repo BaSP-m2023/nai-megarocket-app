@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import Button from 'Components/Shared/Button';
 import SharedModal from 'Components/Shared/Modal';
 import { useHistory } from 'react-router-dom';
 import { getClasses, deleteClass } from 'Redux/classes/thunks';
@@ -12,6 +11,9 @@ import CalendarModal from './Modal';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Button as ButtonMui } from '@mui/material/';
+import AddIcon from '@mui/icons-material/Add';
+import Tooltip from '@mui/material/Tooltip';
 
 const Classes = () => {
   const history = useHistory();
@@ -184,16 +186,7 @@ const Classes = () => {
     if (classItem) {
       if (classItem.trainer && classItem.trainer?.isActive) {
         return (
-          <div
-            onClick={() => handleClass(classItem._id)}
-            id={
-              'admin-button-' +
-              classItem.day.toString().toLowerCase() +
-              '-' +
-              classItem.hour.slice(0, 2)
-            }
-            className={styles.classesButton}
-          >
+          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
             <div className={styles.buttonText}>
               {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
             </div>
@@ -202,16 +195,7 @@ const Classes = () => {
         );
       } else {
         return (
-          <div
-            onClick={() => handleClass(classItem._id)}
-            id={
-              'admin-button-' +
-              classItem.day.toString().toLowerCase() +
-              '-' +
-              classItem.hour.slice(0, 2)
-            }
-            className={styles.classesButton}
-          >
+          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
             <div className={styles.buttonText}>
               {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
             </div>
@@ -238,33 +222,21 @@ const Classes = () => {
       ) : classes ? (
         <Container>
           <div className={styles.container}>
-            <div className={styles.header}>
+            <div className={styles.headerContainer}>
               <div className={styles.titleContainer}>
                 <h2 className={styles.title}>Scheduled Classes</h2>
-                <Button
-                  text={'+ Add Class'}
-                  type={'add'}
-                  clickAction={handleAddClass}
-                  testId={'admin-classes-add-button'}
-                />
               </div>
               <div className={styles.select}>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel id="activity-label">Select Activity</InputLabel>
+                  <InputLabel id="activity">Activity</InputLabel>
                   <Select
                     value={activity}
                     onChange={handleActivityChange}
-                    id={'admin-select-activity'}
+                    id={'admin-classes-input-day'}
                   >
-                    <MenuItem id={'admin-input-activity-all'} value="all">
-                      All
-                    </MenuItem>
+                    <MenuItem value="all">All</MenuItem>
                     {activities?.map((activityItem, index) => (
-                      <MenuItem
-                        key={index}
-                        value={activityItem.name}
-                        id={'admin-input-activity-' + index}
-                      >
+                      <MenuItem key={index} value={activityItem.name}>
                         {activityItem.name}
                       </MenuItem>
                     ))}
@@ -273,23 +245,15 @@ const Classes = () => {
               </div>
               <div className={styles.select}>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel id="trainer-label">Select Trainer</InputLabel>
-                  <Select
-                    value={trainer}
-                    onChange={handleTrainerChange}
-                    id={`admin-select-trainer`}
-                  >
-                    <MenuItem id={'admin-input-trainer-all'} value="all">
-                      All
-                    </MenuItem>
-                    <MenuItem id={'admin-input-trainer-not-assign'} value="notAssign">
-                      Not Assign
-                    </MenuItem>
+                  <InputLabel id="trainer">Select Trainer</InputLabel>
+                  <Select value={trainer} onChange={handleTrainerChange} id="trainer">
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="notAssign">Not Assign</MenuItem>
                     {trainers?.map((trainerItem, index) => (
                       <MenuItem
                         value={trainerItem.firstName + trainerItem.lastName}
                         key={index}
-                        id={`admin-select-trainer-${index}`}
+                        id={`admin-classes-select-trainer-${trainerItem.firstName}`}
                         sx={trainerItem.isActive ? null : { color: '#878E88' }}
                       >
                         {trainerItem.firstName + ' ' + trainerItem.lastName}
@@ -297,6 +261,27 @@ const Classes = () => {
                     ))}
                   </Select>
                 </FormControl>
+              </div>
+              <div className={styles.buttonContainer}>
+                <Tooltip title="Add new class">
+                  <ButtonMui
+                    sx={{
+                      borderRadius: '200px',
+                      height: '50px',
+                      width: '50px',
+                      padding: '0',
+                      minWidth: '0'
+                    }}
+                    id={'admin-classes-add-button'}
+                    onClick={handleAddClass}
+                    color="primary"
+                    aria-label="add"
+                    variant="contained"
+                    size="small"
+                  >
+                    <AddIcon size="small" />
+                  </ButtonMui>
+                </Tooltip>
               </div>
             </div>
             <table>
@@ -331,9 +316,9 @@ const Classes = () => {
             title={'Delete Class'}
             body={'Are you sure you want to delete this class?'}
             onConfirm={handleConfirmDeleteClass}
-            testId={'admin-modal'}
-            confirmDeleteTestId={'admin-button-confirm-modal'}
-            closeTestId={'admin-button-close-modal'}
+            testId={'admin-classes-modal'}
+            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
+            closeTestId={'admin-classes-button-close-warning-modal'}
           />
           <CalendarModal
             show={calendarAlert}
@@ -342,10 +327,10 @@ const Classes = () => {
             onClose={handleCloseModalCalendar}
             closeModal={handleUpdateClass}
             onConfirm={handleDeleteClass}
-            testId={'admin-modal-calendar'}
-            confirmDeleteTestId={'admin-button-confirm-modal'}
-            editTestId={'admin-button-edit-modal'}
-            closeTestId={'admin-button-close-modal'}
+            testId={'admin-classes-modal-calendar'}
+            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
+            editTestId={'admin-classes-button-edit-modal'}
+            closeTestId={'admin-classes-icon-cross-close-modal'}
           />
         </Container>
       ) : (
