@@ -21,18 +21,18 @@ const Button = ({ text, clickAction, type, info, testId }) => {
       break;
     case 'edit':
       buttonStyle = styles.iconButton;
-      icon = <EditTooltip testId={testId} />;
+      icon = <EditTooltip />;
       break;
     case 'delete':
       buttonStyle = styles.iconButton;
-      icon = <DeleteTooltip testId={testId} />;
+      icon = <DeleteTooltip />;
       break;
     default:
       buttonStyle = styles.noButton;
   }
 
   return icon ? (
-    <div onClick={clickAction} type={info} className={buttonStyle}>
+    <div id={testId} onClick={clickAction} type={info} className={buttonStyle}>
       {icon}
     </div>
   ) : (

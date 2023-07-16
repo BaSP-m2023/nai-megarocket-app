@@ -113,9 +113,10 @@ const Admins = () => {
                 columnTitles={['First Name', 'Last Name', 'Phone Number', 'Email']}
                 handleUpdateItem={handleUpdateAdmin}
                 handleDeleteItem={handleDeleteAdmin}
-                testId={'superadmin-admins-table'}
-                testCancelId={'superadmin-admins-icon-delete'}
-                testEditId={'superadmin-admins-icon-edit'}
+                testId={'super-admin-admins-table'}
+                testCancelId={'super-admin-admins-icon-delete'}
+                testEditId={'super-admin-admins-icon-edit'}
+                testIdSearch={'super-admin-input-search'}
               />
               <ConfirmModal
                 open={showModal}

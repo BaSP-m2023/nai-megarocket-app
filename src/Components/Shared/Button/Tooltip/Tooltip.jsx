@@ -4,20 +4,20 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-export function DeleteTooltip({ testId }) {
+export function DeleteTooltip() {
   return (
     <Tooltip title="Delete">
-      <IconButton id={testId}>
+      <IconButton>
         <DeleteIcon sx={{ width: '18px', height: '18px' }} />
       </IconButton>
     </Tooltip>
   );
 }
 
-export function EditTooltip({ testId }) {
+export function EditTooltip() {
   return (
     <Tooltip title="Edit">
-      <IconButton id={testId}>
+      <IconButton>
         <EditIcon sx={{ width: '18px', height: '18px' }} />
       </IconButton>
     </Tooltip>

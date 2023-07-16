@@ -27,7 +27,8 @@ const Table = ({
   title,
   buttonId,
   addClick,
-  historyAction
+  historyAction,
+  testIdSearch
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -113,6 +114,7 @@ const Table = ({
             variant="standard"
             value={searchTerm}
             onChange={handleSearchChange}
+            testIdSearch={testIdSearch}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
