@@ -97,7 +97,7 @@ const Subscriptions = () => {
   };
 
   const subscriptionsData = subscriptions?.map((item) => {
-    const classInfo = classes.find((c) => c._id === item.classes?._id);
+    const classInfo = classes?.find((c) => c._id === item.classes?._id);
     return {
       ...item,
       memberName: `${item.member.firstName} ${item.member.lastName}`,
