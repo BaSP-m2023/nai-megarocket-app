@@ -21,7 +21,15 @@
   display: flex;
   flex-direction: column;
   width: 100vw;
+  height: 90vh;
   margin-left: 160px;
   align-items: center;
   justify-content: space-around;
+}
+
+.realCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }

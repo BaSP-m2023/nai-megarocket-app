@@ -22,7 +22,7 @@ const Routes = () => {
     if (token) {
       dispatch(getAuth(token));
     }
-  }, [role]);
+  }, [token]);
 
   const userRoute = () => {
     switch (role) {
