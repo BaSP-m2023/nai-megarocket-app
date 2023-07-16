@@ -120,7 +120,7 @@ const AdminProfile = () => {
               inputName={'firstName'}
               error={errors.firstName?.message}
               disabled={!editMode}
-              testId={'admin-profile-input-first-name'}
+              testId={'admin-input-first-name'}
             />
             <Input
               register={register}
@@ -129,7 +129,7 @@ const AdminProfile = () => {
               inputName={'lastName'}
               error={errors.lastName?.message}
               disabled={!editMode}
-              testId={'admin-profile-input-last-name'}
+              testId={'admin-input-last-name'}
             />
             <Input
               register={register}
@@ -138,7 +138,7 @@ const AdminProfile = () => {
               inputName={'dni'}
               error={errors.dni?.message}
               disabled={true}
-              testId={'admin-profile-input-dni'}
+              testId={'admin-input-dni'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
@@ -149,7 +149,7 @@ const AdminProfile = () => {
               inputName={'email'}
               error={errors.email?.message}
               disabled={!editMode}
-              testId={'admin-profile-input-email'}
+              testId={'admin-input-email'}
             />
             <Input
               register={register}
@@ -158,7 +158,7 @@ const AdminProfile = () => {
               inputName={'city'}
               error={errors.city?.message}
               disabled={!editMode}
-              testId={'admin-profile-input-city'}
+              testId={'admin-input-city'}
             />
             <Input
               register={register}
@@ -167,7 +167,7 @@ const AdminProfile = () => {
               inputName={'phone'}
               error={errors.phone?.message}
               disabled={!editMode}
-              testId={'admin-profile-input-phone'}
+              testId={'admin-input-phone'}
             />
           </div>
           <div className={styles.buttonContainer}>
@@ -177,7 +177,7 @@ const AdminProfile = () => {
                 text={'Edit'}
                 type={'submit'}
                 clickAction={handleEnableEditMode}
-                testId={'admin-profile-edit-button'}
+                testId={'admin-edit-button'}
               />
             )}
             {editMode && (
@@ -187,13 +187,13 @@ const AdminProfile = () => {
                     text={'Cancel'}
                     type={'cancel'}
                     clickAction={handleDisableEditMode}
-                    testId={'admin-profile-cancel-button'}
+                    testId={'admin-cancel-button'}
                   />
                   <Button
                     text={'Confirm'}
                     type={'submit'}
                     info={'submit'}
-                    testId={'admin-profile-submit-button'}
+                    testId={'admin-submit-button'}
                   />
                 </div>
               </>

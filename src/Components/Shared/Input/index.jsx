@@ -90,7 +90,7 @@ const InputComponent = ({
     </div>
   );
   const renderInput = (type) => (
-    <div className={styles.inputDiv} id={testId}>
+    <div className={styles.inputDiv}>
       <TextField
         {...register(inputName)}
         name={inputName}
@@ -110,7 +110,7 @@ const InputComponent = ({
   );
 
   const renderIsActive = () => (
-    <div id={testId}>
+    <div>
       <FormControlLabel
         control={<Android12Switch checked={value} />}
         label={labelName}

@@ -119,11 +119,7 @@ const Form = () => {
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.head}>
           {' '}
-          <div
-            id="admin-subscriptions-form-go-back"
-            className={styles.arrow}
-            onClick={handleCancel}
-          >
+          <div id="admin-form-go-back" className={styles.arrow} onClick={handleCancel}>
             <FiArrowLeft size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Subscription' : 'Add Subscription'}</h2>
@@ -138,14 +134,18 @@ const Form = () => {
                 {...field}
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
-                id={'admin-subscriptions-input-classes'}
+                id={'admin-input-classes'}
                 MenuProps={{
                   sx: { height: '400px' }
                 }}
               >
                 {validClasses?.map((classes) =>
                   classes.trainer ? (
-                    <MenuItem key={classes?._id} value={classes?._id}>
+                    <MenuItem
+                      key={classes?._id}
+                      value={classes?._id}
+                      id={'admin-input-classes-' + classes._id}
+                    >
                       {classes.activity?.name +
                         ' | ' +
                         classes.hour +
@@ -164,7 +164,7 @@ const Form = () => {
           <FormHelperText>{errors.classes?.message}</FormHelperText>
         </FormControl>
         <FormControl variant="standard" fullWidth error={errors.member?.message}>
-          <InputLabel id="day-label">Member</InputLabel>
+          <InputLabel id="member-label">Member</InputLabel>
           <Controller
             control={control}
             name="member"
@@ -173,10 +173,14 @@ const Form = () => {
                 {...field}
                 value={field.value}
                 onChange={(e) => field.onChange(e.target.value)}
-                id={'admin-subscriptions-input-members'}
+                id={'admin-input-member'}
               >
                 {members?.map((member) => (
-                  <MenuItem key={member?._id} value={member?._id}>
+                  <MenuItem
+                    key={member?._id}
+                    value={member?._id}
+                    id={'admin-input-member-' + member._id}
+                  >
                     {member?.firstName + ' ' + member?.lastName}
                   </MenuItem>
                 ))}
@@ -193,7 +197,7 @@ const Form = () => {
             inputName={'isActive'}
             value={watch('isActive')}
             error={errors.isActive}
-            testId={'admin-subscriptions-input-checkbox'}
+            testId={'admin-input-checkbox'}
           />
         ) : null}
         <fieldset className={styles.flexButtons}>
@@ -201,7 +205,7 @@ const Form = () => {
             text={id ? 'Update' : 'Add'}
             type={'submit'}
             info={'submit'}
-            testId={'admin-subscriptions-button-submit-form'}
+            testId={'admin-button-submit-form'}
           />
         </fieldset>
       </SharedForm>

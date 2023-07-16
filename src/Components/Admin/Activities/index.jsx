@@ -110,9 +110,9 @@ const Activities = () => {
             columnTitles={['Name', 'Description', 'Active']}
             handleUpdateItem={handleEditItem}
             handleDeleteItem={handleDeleteClick}
-            testId={'admin-activities-table'}
-            testCancelId={'admin-activities-icon-delete'}
-            testEditId={'admin-activities-icon-edit'}
+            testId={'admin-table'}
+            testCancelId={'admin-icon-delete'}
+            testEditId={'admin-icon-edit'}
           />
           <ConfirmModal
             open={showModal}
@@ -121,7 +121,7 @@ const Activities = () => {
             title={titleModal}
             body={bodyModal}
             onConfirm={handleConfirmDelete}
-            id="admin-activities-modal"
+            id="admin-modal"
             confirmId={'admin-button-confirm-modal'}
             closeId={'admin-button-close-modal'}
           />
