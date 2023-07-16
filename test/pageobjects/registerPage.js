@@ -44,12 +44,16 @@ class RegisterPage {
     return $('#sing-up-button-add');
   }
 
-  get btnBack() {
-    return $('#sing-up-button-cancel');
+  get btnArrowBack() {
+    return $('#sign-up-form-go-back');
   }
 
-  get btnReset() {
-    return $('#sing-up-button-reset');
+  get inputCheckboxInactive() {
+    return $(`[data-testid="CheckBoxOutlineBlankIcon"]`);
+  }
+
+  get inputCheckboxActive() {
+    return $(`[data-testid="CheckBoxIcon"]`);
   }
 
   async fillFormRegister(firstName, lastName, dni, phone, email, password, city, date, postalCode) {
@@ -69,12 +73,8 @@ class RegisterPage {
     await this.btnSignUp.click();
   }
 
-  async backToLogin() {
-    await this.btnBack.click();
-  }
-
-  async resetForm() {
-    await this.btnReset.click();
+  async backToLoginArrow() {
+    await this.btnArrowBack.click();
   }
 }
 

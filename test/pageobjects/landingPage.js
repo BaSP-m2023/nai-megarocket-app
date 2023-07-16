@@ -47,6 +47,10 @@ class LandingPage {
   async clickLogin() {
     await this.btnLogin.click();
   }
+
+  async clickSignUp() {
+    await this.btnSignup.click();
+  }
 }
 
 module.exports = new LandingPage();

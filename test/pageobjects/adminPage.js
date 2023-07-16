@@ -5,7 +5,7 @@ class AdminPage {
   }
 
   get btnEdit() {
-    return $('#admin-profile-edit-button');
+    return $('#admin-edit-button');
   }
 
   get btnAdd() {
@@ -42,10 +42,6 @@ class AdminPage {
 
   get inputActivityDescriptionModal() {
     return $('#admin-input-description');
-  }
-
-  get btnSubmitProfile() {
-    return $('#admin-profile-submit-button');
   }
 
   get btnActive() {
@@ -97,7 +93,7 @@ class AdminPage {
   }
 
   get inputPhone() {
-    return $('[id="admin-profile-input-phone"][type="text"]');
+    return $('#admin-input-phone');
   }
 
   get inputEmail() {
