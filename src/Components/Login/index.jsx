@@ -5,7 +5,7 @@ import { loginValidation } from 'Validations/login';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 import Container from 'Components/Shared/Container';
-import { getAuth, login } from 'Redux/auth/thunks';
+import { login } from 'Redux/auth/thunks';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { LOGIN_SUCCESS } from 'Redux/auth/constants';
@@ -75,7 +75,6 @@ const Login = () => {
   const handleLogin = async (data) => {
     try {
       const response = await dispatch(login(data));
-      dispatch(getAuth(response.payload.token));
       if (response.type === LOGIN_SUCCESS) {
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
