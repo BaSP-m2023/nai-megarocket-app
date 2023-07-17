@@ -9,7 +9,7 @@ const LogoutPage = require('../pageobjects/logoutPage');
 describe('Register Page', () => {
   beforeAll('Open browser', () => {
     browser.setWindowSize(1366, 768);
-    browser.url('https://nai-megarocket-pnn6iq1yf-basp.vercel.app/landing');
+    browser.url('https://nai-megarocket-app.vercel.app/landing');
   });
   it('should open the landing page and click on Sign Up button', async () => {
     await LandingPage.btnSignup.waitForDisplayed();

@@ -4,12 +4,24 @@ class AdminPage {
     return $('h2');
   }
 
-  get btnEdit() {
+  get tableAdmin() {
+    return $('#admin-table');
+  }
+
+  get btnEditProfile() {
     return $('#admin-edit-button');
   }
 
+  get btnAddActivity() {
+    return $('[id="admin-button-add-activity"][type="button"]');
+  }
+
+  get btnSubmitProfile() {
+    return $('#admin-submit-button');
+  }
+
   get btnAdd() {
-    return $('#admin-button-add');
+    return $('#admin-button-submit-form');
   }
 
   get inputSearchTable() {
@@ -44,19 +56,31 @@ class AdminPage {
     return $('#admin-input-description');
   }
 
+  get iconEditActivity() {
+    return $('#admin-icon-edit-5');
+  }
+
+  get iconDeleteActivity() {
+    return $('#admin-icon-delete-5');
+  }
+
+  get inputActivityDescriptionModalUpdate() {
+    return $('#admin-input-description');
+  }
+
   get btnActive() {
     return $('#admin-input-checkbox');
   }
 
-  get btnCancel() {
+  get btnCancelModal() {
     return $('#admin-button-close-modal');
   }
 
-  get btnConfirm() {
+  get btnConfirmModal() {
     return $('#admin-button-confirm-modal');
   }
 
-  get deleteModal() {
+  get btnDeleteModal() {
     return $('#admin-modal');
   }
 
@@ -138,6 +162,13 @@ class AdminPage {
 
   async fillForm() {
     await this.inputPhone.setValue('3415853663');
+  }
+
+  async fillFormAddActivity() {
+    await this.inputActivityNameModal.setValue('Zumba');
+    await this.inputActivityDescriptionModal.setValue(
+      'Is a fun, high-energy workout experience that keeps you excited'
+    );
   }
 }
 
