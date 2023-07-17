@@ -177,7 +177,7 @@ const AdminProfile = () => {
                 text={'Edit'}
                 type={'submit'}
                 clickAction={handleEnableEditMode}
-                testId={'admin-edit-button'}
+                testId={'admin-profile-edit-button'}
               />
             )}
             {editMode && (
