@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import Container from 'Components/Shared/Container';
 import Header from 'Components/Shared/Header/index';
 import styles from './notAllowed.module.css';
 import Button from '@mui/material/Button';
@@ -37,7 +36,7 @@ const NotAllowed = () => {
   return (
     <>
       <Header />
-      <Container isLogin={true}>
+      <div className={styles.container}>
         {roleSession ? (
           <>
             <div className={styles.notAllowedContainer}>
@@ -52,7 +51,7 @@ const NotAllowed = () => {
               </p>
               <Button
                 variant="contained"
-                id={'go-home-button'}
+                id={'go-home-button-notAllowed'}
                 sx={{ width: '10vw', fontSize: '16px' }}
                 onClick={goHome}
               >
@@ -77,7 +76,7 @@ const NotAllowed = () => {
             </div>
           </>
         )}
-      </Container>
+      </div>
     </>
   );
 };
