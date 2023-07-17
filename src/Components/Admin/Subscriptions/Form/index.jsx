@@ -8,7 +8,7 @@ import { createSubscription, updateSubscription } from 'Redux/subscriptions/thun
 import InputComponent from 'Components/Shared/Input';
 import { Controller, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import subscriptionValidation from 'Validations/subscriptions';
+import subscriptionValidation from 'Validations/Admin/subscriptions';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
 import toast, { Toaster } from 'react-hot-toast';

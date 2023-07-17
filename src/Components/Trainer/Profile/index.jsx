@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { trainerUpdateValidation } from 'Validations/trainers';
+import { trainerUpdateValidation } from 'Validations/Admin/trainers';
 import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';

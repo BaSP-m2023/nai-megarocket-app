@@ -4,7 +4,7 @@ import { updateTrainer, addTrainer } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { trainerCreateValidation, trainerUpdateValidation } from 'Validations/trainers';
+import { trainerCreateValidation, trainerUpdateValidation } from 'Validations/Admin/trainers';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button/index';
 import Input from 'Components/Shared/Input';

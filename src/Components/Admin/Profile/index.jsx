@@ -3,7 +3,7 @@ import { putAdmin } from 'Redux/admins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import adminsValidation from 'Validations/admins';
+import adminsValidation from 'Validations/SuperAdmin/admins';
 import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';

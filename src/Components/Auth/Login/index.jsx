@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './login.module.css';
-import { loginValidation } from 'Validations/login';
+import { loginValidation } from 'Validations/Auth/login';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 import Container from 'Components/Shared/Container';
-import { login } from 'Redux/auth/thunks';
+import { getAuth, login } from 'Redux/auth/thunks';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { LOGIN_SUCCESS } from 'Redux/auth/constants';
@@ -72,14 +72,15 @@ const Login = () => {
       });
     }
   };
+
   const handleLogin = async (data) => {
     try {
       const response = await dispatch(login(data));
       if (response.type === LOGIN_SUCCESS) {
+        dispatch(getAuth(response?.payload.token));
         switch (response.payload.role) {
           case 'SUPER_ADMIN':
             history.push('/super-admins/admins');
-            localStorage.setItem('toastMessage', 'Welcome to MegaRocketGYM');
             break;
           case 'ADMIN':
             history.push('/admins/home');

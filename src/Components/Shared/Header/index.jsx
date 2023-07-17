@@ -1,7 +1,7 @@
 import styles from './header.module.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from 'react-redux';
-import DropDownMenu from 'Components/Shared/DropDownMenu/index';
+import DropDownMenu from 'Components/Shared/Header/DropDownMenu/index';
 
 function Header({ profileRoute }) {
   const history = useHistory();
