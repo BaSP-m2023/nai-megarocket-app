@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from 'Components/Admin/Classes/Modal/modal.module.css';
 import Button from 'Components/Shared/Button';
+import CloseIcon from '@mui/icons-material/Close';
 
 const CalendarModal = (data) => {
   let containerStyle;
@@ -37,10 +38,13 @@ const CalendarModal = (data) => {
     <div className={styles.modalContainer} id={data.testId}>
       <div className={containerStyle}>
         <div className={styles.closeContainer}>
-          <Button type={'delete'} clickAction={onClose} testId={data.closeTestId} />
+          <CloseIcon onClick={onClose} id={data.closeTestId} />
+          {/* <Button type={'close'} clickAction={onClose} testId={data.closeTestId} /> */}
         </div>
-        <h3 className={styles.h3Container}>{data.title}</h3>
-        <p className={styles.pContainer}>{data.body}</p>
+        <h3 className={styles.h3Container}>{data.classTitle}</h3>
+        <p className={styles.pContainer}>{data.classDay}</p>
+        <p className={styles.pContainer}>{data.classTrainer}</p>
+        <p className={styles.pContainer}>{data.classSlots}</p>
         <div className={styles.buttonContainer}>
           <Button
             type="confirm"

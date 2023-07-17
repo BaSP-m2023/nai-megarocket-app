@@ -5,8 +5,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import toast, { Toaster } from 'react-hot-toast';
 import { editClass, addClass } from 'Redux/classes/thunks';
-import { getActivities } from 'Redux/activities/thunks';
-import { getTrainers } from 'Redux/trainers/thunks';
 import classValidation from 'Validations/Admin/classes';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
@@ -116,8 +114,6 @@ const Form = () => {
 
   useEffect(() => {
     toast.remove();
-    dispatch(getTrainers());
-    dispatch(getActivities());
     if (id) {
       getClassData();
     }
