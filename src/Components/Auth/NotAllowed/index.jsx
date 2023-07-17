@@ -70,8 +70,7 @@ const NotAllowed = () => {
                 alt="Secure-image"
               />
               <h3>
-                You are not logged in. You will be redirected to the Login form in {countdown}{' '}
-                seconds...
+                You are not logged in. You will be redirected to the Login in {countdown} seconds...
               </h3>
             </div>
           </>
