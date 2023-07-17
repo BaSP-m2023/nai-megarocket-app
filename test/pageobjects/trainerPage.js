@@ -1,119 +1,79 @@
 /* eslint-disable no-undef */
 class TrainerPage {
-  get trainerTitle() {
-    return $('#root > div > div > div > h2');
+  get welcomeMessage() {
+    return $('h2');
   }
 
-  get trainerAddButton() {
-    return $('#root > div > #admin-trainer-add-button > div > h2');
+  get inputFirstname() {
+    return $('#trainer-input-first-name');
   }
 
-  get nameInput() {
-    return $('#admin-trainers-input-first-name');
+  get inputPhone() {
+    return $('#trainer-input-phone');
   }
 
-  get lastNameInput() {
-    return $('#admin-trainers-input-last-name');
+  get inputDni() {
+    return $('#trainer-input-dni');
   }
 
-  get dniInput() {
-    return $('#admin-trainers-input-dni');
+  get inputLastname() {
+    return $('#trainer-input-last-name');
   }
 
-  get phoneNumberInput() {
-    return $('#admin-trainers-input-phone');
+  get inputCity() {
+    return $('#trainer-input-city');
   }
 
-  get emailInput() {
-    return $('#admin-trainers-input-email');
+  get inputEmail() {
+    return $('#trainer-input-email');
   }
 
-  get cityInput() {
-    return $('#admin-trainers-input-city');
+  get inputActivitySelector() {
+    return $('#activity');
   }
 
-  get salaryInput() {
-    return $('#admin-trainers-input-salary');
+  get btnEditProfile() {
+    return $('#trainer-button-edit-form');
   }
 
-  get passwordInput() {
-    return $('#admin-trainers-input-password');
+  get btnCancelForm() {
+    return $('#trainer-button-cancel-form');
   }
 
-  get isActiveInput() {
-    return $('#admin-trainers-input-checkbox');
+  get btnConfirmForm() {
+    return $('#trainer-button-submit-form');
   }
 
-  get submitButton() {
-    return $('#admin-trainers-button-submit-form');
+  get modalClass() {
+    return $('#trainer-input-first-name');
   }
 
-  get confirmButton() {
-    return $('#admin-trainers-form-button-confirm-modal');
+  get modalClassTitle() {
+    return $('#trainer-class-name');
   }
 
-  get successModal() {
-    return $('#admin-trainers-form-modal > div');
+  get modalClassInformation() {
+    return $('#trainer-class-information');
   }
 
-  get editTrainerIcon() {
-    return $('#admin-trainers-icon-edit');
+  get modalClose() {
+    return $('#trainer-close-modal');
   }
 
-  get errorMessagePassword() {
-    return $('#admin-trainers-input-password > p');
+  async clickOnEditBtn() {
+    await this.btnEditProfile.click();
   }
 
-  get deleteTrainerIcon() {
-    return $('#admin-trainers-icon-delete');
+  async clickOnConfirmBtn() {
+    await this.btnConfirmForm.click();
   }
 
-  get closeButton() {
-    return $('#admin-trainers-button-close-success-modal');
+  async clickOnCancelBtn() {
+    await this.btnCancelForm.click();
   }
 
-  get confirmDeleteButton() {
-    return $('#admin-trainers-button-confirm-delete-modal');
-  }
-
-  get deleteModal() {
-    return $('#admin-trainers-modal > div');
-  }
-
-  async clickOnTrainerAddButton() {
-    await this.trainerAddButton.click();
-  }
-
-  async clickOnSumbitButton() {
-    await this.submitButton.click();
-  }
-
-  async clickOnConfirmButton() {
-    await this.confirmButton.click();
-  }
-
-  async clickOnEditIcon() {
-    await this.editTrainerIcon.click();
-  }
-
-  async changePhoneNumber() {
-    await this.phoneNumberInput.setValue('1234560978');
-  }
-
-  async completePasswordInput() {
-    await this.passwordInput.setValue('mariaB1!');
-  }
-
-  async clickOnDeleteIcon() {
-    await this.deleteTrainerIcon.click();
-  }
-
-  async clickOnCloseButton() {
-    await this.cancelButton.click();
-  }
-
-  async clickOnConfirmDeleteButton() {
-    await this.confirmDeleteButton.click();
+  async clickOnModalCloseBtn() {
+    await this.modalClose.click();
   }
 
   async completeForm(firstName, lastName, dni, phone, email, city, salary, password) {

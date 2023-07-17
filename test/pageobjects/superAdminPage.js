@@ -1,95 +1,95 @@
 /* eslint-disable no-undef */
 class SuperAdminPage {
-  get iconEditSuperAdmin() {
-    return $('#superadmin-admins-icon-edit');
+  get iconEdit() {
+    return $('#super-admin-icon-edit-0');
   }
 
-  get iconDeleteSuperAdmin() {
-    return $('#superadmin-admins-icon-delete');
+  get iconDelete() {
+    return $('#super-admin-icon-delete-0');
   }
 
-  get btnAddSuperAdmin() {
+  get btnAdd() {
     return $('#super-admin-add-button');
   }
 
-  get btnCofirmAddSuperAdmin() {
+  get btnSubmit() {
     return $('#super-admin-button-add-admin');
   }
 
-  get btnArrowSuperAdmin() {
+  get btnGoBack() {
     return 4('#super-admin-form-go-back');
   }
 
-  get btnUpdateSuperAdmin() {
-    return $('#super-admin-button-add-admin');
-  }
-
-  get btnChangePasswordSuperAdmin() {
+  get btnChangePassword() {
     return $('#super-admins-admin-change-password-open-modal');
   }
 
-  get btnConfirmChangePasswordSuperAdmin() {
+  get btnConfirmChangePassword() {
     return $('#button-super-admin-admins-confirm-change-password');
   }
 
-  get btnCancelChangePasswordSuperAdmin() {
+  get btnCancelChangePassword() {
     return $('#button-back-super-admin-admin-password-modal');
   }
 
-  get btnEyeSuperAdmin() {
+  get btnEye() {
     return $('#eye-button');
   }
 
-  get btnConfirmDeleteSuperAdmin() {
+  get btnConfirmDelete() {
     return $('#super-admin-button-confirm-modal');
   }
 
-  get btnCancelDeleteSuperAdmin() {
+  get btnCancelDelete() {
     return $('#super-admin-button-cancel-modal');
   }
 
-  get btnPreviousSuperAdmin() {
-    return $('#table-button-previous');
+  get btnPrevious() {
+    return $('#pagination-button-0');
   }
 
-  get btnNextSuperAdmin() {
-    return $('#table-button-next');
+  get btnNext() {
+    return $('#pagination-button-2');
   }
 
-  get inputSearch() {
-    return $('#table-input-search');
-  }
-
-  get inputFirstNameSuperAdmin() {
+  get inputFirstName() {
     return $('#super-admin-input-first-name');
   }
 
-  get inputLastNameSuperAdmin() {
+  get inputLastName() {
     return $('#super-admin-input-last-name');
   }
 
-  get inputDniSuperAdmin() {
+  get inputDni() {
     return $('#super-admin-input-dni');
   }
 
-  get inputPasswordSuperAdmin() {
-    return $('#super-admin-input-password');
+  get inputSearch() {
+    return $('#input-table-search');
   }
 
-  get inputCitySuperAdmin() {
+  get inputCity() {
     return $('#super-admin-input-city');
   }
 
-  get inputEmailSuperAdmin() {
+  get inputEmail() {
     return $('#super-admin-input-email');
   }
 
-  get inputPhoneNumberSuperAdmin() {
+  get inputPhoneNumber() {
     return $('#super-admin-input-phone-number');
   }
 
-  get inputRepeatPasswordSuperAdmin() {
-    return $('#:r26:');
+  get inputPassword() {
+    return $('#super-admin-input-password');
+  }
+
+  get inputChangePassword() {
+    return $('#super-admin-input-password-change');
+  }
+
+  get inputRepeatPassword() {
+    return $('#super-admin-input-repeat-password-change');
   }
 
   get tableSuperAdmin() {
@@ -97,7 +97,9 @@ class SuperAdminPage {
   }
 
   get modalSuperAdmin() {
-    return $('super-admin-modal');
+    return $(
+      '#root > div.layout_center__DWPZJ > div > div.form_formContainer__czDrw > div.modal_modalOverlay__1DvR3 > div'
+    );
   }
 }
 
