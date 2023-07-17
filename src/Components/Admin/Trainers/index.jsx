@@ -88,6 +88,12 @@ const Trainers = () => {
     history.push(`/admins/trainers/form/${id}`);
   };
 
+  const trainersData = trainers
+    ?.filter((item) => item.isActive === true)
+    ?.map((item) => ({
+      ...item,
+      name: `${item.firstName} ${item.lastName}`
+    }));
   return (
     <>
       <Toaster
@@ -109,16 +115,9 @@ const Trainers = () => {
               title={'Trainers'}
               buttonId={'admin-add-button'}
               addClick={handleAddTrainer}
-              data={trainers}
-              properties={['firstName', 'lastName', 'phone', 'email', 'salary', 'isActive']}
-              columnTitles={[
-                'First Name',
-                'Last Name',
-                'Phone Number',
-                'Email',
-                'Salary',
-                'Active'
-              ]}
+              data={trainersData}
+              properties={['name', 'phone', 'email', 'salary', 'isActive']}
+              columnTitles={['Name', 'Phone Number', 'Email', 'Salary', 'Active']}
               handleUpdateItem={editItem}
               handleDeleteItem={handleDelete}
               testId={'admin-table'}

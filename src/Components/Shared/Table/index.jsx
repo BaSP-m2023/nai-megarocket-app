@@ -12,6 +12,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 import SearchIcon from '@mui/icons-material/Search';
 import { ClipLoader } from 'react-spinners';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Table = ({
   data,
@@ -51,13 +53,6 @@ const Table = ({
       month: '2-digit',
       day: '2-digit'
     });
-  };
-
-  const isBoolean = (value) => {
-    if (typeof value === 'boolean') {
-      return value === true ? 'Yes' : 'No';
-    }
-    return value;
   };
 
   const handleSearchChange = (event) => {
@@ -198,7 +193,15 @@ const Table = ({
                     }
                     return (
                       <td className={styles.tableThtd} key={index}>
-                        {isBoolean(displayValue) ? isBoolean(displayValue) : displayValue}
+                        {typeof displayValue === 'boolean' ? (
+                          displayValue ? (
+                            <CheckIcon />
+                          ) : (
+                            <CloseIcon />
+                          )
+                        ) : (
+                          displayValue
+                        )}
                       </td>
                     );
                   })}

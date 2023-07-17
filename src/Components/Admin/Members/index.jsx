@@ -82,6 +82,13 @@ const Members = () => {
   const handleEdit = (id) => {
     history.push(`/admins/members/form/${id}`);
   };
+
+  const membersData = members
+    ?.filter((item) => item.isActive === true)
+    ?.map((item) => ({
+      ...item,
+      name: `${item.firstName} ${item.lastName}`
+    }));
   return (
     <>
       <Toaster
@@ -100,11 +107,11 @@ const Members = () => {
             title={'Members'}
             buttonId={'admin-add-button'}
             addClick={handleAdd}
-            data={members}
+            data={membersData}
             handleDeleteItem={handleDelete}
             handleUpdateItem={handleEdit}
-            columnTitles={['Name', 'Surname', 'Email', 'Membership', 'Active']}
-            properties={['firstName', 'lastName', 'email', 'membership', 'isActive']}
+            columnTitles={['Name', 'Email', 'Membership', 'Active']}
+            properties={['name', 'email', 'membership', 'isActive']}
             testId={'admin-table'}
             testCancelId={'admin-icon-delete'}
             testEditId={'admin-icon-edit'}

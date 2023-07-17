@@ -3,7 +3,6 @@ import styles from './form.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import Button from 'Components/Shared/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getClasses } from 'Redux/classes/thunks';
 import { getMembers } from 'Redux/members/thunks';
 import { createSubscription, updateSubscription } from 'Redux/subscriptions/thunks';
 import InputComponent from 'Components/Shared/Input';
@@ -45,7 +44,6 @@ const Form = () => {
 
   useEffect(() => {
     toast.remove();
-    dispatch(getClasses());
     dispatch(getMembers());
     if (id) {
       getSubscriptionData();
