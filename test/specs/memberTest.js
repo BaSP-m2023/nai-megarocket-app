@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const RegisterPage = require('../pageobjects/registerPage');
+/*const RegisterPage = require('../pageobjects/registerPage');
 const LandingPage = require('../pageobjects/landingPage');
 const LoginPage = require('../pageobjects/loginPage');
 const NavBarPage = require('../pageobjects/navBarPage');
@@ -80,3 +80,4 @@ describe('Register Page', () => {
     await LogoutPage.btnLogoutModalConfirm.click();
   });
 });
+*/

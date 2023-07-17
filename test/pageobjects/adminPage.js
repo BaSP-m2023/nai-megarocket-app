@@ -24,6 +24,14 @@ class AdminPage {
     return $('#admin-button-submit-form');
   }
 
+  get btnAddClass() {
+    return $('[id="admin-classes-add-button"][type="button"]');
+  }
+
+  get btnAddMember() {
+    return $('[id="admin-add-button"][type="button"]');
+  }
+
   get inputSearchTable() {
     return $('#table-input-search');
   }
@@ -88,16 +96,32 @@ class AdminPage {
     return $('#admin-input-day');
   }
 
+  get inputDayMonday() {
+    return $('#admin-input-day-monday');
+  }
+
   get inputHour() {
     return $('#admin-input-hour');
+  }
+
+  get inputHour13() {
+    return $('#admin-input-hour-13:00');
   }
 
   get inputTrainer() {
     return $('#admin-input-trainer');
   }
 
+  get inputTrainer01() {
+    return $('#admin-input-trainer-1');
+  }
+
   get inputActivity() {
     return $('#admin-input-activity');
+  }
+
+  get inputActivity00() {
+    return $('#admin-input-activity-0');
   }
 
   get inputSlots() {
@@ -165,10 +189,20 @@ class AdminPage {
   }
 
   async fillFormAddActivity() {
-    await this.inputActivityNameModal.setValue('Zumba');
-    await this.inputActivityDescriptionModal.setValue(
-      'Is a fun, high-energy workout experience that keeps you excited'
-    );
+    await this.inputActivityNameModal.setValue('Jump');
+    await this.inputActivityDescriptionModal.setValue('High energy workout experience');
+  }
+
+  async fillFormAddClass() {
+    await this.inputDay.click();
+    await this.inputDayMonday.click();
+    await this.inputHour.click();
+    await this.inputHour13.click();
+    await this.inputTrainer.click();
+    await this.inputTrainer01.click();
+    await this.inputActivity.click();
+    await this.inputActivity00.click();
+    await this.inputSlots.setValue('8');
   }
 }
 
