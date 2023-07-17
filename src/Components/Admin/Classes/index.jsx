@@ -20,7 +20,7 @@ const Classes = () => {
   const isLoadingClasses = useSelector((state) => state.classes?.loading);
   const isLoadingActivities = useSelector((state) => state.activities?.loading);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
-  const [classToDelete, setClassToDelete] = useState(null);
+  const [classSelect, setClassSelect] = useState('');
   const {
     classes = [],
     activities = [],
@@ -83,7 +83,7 @@ const Classes = () => {
   const handleConfirmDeleteClass = async () => {
     setShowDeleteWarning(false);
     try {
-      const data = await dispatch(deleteClass(classToDelete));
+      const data = await dispatch(deleteClass(classSelect._id));
       showToast(data.message, 'success');
     } catch (error) {
       showToast(error.message, 'error');
@@ -95,7 +95,7 @@ const Classes = () => {
   };
 
   const handleUpdateClass = () => {
-    history.push(`/admins/classes/form/${classToDelete}`);
+    history.push(`/admins/classes/form/${classSelect._id}`);
   };
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -129,8 +129,8 @@ const Classes = () => {
   const handleCloseModalCalendar = () => {
     setCalendarAlert(false);
   };
-  const handleClass = (id) => {
-    setClassToDelete(id);
+  const handleClass = (classItem) => {
+    setClassSelect(classItem);
     setCalendarAlert(true);
   };
 
@@ -186,7 +186,7 @@ const Classes = () => {
     if (classItem) {
       if (classItem.trainer && classItem.trainer?.isActive) {
         return (
-          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
+          <div onClick={() => handleClass(classItem)} className={styles.classesButton}>
             <div className={styles.buttonText}>
               {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
             </div>
@@ -195,7 +195,7 @@ const Classes = () => {
         );
       } else {
         return (
-          <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
+          <div onClick={() => handleClass(classItem)} className={styles.classesButton}>
             <div className={styles.buttonText}>
               {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
             </div>
@@ -322,8 +322,10 @@ const Classes = () => {
           />
           <CalendarModal
             show={calendarAlert}
-            title={'Class Options'}
-            body={'What do you want to do ?'}
+            classTitle={`Class  ${classSelect.activity?.name}`}
+            classDay={`${classSelect.day} ${classSelect.hour}`}
+            classTrainer={`Trainer ${classSelect.trainer?.firstName} ${classSelect.trainer?.lastName}`}
+            classSlots={`Slots  ${classSelect.slots}`}
             onClose={handleCloseModalCalendar}
             closeModal={handleUpdateClass}
             onConfirm={handleDeleteClass}
