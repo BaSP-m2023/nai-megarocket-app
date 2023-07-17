@@ -73,6 +73,6 @@ Input:hover {
 }
 
 .buttonsDiv Button:hover {
-  color: #157CAA;
+  background-color: #157CAA;
   transition: 1s ease;
 }

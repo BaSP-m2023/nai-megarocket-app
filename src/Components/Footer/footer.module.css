@@ -6,7 +6,7 @@
   justify-content: space-around;
   padding: 2vh 0;
   width: 100%;
-  background-color: black;
+  background-color: #212121;
 }
 
 .brand {
@@ -32,14 +32,12 @@
 }
 
 .socialIcon {
-  margin-left: 5px;
-  border-radius: 15rem;
-  background-color: white;
+  color: white;
   transition: 1s ease;
 }
 
 .socialIcon:hover {
-  background-color: #157CAA;
+  color: #157CAA;
   transition: 1s ease;
 }
 
@@ -89,6 +87,8 @@
 }
 
 .contactData p {
+  display: flex;
+  align-items: center;
   margin: 0;
   padding: 0.5rem;
   transition: 1s ease;

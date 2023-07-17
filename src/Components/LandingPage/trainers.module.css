@@ -1,62 +1,33 @@
 .trainerContainer {
   display: flex;
   width: 100%;
-  height: 80vh;
+  height: 60vh;
 }
 
-.trainer1 {
+.trainerBox {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   width: 20vw;
-  height: 100%;
-  background-image: url('/public/assets/images/landing/01.jpg');
   background-size: cover;
   background-position: center;
   background-color: transparent;
+  border: 5px solid white;
+}
+
+.trainer1 {
+  background-image: url('/public/assets/images/landing/01.jpg');
 }
 .trainer2 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  width: 20vw;
-  padding: 20px;
   background-image: url('/public/assets/images/landing/02.jpg');
-  background-size: cover;
-  background-position: center;
 }
 .trainer3 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  width: 20vw;
-  padding: 20px;
   background-image: url('/public/assets/images/landing/03.jpg');
-  background-size: cover;
-  background-position: center;
 }
 .trainer4 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  width: 20vw;
-  padding: 20px;
-  background-image: url('/public/assets/images/landing/09.jpg');
-  background-size: cover;
-  background-position: center;
+  background-image: url('/public/assets/images/landing/04.jpg');
 }
 .trainer5 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  width: 20vw;
-  padding: 20px;
   background-image: url('/public/assets/images/landing/05.jpg');
-  background-size: cover;
-  background-position: center;
 }
