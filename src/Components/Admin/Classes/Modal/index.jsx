@@ -1,66 +1,71 @@
 import React from 'react';
-import styles from 'Components/Admin/Classes/Modal/modal.module.css';
-import Button from 'Components/Shared/Button';
-import CloseIcon from '@mui/icons-material/Close';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Button, Divider, Typography } from '@mui/material';
 
-const CalendarModal = (data) => {
-  let containerStyle;
-
-  if (!data.show) {
-    return null;
-  }
-
-  const onCloseModal = () => {
-    data.closeModal();
-  };
-
-  const onConfirm = () => {
-    data.onConfirm();
-  };
-
-  const onClose = () => {
-    data.onClose();
-  };
-
-  switch (data.typeStyle) {
-    case 'success':
-      containerStyle = styles.modalContentSuccess;
-      break;
-    case 'error':
-      containerStyle = styles.modalContentError;
-      break;
-    default:
-      containerStyle = styles.modalContentDefault;
-      break;
-  }
-
+const CalendarModal = (props) => {
   return (
-    <div className={styles.modalContainer} id={data.testId}>
-      <div className={containerStyle}>
-        <div className={styles.closeContainer}>
-          <CloseIcon onClick={onClose} id={data.closeTestId} />
-          {/* <Button type={'close'} clickAction={onClose} testId={data.closeTestId} /> */}
-        </div>
-        <h3 className={styles.h3Container}>{data.classTitle}</h3>
-        <p className={styles.pContainer}>{data.classDay}</p>
-        <p className={styles.pContainer}>{data.classTrainer}</p>
-        <p className={styles.pContainer}>{data.classSlots}</p>
-        <div className={styles.buttonContainer}>
-          <Button
-            type="confirm"
-            text={'Edit'}
-            clickAction={onCloseModal}
-            testId={data.editTestId}
-          />
-          <Button
-            type="confirm"
-            text={'Delete'}
-            clickAction={onConfirm}
-            testId={data.confirmDeleteTestId}
-          />
-        </div>
-      </div>
-    </div>
+    <Dialog
+      open={props.show}
+      id={props.testId}
+      keepMounted
+      onClose={props.onClose}
+      sx={{
+        backdropFilter: 'blur(8px)'
+      }}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          fontSize: '26px',
+          fontWeight: '700',
+          padding: '10px',
+          gap: '5px',
+          justifyContent: 'center',
+          marginLeft: '10px'
+        }}
+      >
+        <CalendarMonthRoundedIcon sx={{ fontSize: '35px' }} /> {props.classTitle}
+      </DialogTitle>
+      <Divider />
+      <DialogContent sx={{ padding: '20px 40px', minWidth: '300px', textAlign: 'center' }}>
+        <Typography variant="h6" id="alert-dialog-slide-description">
+          {props.classTrainer}
+        </Typography>
+        <Typography variant="h6" id="alert-dialog-slide-description2">
+          {props.classDay?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')}
+        </Typography>
+        <Typography variant="h6" id="alert-dialog-slide-description3">
+          {props.classHour}
+        </Typography>
+
+        <Typography variant="h6" id="alert-dialog-slide-description4">
+          {props.classSlots}
+        </Typography>
+      </DialogContent>
+      <DialogActions
+        sx={{ padding: '0px 30px 15px 30px', display: 'flex', justifyContent: 'center' }}
+      >
+        <Button id={props.editTestId} onClick={props.handleUpdate} variant="contained">
+          <EditRoundedIcon />
+        </Button>
+        <Button
+          id={props.editTestId}
+          onClick={props.handleDelete}
+          variant="contained"
+          color="error"
+        >
+          <DeleteOutlineRoundedIcon />
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
