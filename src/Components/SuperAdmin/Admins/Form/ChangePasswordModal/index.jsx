@@ -104,6 +104,8 @@ const ChangePasswordModal = ({ show, closeModal }) => {
                 inputType={showPassword ? 'text' : 'password'}
                 inputName={'password'}
                 error={errors.password?.message}
+                testId={'super-admin-input-password-change'}
+                errorTestId={'super-admin-input-password-change-error'}
               />
             </div>
             <div className={styles.inputContainer}>
@@ -113,6 +115,8 @@ const ChangePasswordModal = ({ show, closeModal }) => {
                 inputType={showPassword ? 'text' : 'password'}
                 inputName={'repeatPassword'}
                 error={errors.repeatPassword?.message}
+                testId={'super-admin-input-repeat-password-change'}
+                errorTestId={'super-admin-input-repeat-password-change-error'}
               />
             </div>
             <div className={styles.buttonContainer}>
