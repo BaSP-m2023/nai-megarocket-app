@@ -126,8 +126,8 @@ const Admins = () => {
                 body={modalInformation.body}
                 onConfirm={confirmDelete}
                 id="logout-modal"
-                confirmId={'logout-button-confirm-modal'}
-                closeId={'logout-button-close-modal'}
+                confirmId={'delete-button-confirm-modal'}
+                closeId={'cancel-button-close-modal'}
               />
             </>
           ) : (
