@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './button.module.css';
 import { EditTooltip, DeleteTooltip } from './Tooltip/Tooltip';
+import { Button } from '@mui/material';
 
-const Button = ({ text, clickAction, type, info, testId }) => {
+const SharedButton = ({ text, clickAction, type, info, testId }) => {
   let buttonStyle = styles.button;
   let icon = null;
 
@@ -36,10 +37,16 @@ const Button = ({ text, clickAction, type, info, testId }) => {
       {icon}
     </div>
   ) : (
-    <button onClick={clickAction} type={info} className={buttonStyle} id={testId}>
+    <Button
+      variant="contained"
+      onClick={clickAction}
+      type={info}
+      className={buttonStyle}
+      id={testId}
+    >
       {text}
-    </button>
+    </Button>
   );
 };
 
-export default Button;
+export default SharedButton;
