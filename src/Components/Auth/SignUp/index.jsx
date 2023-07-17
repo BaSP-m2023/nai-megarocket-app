@@ -40,7 +40,6 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     memberAddFunction(data);
-    console.log(data);
   };
 
   const memberAddFunction = async (member) => {

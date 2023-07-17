@@ -23,14 +23,13 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
     const handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
-        console.log(menuRef.current);
       }
     };
     document.addEventListener('mousedown', handler);
     return () => {
       document.removeEventListener('mousedown', handler);
     };
-  });
+  }, []);
 
   const showModalLogout = () => {
     setOpen(!open);
