@@ -29,7 +29,8 @@ const Table = ({
   title,
   buttonId,
   addClick,
-  historyAction
+  historyAction,
+  testIdSearch
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -108,6 +109,7 @@ const Table = ({
             variant="standard"
             value={searchTerm}
             onChange={handleSearchChange}
+            testIdSearch={testIdSearch}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -207,12 +209,12 @@ const Table = ({
                     {showButtons && (
                       <>
                         <Button
-                          testId={testEditId}
+                          testId={`${testEditId}-${index}`}
                           type="edit"
                           clickAction={() => handleUpdateItem(item._id)}
                         />
                         <Button
-                          testId={testCancelId}
+                          testId={`${testCancelId}-${index}`}
                           type="delete"
                           clickAction={() => handleDeleteItem(item._id)}
                         />
