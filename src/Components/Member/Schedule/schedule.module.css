@@ -144,8 +144,19 @@
 }
 
 .buttonText {
+  display: flex;
+  gap: 4px;
   white-space: pre-line;
   font-weight: bold;
+}
+
+.slotsFull {
+  display: flex;
+  color: #E0E4DB;
+  background-color:#0f232e ;
+  border-radius: 5px;
+  margin: 0;
+  padding: 0 5px 0 5px;
 }
 
 .headerTable th {
@@ -159,19 +170,6 @@
   font-size: 0.9rem;
 }
 
-.slotsFull {
-  display: flex;
-  width: 25%;
-  text-align: center;
-  justify-content: center;
-  color: #E0E4DB;
-  background-color:#f52821 ;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 0.8rem;
-  margin: 0;
-  padding: 0;
-}
 
 .slots {
   padding: 1%;
@@ -194,4 +192,21 @@
 
 .styleActivity4 {
   background-color: #F9A414;
+}
+
+.emptyButtonDisabled {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background-color: rgb(125, 123, 123, 0.5);
+  border-radius: 5px;
+  color:#0F232E;
+  font-size: 0.9rem;
+}
+
+.emptyButton {
+  height: 50px;
 }

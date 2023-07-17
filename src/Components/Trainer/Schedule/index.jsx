@@ -91,7 +91,7 @@ const Schedule = () => {
       );
 
       const subscriptionsForClass = subscriptions?.filter(
-        (item) => item.classes?._id === classItem?._id
+        (item) => item.isActive && item.classes?._id === classItem?._id
       );
 
       const membersClass = subscriptions?.filter((item) => item.classes?._id === classItem?._id);
