@@ -284,7 +284,7 @@ const Classes = () => {
                 </Tooltip>
               </div>
             </div>
-            <table>
+            <table className={styles.stylesTable}>
               <thead>
                 <tr className={styles.headerTable}>
                   <th>Hours</th>

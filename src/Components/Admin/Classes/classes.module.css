@@ -5,7 +5,7 @@
   width: 100%;
   height: auto;
   padding: 1%;
-  margin: 1%;
+  margin-top: 15%;
   padding-bottom: 5vh;
   color: black;
   border-collapse: collapse;
@@ -38,7 +38,6 @@
 .headerContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 1%;
   border-radius: 5px;
 }
 
@@ -112,6 +111,6 @@
   width: 5%;
 }
 
-thead tr th:first-child {
+.stylesTable thead tr th:first-child {
   background-color: #525e6b;
 }
