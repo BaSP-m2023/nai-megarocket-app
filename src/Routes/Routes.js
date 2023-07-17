@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import AuthRoutes from './auth';
 import SuperAdminRoutes from './superAdmin';
@@ -6,11 +6,23 @@ import AdminRoutes from './admin';
 import TrainerRoutes from './trainer';
 import MemberRoutes from './member';
 import Landing from 'Components/LandingPage';
-
 import PrivateRoute from './privateRoute';
+import { useDispatch } from 'react-redux';
+import { getAuth } from 'Redux/auth/thunks';
+import { tokenListener } from 'Helper/firebase';
 
 const Routes = () => {
+  const dispatch = useDispatch();
+  const token = sessionStorage.getItem('token');
   const role = sessionStorage.getItem('role');
+
+  useEffect(() => {
+    tokenListener();
+    if (token) {
+      dispatch(getAuth(token));
+    }
+  }, [token]);
+
   const userRoute = () => {
     switch (role) {
       case 'ADMIN':

@@ -1,22 +1,10 @@
 import Container from 'Components/Shared/Container';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
-import { getAuth } from 'Redux/auth/thunks';
-import { tokenListener } from 'Helper/firebase';
 
 const PrivateRoute = ({ component: RouteComponent, role, ...rest }) => {
-  const dispatch = useDispatch();
-  const token = sessionStorage.getItem('token');
-
-  useEffect(() => {
-    tokenListener();
-    if (token) {
-      dispatch(getAuth(token));
-    }
-  }, []);
-
   const auth = useSelector((state) => state.auth);
   const isAuthPending = auth?.isAuthPending;
 

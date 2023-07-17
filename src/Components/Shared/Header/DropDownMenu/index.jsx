@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { logout } from 'Redux/auth/thunks';
-import ConfirmModal from '../Modal/ConfirmModal';
+import ConfirmModal from '../../Modal/ConfirmModal';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Avatar from '@mui/material/Avatar';
@@ -34,8 +34,8 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
 
   const showModalLogout = () => {
     setOpen(!open);
-    setTitleModal('Leaving soon?');
-    setBodyModal('Are you sure you want to log out?');
+    setTitleModal('Logout');
+    setBodyModal('You want to leave?');
     setShowModal(true);
   };
 

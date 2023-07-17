@@ -3,13 +3,8 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import { Typography } from '@mui/material';
 
 export default function ConfirmModal({
   onClose,
@@ -25,14 +20,13 @@ export default function ConfirmModal({
     <div>
       <Dialog
         open={open}
-        TransitionComponent={Transition}
         keepMounted
         onClose={onClose}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{title}</DialogTitle>
-        <DialogContent sx={{ padding: '30px' }}>
-          <DialogContentText id="alert-dialog-slide-description">{body}</DialogContentText>
+        <DialogContent sx={{ padding: '30px', minWidth: '300px' }}>
+          <Typography id="alert-dialog-slide-description">{body}</Typography>
         </DialogContent>
         <DialogActions sx={{ padding: '30px' }}>
           <Button id={closeId} onClick={onClose} sx={{ color: 'black', borderColor: 'black' }}>
@@ -44,7 +38,7 @@ export default function ConfirmModal({
             variant="contained"
             onClick={onConfirm}
           >
-            {isDelete ? 'Delete' : 'Logout'}
+            {isDelete ? 'Delete' : 'Leave'}
           </Button>{' '}
         </DialogActions>
       </Dialog>

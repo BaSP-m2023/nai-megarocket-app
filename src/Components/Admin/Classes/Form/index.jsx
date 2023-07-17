@@ -7,7 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { editClass, addClass } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
 import { getTrainers } from 'Redux/trainers/thunks';
-import classValidation from 'Validations/classes';
+import classValidation from 'Validations/Admin/classes';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';

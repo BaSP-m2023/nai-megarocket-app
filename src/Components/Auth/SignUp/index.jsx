@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './signup.module.css';
 import Input from 'Components/Shared/Input';
-import memberValidation from 'Validations/signup';
+import memberValidation from 'Validations/Auth/signup';
 import toast, { Toaster } from 'react-hot-toast';
 import { FiArrowLeft } from 'react-icons/fi';
 import Checkbox from '@mui/material/Checkbox';

@@ -6,7 +6,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './modal.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
-import ValidationsPassword from '../../../Validations/validations-password';
+import ValidationsPassword from '../../../../../Validations/Auth/validations-password';
 import { putAdmin, getAdminById } from 'Redux/admins/thunks';
 import { toast } from 'react-hot-toast';
 import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
