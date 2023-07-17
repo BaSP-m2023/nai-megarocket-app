@@ -8,9 +8,11 @@ import {
   LOGOUT_ERROR,
   LOGOUT_PENDING,
   LOGOUT_SUCCESS,
-  SIGN_UP_ERROR,
+  SET_USER_ROLE,
+  UPDATE_USER,
   SIGN_UP_PENDING,
-  SIGN_UP_SUCCESS
+  SIGN_UP_SUCCESS,
+  SIGN_UP_ERROR
 } from './constants';
 
 export const getAuthPending = () => {
@@ -71,16 +73,29 @@ export const logoutError = (error) => {
   };
 };
 
+export const setUserRole = (role) => {
+  return {
+    type: SET_USER_ROLE,
+    payload: role
+  };
+};
+
+export const updateUser = (data) => {
+  return {
+    type: UPDATE_USER,
+    payload: data
+  };
+};
+
 export const signUpPending = () => {
   return {
     type: SIGN_UP_PENDING
   };
 };
 
-export const signUpSuccess = (data) => {
+export const signUpSuccess = () => {
   return {
-    type: SIGN_UP_SUCCESS,
-    payload: data
+    type: SIGN_UP_SUCCESS
   };
 };
 

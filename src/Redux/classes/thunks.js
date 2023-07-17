@@ -1,14 +1,15 @@
 import * as actions from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getClasses = () => {
   return async (dispatch) => {
     try {
       dispatch(actions.getClassesPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       dispatch(actions.getClassesSuccess(data));
@@ -25,7 +26,10 @@ export const getClassById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -49,7 +53,7 @@ export const addClass = (gymClass) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(gymClass)
       });
@@ -75,7 +79,7 @@ export const editClass = (id, gymClass) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(gymClass)
       });
@@ -99,7 +103,10 @@ export const deleteClass = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       if (response.ok) {

@@ -16,15 +16,16 @@ import {
   postActivitiesError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getActivities = () => {
   return async (dispatch) => {
     dispatch(getActivitiesPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       dispatch(getActivitiesSuccess(data));
@@ -41,7 +42,10 @@ export const getActivitiesById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       dispatch(getActivitiesByIdSuccess(data));
@@ -58,7 +62,10 @@ export const deleteActivities = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -82,7 +89,7 @@ export const putActivities = (activity, id) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(activity)
       });
@@ -108,7 +115,7 @@ export const postActivities = (activity) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(activity)
       });

@@ -17,7 +17,6 @@
   padding: 30px;
   background-color: white;
   border-radius: 9px;
-  margin-left: 15vw;
 }
 
 .modalContentError {
@@ -27,7 +26,6 @@
   background-color: #e93528;
   border-radius: 9px;
   max-width: 50%;
-  margin-left: 15vw;
 }
 
 .modalContentSuccess {
@@ -36,7 +34,6 @@
   padding: 30px;
   background-color: #fddba1;
   border-radius: 9px;
-  margin-left: 15vw;
 }
 
 .h3Container {
@@ -51,6 +48,7 @@
 
 .buttonContainer {
   display: flex;
+  gap: 0.5vw;
   width: 100%;
   justify-content: center;
 }

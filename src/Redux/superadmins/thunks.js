@@ -16,15 +16,16 @@ import {
   updateSuperAdminsError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getSuperAdmins = () => {
   return async (dispatch) => {
     dispatch(getSuperAdminsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       dispatch(getSuperAdminsSuccess(data));
@@ -41,7 +42,10 @@ export const getSuperAdminById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       dispatch(getSuperAdminsIdSuccess(data));
@@ -58,7 +62,10 @@ export const deleteSuperAdmin = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -81,7 +88,7 @@ export const updateSuperAdmin = (id, superAdmin) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(superAdmin)
       });
@@ -107,7 +114,7 @@ export const addSuperAdmin = (superAdmin) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(superAdmin)
       });

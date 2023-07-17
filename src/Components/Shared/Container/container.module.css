@@ -1,7 +1,27 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 85vw;
+  width: 100vw;
   align-items: center;
-  justify-content: center;
+  margin-top: 30px;
+  margin-left: 160px;
+  margin-right: 80px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  margin-left: 160px;
+  align-items: center;
+  justify-content: space-around;
 }

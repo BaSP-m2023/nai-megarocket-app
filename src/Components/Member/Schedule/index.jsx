@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { getClasses } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
-import { getMembersById } from 'Redux/members/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
@@ -16,18 +15,19 @@ const Schedule = () => {
   const {
     classes = [],
     activities = [],
-    subscriptions = []
+    subscriptions = [],
+    user = []
   } = useSelector((state) => ({
-    classes: state.classes.data.data,
-    activities: state.activities.data.data,
-    subscriptions: state.subscriptions.data
+    classes: state.classes?.data?.data,
+    activities: state.activities?.data?.data,
+    subscriptions: state.subscriptions?.data,
+    user: state.auth?.user
   }));
   const loading = useSelector((state) => state.members.loading);
   const [memberData, setMemberData] = useState(null);
   const [activity, setActivity] = useState('');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
   const [infoClass, setInfoClass] = useState({
     Hour: '',
     day: '',
@@ -37,7 +37,8 @@ const Schedule = () => {
     slotCount: '',
     idSuscription: '',
     idClass: '',
-    idMember: ''
+    idMember: '',
+    membership: ''
   });
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -61,6 +62,7 @@ const Schedule = () => {
   ];
 
   useEffect(() => {
+    toast.remove();
     const fetchData = async () => {
       try {
         dispatch(getClasses());
@@ -76,15 +78,8 @@ const Schedule = () => {
     setActivity('all');
   }, []);
 
-  const getMemberData = async () => {
-    try {
-      const idMember = '648cf236ace9aaef8ae7656c';
-      const response = await dispatch(getMembersById(idMember));
-      setMemberData(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-      setError(true);
-    }
+  const getMemberData = () => {
+    setMemberData(user);
   };
 
   const getClassButton = (hour, day) => {
@@ -99,11 +94,14 @@ const Schedule = () => {
 
     if (classItem) {
       const suscriptionFound = subscriptions?.find(
-        (item) => item.classes?._id === classItem?._id && item.member?._id === memberData?._id
+        (item) =>
+          item.classes?._id === classItem?._id &&
+          item.member?._id === memberData?._id &&
+          item.isActive === true
       );
 
       const subscriptionsForClass = subscriptions?.filter(
-        (item) => item.classes?._id === classItem?._id
+        (item) => item.classes?._id === classItem?._id && item.isActive === true
       );
 
       const slotCount = subscriptionsForClass.length;
@@ -121,13 +119,16 @@ const Schedule = () => {
               day: classItem.day,
               idSuscription: suscriptionFound?._id,
               idClass: classItem?._id,
-              idMember: memberData?._id
+              idMember: memberData?._id,
+              membership: memberData?.membership
             }));
           }}
           className={suscriptionFound ? styles.addedButton : styles.classesButton}
         >
           <div className={styles.buttonText}>{classItem.activity?.name}</div>
-          {classItem.trainer?.firstName}
+          {!suscriptionFound
+            ? `${classItem.trainer?.firstName}  ${classItem.trainer?.lastName}`
+            : null}
           {suscriptionFound && (
             <div className={styles.slots}>
               <BsCheckCircleFill /> Subscribed
@@ -172,9 +173,8 @@ const Schedule = () => {
               />
               <div className={styles.container}>
                 <div className={styles.header}>
-                  <h2 className={styles.title}>
-                    Scheduled Classes - Member: {memberData?.firstName}
-                  </h2>
+                  <h2 className={styles.title}>Scheduled Classes</h2>
+                  <h3 className={styles.title}>You membership: {memberData?.membership}</h3>
                   <div className={styles.filterActivity}>
                     <label className={styles.selectLabel} htmlFor="activity">
                       Filter by activity:{' '}
@@ -185,6 +185,7 @@ const Schedule = () => {
                       value={activity}
                       onChange={handleActivityChange}
                     >
+                      <option value="all">All</option>
                       {activities?.map((activityItem, index) => (
                         <option
                           value={activityItem.name}
@@ -240,6 +241,7 @@ const Schedule = () => {
         idSuscription={infoClass.idSuscription}
         idClass={infoClass.idClass}
         idMember={infoClass.idMember}
+        membership={infoClass.membership}
       />
     </>
   );

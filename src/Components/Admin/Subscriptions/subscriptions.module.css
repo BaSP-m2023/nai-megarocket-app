@@ -1,9 +1,9 @@
 .buttonContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  width: 50vw;
-  padding: 2%;
+  width: 80%;
+  height: 7rem;
 }
 
 .addSubs {
@@ -12,4 +12,28 @@
   border: none;
   color: white;
   cursor: pointer;
+}
+
+.toggleButton {
+  background-color: inherit;
+  color: #0f232e;
+  border-radius: 29px;
+  font-size: 1.5rem;
+  padding-top: 6px;
+}
+
+.toggleButton.active {
+  background-color: #0f232e;
+  color: white;
+}
+
+
+.buttons > button {
+  margin: 0;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

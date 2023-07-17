@@ -1,30 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import InputComponent from 'Components/Shared/Input';
 import Button from 'Components/Shared/Button';
-import SharedModal from 'Components/Shared/Modal';
 import styles from './form.module.css';
-import { putActivities, postActivities, getActivitiesById } from 'Redux/activities/thunks';
-import { useDispatch } from 'react-redux';
+import { putActivities, postActivities } from 'Redux/activities/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import activityValidation from 'Validations/activities';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
+import toast, { Toaster } from 'react-hot-toast';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const Form = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [typeStyle, setTypeStyle] = useState('');
-  const [titleModal, setTitleModal] = useState('');
-  const [bodyModal, setBodyModal] = useState('');
+  const activities = useSelector((state) => state.activities.data.data);
 
   const {
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -34,8 +32,7 @@ const Form = () => {
 
   const getActivityData = async () => {
     try {
-      const response = await dispatch(getActivitiesById(id));
-      const activityData = response.data;
+      const activityData = activities.find((activity) => activity._id === id);
       delete activityData._id;
       delete activityData.__v;
       reset(activityData);
@@ -45,6 +42,7 @@ const Form = () => {
   };
 
   useEffect(() => {
+    toast.remove();
     if (id) {
       getActivityData();
     }
@@ -54,113 +52,91 @@ const Form = () => {
     if (id) {
       try {
         const response = await dispatch(putActivities(data, id));
-        setIsSuccess(true);
-        setShowModal(true);
-        setTypeStyle('success');
-        setTitleModal('Success');
-        setBodyModal(response.message);
+        localStorage.setItem('toastMessage', response.message);
+        history.push('/admins/activities');
       } catch (error) {
-        setIsSuccess(false);
-        setShowModal(true);
-        setTypeStyle('error');
-        setTitleModal('Error');
-        setBodyModal(error.message);
+        showErrorToast(error.message);
       }
     } else {
       try {
         const response = await dispatch(postActivities(data));
-        setIsSuccess(true);
-        setShowModal(true);
-        setTypeStyle('success');
-        setTitleModal('Success');
-        setBodyModal(response.message);
+        localStorage.setItem('toastMessage', response.message);
+        history.push('/admins/activities');
       } catch (error) {
-        setIsSuccess(false);
-        setShowModal(true);
-        setTypeStyle('error');
-        setTitleModal('error');
-        setBodyModal(error.message);
+        showErrorToast(error.message);
       }
     }
   };
 
-  const onConfirm = () => {
-    if (isSuccess) {
-      history.push('/admin/activities');
-      setIsSuccess(true);
-    } else {
-      setShowModal(false);
-    }
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
   };
 
   const handleCancel = () => {
-    history.push('/admin/activities');
+    history.push('/admins/activities');
   };
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
-        <h2>{id ? 'Update Activity' : 'Add Activity'}</h2>
+        <div className={styles.head}>
+          {' '}
+          <div id="admin-form-go-back" className={styles.arrow} onClick={handleCancel}>
+            <ArrowBackIosNewIcon size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Activity' : 'Add Activity'}</h2>
+        </div>
         <InputComponent
           register={register}
           inputName="name"
           inputType="text"
           labelName="Activity"
-          placeholder="Activity"
           error={errors.name?.message}
-          testId={'admin-activity-input-name'}
+          testId={'admin-input-name'}
         />
         <InputComponent
           register={register}
           inputName="description"
           inputType="text"
           labelName="Description"
-          placeholder="Description"
           error={errors.description?.message}
-          testId={'admin-activity-input-description'}
+          testId={'admin-input-description'}
         />
-        <InputComponent
-          register={register}
-          labelName={'Active ?'}
-          inputType={'isActive'}
-          inputName={'isActive'}
-          error={errors.isActive}
-          testId={'admin-activity-input-checkbox'}
-        />
+        {id && (
+          <InputComponent
+            register={register}
+            labelName={'Active ?'}
+            inputType={'isActive'}
+            inputName={'isActive'}
+            value={watch('isActive')}
+            error={errors.isActive}
+            testId={'admin-input-checkbox'}
+          />
+        )}
         <div className={styles.buttonContainer}>
           <Button
             text={id ? 'Update' : 'Add'}
             type={'submit'}
             info={'submit'}
-            testId={'admin-activity-button-submit-form'}
-          />
-        </div>
-        <div className={styles.buttons}>
-          <Button
-            text={'Back'}
-            type={'cancel'}
-            clickAction={handleCancel}
-            testId={'admin-activity-button-back-form'}
-          />
-          <Button
-            type={'cancel'}
-            clickAction={() => reset()}
-            text={'Reset'}
-            info={'reset'}
-            testId={'admin-activity-button-reset-form'}
+            testId={'admin-button-submit-form'}
           />
         </div>
       </SharedForm>
-      <SharedModal
-        show={showModal}
-        typeStyle={typeStyle}
-        title={titleModal}
-        body={bodyModal}
-        isDelete={false}
-        closeModal={onConfirm}
-        testId={'admin-activities-form-modal'}
-        confirmDeleteTestId={'admin-activities-form-button-confirm-modal'}
-      />
     </Container>
   );
 };

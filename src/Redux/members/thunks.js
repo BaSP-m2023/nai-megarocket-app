@@ -16,15 +16,16 @@ import {
   addMemberError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getMembers = () => {
   return async (dispatch) => {
     dispatch(getMembersPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       dispatch(getMembersSuccess(data));
@@ -41,7 +42,10 @@ export const getMembersById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       dispatch(getMemberByIdSuccess(data));
@@ -59,7 +63,10 @@ export const deleteMember = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -83,7 +90,7 @@ export const updateMember = (id, member) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(member)
       });
@@ -109,7 +116,7 @@ export const addMember = (member) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(member)
       });

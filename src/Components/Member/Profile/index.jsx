@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateMember, getMembersById } from 'Redux/members/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateMember } from 'Redux/members/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
 import memberValidation from 'Validations/members';
-import { FaRegEye, FaEyeSlash } from 'react-icons/fa';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { updateUser } from 'Redux/auth/actions';
 
 const MemberForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
-  const membership = ['Black', 'Gold', 'Silver'];
+  const membership = ['Only Classes', 'Classic', 'Black'];
   const {
     register,
     reset,
@@ -25,70 +24,45 @@ const MemberForm = () => {
     mode: 'onBlur',
     resolver: joiResolver(memberValidation)
   });
-  const id = '648e3c83b5cfaed572813eae';
+  const user = useSelector((state) => state.auth?.user);
+  const id = user?._id;
+
+  const loadMemberData = () => {
+    const formattedMember = {
+      ...user,
+      birthDay: formatDate(user?.birthDay)
+    };
+    delete formattedMember?._id;
+    delete formattedMember?.__v;
+    delete formattedMember?.firebaseUid;
+    delete formattedMember?.createdAt;
+    delete formattedMember?.updatedAt;
+    reset(formattedMember);
+  };
 
   useEffect(() => {
+    toast.remove();
     if (id) {
-      fetchMemberById(id);
+      loadMemberData();
     }
-  }, []);
-
-  const fetchMemberById = async (id) => {
-    try {
-      const response = await dispatch(getMembersById(id));
-      const member = response.data;
-      const formattedMember = {
-        ...member,
-        birthDay: formatDate(member.birthDay)
-      };
-      delete formattedMember._id;
-      delete formattedMember.__v;
-      reset(formattedMember);
-    } catch (error) {
-      console.error('Member not found');
-    }
-  };
-
-  const onSubmit = (data) => {
-    memberUpdateFunction(id, data);
-  };
+  }, [id]);
 
   const showToast = (message, type) => {
+    const toastConfig = {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: type === 'success' ? '#fddba1' : 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    };
     if (type === 'success') {
-      toast.success(message, {
-        duration: 2500,
-        position: 'top-right',
-        style: {
-          background: '#fddba1'
-        },
-        iconTheme: {
-          primary: '#0f232e',
-          secondary: '#fff'
-        }
-      });
+      toast.success(message, toastConfig);
     } else if (type === 'error') {
-      toast.error(message, {
-        duration: 2500,
-        position: 'top-right',
-        style: {
-          background: 'rgba(227, 23, 10, 0.5)'
-        },
-        iconTheme: {
-          primary: '#0f232e',
-          secondary: '#fff'
-        }
-      });
-    }
-  };
-
-  const memberUpdateFunction = async (id, member) => {
-    try {
-      await dispatch(updateMember(id, member));
-      showToast('Saved Changes', 'success');
-      handleDisableEditMode();
-      fetchMemberById(id);
-    } catch (error) {
-      showToast(error.message, 'error');
+      toast.error(message, toastConfig);
     }
   };
 
@@ -106,6 +80,25 @@ const MemberForm = () => {
     return `${formattedYear}-${formattedMonth}-${formattedDay}`;
   };
 
+  const updateLoggedMember = async (id, member) => {
+    try {
+      const data = await dispatch(updateMember(id, member));
+      dispatch(updateUser(data.data));
+      const formatedData = {
+        ...data.data,
+        birthDay: formatDate(data?.data?.birthDay)
+      };
+      delete formatedData?._id;
+      delete formatedData?.__v;
+      delete formatedData?.firebaseUid;
+      reset(formatedData);
+      showToast('Saved Changes', 'success');
+      handleDisableEditMode();
+    } catch (error) {
+      showToast(error.message, 'error');
+    }
+  };
+
   const handleEnableEditMode = () => {
     setEditMode(true);
   };
@@ -113,6 +106,10 @@ const MemberForm = () => {
   const handleDisableEditMode = () => {
     setEditMode(false);
     reset();
+  };
+
+  const onSubmit = (data) => {
+    updateLoggedMember(id, data);
   };
 
   return (
@@ -123,7 +120,11 @@ const MemberForm = () => {
         }}
       />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitleTwo}>user data</h2>
+        <h2 className={styles.formTitleTwo}>
+          {editMode
+            ? `${user?.firstName} ${user?.lastName} Profile`
+            : `${user?.firstName} ${user?.lastName} Profile`}
+        </h2>
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
@@ -133,6 +134,7 @@ const MemberForm = () => {
               inputName={'firstName'}
               error={errors.firstName?.message}
               disabled={!editMode}
+              testId={'member-input-first-name'}
             />
             <Input
               register={register}
@@ -141,15 +143,9 @@ const MemberForm = () => {
               inputName={'lastName'}
               error={errors.lastName?.message}
               disabled={!editMode}
+              testId={'member-input-last-name'}
             />
-            <Input
-              register={register}
-              labelName={'DNI'}
-              inputType={'number'}
-              inputName={'dni'}
-              error={errors.dni?.message}
-              disabled={!editMode}
-            />
+
             <Input
               register={register}
               labelName={'Phone'}
@@ -157,6 +153,7 @@ const MemberForm = () => {
               inputName={'phone'}
               error={errors.phone?.message}
               disabled={!editMode}
+              testId={'member-input-phone'}
             />
             <Input
               register={register}
@@ -165,28 +162,10 @@ const MemberForm = () => {
               inputName={'email'}
               error={errors.email?.message}
               disabled={!editMode}
+              testId={'member-input-email'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <Input
-                register={register}
-                labelName={'Password'}
-                inputType={showPassword ? 'text' : 'password'}
-                inputName={'password'}
-                error={errors.password?.message}
-                disabled={!editMode}
-              />
-              <div className={styles.buttonHideContainer}>
-                <button
-                  className={styles.toggleButton}
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <FaEyeSlash /> : <FaRegEye />}
-                </button>
-              </div>
-            </div>
             <Input
               register={register}
               labelName={'City'}
@@ -194,6 +173,7 @@ const MemberForm = () => {
               inputName={'city'}
               error={errors.city?.message}
               disabled={!editMode}
+              testId={'member-input-city'}
             />
             <Input
               register={register}
@@ -202,6 +182,7 @@ const MemberForm = () => {
               inputName={'birthDay'}
               error={errors.birthDay?.message}
               disabled={!editMode}
+              testId={'member-input-date'}
             />
             <Input
               register={register}
@@ -210,15 +191,17 @@ const MemberForm = () => {
               inputName={'postalCode'}
               error={errors.postalCode?.message}
               disabled={!editMode}
+              testId={'member-input-postal-code'}
             />
             <Input
               register={register}
-              labelName={'Memberships'}
+              labelName={'Membership'}
               inputType={'text'}
               list={membership}
               inputName={'membership'}
               error={errors.membership?.message}
               disabled={true}
+              testId={'member-input-membership'}
             />
           </div>
           <div className={styles.buttonContainer}>
@@ -228,13 +211,24 @@ const MemberForm = () => {
                 text={'Edit'}
                 type={'submit'}
                 clickAction={handleEnableEditMode}
+                testId={'member-edit-button'}
               />
             )}
             {editMode && (
               <>
                 <div className={styles.buttonsLowContainer}>
-                  <Button text={'Cancel'} type={'cancel'} clickAction={handleDisableEditMode} />
-                  <Button text={'Confirm'} type={'submit'} info={'submit'} />
+                  <Button
+                    testId={'member-cancel-button'}
+                    text={'Cancel'}
+                    type={'cancel'}
+                    clickAction={handleDisableEditMode}
+                  />
+                  <Button
+                    testId={'member-submit-button'}
+                    text={'Confirm'}
+                    type={'submit'}
+                    info={'submit'}
+                  />
                 </div>
               </>
             )}

@@ -1,37 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { updateTrainer, addTrainer } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import trainerValidation from 'Validations/trainers';
+import { trainerCreateValidation, trainerUpdateValidation } from 'Validations/trainers';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button/index';
-import SharedModal from 'Components/Shared/Modal/index';
 import Input from 'Components/Shared/Input';
 import SharedForm from 'Components/Shared/Form';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const AdminTrainerForm = () => {
   const history = useHistory();
   const { id } = useParams();
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-  const [modalTypeStyle, setModalTypeStyle] = useState('success');
-  const [shouldRedirect, setShouldRedirect] = useState(false);
   const dispatch = useDispatch();
   const trainers = useSelector((state) => state.trainers.data);
   const {
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors }
   } = useForm({
     mode: 'all',
-    resolver: joiResolver(trainerValidation)
+    resolver: joiResolver(id ? trainerUpdateValidation : trainerCreateValidation)
   });
 
   useEffect(() => {
+    toast.remove();
     if (id) {
       getTrainerById(id);
     }
@@ -42,68 +41,74 @@ const AdminTrainerForm = () => {
     if (trainer) {
       delete trainer._id;
       delete trainer.__v;
+      delete trainer.firebaseUid;
+      delete trainer.createdAt;
+      delete trainer.updatedAt;
       reset(trainer);
     }
   };
 
-  const showSuccesModal = (data) => {
-    setModalMessage(data.message);
-    setModalTypeStyle('success');
-    setShowModal(true);
-    setShouldRedirect(true);
-  };
-  const showErrorModal = (error) => {
-    setModalMessage(error.message);
-    setModalTypeStyle('error');
-    setShowModal(true);
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
   };
 
   const createTrainer = async (data) => {
     try {
       const response = await dispatch(addTrainer(data));
-      showSuccesModal(response);
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/trainers');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
 
   const updateTrainerFunction = async (id, data) => {
     try {
       const response = await dispatch(updateTrainer(id, data));
-      showSuccesModal(response);
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/trainers');
     } catch (error) {
-      showErrorModal(error);
+      showErrorToast(error.message);
     }
   };
 
   const onSubmit = (data) => {
     if (id) {
       updateTrainerFunction(id, data);
+      delete data.password;
     } else {
       createTrainer(data);
     }
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    if (shouldRedirect) {
-      history.push('/admin/trainers');
-    }
-  };
-
   const handleCancel = () => {
-    history.push('/admin/trainers');
-  };
-
-  const handleReset = () => {
-    reset();
+    history.push('/admins/trainers');
   };
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.headContainer}>
-          <h2>{id ? 'Update Trainer' : 'Add Trainer'}</h2>
+        <div className={styles.head}>
+          {' '}
+          <div id="admin-form-go-back" className={styles.arrow} onClick={handleCancel}>
+            <FiArrowLeft size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Trainer' : 'Add Trainer'}</h2>
         </div>
         <div className={styles.container}>
           <div>
@@ -113,7 +118,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
-              testId={'admin-trainers-input-first-name'}
+              testId={'admin-input-first-name'}
             />
             <Input
               register={register}
@@ -121,7 +126,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'lastName'}
               error={errors.lastName?.message}
-              testId={'admin-trainers-input-last-name'}
+              testId={'admin-input-last-name'}
             />
             <Input
               register={register}
@@ -129,7 +134,7 @@ const AdminTrainerForm = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
-              testId={'admin-trainers-input-dni'}
+              testId={'admin-input-dni'}
             />
             <Input
               register={register}
@@ -137,7 +142,7 @@ const AdminTrainerForm = () => {
               inputType={'number'}
               inputName={'phone'}
               error={errors.phone?.message}
-              testId={'admin-trainers-input-phone'}
+              testId={'admin-input-phone'}
             />
           </div>
           <div>
@@ -147,7 +152,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'email'}
               error={errors.email?.message}
-              testId={'admin-trainers-input-email'}
+              testId={'admin-input-email'}
             />
             <Input
               register={register}
@@ -155,7 +160,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'city'}
               error={errors.city?.message}
-              testId={'admin-trainers-input-city'}
+              testId={'admin-input-city'}
             />
             <Input
               register={register}
@@ -163,62 +168,43 @@ const AdminTrainerForm = () => {
               inputType={'number'}
               inputName={'salary'}
               error={errors.salary?.message}
-              testId={'admin-trainers-input-salary'}
+              testId={'admin-input-salary'}
             />
-            <Input
-              register={register}
-              labelName={'Password'}
-              inputType={'text'}
-              inputName={'password'}
-              error={errors.password?.message}
-              testId={'admin-trainers-input-password'}
-            />
-            <Input
-              register={register}
-              labelName={'Active ?'}
-              inputType={'isActive'}
-              inputName={'isActive'}
-              error={errors.isActive}
-              testId={'admin-trainers-input-checkbox'}
-            />
+            {!id && (
+              <Input
+                register={register}
+                labelName={'Password'}
+                inputType={'text'}
+                inputName={'password'}
+                error={errors.password?.message}
+                testId={'admin-input-password'}
+              />
+            )}
+            {id && (
+              <div className={styles.active}>
+                {' '}
+                <Input
+                  register={register}
+                  labelName={'Active ?'}
+                  inputType={'isActive'}
+                  value={watch('isActive')}
+                  inputName={'isActive'}
+                  error={errors.isActive}
+                  testId={'admin-input-checkbox'}
+                />
+              </div>
+            )}
           </div>
         </div>
-        <div>
-          <div className={styles.buttons}>
-            <Button
-              text={id ? 'Update' : 'Add'}
-              type="submit"
-              info={'submit'}
-              testId={'admin-trainers-button-submit-form'}
-            />
 
-            <div className={styles.buttonsLow}>
-              <Button
-                text="Back"
-                type="cancel"
-                clickAction={handleCancel}
-                testId={'admin-trainers-button-back-form'}
-              />
-              <Button
-                type={'cancel'}
-                clickAction={handleReset}
-                text={'Reset'}
-                info={'reset'}
-                testId={'admin-trainers-button-reset-form'}
-              />
-            </div>
-          </div>
+        <div className={styles.buttons}>
+          <Button
+            text={id ? 'Update' : 'Add'}
+            type="submit"
+            info={'submit'}
+            testId={'admin-button-submit-form'}
+          />
         </div>
-        <SharedModal
-          show={showModal}
-          title={id ? 'Edit Trainer' : 'Add Trainer'}
-          body={modalMessage}
-          isDelete={false}
-          typeStyle={modalTypeStyle}
-          closeModal={handleCloseModal}
-          testId={'admin-trainers-form-modal'}
-          closeTestId={'admin-trainers-form-button-confirm-modal'}
-        />
       </SharedForm>
     </Container>
   );

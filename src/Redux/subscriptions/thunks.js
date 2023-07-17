@@ -16,14 +16,15 @@ import {
   updateSubscriptionError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getSubscriptions = () => async (dispatch) => {
   dispatch(getSubscriptionsPending());
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
       method: 'GET',
-      headers: { token: token }
+      headers: {
+        'Content-Type': 'application/json',
+        token: sessionStorage.getItem('token')
+      }
     });
     if (!response.ok) {
       throw new Error('Failed to fetch subscriptions');
@@ -43,7 +44,10 @@ export const deleteSubscription = (subscriptionId) => async (dispatch) => {
       `${process.env.REACT_APP_API_URL}/api/subscriptions/${subscriptionId}`,
       {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       }
     );
     if (!response.ok) {
@@ -65,7 +69,10 @@ export const getSubscriptionById = (subscriptionId) => async (dispatch) => {
       `${process.env.REACT_APP_API_URL}/api/subscriptions/${subscriptionId}`,
       {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       }
     );
     if (!response.ok) {
@@ -86,7 +93,7 @@ export const createSubscription = (subscription) => async (dispatch) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        token: token
+        token: sessionStorage.getItem('token')
       },
       body: JSON.stringify(subscription)
     });
@@ -111,14 +118,14 @@ export const updateSubscription = (subscription, subscriptionId) => async (dispa
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(subscription)
       }
     );
     const data = await response.json();
     if (response.ok) {
-      dispatch(updateSubscriptionSuccess(subscription, subscriptionId));
+      dispatch(updateSubscriptionSuccess(data.data));
       return data;
     } else {
       throw new Error(data.message);

@@ -1,0 +1,86 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100vh;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.formMembers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
+}
+
+.formTitle {
+  text-align: center;
+  color: #0f232e;
+  margin-top: 4%;
+  margin-bottom: 2%;
+}
+
+.formColumn {
+  flex: 1;
+}
+
+.formLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.formRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-items: flex-start;
+}
+
+.formInputsDiv {
+  display: flex;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5%;
+  width: 100%;
+}
+
+.buttonContainer button {
+  width: 20vw;
+  margin-top: 0;
+}
+
+.buttonsLowContainer {
+  width: 30%;
+  display: flex;
+  gap: 3vw;
+}
+
+.formTitleTwo {
+  color: #f9a414;
+  border-bottom: solid 2px #f9a414;
+  margin: 2rem 5rem 2rem 5rem;
+  text-transform: uppercase;
+  line-height: 3rem;
+  font-weight: 100;
+  letter-spacing: 2px;
+}
+
+.toggleButton {
+  display: flex;
+  align-items: center;
+  font-size: 1vw;
+  background-color: inherit;
+  border: none;
+  height: fit-content;
+}
+
+.buttonHideContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

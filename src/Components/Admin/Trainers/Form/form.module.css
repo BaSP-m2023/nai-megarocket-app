@@ -4,7 +4,6 @@
   justify-content: center;
   margin-top: 1%;
   margin-bottom: 1%;
-  padding: 3rem;
 }
 
 .buttons {
@@ -25,3 +24,28 @@
 .buttonsLow > button {
   width: 9.5vw;
 }
+
+.head {
+  margin: 2vh 4vw 2vh 4vw;
+  display: flex;
+  width: 42vw;
+  justify-content: center;
+  align-items: center;
+  }
+
+  .formTitle {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    color: #0f232e;
+  }
+
+  .arrow {
+    cursor: pointer;
+  }
+
+  .active {
+    display: flex;
+    flex-direction: flex-start;
+    margin-top: 4vh;
+  }

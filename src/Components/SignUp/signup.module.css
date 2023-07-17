@@ -1,0 +1,73 @@
+.containerSignUp {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.imgSignUp {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 50vw;
+  height: 100vh;
+}
+
+.imgSignUp img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.containerForm {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 50vw;
+  padding: 2vh 2vw;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100% ;
+}
+
+.formMembers {
+  display: flex;
+  width: 100%;
+  padding-top: 6vh;
+}
+
+.formColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formColumn:not(:last-child) {
+  margin-right: 2vw;
+}
+
+.arrow {
+  margin-left: 1vw;
+  cursor: pointer;
+}
+
+.checkBox {
+  display: flex;
+}
+
+.checkBox p {
+  font-size: .8rem;
+  color: grey;
+}
+
+.buttonSignUp {
+  display: flex;
+  justify-content: center;
+}

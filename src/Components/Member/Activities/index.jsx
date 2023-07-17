@@ -26,7 +26,7 @@ const Activities = () => {
           <>
             <div className={styles.headerContainer}>
               <div className={styles.header}>
-                <h1 className={styles.title}>Activities</h1>
+                <h1 className={styles.title}>ACTIVITIES</h1>
                 <div className={styles.line}></div>
                 <p className={styles.paragraph}>
                   These are all the activities available. If you want to try any of them subscribe

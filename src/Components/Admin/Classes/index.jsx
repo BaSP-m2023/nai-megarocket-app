@@ -5,38 +5,73 @@ import SharedModal from 'Components/Shared/Modal';
 import { useHistory } from 'react-router-dom';
 import { getClasses, deleteClass } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
+import { getTrainers } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import CalendarModal from './Modal';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const Classes = () => {
   const history = useHistory();
-
-  const isLoading = useSelector((state) => state.classes.loading);
+  const isLoadingClasses = useSelector((state) => state.classes?.loading);
+  const isLoadingActivities = useSelector((state) => state.activities?.loading);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const [classToDelete, setClassToDelete] = useState(null);
-  const { classes = [], activities = [] } = useSelector((state) => ({
+  const {
+    classes = [],
+    activities = [],
+    trainers = []
+  } = useSelector((state) => ({
     classes: state.classes.data.data,
-    activities: state.activities.data.data
+    activities: state.activities.data.data,
+    trainers: state.trainers.data
   }));
-  const [activity, setActivity] = useState('');
+  const [activity, setActivity] = useState('all');
+  const [trainer, setTrainer] = useState('all');
   const [calendarAlert, setCalendarAlert] = useState(false);
   const dispatch = useDispatch();
-
+  const isLoading = isLoadingActivities && isLoadingClasses;
   useEffect(() => {
+    toast.remove();
     dispatch(getClasses());
     dispatch(getActivities());
+    dispatch(getTrainers());
+    const toastMessage = localStorage.getItem('toastMessage');
+    if (toastMessage) {
+      showToast(toastMessage, 'success');
+      localStorage.removeItem('toastMessage');
+    }
   }, []);
 
-  useEffect(() => {
-    if (activities.length > 0) {
-      setActivity(activities[0].name);
+  const showToast = (message, type) => {
+    if (type === 'success') {
+      toast.success(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: '#fddba1'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
+    } else if (type === 'error') {
+      toast.error(message, {
+        duration: 2500,
+        position: 'top-right',
+        style: {
+          background: 'rgba(227, 23, 10, 0.5)'
+        },
+        iconTheme: {
+          primary: '#0f232e',
+          secondary: '#fff'
+        }
+      });
     }
-  }, [activities]);
+  };
 
   const handleDeleteClass = () => {
     setCalendarAlert(false);
@@ -47,22 +82,18 @@ const Classes = () => {
     setShowDeleteWarning(false);
     try {
       const data = await dispatch(deleteClass(classToDelete));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
+      showToast(data.message, 'success');
     } catch (error) {
-      setAlertMessage(error);
-      setShowAlert(true);
-      setIsSuccess(false);
+      showToast(error.message, 'error');
     }
   };
 
   const handleAddClass = () => {
-    history.push('/admin/classes/form/');
+    history.push('/admins/classes/form/');
   };
 
   const handleUpdateClass = () => {
-    history.push(`/admin/classes/form/${classToDelete}`);
+    history.push(`/admins/classes/form/${classToDelete}`);
   };
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -89,6 +120,10 @@ const Classes = () => {
     setActivity(e.target.value);
   };
 
+  const handleTrainerChange = (e) => {
+    setTrainer(e.target.value);
+  };
+
   const handleCloseModalCalendar = () => {
     setCalendarAlert(false);
   };
@@ -98,25 +133,110 @@ const Classes = () => {
   };
 
   const getClassButton = (hour, day) => {
-    const classItem = classes.find(
-      (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
-    );
-    return classItem ? (
-      <div onClick={() => handleClass(classItem._id)} className={styles.classesButton}>
-        <div className={styles.buttonText}>{activity}</div>
-        {classItem.trainer.firstName}
-      </div>
-    ) : (
-      <div className={styles.emptyButton}></div>
-    );
+    let classItem;
+
+    if (activity === 'all' && trainer === 'all') {
+      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
+    } else if (trainer !== 'all' && activity === 'all') {
+      if (trainer === 'notAssign') {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            (!item.trainer || !item.trainer?.isActive)
+        );
+      } else {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            item.trainer?.firstName + item.trainer?.lastName === trainer
+        );
+      }
+    } else if (activity !== 'all' && trainer === 'all') {
+      classItem = classes?.find(
+        (item) =>
+          item.day.includes(day) &&
+          item.hour === hour &&
+          item.activity?.name === activity &&
+          (!item.trainer || item.trainer?.isActive)
+      );
+    } else {
+      if (trainer === 'notAssign') {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            item.activity?.name === activity &&
+            (!item.trainer || !item.trainer?.isActive)
+        );
+      } else {
+        classItem = classes?.find(
+          (item) =>
+            item.day.includes(day) &&
+            item.hour === hour &&
+            item.activity?.name === activity &&
+            item.trainer?.firstName + item.trainer?.lastName === trainer
+        );
+      }
+    }
+
+    if (classItem) {
+      if (classItem.trainer && classItem.trainer?.isActive) {
+        return (
+          <div
+            onClick={() => handleClass(classItem._id)}
+            id={
+              'admin-button-' +
+              classItem.day.toString().toLowerCase() +
+              '-' +
+              classItem.hour.slice(0, 2)
+            }
+            className={styles.classesButton}
+          >
+            <div className={styles.buttonText}>
+              {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
+            </div>
+            {classItem?.trainer?.firstName}
+          </div>
+        );
+      } else {
+        return (
+          <div
+            onClick={() => handleClass(classItem._id)}
+            id={
+              'admin-button-' +
+              classItem.day.toString().toLowerCase() +
+              '-' +
+              classItem.hour.slice(0, 2)
+            }
+            className={styles.classesButton}
+          >
+            <div className={styles.buttonText}>
+              {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
+            </div>
+            Not assigned trainer
+          </div>
+        );
+      }
+    } else {
+      return <div className={styles.emptyButton}></div>;
+    }
   };
 
   return (
-    <Container>
+    <>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       {isLoading ? (
-        <ClipLoader />
+        <Container center={true}>
+          <ClipLoader />
+        </Container>
       ) : classes ? (
-        <>
+        <Container>
           <div className={styles.container}>
             <div className={styles.header}>
               <div className={styles.titleContainer}>
@@ -129,23 +249,54 @@ const Classes = () => {
                 />
               </div>
               <div className={styles.select}>
-                <label htmlFor="activity">Select Activity: </label>
-                <select
-                  id="activity"
-                  value={activity ? activity : activities[0]}
-                  onChange={handleActivityChange}
-                >
-                  {console.log(activity)}
-                  {activities?.map((activityItem, index) => (
-                    <option
-                      value={activityItem.name}
-                      key={index}
-                      id={`admin-classes-select-activity-${activityItem.name}`}
-                    >
-                      {activityItem.name}
-                    </option>
-                  ))}
-                </select>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="activity-label">Select Activity</InputLabel>
+                  <Select
+                    value={activity}
+                    onChange={handleActivityChange}
+                    id={'admin-select-activity'}
+                  >
+                    <MenuItem id={'admin-input-activity-all'} value="all">
+                      All
+                    </MenuItem>
+                    {activities?.map((activityItem, index) => (
+                      <MenuItem
+                        key={index}
+                        value={activityItem.name}
+                        id={'admin-input-activity-' + index}
+                      >
+                        {activityItem.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              <div className={styles.select}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="trainer-label">Select Trainer</InputLabel>
+                  <Select
+                    value={trainer}
+                    onChange={handleTrainerChange}
+                    id={`admin-select-trainer`}
+                  >
+                    <MenuItem id={'admin-input-trainer-all'} value="all">
+                      All
+                    </MenuItem>
+                    <MenuItem id={'admin-input-trainer-not-assign'} value="notAssign">
+                      Not Assign
+                    </MenuItem>
+                    {trainers?.map((trainerItem, index) => (
+                      <MenuItem
+                        value={trainerItem.firstName + trainerItem.lastName}
+                        key={index}
+                        id={`admin-select-trainer-${index}`}
+                        sx={trainerItem.isActive ? null : { color: '#878E88' }}
+                      >
+                        {trainerItem.firstName + ' ' + trainerItem.lastName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </div>
             </div>
             <table>
@@ -180,19 +331,9 @@ const Classes = () => {
             title={'Delete Class'}
             body={'Are you sure you want to delete this class?'}
             onConfirm={handleConfirmDeleteClass}
-            testId={'admin-classes-modal'}
-            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
-            closeTestId={'admin-classes-button-close-warning-modal'}
-          />
-          <SharedModal
-            isDelete={false}
-            show={showAlert}
-            typeStyle={isSuccess ? 'success' : 'error'}
-            closeModal={() => setShowAlert(false)}
-            title={isSuccess ? 'Success' : 'Error'}
-            body={alertMessage}
-            testId={'admin-classes-modal'}
-            closeTestId={'admin-classes-button-close-success-modal'}
+            testId={'admin-modal'}
+            confirmDeleteTestId={'admin-button-confirm-modal'}
+            closeTestId={'admin-button-close-modal'}
           />
           <CalendarModal
             show={calendarAlert}
@@ -201,16 +342,18 @@ const Classes = () => {
             onClose={handleCloseModalCalendar}
             closeModal={handleUpdateClass}
             onConfirm={handleDeleteClass}
-            testId={'admin-classes-modal-calendar'}
-            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
-            editTestId={'admin-classes-button-edit-modal'}
-            closeTestId={'admin-classes-icon-cross-close-modal'}
+            testId={'admin-modal-calendar'}
+            confirmDeleteTestId={'admin-button-confirm-modal'}
+            editTestId={'admin-button-edit-modal'}
+            closeTestId={'admin-button-close-modal'}
           />
-        </>
+        </Container>
       ) : (
-        <h3>There are no Classes in the database</h3>
+        <Container center={true}>
+          <h3>There are no Classes in the database</h3>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 

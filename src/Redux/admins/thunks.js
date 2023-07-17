@@ -16,15 +16,16 @@ import {
   postAdminError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getAdmins = () => {
   return async (dispatch) => {
     dispatch(getAdminsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       dispatch(getAdminsSuccess(data.data));
@@ -40,7 +41,10 @@ export const getAdminById = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'GET',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       dispatch(getAdminByIdSuccess(data.data));
@@ -57,7 +61,10 @@ export const deleteAdmin = (adminId) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -81,7 +88,7 @@ export const putAdmin = (id, admin) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(admin)
       });
@@ -107,7 +114,7 @@ export const postAdmin = (admin) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          token: token
+          token: sessionStorage.getItem('token')
         },
         body: JSON.stringify(admin)
       });

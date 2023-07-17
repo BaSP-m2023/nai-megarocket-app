@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateMember, addMember } from 'Redux/members/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './form.module.css';
-import SharedModal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
 import memberValidation from 'Validations/members';
 import Container from 'Components/Shared/Container';
+import toast, { Toaster } from 'react-hot-toast';
+import { FiArrowLeft } from 'react-icons/fi';
+import { FormControl, InputLabel, FormHelperText, MenuItem, Select } from '@mui/material';
 
 const MemberForm = () => {
   const members = useSelector((state) => state.members.data.data);
-  const [showAlert, setShowAlert] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const membership = ['Black', 'Gold', 'Silver'];
+  const membership = ['Only Classes', 'Classic', 'Black'];
   const {
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -31,6 +31,7 @@ const MemberForm = () => {
   });
 
   useEffect(() => {
+    toast.remove();
     if (id) {
       memberById(id);
     }
@@ -42,6 +43,9 @@ const MemberForm = () => {
       member.birthDay = formatDate(member.birthDay);
       delete member._id;
       delete member.__v;
+      delete member.firebaseUid;
+      delete member.createdAt;
+      delete member.updatedAt;
       reset(member);
     } else {
       console.error('Member not found');
@@ -51,6 +55,7 @@ const MemberForm = () => {
   const onSubmit = (data) => {
     if (id) {
       memberUpdateFunction(id, data);
+      delete data.password;
     } else {
       memberAddFunction(data);
     }
@@ -58,44 +63,40 @@ const MemberForm = () => {
 
   const memberUpdateFunction = async (id, member) => {
     try {
-      const data = await dispatch(updateMember(id, member));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
+      const response = await dispatch(updateMember(id, member));
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/members');
     } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
+      showErrorToast(error.message);
     }
   };
 
   const memberAddFunction = async (member) => {
     try {
-      const data = await dispatch(addMember(member));
-      setAlertMessage(data.message);
-      setIsSuccess(true);
-      setShowAlert(true);
+      const response = await dispatch(addMember(member));
+      localStorage.setItem('toastMessage', response.message);
+      history.push('/admins/members');
     } catch (error) {
-      setAlertMessage(error.message);
-      setIsSuccess(false);
-      setShowAlert(true);
+      showErrorToast(error.message);
     }
   };
 
-  const handleCloseAlert = () => {
-    if (isSuccess) {
-      history.push('/admin/members');
-    } else {
-      setShowAlert(false);
-    }
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      duration: 2500,
+      position: 'top-right',
+      style: {
+        background: 'rgba(227, 23, 10, 0.5)'
+      },
+      iconTheme: {
+        primary: '#0f232e',
+        secondary: '#fff'
+      }
+    });
   };
 
   const handleCancel = () => {
-    history.push('/admin/members');
-  };
-
-  const handleReset = () => {
-    reset();
+    history.push('/admins/members');
   };
 
   const formatDate = (dateString) => {
@@ -114,18 +115,20 @@ const MemberForm = () => {
 
   return (
     <Container>
+      <Toaster
+        containerStyle={{
+          margin: '10vh 0 0 0'
+        }}
+      />
       <div className={styles.formContainer}>
-        <h2 className={styles.formTitle}>{id ? 'Update Member' : 'Add Member'}</h2>
-        <SharedModal
-          isDelete={false}
-          show={showAlert}
-          closeModal={handleCloseAlert}
-          typeStyle={isSuccess ? 'success' : 'error'}
-          title={isSuccess ? 'Success' : 'Something went wrong'}
-          body={alertMessage}
-          testId={'admin-memebrs-form-modal'}
-          closeTestId={'admin-memebrs-form-button-confirm-modal'}
-        />
+        {' '}
+        <div className={styles.head}>
+          {' '}
+          <div id="admin-form-go-back" className={styles.arrow} onClick={handleCancel}>
+            <FiArrowLeft size={35} />
+          </div>
+          <h2 className={styles.formTitle}> {id ? 'Update Member' : 'Add Member'}</h2>
+        </div>
         <form className={styles.formMembers} onSubmit={handleSubmit(onSubmit)}>
           <div className={`${styles.formColumn} ${styles.formLeft}`}>
             <Input
@@ -134,7 +137,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
-              testId={'admin-members-input-first-name'}
+              testId={'admin-input-first-name'}
             />
             <Input
               register={register}
@@ -142,7 +145,7 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'lastName'}
               error={errors.lastName?.message}
-              testId={'admin-members-input-last-name'}
+              testId={'admin-input-last-name'}
             />
             <Input
               register={register}
@@ -150,7 +153,7 @@ const MemberForm = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
-              testId={'admin-members-input-dni'}
+              testId={'admin-input-dni'}
             />
             <Input
               register={register}
@@ -158,7 +161,7 @@ const MemberForm = () => {
               inputType={'number'}
               inputName={'phone'}
               error={errors.phone?.message}
-              testId={'admin-members-input-phone'}
+              testId={'admin-input-phone'}
             />
             <Input
               register={register}
@@ -166,25 +169,27 @@ const MemberForm = () => {
               inputType={'text'}
               inputName={'email'}
               error={errors.email?.message}
-              testId={'admin-members-input-email'}
+              testId={'admin-input-email'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
-            <Input
-              register={register}
-              labelName={'Password'}
-              inputType={'password'}
-              inputName={'password'}
-              error={errors.password?.message}
-              testId={'admin-members-input-password'}
-            />
+            {!id && (
+              <Input
+                register={register}
+                labelName={'Password'}
+                inputType={'password'}
+                inputName={'password'}
+                error={errors.password?.message}
+                testId={'admin-input-password'}
+              />
+            )}
             <Input
               register={register}
               labelName={'City'}
               inputType={'text'}
               inputName={'city'}
               error={errors.city?.message}
-              testId={'admin-members-input-city'}
+              testId={'admin-input-city'}
             />
             <Input
               register={register}
@@ -192,7 +197,7 @@ const MemberForm = () => {
               inputType={'date'}
               inputName={'birthDay'}
               error={errors.birthDay?.message}
-              testId={'admin-members-input-date'}
+              testId={'admin-input-date'}
             />
             <Input
               register={register}
@@ -200,24 +205,31 @@ const MemberForm = () => {
               inputType={'number'}
               inputName={'postalCode'}
               error={errors.postalCode?.message}
-              testId={'admin-members-input-zip'}
+              testId={'admin-input-zip'}
             />
-            <Input
-              register={register}
-              labelName={'Memberships'}
-              inputType={'list'}
-              list={membership}
-              inputName={'membership'}
-              error={errors.membership?.message}
-              testId={'admin-members-input-memebrship'}
-            />
+            <FormControl variant="standard" fullWidth error={errors.membership?.message}>
+              <InputLabel id="Memberships">Memberships</InputLabel>
+              <Select {...register('membership')} id={'admin-input-membership'}>
+                {membership.map((membership) => (
+                  <MenuItem
+                    key={membership}
+                    value={membership}
+                    id={'admin-input-membership-' + membership}
+                  >
+                    {membership}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>{errors.membership?.message}</FormHelperText>
+            </FormControl>
             <Input
               register={register}
               labelName={'Active ?'}
+              value={watch('isActive')}
               inputType={'isActive'}
               inputName={'isActive'}
               error={errors.isActive}
-              testId={'admin-members-input-checkbox'}
+              testId={'admin-input-checkbox'}
             />
           </div>
           <div className={styles.buttonContainer}>
@@ -225,23 +237,8 @@ const MemberForm = () => {
               text={id ? 'Update' : 'Add'}
               type={'submit'}
               info={'submit'}
-              testId={'admin-members-button-submit-form'}
+              testId={'admin-button-submit-form'}
             />
-            <div className={styles.buttonsLowContainer}>
-              <Button
-                text={'Back'}
-                type={'cancel'}
-                clickAction={handleCancel}
-                testId={'admin-members-button-back-form'}
-              />
-              <Button
-                type={'cancel'}
-                onClick={handleReset}
-                info={'reset'}
-                text={'Reset'}
-                testId={'admin-members-button-reset-form'}
-              />
-            </div>
           </div>
         </form>
       </div>

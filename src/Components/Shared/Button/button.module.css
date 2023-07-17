@@ -3,10 +3,10 @@
   padding: 0.9rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
-  background-color: rgba(253, 219, 161);
+  background-color: #157CAA;;
   border: solid 1px;
-  border-color: rgba(253, 219, 161);
-  color: rgba(55, 56, 103);
+  border-color: #157CAA;;
+  color: white;
   text-align: center;
   font-size: 1rem;
   border-radius: 0.5rem;
@@ -15,27 +15,13 @@
 }
 
 .submitButton {
+  text-align: center;
   width: 8rem;
   padding: 0.7rem;
   margin-top: 1rem;
-  background-color: rgba(253, 219, 161);
-  border: solid 1px;
-  border-color: rgba(253, 219, 161);
-  color: rgba(55, 56, 103);
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.cancelButton {
-  width: 6rem;
-  padding: 0.7rem;
-  margin-top: 1rem;
-  background-color: white;
-  border: solid 1px;
-  border-color: rgba(55, 56, 103);
-  color: rgba(55, 56, 103);
+  background-color: black;
+  border: solid 1px black;
+  color: white;
   font-size: 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -48,7 +34,6 @@
   margin-top: 1rem;
   background-color: rgba(15, 35, 46);
   border: solid 1px;
-  border-color: rgba(55, 56, 103);
   color: white;
   font-size: 1rem;
   border-radius: 0.5rem;
@@ -56,9 +41,23 @@
   font-weight: bold;
 }
 
+.cancelButton 
+{
+  text-align: center;
+  width: 6rem;
+  padding: 0.7rem;
+  margin-top: 1rem;
+  background-color: white;
+  border: solid 1px;
+  border-color: rgba(15, 35, 46);
+  color: rgba(15, 35, 46);
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 .iconButton {
-  margin-left: 2rem;
-  padding: 0.5rem;
   border: none;
   background: none;
   cursor: pointer;

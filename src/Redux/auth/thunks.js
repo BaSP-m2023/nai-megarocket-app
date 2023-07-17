@@ -7,7 +7,10 @@ import {
   loginError,
   logoutPending,
   logoutSuccess,
-  logoutError
+  logoutError,
+  signUpPending,
+  signUpSuccess,
+  signUpError
 } from './actions';
 
 import { firebaseApp } from 'Helper/firebase';
@@ -34,9 +37,14 @@ export const getAuth = (token) => {
   return async (dispatch) => {
     dispatch(getAuthPending());
     try {
-      const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, { headers: { token } });
-      const res = await response.json();
-      return dispatch(getAuthSuccess(res.data));
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        }
+      });
+      const data = await response.json();
+      return dispatch(getAuthSuccess(data.data));
     } catch (error) {
       return dispatch(getAuthError(error.toString()));
     }
@@ -48,9 +56,37 @@ export const logout = () => {
     dispatch(logoutPending());
     try {
       await firebaseApp.auth().signOut();
+      sessionStorage.removeItem('role');
+      sessionStorage.removeItem('token');
       return dispatch(logoutSuccess());
     } catch (error) {
       return dispatch(logoutError(error.toString()));
+    }
+  };
+};
+
+export const signUp = (newMember) => {
+  return async (dispatch) => {
+    dispatch(signUpPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: sessionStorage.getItem('token')
+        },
+        body: JSON.stringify(newMember)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(signUpSuccess());
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      dispatch(signUpError(error));
+      throw error;
     }
   };
 };
