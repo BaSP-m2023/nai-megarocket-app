@@ -3,9 +3,9 @@ import React, { Suspense, lazy } from 'react';
 import { Route } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-const Login = lazy(() => import('Components/Login'));
-const SignUp = lazy(() => import('Components/SignUp'));
-const NotAllowed = lazy(() => import('Components/NotAllowed'));
+const Login = lazy(() => import('Components/Auth/Login'));
+const SignUp = lazy(() => import('Components/Auth/SignUp'));
+const NotAllowed = lazy(() => import('Components/Auth/NotAllowed'));
 
 const AuthRoutes = () => {
   return (

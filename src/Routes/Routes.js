@@ -6,7 +6,6 @@ import AdminRoutes from './admin';
 import TrainerRoutes from './trainer';
 import MemberRoutes from './member';
 import Landing from 'Components/LandingPage';
-
 import PrivateRoute from './privateRoute';
 import { useDispatch } from 'react-redux';
 import { getAuth } from 'Redux/auth/thunks';
@@ -14,15 +13,15 @@ import { tokenListener } from 'Helper/firebase';
 
 const Routes = () => {
   const dispatch = useDispatch();
-  const role = sessionStorage.getItem('role');
   const token = sessionStorage.getItem('token');
+  const role = sessionStorage.getItem('role');
 
   useEffect(() => {
     tokenListener();
     if (token) {
       dispatch(getAuth(token));
     }
-  }, [role]);
+  }, [token]);
 
   const userRoute = () => {
     switch (role) {
@@ -48,8 +47,8 @@ const Routes = () => {
       <Route exact path="/landing" component={Landing} />
       <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminRoutes} />
       <PrivateRoute path="/admins" role="ADMIN" component={AdminRoutes} />
-      <PrivateRoute path="/members" role="MEMBER" isActive={true} component={MemberRoutes} />
-      <PrivateRoute path="/trainers" role="TRAINER" isActive={true} component={TrainerRoutes} />
+      <PrivateRoute path="/members" role="MEMBER" component={MemberRoutes} />
+      <PrivateRoute path="/trainers" role="TRAINER" component={TrainerRoutes} />
     </Switch>
   );
 };

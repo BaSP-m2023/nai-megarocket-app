@@ -6,7 +6,7 @@ import styles from './form.module.css';
 import { putActivities, postActivities } from 'Redux/activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import activityValidation from 'Validations/activities';
+import activityValidation from 'Validations/Admin/activities';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';

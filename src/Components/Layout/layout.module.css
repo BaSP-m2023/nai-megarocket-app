@@ -1,8 +1,6 @@
-.body {
+.center {
   display: flex;
-  min-height: 90vh;
-  width: 100vw;
-}
-.body > span {
-  margin: auto;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
 }

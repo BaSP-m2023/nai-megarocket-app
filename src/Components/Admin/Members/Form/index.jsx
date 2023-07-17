@@ -7,7 +7,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
-import memberValidation from 'Validations/members';
+import memberValidation from 'Validations/Admin/members';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
 import { FiArrowLeft } from 'react-icons/fi';

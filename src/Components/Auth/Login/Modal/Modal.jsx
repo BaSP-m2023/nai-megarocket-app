@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import InputLabel from '@mui/material/InputLabel';
 import Input from '@mui/material/Input';
-import { recoveryValidation } from 'Validations/login';
+import { recoveryValidation } from 'Validations/Auth/login';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
 import { firebaseApp } from 'Helper/firebase';
