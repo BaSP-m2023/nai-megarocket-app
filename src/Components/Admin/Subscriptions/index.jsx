@@ -103,9 +103,9 @@ const Subscriptions = () => {
       memberName: `${item.member.firstName} ${item.member.lastName}`,
       classFound:
         item.classes === null
-          ? '- Class not found -'
+          ? 'Class not found'
           : item.classes.activity === null
-          ? '- Activity not found -'
+          ? 'Activity not found'
           : `${classInfo.activity.name} | ${classInfo.hour} | ${classInfo.day} | ${classInfo.trainer.firstName} ${classInfo.trainer.lastName}`
     };
   });
