@@ -6,7 +6,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
-import memberValidation from 'Validations/members';
+import memberValidation from 'Validations/Admin/members';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
 import { updateUser } from 'Redux/auth/actions';
@@ -134,6 +134,7 @@ const MemberForm = () => {
               inputName={'firstName'}
               error={errors.firstName?.message}
               disabled={!editMode}
+              testId={'member-input-first-name'}
             />
             <Input
               register={register}
@@ -142,6 +143,7 @@ const MemberForm = () => {
               inputName={'lastName'}
               error={errors.lastName?.message}
               disabled={!editMode}
+              testId={'member-input-last-name'}
             />
 
             <Input
@@ -151,6 +153,7 @@ const MemberForm = () => {
               inputName={'phone'}
               error={errors.phone?.message}
               disabled={!editMode}
+              testId={'member-input-phone'}
             />
             <Input
               register={register}
@@ -159,6 +162,7 @@ const MemberForm = () => {
               inputName={'email'}
               error={errors.email?.message}
               disabled={!editMode}
+              testId={'member-input-email'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
@@ -169,6 +173,7 @@ const MemberForm = () => {
               inputName={'city'}
               error={errors.city?.message}
               disabled={!editMode}
+              testId={'member-input-city'}
             />
             <Input
               register={register}
@@ -177,6 +182,7 @@ const MemberForm = () => {
               inputName={'birthDay'}
               error={errors.birthDay?.message}
               disabled={!editMode}
+              testId={'member-input-date'}
             />
             <Input
               register={register}
@@ -185,6 +191,7 @@ const MemberForm = () => {
               inputName={'postalCode'}
               error={errors.postalCode?.message}
               disabled={!editMode}
+              testId={'member-input-postal-code'}
             />
             <Input
               register={register}
@@ -194,6 +201,7 @@ const MemberForm = () => {
               inputName={'membership'}
               error={errors.membership?.message}
               disabled={true}
+              testId={'member-input-membership'}
             />
           </div>
           <div className={styles.buttonContainer}>
@@ -203,13 +211,24 @@ const MemberForm = () => {
                 text={'Edit'}
                 type={'submit'}
                 clickAction={handleEnableEditMode}
+                testId={'member-edit-button'}
               />
             )}
             {editMode && (
               <>
                 <div className={styles.buttonsLowContainer}>
-                  <Button text={'Cancel'} type={'cancel'} clickAction={handleDisableEditMode} />
-                  <Button text={'Confirm'} type={'submit'} info={'submit'} />
+                  <Button
+                    testId={'member-cancel-button'}
+                    text={'Cancel'}
+                    type={'cancel'}
+                    clickAction={handleDisableEditMode}
+                  />
+                  <Button
+                    testId={'member-submit-button'}
+                    text={'Confirm'}
+                    type={'submit'}
+                    info={'submit'}
+                  />
                 </div>
               </>
             )}

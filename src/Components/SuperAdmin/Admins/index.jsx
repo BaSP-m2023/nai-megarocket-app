@@ -113,9 +113,10 @@ const Admins = () => {
                 columnTitles={['First Name', 'Last Name', 'Phone Number', 'Email']}
                 handleUpdateItem={handleUpdateAdmin}
                 handleDeleteItem={handleDeleteAdmin}
-                testId={'superadmin-admins-table'}
-                testCancelId={'superadmin-admins-icon-delete'}
-                testEditId={'superadmin-admins-icon-edit'}
+                testId={'super-admin-table'}
+                testCancelId={'super-admin-icon-delete'}
+                testEditId={'super-admin-icon-edit'}
+                testIdSearch={'super-admin-input-search'}
               />
               <ConfirmModal
                 open={showModal}
@@ -125,8 +126,8 @@ const Admins = () => {
                 body={modalInformation.body}
                 onConfirm={confirmDelete}
                 id="logout-modal"
-                confirmId={'logout-button-confirm-modal'}
-                closeId={'logout-button-close-modal'}
+                confirmId={'delete-button-confirm-modal'}
+                closeId={'cancel-button-close-modal'}
               />
             </>
           ) : (

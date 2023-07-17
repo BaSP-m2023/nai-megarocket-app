@@ -113,16 +113,16 @@ const Trainers = () => {
           ) : trainers.length > 0 ? (
             <Table
               title={'Trainers'}
-              buttonId={'admin-trainer-add-button'}
+              buttonId={'admin-add-button'}
               addClick={handleAddTrainer}
               data={trainersData}
               properties={['name', 'phone', 'email', 'salary', 'isActive']}
               columnTitles={['Name', 'Phone Number', 'Email', 'Salary', 'Active']}
               handleUpdateItem={editItem}
               handleDeleteItem={handleDelete}
-              testId={'admin-trainers-table'}
-              testCancelId={'admin-trainers-icon-delete'}
-              testEditId={'admin-trainers-icon-edit'}
+              testId={'admin-table'}
+              testCancelId={'admin-icon-delete'}
+              testEditId={'admin-icon-edit'}
             />
           ) : (
             <h3>No data to retrieve</h3>
@@ -136,8 +136,7 @@ const Trainers = () => {
         title={'Delete Trainer'}
         body={modalMessage}
         onConfirm={handleDeleteConfirmation}
-        closeTestId={'admin-button-close-success-modal'}
-        id="admin-trainers-modal"
+        id="admin-modal"
         confirmId={'admin-button-confirm-delete-modal'}
         closeId={'admin-button-close-success-modal'}
       />

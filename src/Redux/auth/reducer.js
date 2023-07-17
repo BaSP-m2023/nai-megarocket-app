@@ -8,7 +8,7 @@ import {
   GET_AUTH_PENDING,
   GET_AUTH_SUCCESS,
   GET_AUTH_ERROR,
-  SET_USER_ROLE,
+  SET_USER_AUTH,
   UPDATE_USER,
   SIGN_UP_PENDING,
   SIGN_UP_SUCCESS,
@@ -77,10 +77,10 @@ const authReducer = (state = initialState, action) => {
         error: action.payload,
         isAuthPending: false
       };
-    case SET_USER_ROLE:
+    case SET_USER_AUTH:
       return {
         ...state,
-        role: action.payload
+        userClaims: action.payload
       };
     case UPDATE_USER:
       return {

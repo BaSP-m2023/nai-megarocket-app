@@ -4,7 +4,7 @@ import { updateTrainer, addTrainer } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { trainerCreateValidation, trainerUpdateValidation } from 'Validations/trainers';
+import { trainerCreateValidation, trainerUpdateValidation } from 'Validations/Admin/trainers';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button/index';
 import Input from 'Components/Shared/Input';
@@ -105,7 +105,7 @@ const AdminTrainerForm = () => {
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.head}>
           {' '}
-          <div id="admin-trainers-form-go-back" className={styles.arrow} onClick={handleCancel}>
+          <div id="admin-form-go-back" className={styles.arrow} onClick={handleCancel}>
             <FiArrowLeft size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Trainer' : 'Add Trainer'}</h2>
@@ -118,7 +118,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'firstName'}
               error={errors.firstName?.message}
-              testId={'admin-trainers-input-first-name'}
+              testId={'admin-input-first-name'}
             />
             <Input
               register={register}
@@ -126,7 +126,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'lastName'}
               error={errors.lastName?.message}
-              testId={'admin-trainers-input-last-name'}
+              testId={'admin-input-last-name'}
             />
             <Input
               register={register}
@@ -134,7 +134,7 @@ const AdminTrainerForm = () => {
               inputType={'number'}
               inputName={'dni'}
               error={errors.dni?.message}
-              testId={'admin-trainers-input-dni'}
+              testId={'admin-input-dni'}
             />
             <Input
               register={register}
@@ -142,7 +142,7 @@ const AdminTrainerForm = () => {
               inputType={'number'}
               inputName={'phone'}
               error={errors.phone?.message}
-              testId={'admin-trainers-input-phone'}
+              testId={'admin-input-phone'}
             />
           </div>
           <div>
@@ -152,7 +152,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'email'}
               error={errors.email?.message}
-              testId={'admin-trainers-input-email'}
+              testId={'admin-input-email'}
             />
             <Input
               register={register}
@@ -160,7 +160,7 @@ const AdminTrainerForm = () => {
               inputType={'text'}
               inputName={'city'}
               error={errors.city?.message}
-              testId={'admin-trainers-input-city'}
+              testId={'admin-input-city'}
             />
             <Input
               register={register}
@@ -168,7 +168,7 @@ const AdminTrainerForm = () => {
               inputType={'number'}
               inputName={'salary'}
               error={errors.salary?.message}
-              testId={'admin-trainers-input-salary'}
+              testId={'admin-input-salary'}
             />
             {!id && (
               <Input
@@ -177,7 +177,7 @@ const AdminTrainerForm = () => {
                 inputType={'text'}
                 inputName={'password'}
                 error={errors.password?.message}
-                testId={'admin-trainers-input-password'}
+                testId={'admin-input-password'}
               />
             )}
             {id && (
@@ -190,7 +190,7 @@ const AdminTrainerForm = () => {
                   value={watch('isActive')}
                   inputName={'isActive'}
                   error={errors.isActive}
-                  testId={'admin-trainers-input-checkbox'}
+                  testId={'admin-input-checkbox'}
                 />
               </div>
             )}
@@ -202,7 +202,7 @@ const AdminTrainerForm = () => {
             text={id ? 'Update' : 'Add'}
             type="submit"
             info={'submit'}
-            testId={'admin-trainers-button-submit-form'}
+            testId={'admin-button-submit-form'}
           />
         </div>
       </SharedForm>

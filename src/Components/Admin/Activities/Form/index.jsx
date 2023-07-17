@@ -6,7 +6,7 @@ import styles from './form.module.css';
 import { putActivities, postActivities } from 'Redux/activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import activityValidation from 'Validations/activities';
+import activityValidation from 'Validations/Admin/activities';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Container from 'Components/Shared/Container';
 import SharedForm from 'Components/Shared/Form';
@@ -96,7 +96,7 @@ const Form = () => {
       <SharedForm onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.head}>
           {' '}
-          <div id="admin-activities-form-go-back" className={styles.arrow} onClick={handleCancel}>
+          <div id="admin-form-go-back" className={styles.arrow} onClick={handleCancel}>
             <ArrowBackIosNewIcon size={35} />
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Activity' : 'Add Activity'}</h2>
@@ -107,7 +107,7 @@ const Form = () => {
           inputType="text"
           labelName="Activity"
           error={errors.name?.message}
-          testId={'admin-activity-input-name'}
+          testId={'admin-input-name'}
         />
         <InputComponent
           register={register}
@@ -115,7 +115,7 @@ const Form = () => {
           inputType="text"
           labelName="Description"
           error={errors.description?.message}
-          testId={'admin-activity-input-description'}
+          testId={'admin-input-description'}
         />
         {id && (
           <InputComponent
@@ -125,7 +125,7 @@ const Form = () => {
             inputName={'isActive'}
             value={watch('isActive')}
             error={errors.isActive}
-            testId={'admin-activity-input-checkbox'}
+            testId={'admin-input-checkbox'}
           />
         )}
         <div className={styles.buttonContainer}>
@@ -133,7 +133,7 @@ const Form = () => {
             text={id ? 'Update' : 'Add'}
             type={'submit'}
             info={'submit'}
-            testId={'admin-activity-button-submit-form'}
+            testId={'admin-button-submit-form'}
           />
         </div>
       </SharedForm>

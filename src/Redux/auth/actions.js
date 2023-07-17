@@ -8,7 +8,7 @@ import {
   LOGOUT_ERROR,
   LOGOUT_PENDING,
   LOGOUT_SUCCESS,
-  SET_USER_ROLE,
+  SET_USER_AUTH,
   UPDATE_USER,
   SIGN_UP_PENDING,
   SIGN_UP_SUCCESS,
@@ -73,10 +73,10 @@ export const logoutError = (error) => {
   };
 };
 
-export const setUserRole = (role) => {
+export const setUserAuth = (data) => {
   return {
-    type: SET_USER_ROLE,
-    payload: role
+    type: SET_USER_AUTH,
+    payload: data
   };
 };
 

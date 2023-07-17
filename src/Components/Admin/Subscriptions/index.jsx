@@ -127,7 +127,7 @@ const Subscriptions = () => {
           <Table
             title={showInactive ? 'Subscriptions History' : 'Subscriptions'}
             historyAction={handleToggleInactive}
-            buttonId={'admin-subscriptions-add-button'}
+            buttonId={'admin-add-button'}
             addClick={handleAdd}
             data={
               showInactive
@@ -138,9 +138,9 @@ const Subscriptions = () => {
             columnTitles={['Member', 'Class', 'Date', 'Active']}
             handleUpdateItem={handleEdit}
             handleDeleteItem={handleDeleteSubscription}
-            testId={'admin-subscriptions-table'}
-            testCancelId={'admin-subscriptions-icon-delete'}
-            testEditId={'admin-subscriptions-icon-edit'}
+            testId={'admin-table'}
+            testCancelId={'admin-icon-delete'}
+            testEditId={'admin-icon-edit'}
             showButtons={showButtons}
             showNumberColumn={!showButtons}
             showOrderButton={true}
@@ -152,8 +152,7 @@ const Subscriptions = () => {
             title={titleModal}
             body={bodyModal}
             onConfirm={handleConfirmDelete}
-            closeTestId={'admin-subscriptions-button-close-success-modal'}
-            confirmId={''}
+            confirmId={'admin-button-confirm-delete-modal'}
             closeId={'admin-button-close-success-modal'}
           />
         </Container>

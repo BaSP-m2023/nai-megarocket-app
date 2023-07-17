@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { trainerUpdateValidation } from 'Validations/trainers';
+import { trainerUpdateValidation } from 'Validations/Admin/trainers';
 import styles from './profile.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input/index';
@@ -119,7 +119,7 @@ const TrainerForm = () => {
               inputName={'firstName'}
               error={errors.firstName?.message}
               disabled={!editMode}
-              testId={'trainers-input-first-name'}
+              testId={'trainer-input-first-name'}
             />
             <Input
               register={register}
@@ -128,7 +128,7 @@ const TrainerForm = () => {
               inputName={'lastName'}
               error={errors.lastName?.message}
               disabled={!editMode}
-              testId={'trainers-input-last-name'}
+              testId={'trainer-input-last-name'}
             />
             <Input
               register={register}
@@ -137,7 +137,7 @@ const TrainerForm = () => {
               inputName={'dni'}
               error={errors.dni?.message}
               disabled={true}
-              testId={'trainers-input-dni'}
+              testId={'trainer-input-dni'}
             />
           </div>
           <div className={`${styles.formColumn} ${styles.formRight}`}>
@@ -148,7 +148,7 @@ const TrainerForm = () => {
               inputName={'phone'}
               error={errors.phone?.message}
               disabled={!editMode}
-              testId={'trainers-input-phone'}
+              testId={'trainer-input-phone'}
             />
             <Input
               register={register}
@@ -157,7 +157,7 @@ const TrainerForm = () => {
               inputName={'city'}
               error={errors.city?.message}
               disabled={!editMode}
-              testId={'trainers-input-city'}
+              testId={'trainer-input-city'}
             />
             <Input
               register={register}
@@ -166,7 +166,7 @@ const TrainerForm = () => {
               inputName={'email'}
               error={errors.email?.message}
               disabled={!editMode}
-              testId={'trainers-input-email'}
+              testId={'trainer-input-email'}
             />
           </div>
           <div className={styles.buttonContainer}>
@@ -176,7 +176,7 @@ const TrainerForm = () => {
                 text={'Edit'}
                 type={'submit'}
                 clickAction={handleEnableEditMode}
-                testId={'trainers-button-edit-form'}
+                testId={'trainer-button-edit-form'}
               />
             )}
             {editMode && (
@@ -186,13 +186,13 @@ const TrainerForm = () => {
                     text={'Cancel'}
                     type={'cancel'}
                     clickAction={handleDisableEditMode}
-                    testId={'trainers-button-cancel-form'}
+                    testId={'trainer-button-cancel-form'}
                   />
                   <Button
                     text={'Confirm'}
                     type={'submit'}
                     info={'submit'}
-                    testId={'trainers-button-submit-form'}
+                    testId={'trainer-button-submit-form'}
                   />
                 </div>
               </>

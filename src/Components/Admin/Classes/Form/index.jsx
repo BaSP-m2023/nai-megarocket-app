@@ -7,7 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { editClass, addClass } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
 import { getTrainers } from 'Redux/trainers/thunks';
-import classValidation from 'Validations/classes';
+import classValidation from 'Validations/Admin/classes';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
@@ -146,7 +146,7 @@ const Form = () => {
         <div className={styles.container}>
           <div className={styles.head}>
             {' '}
-            <div id="admin-classes-form-go-back" className={styles.arrow} onClick={handleCancel}>
+            <div id="admin-form-go-back" className={styles.arrow} onClick={handleCancel}>
               <FiArrowLeft size={35} />
             </div>
             <h2 className={styles.formTitle}> {id ? 'Update Class' : 'Add Class'}</h2>
@@ -164,10 +164,14 @@ const Form = () => {
                       multiple
                       value={field.value || []}
                       onChange={(e) => field.onChange(e.target.value)}
-                      id={'admin-classes-input-day'}
+                      id={'admin-input-day'}
                     >
                       {daysOfWeek.map((day) => (
-                        <MenuItem key={day} value={day}>
+                        <MenuItem
+                          key={day}
+                          value={day}
+                          id={'admin-input-day-' + day.toString().toLowerCase()}
+                        >
                           {day}
                         </MenuItem>
                       ))}
@@ -186,10 +190,10 @@ const Form = () => {
                       {...field}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      id={'admin-classes-input-day'}
+                      id={'admin-input-hour'}
                     >
                       {hoursOfDay.map((hour) => (
-                        <MenuItem key={hour} value={hour}>
+                        <MenuItem key={hour} value={hour} id={'admin-input-hour-' + hour}>
                           {hour}
                         </MenuItem>
                       ))}
@@ -212,10 +216,14 @@ const Form = () => {
                       {...field}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      id={'admin-classes-input-day'}
+                      id={'admin-input-trainer'}
                     >
-                      {trainers.map((trainer) => (
-                        <MenuItem key={trainer._id} value={trainer._id}>
+                      {trainers.map((trainer, index) => (
+                        <MenuItem
+                          key={trainer._id}
+                          value={trainer._id}
+                          id={`admin-input-trainer-` + index}
+                        >
                           {trainer.firstName}
                         </MenuItem>
                       ))}
@@ -231,7 +239,7 @@ const Form = () => {
                 fullWidth
                 error={errors.activity?.message ? true : false}
               >
-                <InputLabel id="day-label">Activity</InputLabel>
+                <InputLabel id="activity-label">Activity</InputLabel>
                 <Controller
                   control={control}
                   name="activity"
@@ -240,10 +248,14 @@ const Form = () => {
                       {...field}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
-                      id={'admin-classes-input-day'}
+                      id={'admin-input-activity'}
                     >
-                      {activities.map((activity) => (
-                        <MenuItem key={activity._id} value={activity._id}>
+                      {activities.map((activity, index) => (
+                        <MenuItem
+                          key={activity._id}
+                          value={activity._id}
+                          id={'admin-input-activity-' + index}
+                        >
                           {activity.name}
                         </MenuItem>
                       ))}
@@ -258,7 +270,7 @@ const Form = () => {
                 inputType={'number'}
                 inputName={'slots'}
                 error={errors.slots?.message}
-                testId={'admin-classes-input-slots'}
+                testId={'admin-input-slots'}
               />
             </div>
           </div>
@@ -268,7 +280,7 @@ const Form = () => {
             type="submit"
             info="submit"
             text={id ? 'Update' : 'Add'}
-            testId={'admin-classes-button-submit-form'}
+            testId={'admin-button-submit-form'}
           />
         </div>
       </form>

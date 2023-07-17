@@ -4,7 +4,7 @@ import { putAdmin, postAdmin } from 'Redux/admins/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import adminsValidation from 'Validations/admins';
+import adminsValidation from 'Validations/SuperAdmin/admins';
 import styles from './form.module.css';
 import Button from 'Components/Shared/Button';
 import Input from 'Components/Shared/Input';
@@ -12,7 +12,7 @@ import Container from 'Components/Shared/Container';
 import { FiArrowLeft } from 'react-icons/fi';
 import { toast, Toaster } from 'react-hot-toast';
 
-import ChangePasswordModal from 'Components/Shared/ChangePasswordModal';
+import ChangePasswordModal from 'Components/SuperAdmin/Admins/Form/ChangePasswordModal';
 
 const Form = () => {
   const history = useHistory();

@@ -105,16 +105,16 @@ const Members = () => {
         <Container>
           <Table
             title={'Members'}
-            buttonId={'admin-members-add-button'}
+            buttonId={'admin-add-button'}
             addClick={handleAdd}
             data={membersData}
             handleDeleteItem={handleDelete}
             handleUpdateItem={handleEdit}
-            columnTitles={['Name', 'Phone Number', 'Email', 'Membership', 'Active']}
-            properties={['name', 'phone', 'email', 'membership', 'isActive']}
-            testId={'admin-member-table'}
-            testCancelId={'admin-member-icon-delete'}
-            testEditId={'admin-member-icon-edit'}
+            columnTitles={['Name', 'Email', 'Membership', 'Active']}
+            properties={['name', 'email', 'membership', 'isActive']}
+            testId={'admin-table'}
+            testCancelId={'admin-icon-delete'}
+            testEditId={'admin-icon-edit'}
           />
           <ConfirmModal
             open={showAlert}
@@ -123,9 +123,9 @@ const Members = () => {
             title={title}
             body={alertMessage}
             onConfirm={handleConfirmDelete}
-            id="admin-members-confirm-modal"
-            confirmId={'button-confirm-delete-modal'}
-            closeId={'button-close-modal'}
+            id="admin-confirm-modal"
+            confirmId={'admin-button-confirm-delete-modal'}
+            closeId={'admin-button-close-modal'}
           />
         </Container>
       ) : (
