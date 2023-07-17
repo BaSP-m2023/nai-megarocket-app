@@ -22,15 +22,17 @@ const Modal = (data) => {
   };
 
   return (
-    <div className={styles.modalContainer}>
+    <div id="trainer-modal" className={styles.modalContainer}>
       <div className={styles.modalContentDefault}>
         <div className={styles.closeContainer}>
-          <div className={styles.close} onClick={onCloseModal}>
+          <div id="trainer-close-modal" className={styles.close} onClick={onCloseModal}>
             <BsXLg />
           </div>
         </div>
-        <div className={styles.activity}>{data.activity}</div>
-        <div className={styles.centerTitle}>
+        <div id="trainer-class-name" className={styles.activity}>
+          {data.activity}
+        </div>
+        <div id="trainer-class-information" className={styles.centerTitle}>
           Class {data.day.length > 1 ? data.day.join(' - ') : data.day} {data.hour} Hs
         </div>
         <div className={styles.trainer}>
