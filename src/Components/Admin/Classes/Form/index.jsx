@@ -131,6 +131,10 @@ const Form = () => {
     history.push('/admins/classes');
   };
 
+  const setHours = (str) => {
+    return str.replace(':', '-');
+  };
+
   return (
     <Container>
       <Toaster
@@ -198,7 +202,7 @@ const Form = () => {
                       id={'admin-input-hour'}
                     >
                       {hoursOfDay.map((hour) => (
-                        <MenuItem key={hour} value={hour} id={'admin-input-hour-' + hour}>
+                        <MenuItem key={hour} value={hour} id={`admin-input-hour-${setHours(hour)}`}>
                           {hour}
                         </MenuItem>
                       ))}

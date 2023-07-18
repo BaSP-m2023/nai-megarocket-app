@@ -225,7 +225,7 @@ const Classes = () => {
         <Container>
           <div className={styles.container}>
             <div className={styles.headerContainer}>
-              <div className={styles.titleContainer}>
+              <div>
                 <h2 className={styles.title}>Scheduled Classes</h2>
               </div>
               <div className={styles.select}>
