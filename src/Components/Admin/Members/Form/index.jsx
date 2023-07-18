@@ -55,6 +55,7 @@ const MemberForm = () => {
   const onSubmit = (data) => {
     if (id) {
       memberUpdateFunction(id, data);
+      delete data.isActive;
       delete data.password;
     } else {
       memberAddFunction(data);
@@ -207,7 +208,12 @@ const MemberForm = () => {
               error={errors.postalCode?.message}
               testId={'admin-input-zip'}
             />
-            <FormControl variant="standard" fullWidth error={errors.membership?.message}>
+            <FormControl
+              sx={{ width: '20vw', marginTop: '5px' }}
+              variant="standard"
+              fullWidth
+              error={errors.membership?.message}
+            >
               <InputLabel id="Memberships">Memberships</InputLabel>
               <Select {...register('membership')} id={'admin-input-membership'}>
                 {membership.map((membership) => (
@@ -222,15 +228,17 @@ const MemberForm = () => {
               </Select>
               <FormHelperText>{errors.membership?.message}</FormHelperText>
             </FormControl>
-            <Input
-              register={register}
-              labelName={'Active ?'}
-              value={watch('isActive')}
-              inputType={'isActive'}
-              inputName={'isActive'}
-              error={errors.isActive}
-              testId={'admin-input-checkbox'}
-            />
+            {id && (
+              <Input
+                register={register}
+                labelName={'Active ?'}
+                value={watch('isActive')}
+                inputType={'isActive'}
+                inputName={'isActive'}
+                error={errors.isActive}
+                testId={'admin-input-checkbox'}
+              />
+            )}
           </div>
           <div className={styles.buttonContainer}>
             <Button
