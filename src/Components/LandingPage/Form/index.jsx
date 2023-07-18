@@ -38,7 +38,7 @@ const ContactForm = () => {
   return (
     <div className={styles.formContainer}>
       <h2>contact us</h2>
-      <Form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputsDiv}>
           <div className={styles.leftFieldset}>
             <Input
@@ -48,6 +48,7 @@ const ContactForm = () => {
               inputName={'firstName'}
               error={errors.firstName?.message}
               testId={'landing-input-first-name'}
+              className={styles.input}
             />
             <Input
               register={register}

@@ -3,7 +3,6 @@ import styles from './landing.module.css';
 import stylesJoin from './join.module.css';
 import stylesTrainers from './trainers.module.css';
 import Footer from 'Components/Footer';
-import Button from 'Components/Shared/Button';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import ContactForm from './Form';
 import Header from 'Components/Shared/Header/index';
@@ -20,27 +19,18 @@ const Landing = () => {
       <Header />
       <div className={styles.container}>
         <div className={styles.imgPortrait}>
-          <img
-            src="/assets/images/landing/portrait.png"
-            alt="gym image"
-            className={styles.imgPortrait}
-          />
+          <img src="/assets/images/landing/portrait.png" alt="gym image" />
           <div className={styles.overlay}>
             <div className={styles.content}>
               <img src="/assets/images/logos/logo-4.png" alt="gym image" />
-              <p>
-                it&apos;s gym <span className={styles.bullet}>&#8226;</span> it&apos;s life
-              </p>
+              <p>it&apos;s gym &#8226; it&apos;s life</p>
             </div>
           </div>
         </div>
         <div className={stylesJoin.joinButtonDiv}>
-          <Button
-            testId={'login-button-register-1'}
-            type="submit"
-            text={'join our gym'}
-            clickAction={handleRegister}
-          />
+          <button type="submit" onClick={handleRegister}>
+            join our gym
+          </button>
         </div>
         <div className={stylesTrainers.trainerContainer}>
           <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer1}`}></div>
@@ -50,23 +40,19 @@ const Landing = () => {
           <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer5}`}></div>
         </div>
         <div className={stylesJoin.joined}>
-          <p>be fit &#8226; be happy &#8226; be megarocket</p>
+          <p>be fit</p>
+          <p className={stylesJoin.dot}>&nbsp;&#8226;&nbsp;</p>
+          <p>be happy</p>
+          <p className={stylesJoin.dot}>&nbsp;&#8226;&nbsp;</p>
+          <p>be megarocket</p>
         </div>
         <div className={stylesJoin.landscape}>
-          <Button
-            testId={'login-button-register-2'}
-            type="submit"
-            className={stylesJoin.joinButton}
-            text={'join'}
-            clickAction={handleRegister}
-          />
-          <Button
-            testId={'login-button-register'}
-            type="submit"
-            className={stylesJoin.joinButton}
-            text={'now'}
-            clickAction={handleRegister}
-          />
+          <button type="submit" className={stylesJoin.joinButtonJoin} onClick={handleRegister}>
+            <span>join</span>
+          </button>
+          <button type="submit" className={stylesJoin.joinButtonNow} onClick={handleRegister}>
+            <span>now</span>
+          </button>
         </div>
         <ContactForm />
       </div>

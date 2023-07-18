@@ -8,17 +8,10 @@
   box-shadow: none;
   padding: 0;
   margin: 0;
+  width: 100%;
   border: none;
   box-shadow: none;
   padding-bottom: 10vh;
-}
-
-.formContainer form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: none;
 }
 
 .formContainer h2 {
@@ -27,16 +20,23 @@
   cursor: default;
 }
 
-Input:hover {
-  border-color: black;
-  transition: 1s ease;
+.formContainer form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .inputsDiv {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  width: 90vw;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .leftFieldset {
@@ -53,15 +53,8 @@ Input:hover {
   align-items: center;
 }
 
-/* .buttonsDiv Button {
-  border: none;
-  border-radius: 0;
-  background-color: black;
-  text-transform: uppercase;
-  transition: 1s ease;
+@media screen and (max-width: 601px) {
+  .inputsDiv {
+    flex-direction: column;
+  }
 }
-
-.buttonsDiv Button:hover {
-  background-color: #157CAA;
-  transition: 1s ease;
-} */
