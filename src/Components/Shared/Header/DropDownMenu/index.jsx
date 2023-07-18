@@ -83,17 +83,19 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
     <>
       <div className="menu-container" ref={menuRef}>
         <div
-          id="header-button-avatar"
           className="menu-trigger"
           onClick={() => {
             setOpen(!open);
           }}
         >
           <div className="avatar">
-            <Avatar {...stringAvatar(`${userData?.firstName} ${userData?.lastName}`)} />
+            <Avatar
+              id="header-button-avatar"
+              {...stringAvatar(`${userData?.firstName} ${userData?.lastName}`)}
+            />
           </div>
 
-          <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
+          <div id="dropdown-menu" className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
             <p className="user-name">
               {' '}
               {userData?.firstName} {userData?.lastName}

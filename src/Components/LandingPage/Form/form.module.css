@@ -8,17 +8,10 @@
   box-shadow: none;
   padding: 0;
   margin: 0;
-  border: none!important;
-  box-shadow: none !important;
-  padding-bottom: 10vh;
-}
-
-.formContainer form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  border: none;
   box-shadow: none;
+  padding-bottom: 10vh;
 }
 
 .formContainer h2 {
@@ -27,27 +20,23 @@
   cursor: default;
 }
 
-.input {
-  font-size: 1.2rem;
-  margin: 3vh 0;
-  width: 25vw!important;
-  height: 10vh!important;
-  border-radius: 0!important;
-  border-color: rgb(0, 0, 0, 0.2)!important;
-  padding: 0 2vw;
-  transition: 1s ease;
-}
-
-Input:hover {
-  border-color: black!important;
-  transition: 1s ease;
+.formContainer form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .inputsDiv {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  width: 90vw;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .leftFieldset {
@@ -64,15 +53,8 @@ Input:hover {
   align-items: center;
 }
 
-.buttonsDiv Button {
-  border: none;
-  border-radius: 0;
-  background-color: black;
-  text-transform: uppercase;
-  transition: 1s ease;
-}
-
-.buttonsDiv Button:hover {
-  color: #157CAA;
-  transition: 1s ease;
+@media screen and (max-width: 601px) {
+  .inputsDiv {
+    flex-direction: column;
+  }
 }

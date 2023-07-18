@@ -123,14 +123,10 @@ const ChangePasswordModal = ({ show, closeModal }) => {
               <Button
                 type="cancel"
                 text={'Cancel'}
-                testId={'button-back-super-admin-admin-password-modal'}
+                testId={'super-admin-button-cancel-modal'}
                 clickAction={closeModal}
               />
-              <Button
-                type="submit"
-                testId={'button-super-admin-admins-confirm-change-password'}
-                text={'Confirm'}
-              />
+              <Button type="submit" testId={'super-admin-button-confirm-modal'} text={'Confirm'} />
             </div>
           </form>
         </div>

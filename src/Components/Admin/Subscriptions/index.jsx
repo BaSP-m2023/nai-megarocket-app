@@ -100,13 +100,13 @@ const Subscriptions = () => {
     const classInfo = classes?.find((c) => c._id === item.classes?._id);
     return {
       ...item,
-      memberName: `${item.member.firstName} ${item.member.lastName}`,
+      memberName: `${item.member?.firstName} ${item.member?.lastName}`,
       classFound:
         item.classes === null
           ? 'Class not found'
-          : item.classes.activity === null
+          : item.classes?.activity === null
           ? 'Activity not found'
-          : `${classInfo.activity.name} | ${classInfo.hour} | ${classInfo.day} | ${classInfo.trainer.firstName} ${classInfo.trainer.lastName}`
+          : `${classInfo?.activity?.name} | ${classInfo?.hour} | ${classInfo?.day} | ${classInfo?.trainer?.firstName} ${classInfo?.trainer?.lastName}`
     };
   });
 
@@ -131,7 +131,7 @@ const Subscriptions = () => {
             addClick={handleAdd}
             data={
               showInactive
-                ? subscriptionsData
+                ? subscriptionsData.filter((subscription) => !subscription.isActive)
                 : subscriptionsData.filter((subscription) => subscription.isActive)
             }
             properties={['memberName', 'classFound', 'date', 'isActive']}

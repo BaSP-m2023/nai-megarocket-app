@@ -116,7 +116,7 @@ const Modal = (data) => {
             Slots: {data.slotCount} / {data.slot}
           </div>
         )}
-        {data.membership === 'Classic' ? (
+        {data.membership === 'Classic' || data.membership === 'none' ? (
           <div className={styles.center}>
             You cannot enroll in classes. Upgrade your membership!
           </div>

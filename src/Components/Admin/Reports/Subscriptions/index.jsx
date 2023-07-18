@@ -6,10 +6,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { PieChart } from '@mui/x-charts/PieChart';
+import Paper from '@mui/material/Paper';
+import { Chip, Divider } from '@mui/material';
 
 const ReportsSubscriptions = () => {
   const subscriptions = useSelector((state) => state.subscriptions.data);
-
   const subscriptionDates = subscriptions.map((subscription) => parseISO(subscription.date));
 
   const currentDate = new Date();
@@ -34,7 +35,7 @@ const ReportsSubscriptions = () => {
 
   const months = Object.keys(subscriptionsByMonth);
   const subscriptionCounts = Object.values(subscriptionsByMonth);
-
+  const subscriptionActive = subscriptions.filter((sub) => sub.isActive === true);
   const subscriptionsByClass = {};
   subscriptions?.forEach((subscription) => {
     if (subscription?.isActive) {
@@ -47,11 +48,11 @@ const ReportsSubscriptions = () => {
   });
 
   const activityNames = [
-    ...new Set(subscriptions.map((subscription) => subscription?.classes?.activity?.name))
+    ...new Set(subscriptionActive.map((subscription) => subscription?.classes?.activity?.name))
   ];
 
   const activityCount = {};
-  subscriptions.forEach((subscription) => {
+  subscriptionActive.forEach((subscription) => {
     const activityName = subscription?.classes?.activity?.name;
     if (activityName) {
       if (activityCount[activityName]) {
@@ -66,25 +67,31 @@ const ReportsSubscriptions = () => {
     value: activityCount[name] || 0
   }));
   return (
-    <Stack direction="row" marginTop="80px">
+    <Stack direction="row" flexWrap="wrap" justifyContent="center" gap="20px" marginTop="80px">
       {months.length > 0 && subscriptionCounts.length > 0 ? (
         <>
-          <Box direction="row" width="100%" textAlign="center">
-            <Typography padding="5%" fontWeight="bold">
-              Monthly class subscriptions
+          <Paper elevation={7} direction="row" width="100%" textAlign="center">
+            <Typography padding={2} variant={'h5'} textAlign="center">
+              Class subscriptions
             </Typography>
+            <Divider>
+              <Chip label={`P/Month: ${(subscriptions.length / 12).toFixed(2)} `} />
+            </Divider>
             <LineChart
               xAxis={[{ scaleType: 'band', data: months }]}
               series={[{ data: subscriptionCounts }]}
               width={800}
               height={300}
             />
-          </Box>
-          <Box direction="row" width="100%" textAlign="center">
-            <Typography padding="5%" fontWeight="bold">
+          </Paper>
+          <Paper elevation={7} direction="row" width="100%" textAlign="center">
+            <Typography padding={2} variant={'h5'} textAlign="center">
               Active class subscriptions by activity
             </Typography>
-            <Box display="flex" justifyContent="center">
+            <Divider>
+              <Chip label={`Total: ${subscriptionActive.length} `} />
+            </Divider>
+            <Box display="flex" padding={5} width={720} justifyContent="center">
               <PieChart
                 series={[
                   {
@@ -98,7 +105,7 @@ const ReportsSubscriptions = () => {
                 height={300}
               />
             </Box>
-          </Box>
+          </Paper>
         </>
       ) : (
         <Typography fontWeight="bold">No data available for the chart</Typography>
