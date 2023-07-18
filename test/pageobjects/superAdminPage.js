@@ -97,9 +97,59 @@ class SuperAdminPage {
   }
 
   get modalSuperAdmin() {
-    return $(
-      '#root > div.layout_center__DWPZJ > div > div.form_formContainer__czDrw > div.modal_modalOverlay__1DvR3 > div'
-    );
+    return $('#super-admin-delete-modal');
+  }
+
+  async clickOnAddBtn() {
+    await this.btnAdd.click();
+  }
+
+  async fillAdminForm(firstname, lastname, dni, password, email, phone, city) {
+    await browser.pause(2000);
+    await this.inputFirstName.setValue(firstname);
+    await this.inputLastName.setValue(lastname);
+    await this.inputDni.setValue(dni);
+    await this.inputPassword.setValue(password);
+    await this.inputEmail.setValue(email);
+    await this.inputPhoneNumber.setValue(phone);
+    await this.inputCity.setValue(city);
+  }
+
+  async clickOnSubmitBtn() {
+    await this.btnSubmit.click();
+  }
+
+  async clickOnEditIcon() {
+    await this.iconEdit.click();
+  }
+
+  async clickOnChangePasswordBtn() {
+    await this.iconEdit.click();
+  }
+
+  async changePhoneNumber(newPhone) {
+    await this.inputPhoneNumber.setValue(newPhone);
+  }
+
+  async changePassword(oldPass, newPass) {
+    await this.inputChangePassword.setValue(oldPass);
+    await this.inputRepeatPassword.setValue(newPass);
+  }
+
+  async clickOnConfirmBtn() {
+    await this.btnConfirmChangePassword.click();
+  }
+
+  async clickOnDeleteIcon() {
+    await this.iconDelete.click();
+  }
+
+  async clickOnConfirmDelete() {
+    await this.btnConfirmDelete.click();
+  }
+
+  async searching(name) {
+    await this.inputSearch.setValue(name);
   }
 }
 

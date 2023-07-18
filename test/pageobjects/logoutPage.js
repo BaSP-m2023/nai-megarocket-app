@@ -23,6 +23,22 @@ class LogoutPage {
   get btnLogoutModalConfirm() {
     return $('#logout-button-confirm-modal');
   }
+
+  get dropDownMenu() {
+    return $('#header-button-avatar > div.dropdown-menu.active');
+  }
+
+  async clickOnAvatarBtn() {
+    await this.btnHeaderAvatar.click();
+  }
+
+  async clickOnlogoutBtn() {
+    await this.btnLogout.click();
+  }
+
+  async clickOnConfirmLogoutBtn() {
+    await this.btnLogoutModalConfirm.click();
+  }
 }
 
 module.exports = new LogoutPage();

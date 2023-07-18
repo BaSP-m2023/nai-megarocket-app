@@ -59,31 +59,15 @@ class LandingPage {
   async clickOnJoinNowBtn() {
     await this.btnJoinNow.click();
   }
-  /*
-  async whatsappRedirection() {
-    await this.linkWhatsapp.click();
-  }
 
-  async facebookRedirection() {
-    await this.linkFacebook.click();
+  async scrollALittle() {
+    await browser.execute(() => {
+      const button = document.querySelector('#login-button-register-1');
+      if (button) {
+        button.scrollIntoView();
+      }
+    });
   }
-
-  async twitterRedirection() {
-    await this.linkTwitter.click();
-  }
-
-  async instagramRedirection() {
-    await this.linkInstagram.click();
-  }
-
-  async googleMapsRedirection() {
-    await this.linkGoogleMaps.click();
-  }
-
-  async emailRedirection() {
-    await this.linkEmail.click();
-  }
-*/
   async scrollDownToFooter() {
     await browser.execute(() => {
       const footer = document.querySelector('.footer');

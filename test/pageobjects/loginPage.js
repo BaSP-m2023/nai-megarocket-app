@@ -16,11 +16,11 @@ class LoginPage {
     return $('login-input-password');
   }
 
-  get inputRecoveryEmail() {
+  get inputRecoveryPasswordEmail() {
     return $('#recovery-password-input-email');
   }
 
-  get inputRepeatEmail() {
+  get inputRecoveryPasswordRepeatEmail() {
     return $('#recovery-password-input-repeat-email');
   }
 
@@ -36,6 +36,10 @@ class LoginPage {
     return $('#login-button-submit');
   }
 
+  get btnSendEmail() {
+    return $('#recovery-button-submit');
+  }
+
   get eyeBtnPassword() {
     return $('#login-eye-button');
   }
@@ -48,8 +52,8 @@ class LoginPage {
     return $('#login-button-create-account');
   }
 
-  get modalRecoveryPasswordLogin() {
-    return $('');
+  get modalRecoveryPassword() {
+    return $('#recovery-password-modal > div.MuiBox-root.css-40qdxc');
   }
 
   async clickOnIconLogin() {
@@ -64,6 +68,10 @@ class LoginPage {
 
   async clickOnBtnSubmit() {
     await this.btnSubmit.click();
+  }
+
+  async clickOnSendEmailBtn() {
+    await this.btnSendEmail.click();
   }
 }
 
