@@ -21,7 +21,7 @@ const Landing = () => {
       <div className={styles.container}>
         <div className={styles.imgPortrait}>
           <img
-            src="/assets/images/landing/portrait.jpg"
+            src="/assets/images/landing/portrait.png"
             alt="gym image"
             className={styles.imgPortrait}
           />

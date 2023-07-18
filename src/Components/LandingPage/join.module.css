@@ -61,9 +61,9 @@
   width: 100vw;
   height: 90vh;
   border: none;
-  background-image: url('/public/assets/images/landing/landscape.jpg');
+  background-image: url('/public/assets/images/landing/landing.png');
   background-size: cover;
-  background-position: center;
+  background-position: top;
   cursor: pointer;
 }
 

@@ -53,7 +53,7 @@ Input:hover {
   align-items: center;
 }
 
-.buttonsDiv Button {
+/* .buttonsDiv Button {
   border: none;
   border-radius: 0;
   background-color: black;
@@ -64,4 +64,4 @@ Input:hover {
 .buttonsDiv Button:hover {
   background-color: #157CAA;
   transition: 1s ease;
-}
+} */
