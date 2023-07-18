@@ -49,7 +49,11 @@ const Routes = () => {
       <PrivateRoute path="/admins" role="ADMIN" component={AdminRoutes} />
       <PrivateRoute path="/members" role="MEMBER" component={MemberRoutes} />
       <PrivateRoute path="/trainers" role="TRAINER" component={TrainerRoutes} />
+      <Route>
+        <Redirect to="/auth/not-allowed" />
+      </Route>
     </Switch>
   );
 };
+
 export default Routes;
