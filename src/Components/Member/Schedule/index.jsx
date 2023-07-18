@@ -9,6 +9,8 @@ import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import StarRateIcon from '@mui/icons-material/StarRate';
 
 const Schedule = () => {
   const dispatch = useDispatch();
@@ -82,6 +84,19 @@ const Schedule = () => {
     setMemberData(user);
   };
 
+  const membershipStyle = () => {
+    switch (memberData?.membership) {
+      case 'Only Classes':
+        return styles.membershipOnly;
+      case 'Classic':
+        return styles.membershipClassic;
+      case 'Black':
+        return styles.membershipBlack;
+      default:
+        return styles.membershipNone;
+    }
+  };
+
   const getClassButton = (hour, day) => {
     let classItem;
     if (activity === 'all') {
@@ -125,7 +140,12 @@ const Schedule = () => {
           }}
           className={suscriptionFound ? styles.addedButton : styles.classesButton}
         >
-          <div className={styles.buttonText}>{classItem.activity?.name}</div>
+          <div className={styles.activityContainer}>
+            <div className={styles.buttonText}>{classItem.activity?.name}</div>
+            <div className={`${classItem.slots <= slotCount ? styles.slotsFull : ''}`}>
+              {classItem.slots <= slotCount && <div>Full</div>}
+            </div>
+          </div>
           {!suscriptionFound
             ? `${classItem.trainer?.firstName}  ${classItem.trainer?.lastName}`
             : null}
@@ -134,7 +154,6 @@ const Schedule = () => {
               <BsCheckCircleFill /> Subscribed
             </div>
           )}
-          <div className={styles.slotsFull}>{classItem.slots <= slotCount && <div>Full</div>}</div>
         </div>
       );
     } else {
@@ -172,30 +191,36 @@ const Schedule = () => {
                 }}
               />
               <div className={styles.container}>
-                <div className={styles.header}>
-                  <h2 className={styles.title}>Scheduled Classes</h2>
-                  <h3 className={styles.title}>You membership: {memberData?.membership}</h3>
-                  <div className={styles.filterActivity}>
-                    <label className={styles.selectLabel} htmlFor="activity">
-                      Filter by activity:{' '}
-                    </label>
-                    <select
-                      className={styles.select}
-                      id="activity"
-                      value={activity}
-                      onChange={handleActivityChange}
-                    >
-                      <option value="all">All</option>
-                      {activities?.map((activityItem, index) => (
-                        <option
-                          value={activityItem.name}
-                          key={index}
-                          id={`member-schedule-select-activity-${activityItem.name}`}
-                        >
-                          {activityItem.name}
-                        </option>
-                      ))}
-                    </select>
+                <div className={styles.headerContainer}>
+                  <div>
+                    <h2 className={styles.title}>Scheduled Classes</h2>
+                  </div>
+                  <div className={styles.select}>
+                    <FormControl variant="standard" fullWidth>
+                      <InputLabel id="activity">Activity</InputLabel>
+                      <Select value={activity} onChange={handleActivityChange} id="activity">
+                        <MenuItem value="all">All</MenuItem>
+                        {activities?.map((activityItem, index) => (
+                          <MenuItem
+                            key={index}
+                            value={activityItem.name}
+                            id={`member-schedule-select-activity-${activityItem.name}`}
+                          >
+                            {activityItem.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className={`${styles.membershipContainer} ${membershipStyle()}`}>
+                    {memberData?.membership === 'none' ? (
+                      <p>Not membership</p>
+                    ) : (
+                      <>
+                        <StarRateIcon fontSize="small" style={{ paddingRight: '5px' }} />
+                        {memberData?.membership}
+                      </>
+                    )}
                   </div>
                 </div>
                 <table>

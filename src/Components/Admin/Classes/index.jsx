@@ -223,7 +223,7 @@ const Classes = () => {
         <Container>
           <div className={styles.container}>
             <div className={styles.headerContainer}>
-              <div className={styles.titleContainer}>
+              <div>
                 <h2 className={styles.title}>Scheduled Classes</h2>
               </div>
               <div className={styles.select}>
@@ -237,7 +237,8 @@ const Classes = () => {
                     <MenuItem value="all">All</MenuItem>
                     {activities?.map((activityItem, index) => (
                       <MenuItem key={index} value={activityItem.name}>
-                        {activityItem.name}
+                        {activityItem.name} id=
+                        {`admin-classes-select-activity-${activityItem.name}`}
                       </MenuItem>
                     ))}
                   </Select>

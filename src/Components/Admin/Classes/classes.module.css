@@ -20,6 +20,12 @@
   margin-bottom: 1%;
 }
 
+.headerContainer {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
 .title {
   text-align: center;
   font-size: 1.3rem;
@@ -33,12 +39,6 @@
   height: 40px;
   padding: 1%;
   margin-left: auto;
-}
-
-.headerContainer {
-  display: flex;
-  align-items: center;
-  border-radius: 5px;
 }
 
 .select {

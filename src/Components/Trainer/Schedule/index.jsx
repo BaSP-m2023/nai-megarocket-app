@@ -8,6 +8,7 @@ import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const Schedule = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const Schedule = () => {
   }));
   const trainer = useSelector((state) => state.auth?.user);
   const loading = useSelector((state) => state.classes?.loading);
-  const [activity, setActivity] = useState('');
+  const [activity, setActivity] = useState('all');
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -78,18 +79,24 @@ const Schedule = () => {
   const getClassButton = (hour, day) => {
     let classItem;
     if (activity === 'all') {
-      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
+      classItem = classes?.find(
+        (item) =>
+          item.day.includes(day) &&
+          item.hour === hour &&
+          item.trainer?.firstName === trainer?.firstName &&
+          item.activity?.name
+      );
     } else {
       classItem = classes?.find(
-        (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
+        (item) =>
+          item.day.includes(day) &&
+          item.hour === hour &&
+          item.activity?.name === activity &&
+          item.trainer?.firstName === trainer?.firstName
       );
     }
 
     if (classItem) {
-      const trainerFound = classes?.find(
-        (item) => item._id === classItem?._id && item.trainer?._id === trainer?._id
-      );
-
       const subscriptionsForClass = subscriptions?.filter(
         (item) => item.classes?._id === classItem?._id
       );
@@ -121,7 +128,7 @@ const Schedule = () => {
               membersClass: membersClass
             }));
           }}
-          className={trainerFound ? styles.addedButton : styles.classesButton}
+          className={styles.classesButton}
         >
           <div className={styles.buttonText}>{classItem.activity?.name}</div>
           {trainerName}
@@ -162,31 +169,26 @@ const Schedule = () => {
                 }}
               />
               <div className={styles.container}>
-                <div className={styles.header}>
-                  <h2 className={styles.title}>
-                    Scheduled Classes - Trainer: {trainer?.firstName}
-                  </h2>
-                  <div className={styles.filterActivity}>
-                    <label className={styles.selectLabel} htmlFor="activity">
-                      Filter by activity:{' '}
-                    </label>
-                    <select
-                      className={styles.select}
-                      id="activity"
-                      value={activity}
-                      onChange={handleActivityChange}
-                    >
-                      <option value="all">All</option>
-                      {activities?.map((activityItem, index) => (
-                        <option
-                          value={activityItem.name}
-                          key={index}
-                          id={`member-schedule-select-activity-${activityItem.name}`}
-                        >
-                          {activityItem.name}
-                        </option>
-                      ))}
-                    </select>
+                <div className={styles.headerContainer}>
+                  <div className={styles.titleContainer}>
+                    <h2 className={styles.title}>Scheduled Classes</h2>
+                  </div>
+                  <div className={styles.select}>
+                    <FormControl variant="standard" fullWidth>
+                      <InputLabel id="activity">Activity</InputLabel>
+                      <Select value={activity} onChange={handleActivityChange} id="activity">
+                        <MenuItem value="all">All</MenuItem>
+                        {activities?.map((activityItem, index) => (
+                          <MenuItem
+                            key={index}
+                            value={activityItem.name}
+                            id={`trainer-schedule-select-activity-${activityItem.name}`}
+                          >
+                            {activityItem.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                   </div>
                 </div>
                 <table>
