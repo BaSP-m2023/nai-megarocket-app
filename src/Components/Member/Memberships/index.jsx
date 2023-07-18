@@ -1,6 +1,7 @@
 import styles from './memberships.module.css';
 import Container from 'Components/Shared/Container';
 import { useSelector } from 'react-redux';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 const Memberships = () => {
   const member = useSelector((state) => state.auth?.user);
@@ -10,7 +11,7 @@ const Memberships = () => {
     <Container>
       <div className={styles.container}>
         <div className={styles.headerContainer}>
-          <div className={styles.header}>
+          <div>
             <h1 className={styles.title}>MEMBERSHIPS</h1>
             <div className={styles.line}></div>
             <p className={styles.paragraph}>
@@ -20,9 +21,9 @@ const Memberships = () => {
           </div>
         </div>
         <div className={styles.cardContainer}>
-          <div className={`${styles.card1} ${styles.card}`}>
-            <h3>ONLY CLASSES</h3>
-            <h2>$2500</h2>
+          <div className={`${styles.card} ${styles.card1}`}>
+            <h2>ONLY CLASSES</h2>
+            <h3>$2500</h3>
             <hr />
             <div className={styles.listDiv}>
               <ul>
@@ -31,19 +32,21 @@ const Memberships = () => {
               </ul>
             </div>
           </div>
-          <div className={`${styles.card2} ${styles.card}`}>
+          <div className={`${styles.card} ${styles.card2}`}>
             {!membership && (
-              <>
-                <div className={styles.upgradeStar}>Upgrade</div>
-              </>
+              <div className={styles.upgradeStar}>
+                <KeyboardDoubleArrowUpIcon className={styles.upgradeStarIcon} />
+                <p>upgrade</p>
+              </div>
             )}
             {membership === 'Only Classes' && (
-              <>
-                <div className={styles.upgradeStar}>Upgrade</div>
-              </>
+              <div className={styles.upgradeStar}>
+                <KeyboardDoubleArrowUpIcon className={styles.upgradeStarIcon} />
+                <p>upgrade</p>
+              </div>
             )}
-            <h3>CLASSIC</h3>
-            <h2>$4000</h2>
+            <h2>CLASSIC</h2>
+            <h3>$4000</h3>
             <hr />
             <div className={styles.listDiv}>
               <ul>
@@ -53,14 +56,15 @@ const Memberships = () => {
               </ul>
             </div>
           </div>
-          <div className={`${styles.card3} ${styles.card}`}>
+          <div className={`${styles.card} ${styles.card3}`}>
             {membership === 'Classic' && (
-              <>
-                <div className={styles.upgradeStar}>Upgrade</div>
-              </>
+              <div className={styles.upgradeStar}>
+                <KeyboardDoubleArrowUpIcon className={styles.upgradeStarIcon} />
+                <p>upgrade</p>
+              </div>
             )}
-            <h3>BLACK</h3>
-            <h2>$6000</h2>
+            <h2>BLACK</h2>
+            <h3>$6000</h3>
             <hr />
             <div className={styles.listDiv}>
               <ul>
