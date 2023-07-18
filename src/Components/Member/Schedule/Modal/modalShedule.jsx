@@ -84,10 +84,14 @@ const Modal = (data) => {
   };
 
   return (
-    <div className={styles.modalContainer}>
+    <div id="member-schedule-modal" className={styles.modalContainer}>
       <div className={styles.modalContentDefault}>
         <div className={styles.closeContainer}>
-          <div className={styles.close} onClick={onCloseModal}>
+          <div
+            id="member-schedule-modal-button-close"
+            className={styles.close}
+            onClick={onCloseModal}
+          >
             <BsXLg />
           </div>
         </div>
@@ -125,12 +129,22 @@ const Modal = (data) => {
         )}
         <div className={styles.buttonContainer}>
           {data.slot <= data.slotCount || data.membership === 'Classic' ? (
-            <Button type="cancel" text={<>Back</>} clickAction={onCloseModal} />
+            <Button
+              type="cancel"
+              text={<>Back</>}
+              clickAction={onCloseModal}
+              testId={'member-schedule-button-back-modal'}
+            />
           ) : (
             <Button
               type="cancel"
               text={data.idSuscription ? <>Unsubscribe</> : <>Subscribe</>}
               clickAction={handleSubscribe}
+              testId={
+                data.idSuscription
+                  ? 'member-schedule-modal-button-unsubscribe'
+                  : 'member-schedule-modal-button-subscribe'
+              }
             />
           )}
         </div>
