@@ -25,21 +25,19 @@ const Activities = () => {
         {activities ? (
           <>
             <div className={styles.headerContainer}>
-              <div className={styles.header}>
-                <h1 className={styles.title}>ACTIVITIES</h1>
-                <div className={styles.line}></div>
-                <p className={styles.paragraph}>
-                  These are all the activities available. If you want to try any of them subscribe
-                  to a class!
-                </p>
-              </div>
+              <h2>ACTIVITIES</h2>
+              <div className={styles.line}></div>
+              <p>
+                These are all the activities available. If you want to try any of them subscribe to
+                a class!
+              </p>
             </div>
             <div className={styles.cardsContainer}>
               {activities.map((activity, idx) => (
                 <div key={idx} className={`${styles.card} ${getColorClass(idx)}`}>
-                  <h2 className={styles.cardTitle}>{activity.name}</h2>
+                  <h2>{activity.name}</h2>
                   <hr />
-                  <p className={styles.cardDescription}>{activity.description}</p>
+                  <p>{activity.description}</p>
                 </div>
               ))}
             </div>
