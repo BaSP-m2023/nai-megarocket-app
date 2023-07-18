@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BadgeIcon from '@mui/icons-material/Badge';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Button, Divider, Typography } from '@mui/material';
+import { Button, Chip, Divider, Typography } from '@mui/material';
 
 const CalendarModal = (props) => {
   return (
@@ -22,20 +22,23 @@ const CalendarModal = (props) => {
     >
       <DialogTitle
         sx={{
-          backgroundColor: '#212121',
-          color: 'white',
+          color: 'black',
           display: 'flex',
           alignItems: 'center',
-          fontSize: '26px',
-          fontWeight: '600',
-          padding: '5px',
+          fontSize: '30px',
+          padding: '20px 0 5px 0',
           gap: '5px',
           justifyContent: 'center'
         }}
       >
         {props.classTitle}
       </DialogTitle>
-      <Divider />
+      <Divider variant="middle">
+        <Chip
+          sx={{ fontSize: '15px' }}
+          label={props.classDay?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')}
+        />
+      </Divider>
       <DialogContent
         sx={{
           padding: '20px 40px',
@@ -49,23 +52,32 @@ const CalendarModal = (props) => {
           variant="h6"
           id="alert-dialog-slide-description"
         >
-          <BadgeIcon sx={{ fontSize: '27px', color: '#212121' }} /> {props.classTrainer}
+          <BadgeIcon sx={{ fontSize: '27px', color: '#212121' }} />{' '}
+          {props.classTrainer ? props.classTrainer : 'Not Assigned'}
         </Typography>
-        <Typography variant="h6" id="alert-dialog-slide-description2">
-          {props.classDay?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')}
-        </Typography>
-        <Typography variant="h6" id="alert-dialog-slide-description3">
+
+        <Typography id="alert-dialog-slide-description3">
           Hour: {props.classHour} - Slots: {props.classSlots}
         </Typography>
       </DialogContent>
       <DialogActions
-        sx={{ padding: '0px 30px 15px 30px', display: 'flex', justifyContent: 'center' }}
+        sx={{ padding: '0px 30px 30px 30px', display: 'flex', justifyContent: 'center' }}
       >
-        <Button id={props.editTestId} onClick={props.handleUpdate} variant="outlined">
-          <EditRoundedIcon />
+        <Button
+          id={props.editTestId}
+          onClick={props.handleUpdate}
+          endIcon={<EditRoundedIcon />}
+          variant="contained"
+        >
+          Update
         </Button>
-        <Button id={props.editTestId} color="error" onClick={props.handleDelete} variant="outlined">
-          <DeleteIcon />
+        <Button
+          id={props.editTestId}
+          onClick={props.handleDelete}
+          endIcon={<DeleteIcon />}
+          variant="contained"
+        >
+          Delete
         </Button>
       </DialogActions>
     </Dialog>

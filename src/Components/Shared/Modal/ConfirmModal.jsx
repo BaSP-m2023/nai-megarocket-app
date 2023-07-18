@@ -47,7 +47,7 @@ export default function ConfirmModal({
           )}
           {title}
         </DialogTitle>
-        <Divider />
+        <Divider variant="middle" />
         <DialogContent sx={{ padding: '20px', minWidth: '300px' }}>
           <Typography id="alert-dialog-slide-description">{body}</Typography>
         </DialogContent>
