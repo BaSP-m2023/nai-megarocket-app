@@ -175,14 +175,20 @@ const Schedule = () => {
                   </div>
                   <div className={styles.select}>
                     <FormControl variant="standard" fullWidth>
-                      <InputLabel id="activity">Activity</InputLabel>
-                      <Select value={activity} onChange={handleActivityChange} id="activity">
+                      <InputLabel id="trainer-label-activity">Activity</InputLabel>
+                      <Select
+                        value={activity}
+                        onChange={handleActivityChange}
+                        id="trainer-select-activity"
+                      >
                         <MenuItem value="all">All</MenuItem>
                         {activities?.map((activityItem, index) => (
                           <MenuItem
                             key={index}
                             value={activityItem.name}
-                            id={`trainer-schedule-select-activity-${activityItem.name}`}
+                            id={`trainer-schedule-select-activity-${activityItem.name
+                              .toString()
+                              .toLowerCase()}`}
                           >
                             {activityItem.name}
                           </MenuItem>

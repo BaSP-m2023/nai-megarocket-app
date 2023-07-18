@@ -110,14 +110,13 @@ const InputComponent = ({
   );
 
   const renderIsActive = () => (
-    <div>
+    <div id={testId}>
       <FormControlLabel
         control={<Android12Switch checked={value} />}
         label={labelName}
         {...register(inputName)}
         name={inputName}
         disabled={disabled}
-        id={testId}
         variant="standard"
         size="small"
       />

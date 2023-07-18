@@ -8,9 +8,10 @@ import { getMembers } from 'Redux/members/thunks';
 import { getClasses } from 'Redux/classes/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
 import { useDispatch } from 'react-redux';
-import BarLoader from 'react-spinners/BarLoader';
 import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
+import { ClipLoader } from 'react-spinners';
+import { getTrainers } from 'Redux/trainers/thunks';
 
 const Reports = () => {
   const [activeComponent, setActiveComponent] = useState('subscriptions');
@@ -23,6 +24,7 @@ const Reports = () => {
         dispatch(getMembers());
         dispatch(getClasses());
         dispatch(getSubscriptions());
+        dispatch(getTrainers());
       } catch (error) {
         console.error('Error:', error);
       }
@@ -46,7 +48,7 @@ const Reports = () => {
   return (
     <Container>
       {loading ? (
-        <BarLoader color="#157CAA" />
+        <ClipLoader />
       ) : (
         <Box>
           <ButtonGroup setActiveComponent={setActiveComponent} />

@@ -131,6 +131,10 @@ const Form = () => {
     history.push('/admins/classes');
   };
 
+  const setHours = (str) => {
+    return str.replace(':', '-');
+  };
+
   return (
     <Container>
       <Toaster
@@ -138,7 +142,11 @@ const Form = () => {
           margin: '10vh 0 0 0'
         }}
       />
-      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.formContainer}
+        id="admin-classes-form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className={styles.container}>
           <div className={styles.head}>
             {' '}
@@ -176,7 +184,12 @@ const Form = () => {
                 />
                 <FormHelperText>{errors.day?.message}</FormHelperText>
               </FormControl>
-              <FormControl variant="standard" fullWidth error={errors.hour?.message ? true : false}>
+              <FormControl
+                sx={{ width: '20vw' }}
+                variant="standard"
+                fullWidth
+                error={errors.hour?.message ? true : false}
+              >
                 <InputLabel id="hour-label">Hour</InputLabel>
                 <Controller
                   control={control}
@@ -189,7 +202,7 @@ const Form = () => {
                       id={'admin-input-hour'}
                     >
                       {hoursOfDay.map((hour) => (
-                        <MenuItem key={hour} value={hour} id={'admin-input-hour-' + hour}>
+                        <MenuItem key={hour} value={hour} id={`admin-input-hour-${setHours(hour)}`}>
                           {hour}
                         </MenuItem>
                       ))}
