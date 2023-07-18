@@ -26,7 +26,7 @@ const MemberForm = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    mode: 'all',
+    mode: 'onBlur',
     resolver: joiResolver(memberValidation)
   });
 
