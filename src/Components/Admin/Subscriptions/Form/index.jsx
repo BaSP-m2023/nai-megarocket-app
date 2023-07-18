@@ -122,7 +122,12 @@ const Form = () => {
           </div>
           <h2 className={styles.formTitle}> {id ? 'Update Subscription' : 'Add Subscription'}</h2>
         </div>
-        <FormControl variant="standard" fullWidth error={errors.classes?.message}>
+        <FormControl
+          sx={{ width: '20vw' }}
+          variant="standard"
+          fullWidth
+          error={errors.classes?.message}
+        >
           <InputLabel id="classes-label">Classes</InputLabel>
           <Controller
             control={control}
@@ -161,7 +166,12 @@ const Form = () => {
           />
           <FormHelperText>{errors.classes?.message}</FormHelperText>
         </FormControl>
-        <FormControl variant="standard" fullWidth error={errors.member?.message}>
+        <FormControl
+          sx={{ width: '20vw' }}
+          variant="standard"
+          fullWidth
+          error={errors.member?.message}
+        >
           <InputLabel id="member-label">Member</InputLabel>
           <Controller
             control={control}

@@ -207,7 +207,12 @@ const MemberForm = () => {
               error={errors.postalCode?.message}
               testId={'admin-input-zip'}
             />
-            <FormControl variant="standard" fullWidth error={errors.membership?.message}>
+            <FormControl
+              sx={{ width: '20vw', marginTop: '5px' }}
+              variant="standard"
+              fullWidth
+              error={errors.membership?.message}
+            >
               <InputLabel id="Memberships">Memberships</InputLabel>
               <Select {...register('membership')} id={'admin-input-membership'}>
                 {membership.map((membership) => (
