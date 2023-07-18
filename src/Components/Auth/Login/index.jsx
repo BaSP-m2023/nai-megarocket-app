@@ -138,7 +138,11 @@ const Login = () => {
                   {...register('email')}
                   type={'text'}
                 />
-                {errors['email'] && <p className={styles.errorText}>{errors['email'].message}</p>}
+                {errors['email'] && (
+                  <p id="login-input-email-error" className={styles.errorText}>
+                    {errors['email'].message}
+                  </p>
+                )}
               </FormControl>
             </div>
             <div className={styles.inputsLogin}>
@@ -153,6 +157,7 @@ const Login = () => {
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
+                        id="login-eye-button"
                         aria-label="toggle password visibility"
                         onClick={() => setShowPassword(!showPassword)}
                         edge="end"
@@ -163,7 +168,9 @@ const Login = () => {
                   }
                 />
                 {errors['password'] && (
-                  <p className={styles.errorText}>{errors['password'].message}</p>
+                  <p id="login-input-password-error" className={styles.errorText}>
+                    {errors['password'].message}
+                  </p>
                 )}
               </FormControl>
             </div>

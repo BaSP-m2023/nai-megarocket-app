@@ -109,7 +109,7 @@ const Table = ({
             variant="standard"
             value={searchTerm}
             onChange={handleSearchChange}
-            testIdSearch={testIdSearch}
+            id={testIdSearch}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
