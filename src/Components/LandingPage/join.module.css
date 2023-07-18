@@ -20,7 +20,7 @@
   cursor: pointer;
   border: none;
   border-radius: 0;
-  color: black;
+  color: #212121;
   background-color: transparent;
   transition: 0.5s ease;
 }
@@ -47,6 +47,7 @@
   text-transform: uppercase;
   letter-spacing: 0.8rem;
   cursor: default;
+  color: #212121;
 }
 
 .landscape {
