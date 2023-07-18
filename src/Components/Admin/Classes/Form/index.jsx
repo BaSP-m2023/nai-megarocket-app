@@ -180,7 +180,12 @@ const Form = () => {
                 />
                 <FormHelperText>{errors.day?.message}</FormHelperText>
               </FormControl>
-              <FormControl variant="standard" fullWidth error={errors.hour?.message ? true : false}>
+              <FormControl
+                sx={{ width: '20vw' }}
+                variant="standard"
+                fullWidth
+                error={errors.hour?.message ? true : false}
+              >
                 <InputLabel id="hour-label">Hour</InputLabel>
                 <Controller
                   control={control}

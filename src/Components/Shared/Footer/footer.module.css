@@ -1,0 +1,10 @@
+.footerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.footerContainer p {
+  font-size: .7rem;
+}

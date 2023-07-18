@@ -30,6 +30,7 @@ const Classes = () => {
     activities: state.activities?.data.data,
     trainers: state.trainers?.data
   }));
+  const activeTrainers = trainers.filter((trainer) => trainer.isActive === true);
   const [activity, setActivity] = useState('all');
   const [trainer, setTrainer] = useState('all');
   const [calendarAlert, setCalendarAlert] = useState(false);
@@ -255,8 +256,8 @@ const Classes = () => {
                   <InputLabel id="admin-label-trainer">Select Trainer</InputLabel>
                   <Select value={trainer} onChange={handleTrainerChange} id="admin-select-trainer">
                     <MenuItem value="all">All</MenuItem>
-                    <MenuItem value="notAssign">Not Assign</MenuItem>
-                    {trainers?.map((trainerItem, index) => (
+
+                    {activeTrainers?.map((trainerItem, index) => (
                       <MenuItem
                         value={trainerItem.firstName + trainerItem.lastName}
                         key={index}

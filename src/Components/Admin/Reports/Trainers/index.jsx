@@ -4,12 +4,18 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import { Chip, Divider } from '@mui/material';
 
 const ReportsTrainers = () => {
   const classes = useSelector((state) => state.classes.data.data);
-
+  const trainers = useSelector((state) => state.trainers.data);
+  const activeTrainers = trainers?.filter((trainer) => trainer.isActive === true);
+  const validClasses = classes?.filter(
+    (gymClass) => gymClass?.trainer !== null && gymClass?.activity !== null
+  );
   const activityCount = {};
-  classes?.forEach((item) => {
+  validClasses?.forEach((item) => {
     const activity = item?.activity?.name;
     if (activity) {
       if (activityCount[activity]) {
@@ -26,7 +32,7 @@ const ReportsTrainers = () => {
   }));
 
   const trainersCount = {};
-  classes?.forEach((item) => {
+  validClasses?.forEach((item) => {
     const trainer = item?.trainer ? `${item?.trainer?.firstName}` : null;
     if (trainer) {
       if (trainersCount[trainer]) {
@@ -43,43 +49,53 @@ const ReportsTrainers = () => {
   }));
 
   return (
-    <Stack direction="row" marginTop="80px">
+    <Stack direction="row" flexWrap="wrap" justifyContent="center" gap="20px" marginTop="80px">
       {dataTrainers.length > 0 && dataActivity.length > 0 ? (
         <>
-          <Box textAlign="center">
-            <Typography padding="5%" fontWeight="bold">
-              Total class activities
+          <Paper elevation={7} padding={5} direction="row">
+            <Typography padding={2} variant={'h5'} textAlign="center">
+              Active Classes
             </Typography>
-            <PieChart
-              series={[
-                {
-                  data: dataActivity,
-                  labelKey: 'label',
-                  valueKey: 'value',
-                  innerRadius: 70
-                }
-              ]}
-              width={500}
-              height={300}
-            />
-          </Box>
-          <Box textAlign="center">
-            <Typography padding="5%" fontWeight="bold">
-              Total class trainers
+            <Divider>
+              <Chip label={`All: ${validClasses.length}`} />
+            </Divider>
+            <Box display="flex" padding={5} width={700} justifyContent="center">
+              <PieChart
+                series={[
+                  {
+                    data: dataActivity,
+                    labelKey: 'label',
+                    valueKey: 'value',
+                    innerRadius: 70
+                  }
+                ]}
+                width={500}
+                height={300}
+              />
+            </Box>
+          </Paper>
+          <Paper elevation={7} padding={5} direction="row">
+            <Typography padding={2} variant={'h5'} textAlign="center">
+              Trainers Classes
             </Typography>
-            <PieChart
-              series={[
-                {
-                  data: dataTrainers,
-                  labelKey: 'label',
-                  valueKey: 'value',
-                  innerRadius: 70
-                }
-              ]}
-              width={500}
-              height={300}
-            />
-          </Box>
+            <Divider>
+              <Chip label={`Active trainers: ${activeTrainers.length}`} />
+            </Divider>
+            <Box display="flex" padding={5} width={700} justifyContent="center">
+              <PieChart
+                series={[
+                  {
+                    data: dataTrainers,
+                    labelKey: 'label',
+                    valueKey: 'value',
+                    innerRadius: 70
+                  }
+                ]}
+                width={500}
+                height={300}
+              />
+            </Box>
+          </Paper>
         </>
       ) : (
         <Typography fontWeight="bold">No data available for the chart</Typography>

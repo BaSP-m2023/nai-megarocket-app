@@ -2,4 +2,54 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 90vh;
+}
+
+.notAllowedContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 30vw;
+  max-height: 90vh;
+}
+
+.notAllowedContainer > img {
+  width: 15vw;
+  margin-right: 5vw;
+}
+
+.notAllowedContainer > Button {
+  width: 6vw;
+  margin-top: 1rem;
+}
+
+.notAllowedContainer p,
+h3 {
+  margin: 0.3rem;
+  text-align: center;
+}
+
+.backLink {
+  font-size: 1rem;
+  font-weight: 550;
+  color: #157caa;
+  cursor: pointer;
+  font-weight: bolder;
+  margin-top: 1rem;
+}
+
+.backLink:hover {
+  color: black;
+}
+
+.notAllowedContainer2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 30vw;
+  max-height: 90vh;
+}
+
+.notAllowedContainer2 > img {
+  width: 10vw;
 }
