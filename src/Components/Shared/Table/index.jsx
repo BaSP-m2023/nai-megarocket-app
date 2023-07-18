@@ -109,7 +109,7 @@ const Table = ({
             variant="standard"
             value={searchTerm}
             onChange={handleSearchChange}
-            testIdSearch={testIdSearch}
+            id={testIdSearch}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -228,15 +228,17 @@ const Table = ({
         </table>
         <div className={styles.bottom}>
           <div className={styles.paginationContainer}>
-            <Pagination
-              count={totalPages}
-              page={currentPage}
-              onChange={(event, value) => setCurrentPage(value)}
-              color="primary"
-              renderItem={(item) => (
-                <PaginationItem component="li" {...item} id={`pagination-button-${item.page}`} />
-              )}
-            />
+            <ul>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={(event, value) => setCurrentPage(value)}
+                color="primary"
+                renderItem={(item) => (
+                  <PaginationItem component="div" {...item} id={`pagination-button-${item.page}`} />
+                )}
+              />
+            </ul>
           </div>
         </div>
       </div>
