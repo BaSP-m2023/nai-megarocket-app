@@ -124,9 +124,9 @@ const Modal = (data) => {
           <div className={styles.center}>You are not in this class</div>
         )}
         <div className={styles.buttonContainer}>
-          {data.slot <= data.slotCount ||
-          data.membership === 'Classic' ||
-          data.membership === 'none' ||
+          {(data.slot <= data.slotCount ||
+            data.membership === 'Classic' ||
+            data.membership === 'none') &&
           !data.idSuscription ? (
             <Button type="cancel" text={<>Back</>} clickAction={onCloseModal} />
           ) : (
