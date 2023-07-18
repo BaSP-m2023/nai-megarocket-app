@@ -16,8 +16,8 @@ const Activities = () => {
   const [bodyModal, setBodyModal] = useState('');
   const dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.activities.loading);
-  const activities = useSelector((state) => state.activities.data.data);
+  const loading = useSelector((state) => state.activities?.loading);
+  const activities = useSelector((state) => state.activities?.data?.data);
 
   useEffect(() => {
     toast.remove();

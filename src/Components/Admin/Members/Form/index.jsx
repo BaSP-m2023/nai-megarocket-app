@@ -55,6 +55,7 @@ const MemberForm = () => {
   const onSubmit = (data) => {
     if (id) {
       memberUpdateFunction(id, data);
+      delete data.isActive;
       delete data.password;
     } else {
       memberAddFunction(data);
@@ -227,15 +228,17 @@ const MemberForm = () => {
               </Select>
               <FormHelperText>{errors.membership?.message}</FormHelperText>
             </FormControl>
-            <Input
-              register={register}
-              labelName={'Active ?'}
-              value={watch('isActive')}
-              inputType={'isActive'}
-              inputName={'isActive'}
-              error={errors.isActive}
-              testId={'admin-input-checkbox'}
-            />
+            {id && (
+              <Input
+                register={register}
+                labelName={'Active ?'}
+                value={watch('isActive')}
+                inputType={'isActive'}
+                inputName={'isActive'}
+                error={errors.isActive}
+                testId={'admin-input-checkbox'}
+              />
+            )}
           </div>
           <div className={styles.buttonContainer}>
             <Button
