@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 
 const SharedButton = ({ text, clickAction, type, info, testId }) => {
   let buttonStyle = styles.button;
+  let variant = 'contained';
   let icon = null;
 
   switch (type) {
@@ -12,6 +13,7 @@ const SharedButton = ({ text, clickAction, type, info, testId }) => {
       buttonStyle = styles.confirmButton;
       break;
     case 'cancel':
+      variant = 'outlined';
       buttonStyle = styles.cancelButton;
       break;
     case 'add':
@@ -37,13 +39,7 @@ const SharedButton = ({ text, clickAction, type, info, testId }) => {
       {icon}
     </div>
   ) : (
-    <Button
-      variant="contained"
-      onClick={clickAction}
-      type={info}
-      className={buttonStyle}
-      id={testId}
-    >
+    <Button variant={variant} onClick={clickAction} type={info} className={buttonStyle} id={testId}>
       {text}
     </Button>
   );
