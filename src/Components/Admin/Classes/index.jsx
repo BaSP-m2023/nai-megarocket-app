@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import styles from './classes.module.css';
-import SharedModal from 'Components/Shared/Modal';
+import ConfirmModal from 'Components/Shared/Modal/ConfirmModal';
 import { useHistory } from 'react-router-dom';
 import { getClasses, deleteClass } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
 import { getTrainers } from 'Redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
-import CalendarModal from './Modal';
+import CalendarModal from './Modal/index';
 import Container from 'Components/Shared/Container';
 import toast, { Toaster } from 'react-hot-toast';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
@@ -26,9 +26,9 @@ const Classes = () => {
     activities = [],
     trainers = []
   } = useSelector((state) => ({
-    classes: state.classes.data.data,
-    activities: state.activities.data.data,
-    trainers: state.trainers.data
+    classes: state.classes?.data.data,
+    activities: state.activities?.data.data,
+    trainers: state.trainers?.data
   }));
   const activeTrainers = trainers.filter((trainer) => trainer.isActive === true);
   const [activity, setActivity] = useState('all');
@@ -130,6 +130,7 @@ const Classes = () => {
   const handleCloseModalCalendar = () => {
     setCalendarAlert(false);
   };
+
   const handleClass = (classItem) => {
     setClassSelect(classItem);
     setCalendarAlert(true);
@@ -229,15 +230,21 @@ const Classes = () => {
               </div>
               <div className={styles.select}>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel id="activity">Activity</InputLabel>
+                  <InputLabel id="admin-label-activity">Activity</InputLabel>
                   <Select
                     value={activity}
                     onChange={handleActivityChange}
-                    id={'admin-classes-input-day'}
+                    id={'admin-select-activity'}
                   >
                     <MenuItem value="all">All</MenuItem>
                     {activities?.map((activityItem, index) => (
-                      <MenuItem key={index} value={activityItem.name}>
+                      <MenuItem
+                        id={`admin-classes-select-activity-${activityItem.name
+                          .toString()
+                          .toLowerCase()}`}
+                        key={index}
+                        value={activityItem.name}
+                      >
                         {activityItem.name}
                       </MenuItem>
                     ))}
@@ -246,8 +253,8 @@ const Classes = () => {
               </div>
               <div className={styles.select}>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel id="trainer">Select Trainer</InputLabel>
-                  <Select value={trainer} onChange={handleTrainerChange} id="trainer">
+                  <InputLabel id="admin-label-trainer">Select Trainer</InputLabel>
+                  <Select value={trainer} onChange={handleTrainerChange} id="admin-select-trainer">
                     <MenuItem value="all">All</MenuItem>
 
                     {activeTrainers?.map((trainerItem, index) => (
@@ -310,30 +317,30 @@ const Classes = () => {
               </tbody>
             </table>
           </div>
-          <SharedModal
+          <ConfirmModal
+            open={showDeleteWarning}
+            onClose={() => setShowDeleteWarning(false)}
             isDelete={true}
-            show={showDeleteWarning}
-            closeModal={() => setShowDeleteWarning(false)}
             title={'Delete Class'}
             body={'Are you sure you want to delete this class?'}
             onConfirm={handleConfirmDeleteClass}
-            testId={'admin-classes-modal'}
-            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
-            closeTestId={'admin-classes-button-close-warning-modal'}
+            id="admin-modal"
+            confirmId={'admin-button-confirm-modal'}
+            closeId={'admin-button-close-modal'}
           />
           <CalendarModal
             show={calendarAlert}
-            classTitle={`Class  ${classSelect.activity?.name}`}
-            classDay={`${classSelect.day} ${classSelect.hour}`}
-            classTrainer={`Trainer ${classSelect.trainer?.firstName} ${classSelect.trainer?.lastName}`}
-            classSlots={`Slots  ${classSelect.slots}`}
             onClose={handleCloseModalCalendar}
-            closeModal={handleUpdateClass}
-            onConfirm={handleDeleteClass}
+            handleUpdate={handleUpdateClass}
+            handleDelete={handleDeleteClass}
+            classTitle={`${classSelect.activity?.name} Class`}
+            classDay={classSelect.day}
+            classHour={classSelect.hour}
+            classTrainer={`${classSelect.trainer?.firstName} ${classSelect.trainer?.lastName}`}
+            classSlots={`${classSelect.subscriptions?.length}/${classSelect.slots}`}
             testId={'admin-classes-modal-calendar'}
             confirmDeleteTestId={'admin-classes-button-confirm-modal'}
             editTestId={'admin-classes-button-edit-modal'}
-            closeTestId={'admin-classes-icon-cross-close-modal'}
           />
         </Container>
       ) : (

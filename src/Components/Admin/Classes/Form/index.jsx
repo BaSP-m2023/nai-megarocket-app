@@ -138,7 +138,11 @@ const Form = () => {
           margin: '10vh 0 0 0'
         }}
       />
-      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.formContainer}
+        id="admin-classes-form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className={styles.container}>
           <div className={styles.head}>
             {' '}
