@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './home.module.css';
 import { useSelector } from 'react-redux';
+import CustomImageList from 'Components/Shared/CustomImageList';
 
 const Home = () => {
   const user = useSelector((state) => state.auth.user);
@@ -52,21 +53,29 @@ const Home = () => {
         }}
       />
       <Container className={styles.container}>
-        <h2 className={styles.title}>
-          Welcome to MEGAROCKET, {user?.firstName} {user?.lastName ? ' ' + user?.lastName : ''} !
-        </h2>
-        <div className={styles.slider}>
-          <ul>
-            <li>
-              <img src={`${process.env.PUBLIC_URL}/assets/images/Home/372927100.jpg`} alt="" />
-            </li>
-            <li>
-              <img src={`${process.env.PUBLIC_URL}/assets/images/Home/372927101.jpg`} alt=""></img>
-            </li>
-            <li>
-              <img src={`${process.env.PUBLIC_URL}/assets/images/Home/372927102.jpg`} alt=""></img>
-            </li>
-          </ul>
+        <div className={styles.container2}>
+          <div className={styles.slider}>
+            <ul>
+              <li>
+                <img src={`${process.env.PUBLIC_URL}/assets/images/Home/372927100.jpg`} alt="" />
+              </li>
+              <li>
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/images/Home/372927101.jpg`}
+                  alt=""
+                ></img>
+              </li>
+              <li>
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/images/Home/372927102.jpg`}
+                  alt=""
+                ></img>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <CustomImageList />
+          </div>
         </div>
       </Container>
     </>

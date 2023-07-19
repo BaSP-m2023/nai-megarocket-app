@@ -123,6 +123,7 @@ const Schedule = () => {
 
       return (
         <div
+          id={`member-schedule-enabled-${hour.slice(0, 2)}-${day.toLowerCase()}-button`}
           onClick={() => {
             setShowModal(true);
             setInfoClass(() => ({
