@@ -5,27 +5,8 @@ const Carrousel = () => {
   const [isYogaHovered, setIsYogaHovered] = useState(false);
   const [isBuildHovered, setIsBuildHovered] = useState(false);
   const [isRunningHovered, setIsRunningHovered] = useState(false);
-  const [defaultBackground, setDefaultBackground] = useState('');
+  const [defaultBackground] = useState(styles.yogaContainer);
   const [lastHoveredBackground, setLastHoveredBackground] = useState('');
-
-  useEffect(() => {
-    const randomNumber = Math.floor(Math.random() * 3);
-
-    switch (randomNumber) {
-      case 0:
-        setDefaultBackground(styles.yogaContainer);
-        break;
-      case 1:
-        setDefaultBackground(styles.buildContainer);
-        break;
-      case 2:
-        setDefaultBackground(styles.runningContainer);
-        break;
-      default:
-        setDefaultBackground('');
-        break;
-    }
-  }, []);
 
   const handleMouseEnter = (type) => {
     if (type === 'yoga') {
