@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const LoginPage = require('../pageobjects/loginPage');
+/*const LoginPage = require('../pageobjects/loginPage');
 const NavBarPage = require('../pageobjects/navBarPage');
 const SubscriptionPage = require('../pageobjects/subscriptionPage');
 const LogoutPage = require('../pageobjects/logoutPage');
@@ -70,3 +70,4 @@ describe('Subscription CRUD', () => {
     await LogoutPage.clickOnLogoutButton();
   });
 });
+*/

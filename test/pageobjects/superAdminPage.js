@@ -25,7 +25,7 @@ class SuperAdminPage {
   }
 
   get btnConfirmChangePassword() {
-    return $('#button-super-admin-admins-confirm-change-password');
+    return $('#super-admin-button-add-admin');
   }
 
   get btnCancelChangePassword() {
@@ -92,12 +92,12 @@ class SuperAdminPage {
     return $('#super-admin-input-repeat-password-change');
   }
 
-  get tableSuperAdmin() {
-    return $('super-admin-table');
+  get titleSuperAdmin() {
+    return $('#super-admin-table');
   }
 
   get modalSuperAdmin() {
-    return $('#super-admin-delete-modal');
+    return $('#dropdown-menu');
   }
 
   async clickOnAddBtn() {
@@ -124,7 +124,7 @@ class SuperAdminPage {
   }
 
   async clickOnChangePasswordBtn() {
-    await this.iconEdit.click();
+    await this.btnChangePassword.click();
   }
 
   async changePhoneNumber(newPhone) {

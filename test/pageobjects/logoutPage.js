@@ -25,14 +25,14 @@ class LogoutPage {
   }
 
   get dropDownMenu() {
-    return $('#header-button-avatar > div.dropdown-menu.active');
+    return $('#dropdown-menu');
   }
 
   async clickOnAvatarBtn() {
     await this.btnHeaderAvatar.click();
   }
 
-  async clickOnlogoutBtn() {
+  async clickOnLogoutBtn() {
     await this.btnLogout.click();
   }
 

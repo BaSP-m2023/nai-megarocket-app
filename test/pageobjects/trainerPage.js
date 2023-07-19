@@ -29,7 +29,7 @@ class TrainerPage {
   }
 
   get inputActivitySelector() {
-    return $('#activity');
+    return $('#trainer-select-activity');
   }
 
   get btnEditProfile() {
@@ -74,18 +74,6 @@ class TrainerPage {
 
   async clickOnModalCloseBtn() {
     await this.modalClose.click();
-  }
-
-  async completeForm(firstName, lastName, dni, phone, email, city, salary, password) {
-    await this.nameInput.setValue(firstName);
-    await this.lastNameInput.setValue(lastName);
-    await this.dniInput.setValue(dni);
-    await this.phoneNumberInput.setValue(phone);
-    await this.emailInput.setValue(email);
-    await this.cityInput.setValue(city);
-    await this.salaryInput.setValue(salary);
-    await this.passwordInput.setValue(password);
-    await this.isActiveInput.click();
   }
 }
 

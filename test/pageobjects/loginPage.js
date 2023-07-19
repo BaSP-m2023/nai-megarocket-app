@@ -13,7 +13,7 @@ class LoginPage {
   }
 
   get inputPassword() {
-    return $('login-input-password');
+    return $('#login-input-password');
   }
 
   get inputRecoveryPasswordEmail() {
@@ -32,7 +32,7 @@ class LoginPage {
     return $('#login-input-password-error');
   }
 
-  get btnSignIn() {
+  get btnSubmit() {
     return $('#login-button-submit');
   }
 
@@ -56,7 +56,7 @@ class LoginPage {
     return $('#recovery-password-modal > div.MuiBox-root.css-40qdxc');
   }
 
-  async clickOnIconLogin() {
+  async clickOnLoginIcon() {
     await this.iconLogin.click();
   }
 
