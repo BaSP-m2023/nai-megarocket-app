@@ -44,20 +44,20 @@ class TrainerPage {
     return $('#trainer-button-submit-form');
   }
 
-  get modalClass() {
-    return $('#trainer-input-first-name');
+  get classCard() {
+    return $('#trainer-button-class-thursday-11');
   }
 
   get modalClassTitle() {
-    return $('#trainer-class-name');
+    return $('#trainer-class-title');
   }
 
-  get modalClassInformation() {
-    return $('#trainer-class-information');
+  get modalClassSlots() {
+    return $('#alert-dialog-slide-description3#trainer-class-information');
   }
 
   get modalClose() {
-    return $('#trainer-close-modal');
+    return $('#trainer-modal-button-back');
   }
 
   async clickOnEditBtn() {

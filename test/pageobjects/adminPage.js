@@ -8,8 +8,8 @@ class AdminPage {
     return $('#admin-edit-button');
   }
 
-  get btnAdd() {
-    return $('#admin-button-add');
+  get btnAdminSubmit() {
+    return $('#admin-button-submit-form');
   }
 
   get inputSearchTable() {
@@ -18,6 +18,10 @@ class AdminPage {
 
   get iconEdit() {
     return $('#admin-icon-edit');
+  }
+
+  get iconEditMember() {
+    return $('#admin-icon-edit-0');
   }
 
   get iconDelete() {

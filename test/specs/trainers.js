@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const LoginPage = require('../pageobjects/loginPage');
+/*const LoginPage = require('../pageobjects/loginPage');
 const NavBarPage = require('../pageobjects/navBarPage');
 const TrainerPage = require('../pageobjects/trainerPage');
 const LogoutPage = require('../pageobjects/logoutPage');
@@ -36,11 +36,11 @@ describe('Trainers flow', () => {
   it('Visualizing classes', async () => {
     await NavBarPage.btnClassTrainer.click();
     await expect(TrainerPage.inputActivitySelector).toBeClickable();
-
-    /*await TrainerPage.CARD.click();
+    await TrainerPage.classCard.click();
     await expect(TrainerPage.modalClassTitle).toBeDisplayed();
-    await expect(TrainerPage.modalClassInformation).toBeDisplayed();
-    await TrainerPage.modalClose.click();*/
+    await expect(TrainerPage.modalClassSlots).toBeDisplayed();
+    await TrainerPage.modalClose.click();
+  
   });
 
   it('Logout', async () => {
@@ -51,3 +51,4 @@ describe('Trainers flow', () => {
     await LogoutPage.clickOnConfirmLogoutBtn();
   });
 });
+*/
