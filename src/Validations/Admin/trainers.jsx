@@ -69,7 +69,7 @@ export const trainerCreateValidation = Joi.object({
     .label('Password')
     .messages({
       'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol.',
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol',
       'string.min': 'Password must have at least 8 characters',
       'string.max': 'Password must have less than 16 characters',
       'any.required': 'Password is required',
@@ -105,7 +105,7 @@ export const trainerUpdateValidation = Joi.object({
     .messages({
       'string.pattern.base': 'Last name must have only letters',
       'any.required': 'Last name is required',
-      'string.empty': 'Last name is required.'
+      'string.empty': 'Last name is required'
     }),
   dni: Joi.number().integer().min(1000000).max(99999999).messages({
     'number.base': 'DNI is required',
