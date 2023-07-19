@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  transition: 1s ease;
+}
+
+.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.icon {
+  color: black;
+  font-size: 2rem;
+  cursor: default;
+  transition: 1s ease;
+  border-top: 2px solid black;
+  padding: 0 5vw 5vh 5vw;
+  margin-bottom: 5vh;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.icon:hover {
+  color: #212121;
+  background-color: rgba(255, 255, 255, 0.500);
+  border-top: 2px solid rgba(255, 255, 255, 0.500);
+  visibility: inherit;
+
+}
+
+.icon h4 {
+  text-decoration: solid;
+  text-align: start;
+  text-transform: capitalize;
+}
+
+.icon p {
+  font-size: 1.2rem;
+  text-align: start;
+}
+
+.icon p::first-letter {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
+
+.yogaContainer {
+  background-image: url('/public/assets/images/landing/carrousel/yoga.jpg');
+}
+
+.buildContainer {
+  background-image: url('/public/assets/images/landing/carrousel/build.jpg');
+}
+
+.runningContainer {
+  background-image: url('/public/assets/images/landing/carrousel/running.jpg');
+}
