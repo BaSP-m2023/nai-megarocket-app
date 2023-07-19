@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './schedule.module.css';
 import Modal from './Modal/modalShedule';
 import { useDispatch, useSelector } from 'react-redux';
-import { BsCheckCircleFill } from 'react-icons/bs';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { getClasses } from 'Redux/classes/thunks';
 import { getActivities } from 'Redux/activities/thunks';
 import { getSubscriptions } from 'Redux/subscriptions/thunks';
@@ -25,6 +25,7 @@ const Schedule = () => {
     subscriptions: state.subscriptions?.data,
     user: state.auth?.user
   }));
+  const activeClasses = classes.filter((gymClass) => gymClass.activity?.name !== undefined);
   const loading = useSelector((state) => state.members.loading);
   const [memberData, setMemberData] = useState(null);
   const [activity, setActivity] = useState('');
@@ -100,9 +101,9 @@ const Schedule = () => {
   const getClassButton = (hour, day) => {
     let classItem;
     if (activity === 'all') {
-      classItem = classes?.find((item) => item.day.includes(day) && item.hour === hour);
+      classItem = activeClasses?.find((item) => item.day.includes(day) && item.hour === hour);
     } else {
-      classItem = classes?.find(
+      classItem = activeClasses?.find(
         (item) => item.day.includes(day) && item.hour === hour && item.activity?.name === activity
       );
     }
@@ -152,7 +153,7 @@ const Schedule = () => {
             : null}
           {suscriptionFound && (
             <div className={styles.slots}>
-              <BsCheckCircleFill /> Subscribed
+              <HowToRegIcon fontSize="small" /> Subscribed
             </div>
           )}
         </div>
@@ -220,8 +221,8 @@ const Schedule = () => {
                     </FormControl>
                   </div>
                   <div className={`${styles.membershipContainer} ${membershipStyle()}`}>
-                    {memberData?.membership === 'none' ? (
-                      <p>Not membership</p>
+                    {memberData?.membership === 'None' ? (
+                      <p>Not membership, contact with an admin</p>
                     ) : (
                       <>
                         <StarRateIcon fontSize="small" style={{ paddingRight: '5px' }} />

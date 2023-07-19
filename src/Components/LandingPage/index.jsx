@@ -9,7 +9,6 @@ import Carrousel from './Carrousel';
 
 const Landing = () => {
   const history = useHistory();
-
   const handleRegister = () => {
     history.push('/auth/register');
   };

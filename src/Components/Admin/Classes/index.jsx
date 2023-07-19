@@ -188,7 +188,11 @@ const Classes = () => {
     if (classItem) {
       if (classItem.trainer && classItem.trainer?.isActive) {
         return (
-          <div onClick={() => handleClass(classItem)} className={styles.classesButton}>
+          <div
+            id={`admin-button-class-${day.toLowerCase()}-${hour.split(':')[0].replace(/^0+/, '')}`}
+            onClick={() => handleClass(classItem)}
+            className={styles.classesButton}
+          >
             <div className={styles.buttonText}>
               {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
             </div>
@@ -197,7 +201,11 @@ const Classes = () => {
         );
       } else {
         return (
-          <div onClick={() => handleClass(classItem)} className={styles.classesButton}>
+          <div
+            id={`admin-button-class-${day.toLowerCase()}-${hour.split(':')[0].replace(/^0+/, '')}`}
+            onClick={() => handleClass(classItem)}
+            className={styles.classesButton}
+          >
             <div className={styles.buttonText}>
               {classItem.activity?.name ? classItem.activity?.name : 'Not assigned activity'}
             </div>
@@ -333,15 +341,11 @@ const Classes = () => {
             onClose={handleCloseModalCalendar}
             handleUpdate={handleUpdateClass}
             handleDelete={handleDeleteClass}
-            classTitle={`${classSelect.activity?.name} Class`}
+            classTitle={classSelect.activity?.name}
             classDay={classSelect.day}
             classHour={classSelect.hour}
             classTrainer={`${classSelect.trainer?.firstName} ${classSelect.trainer?.lastName}`}
             classSlots={`${classSelect.subscriptions?.length}/${classSelect.slots}`}
-            testId={'admin-classes-modal-calendar'}
-            confirmDeleteTestId={'admin-classes-button-confirm-modal'}
-            editTestId={'admin-classes-button-edit-modal'}
-            deleteTestId={'admin-classes-button-delete-modal'}
           />
         </Container>
       ) : (

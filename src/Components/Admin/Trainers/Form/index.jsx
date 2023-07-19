@@ -37,7 +37,7 @@ const AdminTrainerForm = () => {
   }, []);
 
   const getTrainerById = (id) => {
-    const trainer = trainers.find((trainer) => trainer._id === id);
+    const trainer = trainers?.find((trainer) => trainer._id === id);
     if (trainer) {
       delete trainer._id;
       delete trainer.__v;
