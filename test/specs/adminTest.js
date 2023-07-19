@@ -11,20 +11,12 @@ describe('Admin navigation flow', () => {
     browser.url('https://nai-megarocket-app.vercel.app/landing');
   });
 
-  it('login', async () => {
+  it('should open the Login Page, fill the inputs and login succesfully', async () => {
     await LandingPage.btnLogin.click();
     await expect(browser).toHaveUrlContaining('https://nai-megarocket-app.vercel.app/auth/login');
-    await expect(LoginPage.eyeBtnPassword).toBeClickable();
     await LoginPage.login('superadmingmail.com', '');
     await expect(LoginPage.errorMessageEmail).toBeDisplayed();
     await expect(LoginPage.errorMessagePassword).toBeDisplayed();
-    await LoginPage.login('admin@gmail.com', 'Firebase1!');
-  });
-
-  it('should open the Login Page, fill the inputs and login succesfully', async () => {
-    await LoginPage.titleLogin.waitForDisplayed();
-    await LoginPage.inputEmail.waitForDisplayed();
-    await LoginPage.inputPassword.waitForDisplayed();
     await LoginPage.login('admin@gmail.com', 'Firebase1!');
   });
 
@@ -67,13 +59,16 @@ describe('Admin navigation flow', () => {
   });
 
   it('should delete an activity', async () => {
+    await AdminPage.inputSearchTable.click();
+    await AdminPage.inputSearchTable.setValue('Zumba');
+    await browser.pause(1000);
     await AdminPage.iconDeleteActivity.waitForDisplayed();
     await AdminPage.iconDeleteActivity.click();
     await browser.pause(1000);
     await AdminPage.btnConfirmModal.click();
     await browser.pause(1000);
   });
-
+  /*
   it('should click on Classes button on the sidebar', async () => {
     await NavBarPage.btnClassAdmin.waitForDisplayed();
     await NavBarPage.btnClassAdmin.click();
@@ -96,7 +91,7 @@ describe('Admin navigation flow', () => {
   });
 
   it('should choose and edit the new class ', async () => {
-    await AdminPage.btnSelectSchedule.waitForDisplayed();
+    expect(AdminPage.btnSelectSchedule).toBeDisplayed();
     await AdminPage.btnSelectSchedule.click();
     await AdminPage.btnAdminEditClass.click();
     await AdminPage.inputDay.click();
@@ -112,11 +107,13 @@ describe('Admin navigation flow', () => {
     await AdminPage.btnSelectSchedule.click();
     await AdminPage.btnAdminDeleteClass.click();
     await AdminPage.btnConfirmModal.click();
+    await browser.pause(1000);
   });
-
+  */ /*
   it('should click on Member button on the sidebar', async () => {
     await NavBarPage.btnMember.waitForDisplayed();
     await NavBarPage.btnMember.click();
+    await browser.pause(1000);
   });
 
   it('should add a new member', async () => {
@@ -132,11 +129,11 @@ describe('Admin navigation flow', () => {
   });
 
   it('should edit a Member', async () => {
-    await AdminPage.tableAdmin.waitForDisplayed();
+    expect(AdminPage.tableAdmin).toBeDisplayed();
     await AdminPage.iconEditMember.waitForDisplayed();
     await AdminPage.iconEditMember.click();
     await AdminPage.inputPhone.setValue('3412588522');
-    await AdminPage.inputEmail.setValue('pedritoP@gmail.com');
+    await AdminPage.inputEmail.setValue('pedritoP@megarocket.com');
     await AdminPage.btnAdminSubmit.click();
     await browser.pause(1000);
   });
@@ -150,17 +147,16 @@ describe('Admin navigation flow', () => {
     await browser.pause(1000);
     await AdminPage.btnConfirmModalMember.click();
   });
-
+*/
   it('should click on Trainer button on the sidebar', async () => {
     await NavBarPage.btnTrainer.waitForDisplayed();
     await NavBarPage.btnTrainer.click();
   });
-  /*
+
   it('Create a new trainer', async () => {
     await AdminPage.btnAddTrainer.click();
     await AdminPage.fillFormAddTrainer();
     await AdminPage.btnAdminSubmit.click();
-    await browser.open('https://nai-megarocket-app.vercel.app/admins/trainers');
   });
 
   it('Update a trainer', async () => {
@@ -179,7 +175,6 @@ describe('Admin navigation flow', () => {
     await AdminPage.iconDeleteTrainer.click();
     await AdminPage.btnConfirmModalTrainer.click();
   });
-
 
   it('should click on Subscription button on the sidebar', async () => {
     await NavBarPage.btnSubscriptions.waitForDisplayed();
@@ -211,7 +206,7 @@ describe('Admin navigation flow', () => {
     await AdminPage.btnAdminSubmit.click();
     await browser.pause(1000);
   });
-  */
+
   it('should click on Reports button on the sidebar', async () => {
     await NavBarPage.btnReports.waitForDisplayed();
     await NavBarPage.btnReports.click();

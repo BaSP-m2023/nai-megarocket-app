@@ -106,7 +106,7 @@ class AdminPage {
 
   get btnSelectSchedule() {
     return $(
-      '#root > div.layout_center__DWPZJ > div.container_container__xTUOV > div.classes_container__nL4wZ > table > tbody > tr:nth-child(6) > td:nth-child(2) > div'
+      '#root > div.layout_center__DWPZJ > div.container_container__xTUOV > div.classes_container__nL4wZ > table > tbody > tr:nth-child(6) > td:nth-child(2) > div > div'
     );
   }
 
@@ -199,7 +199,7 @@ class AdminPage {
   }
 
   get inputActivityBoxing() {
-    return $('#admin-input-activity-4');
+    return $('#admin-input-activity-0');
   }
 
   get inputSearchTable() {
