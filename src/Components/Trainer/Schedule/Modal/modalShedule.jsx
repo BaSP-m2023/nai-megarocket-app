@@ -69,65 +69,67 @@ const CalendarModal = (props) => {
   return (
     <Dialog
       open={props.show}
-      id={props.testId}
+      id="trainer-class-modal"
       keepMounted
       onClose={props.closeModal}
       sx={styles.dialog}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle sx={styles.dialogTitle}>
+      <DialogTitle id="trainer-class-title" sx={styles.dialogTitle}>
         {props.activity} Class {props.hour}h
       </DialogTitle>
       <Divider variant="middle">
         <Chip sx={styles.chip} label={props.day?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')} />
       </Divider>
-      <Box sx={styles.box1}>
-        <Typography sx={styles.typography1} variant="h6" id="alert-dialog-slide-description">
-          <BadgeIcon sx={{ fontSize: '27px', color: '#212121' }} />{' '}
-          {props.trainer ? props.trainer : 'Not Assigned'}
-        </Typography>
+      <Box id="trainer-class-information">
+        <Box sx={styles.box1}>
+          <Typography sx={styles.typography1} variant="h6" id="alert-dialog-slide-description">
+            <BadgeIcon sx={{ fontSize: '27px', color: '#212121' }} />{' '}
+            {props.trainer ? props.trainer : 'Not Assigned'}
+          </Typography>
 
-        <Typography fontSize={18} id="alert-dialog-slide-description3">
-          Slots: {props.subscriptions?.length}/{props.slot}
-        </Typography>
-      </Box>
-      <Typography sx={styles.typography2} id="alert-dialog-slide-description3">
-        Subscribed Members
-      </Typography>
-      <DialogContent dividers={scroll === 'paper'}>
-        <Box id="scroll-dialog-description" sx={styles.box2} tabIndex={-1}>
-          {props.subscriptions?.length > 0
-            ? props.subscriptions?.map((sub, index) => {
-                const fullName = `${sub.member?.firstName} ${sub.member?.lastName}`;
-                const membership = sub.member?.membership;
-
-                return (
-                  <>
-                    <Box sx={styles.box3} key={index}>
-                      <Typography
-                        sx={styles.typography3}
-                        fontSize={18}
-                        id="alert-dialog-slide-description3"
-                      >
-                        {fullName}
-                      </Typography>
-                      <Tooltip title={membership} followCursor>
-                        <Typography
-                          sx={{
-                            ...styles.typography4,
-                            color: membership === 'Black' ? 'black' : 'gray'
-                          }}
-                        >
-                          <RocketLaunchRoundedIcon sx={{ fontSize: '25px' }} />
-                        </Typography>{' '}
-                      </Tooltip>
-                    </Box>
-                  </>
-                );
-              })
-            : 'No one is here yet'}
+          <Typography fontSize={18} id="alert-dialog-slide-description3">
+            Slots: {props.subscriptions?.length}/{props.slot}
+          </Typography>
         </Box>
-      </DialogContent>
+        <Typography sx={styles.typography2} id="alert-dialog-slide-description3">
+          Subscribed Members
+        </Typography>
+        <DialogContent dividers={scroll === 'paper'}>
+          <Box id="scroll-dialog-description" sx={styles.box2} tabIndex={-1}>
+            {props.subscriptions?.length > 0
+              ? props.subscriptions?.map((sub, index) => {
+                  const fullName = `${sub.member?.firstName} ${sub.member?.lastName}`;
+                  const membership = sub.member?.membership;
+
+                  return (
+                    <>
+                      <Box sx={styles.box3} key={index}>
+                        <Typography
+                          sx={styles.typography3}
+                          fontSize={18}
+                          id="alert-dialog-slide-description3"
+                        >
+                          {fullName}
+                        </Typography>
+                        <Tooltip title={membership} followCursor>
+                          <Typography
+                            sx={{
+                              ...styles.typography4,
+                              color: membership === 'Black' ? 'black' : 'gray'
+                            }}
+                          >
+                            <RocketLaunchRoundedIcon sx={{ fontSize: '25px' }} />
+                          </Typography>{' '}
+                        </Tooltip>
+                      </Box>
+                    </>
+                  );
+                })
+              : 'No one is here yet'}
+          </Box>
+        </DialogContent>
+      </Box>
       <DialogActions sx={styles.dialogActions}>
         <Button id="trainer-modal-button-back" onClick={props.closeModal} variant="contained">
           Back

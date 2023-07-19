@@ -116,6 +116,7 @@ const Schedule = () => {
 
       return (
         <div
+          id={`trainer-button-class-${day.toLowerCase()}-${hour.split(':')[0].replace(/^0+/, '')}`}
           onClick={() => {
             setShowModal(true);
             setInfoClass(() => ({

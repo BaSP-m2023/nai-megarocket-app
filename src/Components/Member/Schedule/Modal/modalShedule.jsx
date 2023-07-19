@@ -83,7 +83,7 @@ const Modal = (props) => {
   return (
     <Dialog
       open={props.show}
-      id={props.testId}
+      id="member-class-modal"
       keepMounted
       onClose={props.closeModal}
       sx={{
@@ -92,6 +92,7 @@ const Modal = (props) => {
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogTitle
+        id="member-class-modal-title"
         sx={{
           color: 'black',
           display: 'flex',
@@ -111,6 +112,7 @@ const Modal = (props) => {
         />
       </Divider>
       <DialogContent
+        id="member-class-modal-information"
         sx={{
           padding: '20px 40px',
           color: '#212121',
@@ -146,7 +148,7 @@ const Modal = (props) => {
               <CheckIcon fontSize="small" /> You are subscribed to this class
             </Typography>
           ) : (
-            <Typography id="alert-dialog-slide-description5">
+            <Typography>
               {props.slot <= props.slotCount ? 'This class is full' : 'You are not in this class'}
             </Typography>
           )}
@@ -164,7 +166,7 @@ const Modal = (props) => {
           </Button>
         ) : (
           <Button
-            id="member-subscribe-button"
+            id={props.idSuscription ? 'member-unsubscribe-button' : 'member-subscribe-button'}
             onClick={handleSubscribe}
             endIcon={props.idSuscription ? <PersonRemoveIcon /> : <RocketLaunchIcon />}
             variant="contained"

@@ -101,7 +101,7 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
               sx={{
                 height: '45px',
                 width: '45px',
-                marginRight: '30px',
+                marginRight: '60px',
                 cursor: 'pointer',
                 backgroundColor: '#' + color,
                 textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',

@@ -47,7 +47,6 @@ const styles = {
 
 const CalendarModal = ({
   show,
-  testId,
   onClose,
   classTitle,
   classHour,
@@ -60,19 +59,19 @@ const CalendarModal = ({
   return (
     <Dialog
       open={show}
-      id={testId}
+      id="admin-classes-modal-calendar"
       keepMounted
       onClose={onClose}
       sx={styles.dialog}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle sx={styles.dialogTitle}>
+      <DialogTitle id="admin-class-title" sx={styles.dialogTitle}>
         {classTitle ? classTitle : 'Not Assigned'} Class {classHour}hs
       </DialogTitle>
       <Divider variant="middle">
         <Chip sx={styles.chip} label={classDay?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')} />
       </Divider>
-      <DialogContent sx={styles.dialogContent}>
+      <DialogContent id="admin-class-information" sx={styles.dialogContent}>
         <Typography sx={styles.typography1} variant="h6" id="alert-dialog-slide-description">
           <BadgeIcon sx={{ fontSize: '27px', color: '#212121' }} />{' '}
           {classTrainer ? classTrainer : 'Not Assigned'}
@@ -83,10 +82,10 @@ const CalendarModal = ({
         </Typography>
       </DialogContent>
       <DialogActions sx={styles.dialogActions}>
-        <Button onClick={handleUpdate} variant="contained">
+        <Button id="admin-classes-button-edit-modal" onClick={handleUpdate} variant="contained">
           <EditRoundedIcon />
         </Button>
-        <Button onClick={handleDelete} variant="contained">
+        <Button id="admin-classes-button-delete-modal" onClick={handleDelete} variant="contained">
           <DeleteIcon />
         </Button>
       </DialogActions>
