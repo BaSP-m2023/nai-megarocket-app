@@ -2,19 +2,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-height: 90vh;
+}
+.container2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .slider {
-	width: 800px;
-  height: 500px;
+	width: 65vw;
+  height: 80vh;
 	overflow: hidden;
-  box-shadow: 5px 8px 12px black;
+  box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
   border-radius: 5px;
 }
 
 .slider ul {
 	display: flex;
-  height: 500px;
+  height: 80vh;
   margin: 0;
   padding:0;
 	width: 400%;
@@ -22,14 +28,14 @@
 }
 
 .slider li {
-	width: 800px;
-  height: 500px;
+	width: 65vw;
+  height: 80vh;
 	list-style: none;
 }
 
 .slider img {
-  width: 800px;
-  height: 500px;
+	width: 65vw;
+  height: 80vh;
 }
 
 @keyframes slide {

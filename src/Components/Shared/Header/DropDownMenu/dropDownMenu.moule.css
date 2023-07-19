@@ -103,7 +103,3 @@
   transition: var(--speed);
 }
 
-.avatar {
-  margin-right: 7vh;
-  cursor: pointer;
-}

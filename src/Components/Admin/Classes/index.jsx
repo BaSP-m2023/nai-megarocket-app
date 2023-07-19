@@ -341,6 +341,7 @@ const Classes = () => {
             testId={'admin-classes-modal-calendar'}
             confirmDeleteTestId={'admin-classes-button-confirm-modal'}
             editTestId={'admin-classes-button-edit-modal'}
+            deleteTestId={'admin-classes-button-delete-modal'}
           />
         </Container>
       ) : (
