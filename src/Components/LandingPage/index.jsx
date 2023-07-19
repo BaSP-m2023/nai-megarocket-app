@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './landing.module.css';
 import stylesJoin from './join.module.css';
-import stylesTrainers from './trainers.module.css';
 import Footer from 'Components/Footer';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import ContactForm from './Form';
 import Header from 'Components/Shared/Header/index';
+import Carrousel from './Carrousel';
 
 const Landing = () => {
   const history = useHistory();
@@ -31,13 +31,7 @@ const Landing = () => {
             join our gym
           </button>
         </div>
-        <div className={stylesTrainers.trainerContainer}>
-          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer1}`}></div>
-          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer2}`}></div>
-          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer3}`}></div>
-          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer4}`}></div>
-          <div className={`${stylesTrainers.trainerBox} ${stylesTrainers.trainer5}`}></div>
-        </div>
+        <Carrousel />
         <div className={stylesJoin.joined}>
           <p>be fit</p>
           <p className={stylesJoin.dot}>&nbsp;&#8226;&nbsp;</p>
