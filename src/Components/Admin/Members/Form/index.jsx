@@ -209,7 +209,7 @@ const MemberForm = () => {
               testId={'admin-input-zip'}
             />
             <FormControl
-              sx={{ width: '20vw', marginTop: '5px' }}
+              sx={{ width: '20vw' }}
               variant="standard"
               fullWidth
               error={errors.membership?.message}

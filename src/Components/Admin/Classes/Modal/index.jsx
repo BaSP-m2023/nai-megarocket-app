@@ -25,23 +25,23 @@ const CalendarModal = (props) => {
           color: 'black',
           display: 'flex',
           alignItems: 'center',
-          fontSize: '30px',
+          fontSize: '25px',
           padding: '20px 0 5px 0',
           gap: '5px',
           justifyContent: 'center'
         }}
       >
-        {props.classTitle}
+        {props.classTitle} {props.classHour}h
       </DialogTitle>
       <Divider variant="middle">
         <Chip
-          sx={{ fontSize: '15px' }}
+          sx={{ fontSize: '15px', backgroundColor: '#212121', color: 'white' }}
           label={props.classDay?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')}
         />
       </Divider>
       <DialogContent
         sx={{
-          padding: '20px 40px',
+          padding: '30px 40px 20px 40px',
           color: '#212121',
           minWidth: '300px',
           textAlign: 'center'
@@ -56,28 +56,18 @@ const CalendarModal = (props) => {
           {props.classTrainer ? props.classTrainer : 'Not Assigned'}
         </Typography>
 
-        <Typography id="alert-dialog-slide-description3">
-          Hour: {props.classHour} - Slots: {props.classSlots}
+        <Typography fontSize={18} id="alert-dialog-slide-description3">
+          Slots: {props.classSlots}
         </Typography>
       </DialogContent>
       <DialogActions
-        sx={{ padding: '0px 30px 30px 30px', display: 'flex', justifyContent: 'center' }}
+        sx={{ padding: '10px 30px 30px 30px', display: 'flex', justifyContent: 'center' }}
       >
-        <Button
-          id={props.editTestId}
-          onClick={props.handleUpdate}
-          endIcon={<EditRoundedIcon />}
-          variant="contained"
-        >
-          Update
+        <Button id={props.editTestId} onClick={props.handleUpdate} variant="contained">
+          <EditRoundedIcon />
         </Button>
-        <Button
-          id={props.editTestId}
-          onClick={props.handleDelete}
-          endIcon={<DeleteIcon />}
-          variant="contained"
-        >
-          Delete
+        <Button id={props.editTestId} onClick={props.handleDelete} variant="contained">
+          <DeleteIcon />
         </Button>
       </DialogActions>
     </Dialog>

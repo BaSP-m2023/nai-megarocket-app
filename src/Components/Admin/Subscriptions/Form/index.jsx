@@ -123,7 +123,7 @@ const Form = () => {
           <h2 className={styles.formTitle}> {id ? 'Update Subscription' : 'Add Subscription'}</h2>
         </div>
         <FormControl
-          sx={{ width: '20vw' }}
+          sx={{ width: '20vw', height: '80px' }}
           variant="standard"
           fullWidth
           error={errors.classes?.message}
@@ -167,7 +167,7 @@ const Form = () => {
           <FormHelperText>{errors.classes?.message}</FormHelperText>
         </FormControl>
         <FormControl
-          sx={{ width: '20vw' }}
+          sx={{ width: '20vw', height: '80px' }}
           variant="standard"
           fullWidth
           error={errors.member?.message}

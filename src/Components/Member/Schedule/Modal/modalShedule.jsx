@@ -1,26 +1,23 @@
+import React from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import BadgeIcon from '@mui/icons-material/Badge';
+import DialogTitle from '@mui/material/DialogTitle';
+import CheckIcon from '@mui/icons-material/Check';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import { Box, Button, Chip, Divider, Typography } from '@mui/material';
 import { useState } from 'react';
-import styles from './modalShedule.module.css';
-import Button from 'Components/Shared/Button';
-import { BsCheck, BsFillPersonVcardFill, BsXLg } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
-
 import { updateSubscription, createSubscription } from 'Redux/subscriptions/thunks';
 
-const Modal = (data) => {
+const Modal = (props) => {
   const dispatch = useDispatch();
   const [isButtonDisabled, setButtonDisabled] = useState(false);
-
-  if (!data.show) {
-    return null;
-  }
-
-  const onCloseModal = () => {
-    data.closeModal();
-  };
-
   const showToast = (message, type) => {
     if (type === 'success') {
-      data.toast.success(message, {
+      props.toast.success(message, {
         duration: 2500,
         position: 'top-right',
         style: {
@@ -32,7 +29,7 @@ const Modal = (data) => {
         }
       });
     } else if (type === 'error') {
-      data.toast.error(message, {
+      props.toast.error(message, {
         duration: 2500,
         position: 'top-right',
         style: {
@@ -51,94 +48,132 @@ const Modal = (data) => {
       return;
     }
     setButtonDisabled(true);
-    if (data.idSuscription) {
+    if (props.idSuscription) {
       try {
         const updateSuscription = {
           isActive: false
         };
-        await dispatch(updateSubscription(updateSuscription, data.idSuscription));
+        await dispatch(updateSubscription(updateSuscription, props.idSuscription));
         showToast('Subscription was succesfully removed', 'success');
-        data.closeModal();
+        props.closeModal();
       } catch (error) {
         showToast(error.message, 'error');
-        data.closeModal();
+        props.closeModal();
       }
     } else {
       try {
         const newDate = new Date();
         const newSuscription = {
-          classes: data.idClass,
-          member: data.idMember,
+          classes: props.idClass,
+          member: props.idMember,
           date: newDate.setHours(newDate.getHours() - 3),
           isActive: true
         };
         await dispatch(createSubscription(newSuscription));
         showToast('Subscription was succesfully added', 'success');
-        data.closeModal();
+        props.closeModal();
       } catch (error) {
         showToast(error.message, 'error');
-        data.closeModal();
+        props.closeModal();
       }
     }
     setButtonDisabled(false);
   };
 
   return (
-    <div className={styles.modalContainer}>
-      <div className={styles.modalContentDefault}>
-        <div className={styles.closeContainer}>
-          <div className={styles.close} onClick={onCloseModal}>
-            <BsXLg />
-          </div>
-        </div>
-        <div className={styles.centerTitle}>
-          Class {data.day.length > 1 ? data.day.join(' - ') : data.day} {data.hour} Hs
-        </div>
-        <div className={styles.activity}>{data.activity}</div>
-        <div className={styles.center}>Trainer:</div>
-        <div className={styles.trainer}>
-          <div className={styles.trainerIcon}>
-            <BsFillPersonVcardFill />
-          </div>
-          <span className={styles.space}></span>
-          {data.trainer}
-        </div>
-        {data.slot <= data.slotCount ? (
-          <div className={styles.slotsFull}>
-            Slots full {data.slotCount} / {data.slot}
-          </div>
-        ) : (
-          <div className={styles.center}>
-            Slots: {data.slotCount} / {data.slot}
-          </div>
-        )}
-        {data.membership === 'Classic' || data.membership === 'none' ? (
-          <div className={styles.center}>
-            You cannot enroll in classes. Upgrade your membership!
-          </div>
-        ) : data.idSuscription ? (
-          <div className={styles.added}>
-            <BsCheck /> You are subscribed to this class
-          </div>
-        ) : (
-          <div className={styles.center}>You are not in this class</div>
-        )}
-        <div className={styles.buttonContainer}>
-          {(data.slot <= data.slotCount ||
-            data.membership === 'Classic' ||
-            data.membership === 'none') &&
-          !data.idSuscription ? (
-            <Button type="cancel" text={<>Back</>} clickAction={onCloseModal} />
+    <Dialog
+      open={props.show}
+      id={props.testId}
+      keepMounted
+      onClose={props.closeModal}
+      sx={{
+        backdropFilter: 'blur(8px)'
+      }}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle
+        sx={{
+          color: 'black',
+          display: 'flex',
+          alignItems: 'center',
+          fontSize: '25px',
+          padding: '20px 0 5px 0',
+          gap: '5px',
+          justifyContent: 'center'
+        }}
+      >
+        {props.activity} Class {props.hour}hs
+      </DialogTitle>
+      <Divider variant="middle">
+        <Chip
+          sx={{ fontSize: '15px', backgroundColor: '#212121', color: 'white' }}
+          label={props.day.length > 1 ? props.day.join(', ') : props.day}
+        />
+      </Divider>
+      <DialogContent
+        sx={{
+          padding: '20px 40px',
+          color: '#212121',
+          minWidth: '300px',
+          textAlign: 'center'
+        }}
+      >
+        <Typography
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
+          variant="h6"
+          id="alert-dialog-slide-description"
+        >
+          <BadgeIcon sx={{ fontSize: '27px', color: '#212121' }} /> {props.trainer}
+        </Typography>
+
+        <Typography id="alert-dialog-slide-description3">
+          Slots: {props.slotCount}/{props.slot}
+        </Typography>
+
+        <Box margin={1} fontWeight={'bolder'}>
+          {props.membership === 'Classic' || props.membership === 'None' ? (
+            <Typography id="alert-dialog-slide-description4">
+              Upgrade your membership to subscribe
+            </Typography>
+          ) : props.idSuscription ? (
+            <Typography
+              display={'flex'}
+              alignItems={'center'}
+              gap="5px"
+              justifyContent={'center'}
+              id="alert-dialog-slide-description3"
+            >
+              <CheckIcon fontSize="small" /> You are subscribed to this class
+            </Typography>
           ) : (
-            <Button
-              type="cancel"
-              text={data.idSuscription ? <>Unsubscribe</> : <>Subscribe</>}
-              clickAction={handleSubscribe}
-            />
+            <Typography id="alert-dialog-slide-description5">
+              {props.slot <= props.slotCount ? 'This class is full' : 'You are not in this class'}
+            </Typography>
           )}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </DialogContent>
+      <DialogActions
+        sx={{ padding: '0px 30px 30px 30px', display: 'flex', justifyContent: 'center' }}
+      >
+        {(props.slot <= props.slotCount ||
+          props.membership === 'Classic' ||
+          props.membership === 'None') &&
+        !props.idSuscription ? (
+          <Button variant="contained" onClick={props.closeModal}>
+            Cancel
+          </Button>
+        ) : (
+          <Button
+            id="member-subscribe-button"
+            onClick={handleSubscribe}
+            endIcon={props.idSuscription ? <PersonRemoveIcon /> : <RocketLaunchIcon />}
+            variant="contained"
+          >
+            {props.idSuscription ? 'Unsubscribe' : 'Subscribe'}
+          </Button>
+        )}
+      </DialogActions>
+    </Dialog>
   );
 };
 

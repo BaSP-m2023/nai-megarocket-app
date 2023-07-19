@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from 'Components/Shared/Button';
 import styles from './form.module.css';
-import SharedModal from 'Components/Shared/Modal/index';
 import Form from 'Components/Shared/Form';
 import Input from 'Components/Shared/Input';
 import { useForm } from 'react-hook-form';
@@ -9,36 +8,20 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import memberValidation from 'Validations/Admin/members';
 
 const ContactForm = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [typeStyle, setTypeStyle] = useState('');
-  const [titleModal, setTitleModal] = useState('');
-  const [bodyModal, setBodyModal] = useState('');
-
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     mode: 'all',
     resolver: joiResolver(memberValidation)
   });
 
-  const onSubmit = (data) => {
-    setTypeStyle();
-    setTitleModal('Mail send');
-    setBodyModal('');
-    setShowModal(true);
-    console.log(data);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
   return (
     <div className={styles.formContainer}>
       <h2>contact us</h2>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(() => reset())}>
         <div className={styles.inputsDiv}>
           <div className={styles.leftFieldset}>
             <Input
@@ -88,15 +71,6 @@ const ContactForm = () => {
           />
         </div>
       </Form>
-      {showModal && (
-        <SharedModal
-          show={showModal}
-          typeStyle={typeStyle}
-          title={titleModal}
-          body={bodyModal}
-          closeModal={handleCloseModal}
-        />
-      )}
     </div>
   );
 };

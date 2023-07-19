@@ -34,6 +34,7 @@ const Schedule = () => {
     activity: '',
     slot: '',
     slotCount: '',
+    subscriptions: '',
     idSuscription: '',
     idClass: '',
     idMember: '',
@@ -122,6 +123,7 @@ const Schedule = () => {
               trainer: trainerName,
               activity: classItem.activity?.name,
               slot: classItem.slots,
+              subscriptions: classItem?.subscriptions,
               slotCount: slotCount,
               day: classItem.day,
               idClass: classItem?._id,
@@ -233,8 +235,8 @@ const Schedule = () => {
         closeModal={handleCloseModal}
         day={infoClass.day}
         hour={infoClass.hour}
+        subscriptions={infoClass.subscriptions?.length > 0 ? infoClass.subscriptions : []}
         slot={infoClass.slot}
-        slotCount={infoClass.slotCount}
         trainer={infoClass.trainer}
         activity={infoClass.activity}
         idClass={infoClass.idClass}
