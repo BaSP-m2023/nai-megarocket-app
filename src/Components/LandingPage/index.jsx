@@ -9,7 +9,6 @@ import Header from 'Components/Shared/Header/index';
 
 const Landing = () => {
   const history = useHistory();
-
   const handleRegister = () => {
     history.push('/auth/register');
   };

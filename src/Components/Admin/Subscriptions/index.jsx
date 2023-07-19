@@ -96,19 +96,21 @@ const Subscriptions = () => {
     setShowButtons(!showButtons);
   };
 
-  const subscriptionsData = subscriptions?.map((item) => {
-    const classInfo = classes?.find((c) => c._id === item.classes?._id);
-    return {
-      ...item,
-      memberName: `${item.member?.firstName} ${item.member?.lastName}`,
-      classFound:
-        item.classes === null
-          ? 'Class not found'
-          : item.classes?.activity === null
-          ? 'Activity not found'
-          : `${classInfo?.activity?.name} | ${classInfo?.hour} | ${classInfo?.day} | ${classInfo?.trainer?.firstName} ${classInfo?.trainer?.lastName}`
-    };
-  });
+  const subscriptionsData = Array.isArray(subscriptions)
+    ? subscriptions?.map((item) => {
+        const classInfo = classes?.find((c) => c._id === item.classes?._id);
+        return {
+          ...item,
+          memberName: `${item.member?.firstName} ${item.member?.lastName}`,
+          classFound:
+            item.classes === null
+              ? 'Class not found'
+              : item.classes?.activity === null
+              ? 'Activity not found'
+              : `${classInfo?.activity?.name} | ${classInfo?.hour} | ${classInfo?.day} | ${classInfo?.trainer?.firstName} ${classInfo?.trainer?.lastName}`
+        };
+      })
+    : [];
 
   return (
     <>

@@ -91,6 +91,8 @@ const MemberForm = () => {
       delete formatedData?._id;
       delete formatedData?.__v;
       delete formatedData?.firebaseUid;
+      delete formatedData?.updatedAt;
+      delete formatedData?.createdAt;
       reset(formatedData);
       showToast('Saved Changes', 'success');
       handleDisableEditMode();

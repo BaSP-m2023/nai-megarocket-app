@@ -4,7 +4,7 @@
   flex-wrap: nowrap;
   width: 75vw;
   border-radius: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 6px 7px -3.5px rgba(0,0,0,0.2), 0px 12px 19px 1.5px rgba(0,0,0,0.14), 0px 4.5px 23px 4px rgba(0,0,0,0.12);
 }
 
 .headerContainer {

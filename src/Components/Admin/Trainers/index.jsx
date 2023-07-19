@@ -15,8 +15,8 @@ const Trainers = () => {
   const [modalMessage, setModalMessage] = useState('');
   const [selectedTrainerId, setSelectedTrainerId] = useState(null);
   const trainersState = useSelector((state) => state.trainers);
-  const trainers = trainersState.data;
-  const isLoading = trainersState.loading;
+  const trainers = trainersState?.data;
+  const isLoading = trainersState?.loading;
 
   useEffect(() => {
     toast.remove();
@@ -88,12 +88,14 @@ const Trainers = () => {
     history.push(`/admins/trainers/form/${id}`);
   };
 
-  const trainersData = trainers
-    ?.filter((item) => item.isActive === true)
-    ?.map((item) => ({
-      ...item,
-      name: `${item.firstName} ${item.lastName}`
-    }));
+  const trainersData = Array.isArray(trainers)
+    ? trainers
+        .filter((item) => item?.isActive === true)
+        ?.map((item) => ({
+          ...item,
+          name: `${item.firstName} ${item.lastName}`
+        }))
+    : [];
   return (
     <>
       <Toaster

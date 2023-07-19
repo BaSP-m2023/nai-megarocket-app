@@ -8,76 +8,85 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button, Chip, Divider, Typography } from '@mui/material';
 
-const CalendarModal = (props) => {
+const styles = {
+  dialog: {
+    backdropFilter: 'blur(8px)'
+  },
+  dialogTitle: {
+    color: 'black',
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '25px',
+    padding: '20px 0 5px 0',
+    gap: '5px',
+    justifyContent: 'center'
+  },
+  chip: {
+    fontSize: '15px',
+    backgroundColor: '#212121',
+    color: 'white'
+  },
+  dialogContent: {
+    padding: '30px 40px 20px 40px',
+    color: '#212121',
+    minWidth: '300px',
+    textAlign: 'center'
+  },
+  typography1: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px'
+  },
+  dialogActions: {
+    padding: '10px 30px 30px 30px',
+    display: 'flex',
+    justifyContent: 'center'
+  }
+};
+
+const CalendarModal = ({
+  show,
+  onClose,
+  classTitle,
+  classHour,
+  classDay,
+  classTrainer,
+  classSlots,
+  handleUpdate,
+  handleDelete
+}) => {
   return (
     <Dialog
-      open={props.show}
-      id={props.testId}
+      open={show}
+      id="admin-classes-modal-calendar"
       keepMounted
-      onClose={props.onClose}
-      sx={{
-        backdropFilter: 'blur(8px)'
-      }}
+      onClose={onClose}
+      sx={styles.dialog}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle
-        sx={{
-          color: 'black',
-          display: 'flex',
-          alignItems: 'center',
-          fontSize: '30px',
-          padding: '20px 0 5px 0',
-          gap: '5px',
-          justifyContent: 'center'
-        }}
-      >
-        {props.classTitle}
+      <DialogTitle id="admin-class-title" sx={styles.dialogTitle}>
+        {classTitle ? classTitle : 'Not Assigned'} Class {classHour}hs
       </DialogTitle>
       <Divider variant="middle">
-        <Chip
-          sx={{ fontSize: '15px' }}
-          label={props.classDay?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')}
-        />
+        <Chip sx={styles.chip} label={classDay?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')} />
       </Divider>
-      <DialogContent
-        sx={{
-          padding: '20px 40px',
-          color: '#212121',
-          minWidth: '300px',
-          textAlign: 'center'
-        }}
-      >
-        <Typography
-          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
-          variant="h6"
-          id="alert-dialog-slide-description"
-        >
+      <DialogContent id="admin-class-information" sx={styles.dialogContent}>
+        <Typography sx={styles.typography1} variant="h6" id="alert-dialog-slide-description">
           <BadgeIcon sx={{ fontSize: '27px', color: '#212121' }} />{' '}
-          {props.classTrainer ? props.classTrainer : 'Not Assigned'}
+          {classTrainer ? classTrainer : 'Not Assigned'}
         </Typography>
 
-        <Typography id="alert-dialog-slide-description3">
-          Hour: {props.classHour} - Slots: {props.classSlots}
+        <Typography fontSize={18} id="alert-dialog-slide-description3">
+          Slots: {classSlots}
         </Typography>
       </DialogContent>
-      <DialogActions
-        sx={{ padding: '0px 30px 30px 30px', display: 'flex', justifyContent: 'center' }}
-      >
-        <Button
-          id={props.editTestId}
-          onClick={props.handleUpdate}
-          endIcon={<EditRoundedIcon />}
-          variant="contained"
-        >
-          Update
+      <DialogActions sx={styles.dialogActions}>
+        <Button id="admin-classes-button-edit-modal" onClick={handleUpdate} variant="contained">
+          <EditRoundedIcon />
         </Button>
-        <Button
-          id={props.deleteTestId}
-          onClick={props.handleDelete}
-          endIcon={<DeleteIcon />}
-          variant="contained"
-        >
-          Delete
+        <Button id="admin-classes-button-delete-modal" onClick={handleDelete} variant="contained">
+          <DeleteIcon />
         </Button>
       </DialogActions>
     </Dialog>

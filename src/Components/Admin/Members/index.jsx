@@ -83,12 +83,14 @@ const Members = () => {
     history.push(`/admins/members/form/${id}`);
   };
 
-  const membersData = members
-    ?.filter((item) => item.isActive === true)
-    ?.map((item) => ({
-      ...item,
-      name: `${item.firstName} ${item.lastName}`
-    }));
+  const membersData = Array.isArray(members)
+    ? members
+        ?.filter((item) => item.isActive === true)
+        ?.map((item) => ({
+          ...item,
+          name: `${item.firstName} ${item.lastName}`
+        }))
+    : [];
   return (
     <>
       <Toaster

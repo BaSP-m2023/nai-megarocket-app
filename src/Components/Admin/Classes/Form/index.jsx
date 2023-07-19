@@ -157,7 +157,12 @@ const Form = () => {
           </div>
           <div className={styles.inputsContainer}>
             <div className={styles.inputContainerA}>
-              <FormControl variant="standard" fullWidth error={errors.day?.message ? true : false}>
+              <FormControl
+                sx={{ height: '80px' }}
+                variant="standard"
+                fullWidth
+                error={errors.day?.message ? true : false}
+              >
                 <InputLabel id="day-label">Day</InputLabel>
                 <Controller
                   control={control}
@@ -185,7 +190,7 @@ const Form = () => {
                 <FormHelperText>{errors.day?.message}</FormHelperText>
               </FormControl>
               <FormControl
-                sx={{ width: '20vw' }}
+                sx={{ width: '20vw', height: '80px' }}
                 variant="standard"
                 fullWidth
                 error={errors.hour?.message ? true : false}
@@ -212,6 +217,7 @@ const Form = () => {
                 <FormHelperText>{errors.hour?.message}</FormHelperText>
               </FormControl>
               <FormControl
+                sx={{ height: '80px' }}
                 variant="standard"
                 fullWidth
                 error={errors.trainer?.message ? true : false}
@@ -244,6 +250,7 @@ const Form = () => {
             </div>
             <div className={styles.inputContainerB}>
               <FormControl
+                sx={{ height: '80px' }}
                 variant="standard"
                 fullWidth
                 error={errors.activity?.message ? true : false}
