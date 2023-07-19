@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './landing.module.css';
 import stylesJoin from './join.module.css';
-// import stylesTrainers from './trainers.module.css';
 import Footer from 'Components/Footer';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import ContactForm from './Form';

@@ -55,14 +55,14 @@ const Carrousel = () => {
           onMouseLeave={handleMouseLeave}
         >
           <h4>yoga</h4>
-          <p>enjoy your life</p>
+          <p>raise your own peace</p>
         </div>
         <div
           className={`${styles.icon} ${styles.build}`}
           onMouseEnter={() => handleMouseEnter('build')}
           onMouseLeave={handleMouseLeave}
         >
-          <h4>build</h4>
+          <h4>headStrong</h4>
           <p>release your beast</p>
         </div>
         <div

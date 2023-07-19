@@ -43,6 +43,7 @@
   height: 50vh;
   text-align: center;
   background-image: url('/public/assets/images/landing/texture.jpg');
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   transition: 1s ease;
