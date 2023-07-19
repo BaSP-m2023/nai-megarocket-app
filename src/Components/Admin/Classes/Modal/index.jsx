@@ -72,7 +72,7 @@ const CalendarModal = (props) => {
           Update
         </Button>
         <Button
-          id={props.editTestId}
+          id={props.deleteTestId}
           onClick={props.handleDelete}
           endIcon={<DeleteIcon />}
           variant="contained"

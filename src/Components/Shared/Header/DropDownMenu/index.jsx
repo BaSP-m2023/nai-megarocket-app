@@ -18,8 +18,10 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
   const dispatch = useDispatch();
   const menuRef = useRef();
   const history = useHistory();
+  const [color, setColor] = useState('');
 
   useEffect(() => {
+    generateColor();
     const handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
@@ -30,6 +32,10 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
       document.removeEventListener('mousedown', handler);
     };
   }, []);
+
+  const generateColor = () => {
+    setColor(Math.random().toString(16).substr(-6));
+  };
 
   const showModalLogout = () => {
     setOpen(!open);
@@ -92,6 +98,18 @@ const DropDownMenu = ({ userData, role, profileRoute }) => {
             <Avatar
               id="header-button-avatar"
               {...stringAvatar(`${userData?.firstName} ${userData?.lastName}`)}
+              sx={{
+                height: '45px',
+                width: '45px',
+                marginRight: '30px',
+                cursor: 'pointer',
+                backgroundColor: '#' + color,
+                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                '&:hover': {
+                  backgroundColor: '#c5c5c5',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
+                }
+              }}
             />
           </div>
 
