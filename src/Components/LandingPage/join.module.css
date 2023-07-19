@@ -21,7 +21,10 @@
   border: none;
   border-radius: 0;
   color: #212121;
-  background-color: transparent;
+  background-image: url('/public/assets/images/landing/texture.jpg');
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
   transition: 1s ease;
 }
 
@@ -39,6 +42,10 @@
   padding: 0;
   height: 50vh;
   text-align: center;
+  background-image: url('/public/assets/images/landing/texture.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: 1s ease;
 }
 
 .joined p {
@@ -95,5 +102,4 @@
   .dot {
     visibility: hidden;
   }
-
 }
