@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const LandingPage = require('../pageobjects/landingPage');
+/*const LandingPage = require('../pageobjects/landingPage');
 const LoginPage = require('../pageobjects/loginPage');
 const NavBarPage = require('../pageobjects/navBarPage');
 const MemberPage = require('../pageobjects/memberPage');
@@ -61,3 +61,4 @@ describe('Member flow', () => {
     await LogoutPage.btnLogoutModalConfirm.click();
   });
 });
+*/

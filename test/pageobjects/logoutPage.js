@@ -28,6 +28,10 @@ class LogoutPage {
     return $('#dropdown-menu');
   }
 
+  get alertDialog() {
+    return $('#alert-dialog-slide-description');
+  }
+
   async clickOnAvatarBtn() {
     await this.btnHeaderAvatar.click();
   }

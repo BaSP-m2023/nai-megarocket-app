@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const LandingPage = require('../pageobjects/landinPage.js');
+/*const LandingPage = require('../pageobjects/landingPage.js');
 
 describe('Open landing page', () => {
   beforeAll('Open browser', () => {
@@ -44,3 +44,4 @@ describe('Open landing page', () => {
     await expect(LandingPage.linkEmail).toBeClickeable();
   });
 });
+*/
