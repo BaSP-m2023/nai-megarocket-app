@@ -31,21 +31,23 @@ export const trainerCreateValidation = Joi.object({
     'number.base': 'DNI is required',
     'number.empty': 'DNI is required',
     'number.min': 'DNI too short',
-    'number.max': 'DNI must be a 7-8 digit number'
+    'number.max': 'DNI must be a 7-8 digit number',
+    'number.integer': 'DNI must be an integer'
   }),
   phone: Joi.number().integer().min(1000000000).max(9999999999).messages({
     'number.base': 'Phone is required',
     'number.empty': 'Phone is required',
     'number.min': 'Phone Number must be a 10-digit number',
     'number.max': 'Phone Number must be a 10-digit number',
-    'any.required': 'Phone Number is required'
+    'any.required': 'Phone Number is required',
+    'number.integer': 'Phone must be an integer'
   }),
   email: Joi.string()
     .trim()
     .regex(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
     .messages({
-      'string.empty': 'Email is required',
-      'string.pattern.base': 'Email is invalid'
+      'string.pattern.base': 'Email is invalid',
+      'string.empty': 'Email is required'
     }),
   city: Joi.string()
     .trim()
@@ -66,12 +68,15 @@ export const trainerCreateValidation = Joi.object({
     .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#%^&*<>_?\-¿¡])/)
     .label('Password')
     .messages({
-      'string.pattern.base': 'Invalid password: Example1!',
-      'any.required': 'Password is required.',
-      'string.empty': 'Password is required.'
+      'string.pattern.base':
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol.',
+      'string.min': 'Password must have at least 8 characters',
+      'string.max': 'Password must have less than 16 characters',
+      'any.required': 'Password is required',
+      'string.empty': 'Password is required'
     }),
   salary: Joi.number().min(10).max(100).required().messages({
-    'any.required': 'Salary is required.',
+    'any.required': 'Salary is required',
     'number.min': 'Salary can not be less than 10',
     'number.base': 'Salary is required',
     'number.max': 'Salary can not be more than 100'
@@ -89,7 +94,7 @@ export const trainerUpdateValidation = Joi.object({
     .messages({
       'string.pattern.base': 'Name must have only letters',
       'any.required': 'Name is required',
-      'string.empty': 'Name is required.'
+      'string.empty': 'Name is required'
     }),
   lastName: Joi.string()
     .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
@@ -102,14 +107,20 @@ export const trainerUpdateValidation = Joi.object({
       'any.required': 'Last name is required',
       'string.empty': 'Last name is required.'
     }),
-  dni: Joi.number().integer().greater(99999).less(1000000000).required().messages({
-    'number.base': 'the DNI must be a number',
-    'number.greater': 'DNI must have at least 7 numbers',
-    'number.less': 'DNI cannot have more than 9 numbers'
+  dni: Joi.number().integer().min(1000000).max(99999999).messages({
+    'number.base': 'DNI is required',
+    'number.empty': 'DNI is required',
+    'number.min': 'DNI too short',
+    'number.max': 'DNI must be a 7-8 digit number',
+    'number.integer': 'DNI must be an integer'
   }),
-  phone: Joi.number().integer().required().messages({
-    'number.base': 'Phone must be a number',
-    'number.min': 'Phone must have exact 10 numbers'
+  phone: Joi.number().integer().min(1000000000).max(9999999999).messages({
+    'number.base': 'Phone is required',
+    'number.empty': 'Phone is required',
+    'number.min': 'Phone Number must be a 10-digit number',
+    'number.max': 'Phone Number must be a 10-digit number',
+    'any.required': 'Phone Number is required',
+    'number.integer': 'Phone must be an integer'
   }),
   email: Joi.string()
     .trim()
@@ -120,13 +131,14 @@ export const trainerUpdateValidation = Joi.object({
     }),
   city: Joi.string()
     .trim()
-    .regex(/^[A-Za-z]+\s?[A-Za-z]+$/)
+    .regex(/^[a-zA-ZÀ-ÿ\s]+(?:[\s-][a-zA-ZÀ-ÿ\s]+)*$/)
     .min(5)
     .max(25)
-    .required()
     .messages({
       'string.min': 'City must have between 5 and 25 characters',
-      'string.max': 'City must have between 5 and 25 characters'
+      'string.pattern.base': 'Invalid City',
+      'string.max': 'City must have between 5 and 25 characters',
+      'string.empty': 'City is required'
     }),
   salary: Joi.number().min(10).max(100).required().messages({
     'any.required': 'Salary is required.',

@@ -8,7 +8,7 @@ const classValidation = Joi.object({
           /^(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)(,(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday))*$/
         )
         .messages({
-          'string.pattern.base': 'Invalid days. Please use a comma-separated list of valid days.',
+          'string.pattern.base': 'Invalid days. Please use a comma-separated list of valid days',
           'string.required': 'Day is required',
           'string.empty': 'Day is required'
         })

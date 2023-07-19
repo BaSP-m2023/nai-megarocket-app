@@ -31,34 +31,34 @@ const adminsValidation = Joi.object({
     'number.base': 'DNI is required',
     'number.empty': 'DNI is required',
     'number.min': 'DNI too short',
-    'number.max': 'DNI must be a 7-8 digit number'
+    'number.max': 'DNI must be a 7-8 digit number',
+    'number.integer': 'DNI must be an integer'
   }),
   phone: Joi.number().integer().min(1000000000).max(9999999999).messages({
     'number.base': 'Phone is required',
     'number.empty': 'Phone is required',
     'number.min': 'Phone Number must be a 10-digit number',
     'number.max': 'Phone Number must be a 10-digit number',
-    'any.required': 'Phone Number is required'
+    'any.required': 'Phone Number is required',
+    'number.integer': 'Phone must be an integer'
   }),
   email: Joi.string()
     .trim()
     .regex(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
     .messages({
-      'string.empty': 'Email is required',
-      'string.pattern.base': 'Email is invalid'
+      'string.pattern.base': 'Email is invalid',
+      'string.empty': 'Email is required'
     }),
   city: Joi.string()
     .trim()
-    .min(3)
-    .regex(/^[a-zA-Z0-9]+\s?[a-zA-Z0-9]+$/)
+    .regex(/^[a-zA-ZÀ-ÿ\s]+(?:[\s-][a-zA-ZÀ-ÿ\s]+)*$/)
+    .min(5)
     .max(25)
     .messages({
-      'any.required': 'City is required',
-      'string.pattern.base': 'City is invalid, only allows letters, numbers and a space',
-      'string.empty': 'City is required',
-      'string.base': 'City must be a string',
-      'string.min': 'City too short',
-      'string.max': 'City is invalid'
+      'string.min': 'City must have between 5 and 25 characters',
+      'string.pattern.base': 'Invalid City',
+      'string.max': 'City must have between 5 and 25 characters',
+      'string.empty': 'City is required'
     }),
   password: Joi.string()
     .min(8)
@@ -66,9 +66,12 @@ const adminsValidation = Joi.object({
     .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#%^&*<>_?\-¿¡])/)
     .label('Password')
     .messages({
-      'string.pattern.base': 'Invalid password: Example1!',
-      'any.required': 'Password is required.',
-      'string.empty': 'Password is required.'
+      'string.pattern.base':
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol.',
+      'string.min': 'Password must have at least 8 characters',
+      'string.max': 'Password must have less than 16 characters',
+      'any.required': 'Password is required',
+      'string.empty': 'Password is required'
     })
 });
 
