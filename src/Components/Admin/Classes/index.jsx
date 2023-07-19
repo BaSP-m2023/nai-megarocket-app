@@ -333,7 +333,7 @@ const Classes = () => {
             onClose={handleCloseModalCalendar}
             handleUpdate={handleUpdateClass}
             handleDelete={handleDeleteClass}
-            classTitle={`${classSelect.activity?.name} Class`}
+            classTitle={classSelect.activity?.name}
             classDay={classSelect.day}
             classHour={classSelect.hour}
             classTrainer={`${classSelect.trainer?.firstName} ${classSelect.trainer?.lastName}`}

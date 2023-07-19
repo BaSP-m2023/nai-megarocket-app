@@ -8,65 +8,85 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button, Chip, Divider, Typography } from '@mui/material';
 
-const CalendarModal = (props) => {
+const styles = {
+  dialog: {
+    backdropFilter: 'blur(8px)'
+  },
+  dialogTitle: {
+    color: 'black',
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '25px',
+    padding: '20px 0 5px 0',
+    gap: '5px',
+    justifyContent: 'center'
+  },
+  chip: {
+    fontSize: '15px',
+    backgroundColor: '#212121',
+    color: 'white'
+  },
+  dialogContent: {
+    padding: '30px 40px 20px 40px',
+    color: '#212121',
+    minWidth: '300px',
+    textAlign: 'center'
+  },
+  typography1: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px'
+  },
+  dialogActions: {
+    padding: '10px 30px 30px 30px',
+    display: 'flex',
+    justifyContent: 'center'
+  }
+};
+
+const CalendarModal = ({
+  show,
+  testId,
+  onClose,
+  classTitle,
+  classHour,
+  classDay,
+  classTrainer,
+  classSlots,
+  handleUpdate,
+  handleDelete
+}) => {
   return (
     <Dialog
-      open={props.show}
-      id={props.testId}
+      open={show}
+      id={testId}
       keepMounted
-      onClose={props.onClose}
-      sx={{
-        backdropFilter: 'blur(8px)'
-      }}
+      onClose={onClose}
+      sx={styles.dialog}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle
-        sx={{
-          color: 'black',
-          display: 'flex',
-          alignItems: 'center',
-          fontSize: '25px',
-          padding: '20px 0 5px 0',
-          gap: '5px',
-          justifyContent: 'center'
-        }}
-      >
-        {props.classTitle} {props.classHour}h
+      <DialogTitle sx={styles.dialogTitle}>
+        {classTitle ? classTitle : 'Not Assigned'} Class {classHour}hs
       </DialogTitle>
       <Divider variant="middle">
-        <Chip
-          sx={{ fontSize: '15px', backgroundColor: '#212121', color: 'white' }}
-          label={props.classDay?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')}
-        />
+        <Chip sx={styles.chip} label={classDay?.toString().replace(/([a-z])([A-Z])/g, '$1, $2')} />
       </Divider>
-      <DialogContent
-        sx={{
-          padding: '30px 40px 20px 40px',
-          color: '#212121',
-          minWidth: '300px',
-          textAlign: 'center'
-        }}
-      >
-        <Typography
-          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
-          variant="h6"
-          id="alert-dialog-slide-description"
-        >
+      <DialogContent sx={styles.dialogContent}>
+        <Typography sx={styles.typography1} variant="h6" id="alert-dialog-slide-description">
           <BadgeIcon sx={{ fontSize: '27px', color: '#212121' }} />{' '}
-          {props.classTrainer ? props.classTrainer : 'Not Assigned'}
+          {classTrainer ? classTrainer : 'Not Assigned'}
         </Typography>
 
         <Typography fontSize={18} id="alert-dialog-slide-description3">
-          Slots: {props.classSlots}
+          Slots: {classSlots}
         </Typography>
       </DialogContent>
-      <DialogActions
-        sx={{ padding: '10px 30px 30px 30px', display: 'flex', justifyContent: 'center' }}
-      >
-        <Button id={props.editTestId} onClick={props.handleUpdate} variant="contained">
+      <DialogActions sx={styles.dialogActions}>
+        <Button onClick={handleUpdate} variant="contained">
           <EditRoundedIcon />
         </Button>
-        <Button id={props.editTestId} onClick={props.handleDelete} variant="contained">
+        <Button onClick={handleDelete} variant="contained">
           <DeleteIcon />
         </Button>
       </DialogActions>
