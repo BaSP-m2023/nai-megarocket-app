@@ -76,5 +76,9 @@ class LandingPage {
       }
     });
   }
+
+  async openLanding() {
+    await this.browser.url('https://nai-megarocket-app.vercel.app/landing');
+  }
 }
 module.exports = new LandingPage();
